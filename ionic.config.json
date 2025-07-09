@@ -1,0 +1,7 @@
+{
+  "name": "monytri-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

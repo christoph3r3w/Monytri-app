@@ -1,0 +1,41 @@
+{
+	"name": "monytri-app",
+	"short_name": "monytri",
+	"start_url": "/",
+	"display": "standalone",
+	"theme_color": "#497951",
+	"background_color": "#497951",
+	"description": "monytri",
+	"icons": [
+		{
+			"src":"pwa-64x64.png",
+			"sizes":"64x64",
+			"type":"image/png"
+		},
+		{
+			"src": "pwa-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "pwa-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		},
+		{
+			"src": "maskable-icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"Purpose": "maskable"
+		},
+		{
+			"src":"apple-touch-icon-180x180.png",
+			"sizes":"180x180",
+			"type":"image/png"
+			
+		}
+
+	]
+	
+}
+

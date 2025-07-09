@@ -1,0 +1,150 @@
+@import 'tailwindcss/base';
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a,button {
+  text-decoration: initial ;
+}
+
+/* semantic color variables for this project */
+:root {
+	/* basic colors */
+	/* --general-background-color: #daeadd; */
+	--general-background-color: var(--off-white);
+
+	/* pallet */
+	--primary-green-500:#497951;
+	--primary-darkgreen-550:#406D48;
+	--primary-darkgreen-200: #D1DDD3;
+	--primary-lightgreen-500:#98C455;
+
+	--primary-purple-500:#6057DB;
+	--primary-purple-400:#AFA8E6;
+
+	--primary-red-500:#B73229;
+
+	--primary-orange-500:#FF9600;
+
+	--primary-blue-500:#304FFE;
+
+	--black:#101010;
+	--grey-500:#414141;
+	--grey-400:#717171;
+	--neutral-grey:#A0A0A0;
+	--neutral-grey-footer:#a0a0a05a;
+	--white:#ffffff;
+	--off-white:#F9F7F4;
+
+}
+
+/* @view-transition {
+	navigation: auto;
+} */
+
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+  }
+} */
+
+
+*,
+*::before,
+*::after {
+	--scrollbar-color-thumb: var(--primary-green-500);
+	--scrollbar-color-track: transparent;
+	--scrollbar-width: thin;
+	--scrollbar-width-legacy: 10px;
+
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	scrollbar-gutter: stable;
+	
+	/* Modern browsers with `scrollbar-*` support */
+	@supports (scrollbar-width: auto) {
+		& {
+			scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+			scrollbar-width: none;
+		}
+		
+				
+		/* @container style(--mobile:0){
+			&:hover{
+				scrollbar-width:var(--scrollbar-width, none);
+			}
+		} */
+	
+	}
+	
+	/* Legacy browsers with `::-webkit-scrollbar-*` support */
+	@supports selector(::-webkit-scrollbar) {
+		/* &::-webkit-scrollbar-thumb {
+			background: var(--scrollbar-color-thumb);
+		} */
+		&::-webkit-scrollbar-track {
+			background: var(--scrollbar-color-track);
+		}
+		&::-webkit-scrollbar {
+			max-width: var(--scrollbar-width-legacy);
+			max-height: var(--scrollbar-width-legacy);
+		}
+	}
+	
+	@supports (interpolate-size: allow-keywords){
+		interpolate-size: allow-keywords;
+		transition-behavior: allow-discrete;
+		scroll-behavior: smooth;
+		font-size-adjust: 0.5;
+	}
+
+}
+
+
