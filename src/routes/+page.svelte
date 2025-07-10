@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { PTest,Balance_M,HomeArticles_M } from '$lib'
 	import {current} from '$lib/store.js';
+	import { device } from '$lib/Device.js';
 	import { goto } from '$app/navigation';
 </script>
 
