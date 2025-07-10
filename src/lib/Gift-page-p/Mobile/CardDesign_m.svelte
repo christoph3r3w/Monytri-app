@@ -309,7 +309,7 @@
 	}
 
 	.message-input textarea:focus-within {
-		width: 80cqw;
+		width: clamp(300px,400px,50vw);	
 		transition: 200ms ease-out;
 	}
 

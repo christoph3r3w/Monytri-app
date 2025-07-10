@@ -25,6 +25,16 @@
 		<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a>
 	</div>
 	<br>
+	<p>
+	Platform: {$device.platform}<br>
+	Device: { $device.isMobile ? 'Mobile' : 'Desktop' }
+	</p>
+
+	{#if $device.platform === 'iOS' && $device.isMobile}
+		<p>This is an iPhone or iPad.</p>
+	{:else if $device.platform === 'Android' && $device.isMobile}
+		<p>This is an Android phone or tablet.</p>
+	{/if}
 </div>
 
 <style>
@@ -67,21 +77,21 @@
 		display: none;
 	}
 
+	/* for mobile */
 	:global(html:has(.home-wrapper)){
 		@media (-webkit-min-device-pixel-ratio: 3),
 		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi),
 		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) {
 			&{
-				/* --body-padding: 0; */
 				--header-intro-height: 27dvh;
 				overflow-x: hidden;
 			}
 
-			:global(header,footer){
+			:global(header){
 				--body-padding: 5% ;
-				z-index: 10;
 				padding-inline: var(--body-padding) ;
+				z-index: 10;
 			}
 	
 			:global(.home-wrapper){

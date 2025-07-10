@@ -52,6 +52,7 @@
 </section>
 
 <style>
+	/* desktop */
 	.step-container {
 		grid-column: 1/-1 !important;
 		grid-row: 1/-1 !important;
@@ -103,6 +104,7 @@
 		padding:0;
 	}
 	
+	/* mobile */
 	.success-message {
 		position: relative;
 		display: flex;
@@ -110,6 +112,7 @@
 		align-items: center;
 		flex: 1 1 80%;	
 		width: 100%;
+		height: 100dvh + var(--footer-height);
 		gap: 24px;
 		padding-top: 3rem;
 	}

@@ -3,7 +3,7 @@
 			<h2>Grow your investing skills!<span><img src="./home-page/arrow-right.png" alt=""></span></h2>
 			<ul>
 				<li>
-					<a href="/how-it-works"></a>
+					<a href="/how-it-works" aria-label="article"></a>
 					<figure>
 						<img src="./home-page/homescreen-piggybank.png" alt="homescreen piggybank" width="177px" height="177px">
 						
@@ -13,7 +13,7 @@
 					<p>With Chiara & David</p>
 				</li>
 				<li>
-					<a href="/how-it-works"></a>
+					<a href="/how-it-works" aria-label="article"></a>
 					<figure>
 						<img src="./home-page/homescreen-cash.png" alt="cash" width="177px" height="177px">
 						<figcaption>Ep.2</figcaption>
@@ -22,7 +22,7 @@
 					<p>With Chiara & David</p>
 				</li>
 				<li>
-					<a href="/how-it-works"></a>
+					<a href="/how-it-works" aria-label="article"></a>
 					<figure>
 						<img src="./home-page/homescreen-cash.png" alt="cash" width="177px" height="177px">
 						<figcaption>Ep.3</figcaption>
@@ -35,7 +35,7 @@
 		<article class="recent-blogs">
 			<h2>Recent Blogs<span><img src="./home-page/arrow-right.png" alt=""></span></h2>
 			<div class="blog-container">
-				<a href="/blog"></a>
+				<a href="/blog" aria-label="blog"></a>
 				<img src="./home-page/homescreen-team.png" alt="" width="177px" height="177px">
 				<div class="blog-text">
 					<p class="date">date</p>

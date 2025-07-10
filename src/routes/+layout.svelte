@@ -9,7 +9,7 @@
 
 	let menu_Open = $derived($menuOpen);
 
-	// function to detect service worker update
+	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
 		
@@ -25,7 +25,6 @@
 				}
 			});
 		});
-
 	}
 
 	
@@ -126,6 +125,7 @@
 	
 </script>
 
+<!-- main application layout -->
 <section class="body-container">
 	{#if ($current == 'gift' && $isMobile) }
 	{:else}
@@ -219,7 +219,6 @@
 		grid-column: content;
 		display: grid;
 		grid-template-columns: subgrid;
-		/* grid-template-rows: subgrid; */
 		align-content: start;
 		overflow-x: hidden;
 		overflow-y: visible;
@@ -253,7 +252,6 @@
 			width: 100%;
 			/* background-color: rgb(222, 135, 135); */
 		}
-		
 	}
 
 	:global(footer){
@@ -268,7 +266,6 @@
 	}
 
 	/* media query for mobile view */
-
 	@media (-webkit-min-device-pixel-ratio: 3),
 		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi),
 		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
@@ -294,8 +291,9 @@
 			overflow: hidden;
 		}
 
-		/* header styling for when the --mobile property is = 1 */
 		:global(header){
+			--body-padding: 5%  !important ;
+		
 			flex: 0 1 auto;
 			display: grid;
 			grid-template-columns: var(--grid--mobile-collums);
@@ -312,16 +310,15 @@
 			z-index: 100;
 		}
 				
-		/* main content layout styling for when the --mobile property is = 1 */
 		:global(main){
 			flex: 2 1 100svh;
 			display: grid;
 			grid-template-columns: var(--grid--mobile-collums) !important;
 			max-height: 100%;
 			overflow-y: scroll;
-			/* padding-bottom: calc(5rem + env(safe-area-inset-bottom)); */
 			padding-top: calc(var(--header-height) );
 			margin-bottom: -1rem;
+			/* padding-bottom: calc(5rem + env(safe-area-inset-bottom)); */
 			/* background-color: rgb(61, 112, 153);
 			background-color: rgb(200, 224, 124);
 			background-color: rgb(224, 124, 224); */
@@ -330,20 +327,25 @@
 				padding-top: 0 !important;
 			}
 			
+			/* essential cascading layout styling */
+			/* needs to be simplified */
 			&:nth-child(n) > :is(:global(*)) {
 				grid-column: content ;
 				grid-row: revert;
 				
 				min-height: 100% ;
 				max-height: fit-content;
+				max-height: calc(99svh - var(--header-height) - var(--footer-height) - env(safe-area-inset-bottom));
 				height: fit-content;
 				
 				display: grid;
 				grid-template-columns: subgrid;
 				grid-template-rows: auto;
 				overflow-x: clip;
-				/* outline: solid rgb(55, 0, 255); */
+				z-index: 0;
+				/* background-color:  rgb(162, 255, 0); */
 			}
+
 			
 			&:nth-of-type(1) {
 				grid-column: content ;
@@ -362,6 +364,7 @@
 			flex: 0 1 auto;
 			background-color: var(--primary-green-500);
 			grid-template-columns: var(--grid--mobile-collums);
+			/* test this one last time in iteration 2 */
 			/* grid-template-rows: 1fr .3fr; */
 
 			position: relative;

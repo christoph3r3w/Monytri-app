@@ -69,7 +69,7 @@
 		{#if $current === 'home'}
 			<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="m19.53 18.47-3.841-3.841A8.705 8.705 0 0 0 17.75 9C17.75 4.175 13.825.25 9 .25S.25 4.175.25 9 4.175 17.75 9 17.75a8.705 8.705 0 0 0 5.629-2.061l3.841 3.841a.748.748 0 0 0 1.06 0 .749.749 0 0 0 0-1.06ZM1.75 9c0-3.998 3.252-7.25 7.25-7.25S16.25 5.002 16.25 9 12.998 16.25 9 16.25 1.75 12.998 1.75 9Z" fill="white"/>
-			  </svg>
+			</svg>
 		{:else}
 			<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
@@ -139,6 +139,7 @@
 		width: 100%;
 		gap: 1%;
 		border-bottom: solid 2px color-mix(in hsl, var(--grey-400), white 80%);
+		padding-inline: var(--body-padding);
 	}
 
 	nav {
@@ -277,7 +278,7 @@
 			.header{
 				padding-inline: 0;
 			}
-			 
+			 /* Background Swirly Image decoration */
 			:global(header::after){
 				--_background-cut-off: 85%;
 				content: '';
@@ -286,9 +287,10 @@
 				inset-inline: 0;
 				min-height: calc(var(--header-intro-height) + var(--header-height));
 				background: 
-				/* linear-gradient(180deg, transparent var(--_background-cut-off), var(--general-background-color) var(--_background-cut-off)), */
 				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
 				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off));
+				mask-image:
+				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off)) ;
 				background-repeat: no-repeat;
 				background-size: cover;
 				overflow: clip;

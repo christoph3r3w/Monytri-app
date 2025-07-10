@@ -66,10 +66,9 @@
 
 <div class="container">
 	
-	<h2>Request coming soon</h2>
+	<h2>Request coming soon</h2>	
 	
-	
-	<figure class="banner" style="	background: url('./shared-assests/banner-deco.png')">
+	<figure class="banner" >
 		<img src="./shared-assests/Monytri-01.png" alt="">
 	</figure>
 
@@ -109,10 +108,25 @@
 	</article>
 
 	<!-- add socials here -->
-	<section class='socials'>
-		<a href=""><img src="" alt=""></a>
-		<a href=""><img src="" alt=""></a>
-		<a href=""><img src="" alt=""></a>
+	<section class='socials-container'>
+		<h2>Follow us on</h2>
+		<div class="socials">
+			<a href="https://www.instagram.com/monytri.fintech/" aria-label="Instagram">
+				<svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 5C0.5 2.239 2.739 0 5.5 0H13.5C16.261 0 18.5 2.239 18.5 5V13C18.5 15.761 16.261 18 13.5 18H5.5C2.739 18 0.5 15.761 0.5 13V5ZM16.5 3C16.5 2.448 16.052 2 15.5 2C14.948 2 14.5 2.448 14.5 3C14.5 3.552 14.948 4 15.5 4C16.052 4 16.5 3.552 16.5 3ZM9.5 4C12.261 4 14.5 6.239 14.5 9C14.5 11.761 12.261 14 9.5 14C6.739 14 4.5 11.761 4.5 9C4.5 6.239 6.739 4 9.5 4ZM6.5 9C6.5 7.34315 7.84315 6 9.5 6C11.1569 6 12.5 7.34315 12.5 9C12.5 10.6569 11.1569 12 9.5 12C7.84315 12 6.5 10.6569 6.5 9Z" fill="#212121"/>
+				</svg>
+			</a>
+			<a href="https://www.youtube.com/watch?v=gWXvQtw05QI&t=210s&ab_channel=BOTSCapital" aria-label="YouTube">
+				<svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M16.66 0.50998C12.5681 -0.169993 8.39194 -0.169993 4.3 0.50998C1.96 0.99998 0.5 2.50998 0.5 4.47998V11.48C0.5 13.48 1.96 14.97 4.34 15.48C6.37551 15.8227 8.43585 15.9966 10.5 16C12.5705 15.9995 14.6374 15.8289 16.68 15.49C19 15.05 20.5 13.49 20.5 11.49V4.48998C20.5 2.49998 19 0.93998 16.66 0.50998ZM13.76 8.44998L8.76 11.45C8.68179 11.4976 8.59157 11.5219 8.5 11.52C8.41318 11.5193 8.32768 11.4988 8.25 11.46C8.17137 11.4123 8.1068 11.3445 8.06289 11.2637C8.01897 11.1829 7.99727 11.0919 8 11V4.99998C8.00075 4.91142 8.02411 4.82452 8.06786 4.74752C8.11161 4.67051 8.17431 4.60596 8.25 4.55998C8.32843 4.51796 8.41603 4.49598 8.505 4.49598C8.59398 4.49598 8.68157 4.51796 8.76 4.55998L13.76 7.55998C13.8323 7.60607 13.8918 7.66962 13.933 7.74478C13.9742 7.81994 13.9958 7.90427 13.9958 7.98998C13.9958 8.07569 13.9742 8.16002 13.933 8.23518C13.8918 8.31034 13.8323 8.37389 13.76 8.41998V8.44998Z" fill="#212121"/>
+				</svg>
+			</a>
+			<a href="https://www.linkedin.com/company/monytri/" aria-label="LinkedIn">
+				<svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M2.5 0H16.5C17.605 0 18.5 0.895 18.5 2V16C18.5 17.105 17.605 18 16.5 18H2.5C1.395 18 0.5 17.105 0.5 16V2C0.5 0.895 1.395 0 2.5 0ZM3.977 14H6.5V7H3.977V14ZM5.19396 5.71738C4.42296 5.71738 3.90796 5.20338 3.90796 4.51738C3.90796 3.83138 4.42196 3.31738 5.27896 3.31738C6.04996 3.31738 6.56496 3.83138 6.56496 4.51738C6.56496 5.20338 6.05096 5.71738 5.19396 5.71738ZM13.058 14H15.5V10.174C15.5 7.977 14.523 7 13.302 7C12.081 7 11.43 7.407 11.105 7.977V7H8.582V14H11.105V10.174C11.105 9.035 11.919 8.872 12.163 8.872C12.407 8.872 13.058 9.116 13.058 10.174V14Z" fill="#212121"/>
+				</svg>
+			</a>
+		</div>
 	</section>
 	
 
@@ -173,8 +187,12 @@
 		background-size: cover;
 		display: grid;
 		place-items: center;
+		background: url('./shared-assests/banner-deco.png');
+		background-position:top center;
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
-
+	
 	.banner img{
 		width: 60%;
 		height: auto;
@@ -235,6 +253,21 @@
 		&:nth-of-type(2n) {
 			color: var(--primary-green-500);
 		}
+	}
+
+	.socials-container{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+	}
+
+	.socials{
+		display: flex;
+		align-items: center;
+		gap: 2rem;
+		margin-block: 2rem;
+		cursor:  pointer;
 	}
 
 	.bottom-logo{

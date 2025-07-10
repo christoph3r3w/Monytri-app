@@ -62,7 +62,7 @@
 
 <div class="container">
 		
-	<figure class="banner" style="	background: url('./shared-assests/banner-deco.png')">
+	<figure class="banner">
 		<img src="./shared-assests/Monytri-01.png" alt="">
 	</figure>
 
@@ -181,6 +181,10 @@
 		background-size: cover;
 		display: grid;
 		place-items: center;
+		background: url('./shared-assests/banner-deco.png');
+		background-position:top center;
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 
 	.banner img{
