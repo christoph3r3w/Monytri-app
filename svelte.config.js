@@ -1,7 +1,8 @@
 // adapter  for static sites or conversion to native apps
 // import adapter from '@sveltejs/adapter-static';
 // adapter for vercel
-import adapter from '@sveltejs/adapter-vercel';
+// import adapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-netlify';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,7 +17,8 @@ const config = {
             assets: 'build',
             fallback: null,
             precompress: false,
-            strict: true
+            strict: true,
+			edge: false,
         }),
 		files: {
 			appTemplate: 'src/index.html', 

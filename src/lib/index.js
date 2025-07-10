@@ -25,4 +25,4 @@ export {default as Process_success_S} from './Gift-page-p/Shared/Process-succues
 export {default as InProgress_S} from './Shared/molucule/InProgress.svelte'
 
 // test components
-export {default as PTest} from './test components/page test component.svelte'
+// export {default as PTest} from './test components/page test component.svelte'
