@@ -414,4 +414,9 @@
 		padding: 1%;
 	}
 
+:global(html:has(.mobile-device))
+	.card-design-options{
+		display: none;
+	}
+
 </style>

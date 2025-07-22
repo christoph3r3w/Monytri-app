@@ -45,3 +45,16 @@ export const device = readable(
 		return () => mobileQuery.removeEventListener('change', update);
 	}
 );
+
+if(import.meta.env.DEV){
+	device.subscribe(({isMobile}) => {
+		console.log('isMobile',isMobile);
+		if(isMobile){
+			document.body.classList.add('mobile-device');
+			document.body.classList.remove('desktop-device');
+		}else{
+			document.body.classList.add('desktop-device');
+			document.body.classList.remove('mobile-device');
+		}
+	});
+}
