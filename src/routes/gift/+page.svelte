@@ -200,6 +200,7 @@
 		}
 		stepValidation[3] = true;
 	}
+
 	//search pupose functionality
 	function searchPurpose(query) {
 		formData.searchQuery = query;
@@ -264,9 +265,6 @@
 			formData.message = '';
 		};
 	});
-
-
-
 </script>
 
 <svelte:head>
@@ -347,6 +345,7 @@
 				max={formData.recipient?.amountMax} 
                 min={formData.recipient?.amountMin}
 				{validateAmount}
+				
 				{nextStep}
 				{previousStep}
 				{stepValidation}
@@ -389,7 +388,7 @@
 		{#if currentStep === 1}
 			<Recipient_M
 				recipients={recipients} 
-				formData={formData}
+				{formData}
 				selected={selectRecipient}
 				button={buttonType}
 			/>
@@ -485,29 +484,6 @@
 		height: 100%;
 		width: 100%;
 		background-color: var(--general-background-color);
-
-		& h3{
-			position: relative;
-			margin-bottom: 1%;
-			font-size: clamp(1rem,10vw ,1.3rem);
-		}
-
-		.search-container {
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			background-color: #f5f5f5;
-			padding-block: 1rem;
-			margin-bottom: 4%;
-			gap: 1cqh;
-		}
-		
-		.search-input {
-			width: 100%;
-			padding: 0.75rem;
-			border: 1px solid #e0e0e0;
-			border-radius: 8px;
-		}
 	}
 
 	:global(.left-step) {
@@ -582,7 +558,7 @@
 
 		&:focus::placeholder {padding: 0;}
 	}
-	
+
 	:global(.step-header) {
 		display: flex;
 		align-items: center;
@@ -612,13 +588,15 @@
 			width: 100%;
 			font-size: clamp(1rem,5cqw ,2.5rem);
 			text-wrap:nowrap; 
+			outline: solid red;
 			
 			@container style(--mobile:1) {
-				display: flex;
-				align-items: center;
-				text-wrap:nowrap;
-				font-size: clamp(1rem,5vw ,2rem);
-				padding-inline: 0;
+				/* text-align: center; */
+				/* display: flex;
+				align-items: center; */
+				/* text-wrap:nowrap; */
+				/* font-size: clamp(1rem,5vw ,2rem); */
+				/* padding-inline: 0; */
 			}
 		}
 		
@@ -669,8 +647,8 @@
 		border: 1px solid #e0e0e0;
 		border-radius: 4px;
 	}
-
-	:global(.right-step .button-container)  {
+	/* needs to be deleted */
+	/* :global(.right-step .button-container)  {
 		display: flex;
 		width: 100%;
 
@@ -692,7 +670,6 @@
 			height: fit-content;
 		}
 	}
-
 	
 	:global(div.button-container) {
 		position: relative;
@@ -773,7 +750,7 @@
 		@container style(--mobile:1) {
 			margin-bottom: 0;
 		}
-	}
+	} */
 
 	@media (width <= 930px) {
 		:global(.transfer-wizard) {

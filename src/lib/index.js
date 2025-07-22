@@ -26,3 +26,7 @@ export {default as InProgress_S} from './Shared/molucule/InProgress.svelte'
 
 // test components
 // export {default as PTest} from './test components/page test component.svelte'
+export {default as StepContainer} from './Gift-page-p/Shared/StepContainer_S.svelte';
+export {default as EnterAmount_E} from './Gift-page-p/Examples/EnterAmount_Example.svelte';
+export {default as Purpose_E} from './Gift-page-p/Examples/Purpose_Example.svelte';
+export {default as Recipient_E} from './Gift-page-p/Examples/Recipient_Example.svelte';
