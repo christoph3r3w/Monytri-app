@@ -1,98 +1,122 @@
 <script>
 	import { fade } from 'svelte/transition';
-	let { formData, validatePayment,button } = $props();
+	import {StepContainer} from '$lib';
+	let { formData, validatePayment,button,nextStep,stepValidation,previousStep,submitForm} = $props();
 	let selectedMethod = $state('');
+	let selectedBank = $state('');
 	let methods = $derived({
 		"Linked Credit/Debit Card": "Card ending in **** **** 1234",
 		"iDEAL": "Select your bank",
 		"EFT Payment": "Select your bank",
 		"PayPal": "Pay with your PayPal account",
 	});
-	let selectedBank = $state('');
 </script>
-<section class="step-container" >
+
+{#snippet reviewSummary()}
+	<article class="review-summary payment-confirmation">
+		<h2>Please confirm your payment</h2>
+		<hr />
+		
+		<p class="review-item">
+			<span class="review-label">Recipient:</span>
+			<span class="review-value">{formData.recipient.name}</span>
+		</p>
+		
+		<p class="review-item">
+			<span class="review-label">Gift Amount:</span>
+			<span class="review-value">{formData.amount}</span>
+		</p>
+		
+		<p class="review-item">
+			<span class="review-label">Card Design:</span>
+			<span class="review-value">{formData.cardDesign}</span>
+		</p>
+		
+		{#if formData.message}
+		<p class="review-item message">
+			<span class="review-label">Message:</span>
+			<span class="review-value">{formData.message}</span>
+		</p>
+		{/if}
+
+		{#if formData.Purpose}
+		<p class="review-item">
+			<span class="review-label">Occasion:</span>
+			<span class="review-value">{formData.Purpose}</span>
+		</p>
+		{/if}
+	</article>
+{/snippet}
+
+{#snippet paymentOptions()}
+	<section class="amount-input-container payment-input-container">
+		{#each Object.entries(methods) as [method, info], i}
+		<label for='paymentMethod{i}'>
+			<input type="radio" id='paymentMethod{i}' name="paymentMethod" 
+			bind:group={selectedMethod}
+			onclick={() =>{
+				formData.PaymentMethod = `${method}${selectedBank}`;
+				validatePayment()
+			}} 
+			value="paymentMethod{i}{method}{selectedBank}">
+			{method} 
+		</label>
+		{#if selectedMethod === `paymentMethod${i}${method}`}
+			<p class="payment-info">{info}</p>
+			{#if method === "iDEAL"}
+				<select class="payment-info" bind:value={selectedBank}>
+					<option value="iDEAL-bank1">Bank 1</option>
+					<option value="iDEAL-bank2">Bank 2</option>
+					<option value="iDEAL-bank3">Bank 3</option>
+				</select>
+			{:else if method === "EFT Payment" }
+				<select class="payment-info" bind:value={selectedBank}>
+					<option value="bank1">Bank 1</option>
+					<option value="bank2">Bank 2</option>
+					<option value="bank3">Bank 3</option>
+				</select>
+			{/if}
+		{/if}
+		{/each}
+	</section>
+{/snippet}
+
+<StepContainer 
+	{formData}
+	headerName="Select a payment method"
+	stepType="review"
+	currentStep={5}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+	showLeftContent={true}
+	showRightContent={true}
+	rightContent={reviewSummary	}
+	leftContent={paymentOptions}
+	submitForm={submitForm}
+	
+/>
+
+<!-- <section class="step-container" >
 	<div class="left-step"  >
 		<section class="step-header" transition:fade>
 			{@render button('back')}
 			<h2>Select a payment method</h2>
 		</section>
-		<section class="amount-input-container payment-input-container">
-			{#each Object.entries(methods) as [method, info], i}
-			<label for='paymentMethod{i}'>
-				<input type="radio" id='paymentMethod{i}' name="paymentMethod" 
-				bind:group={selectedMethod}
-				onclick={() =>{
-				formData.PaymentMethod = `${method}${selectedBank}`;
-				validatePayment
-				}} value="paymentMethod{i}{method}{selectedBank}">
-				{method} 
-			</label>
-			{#if selectedMethod === `paymentMethod${i}${method}`}
-				<p class="payment-info">{info}</p>
-				{#if method === "iDEAL"}
-					<select class="payment-info" bind:value={selectedBank}>
-						<option value="iDEAL-bank1">Bank 1</option>
-						<option value="iDEAL-bank2">Bank 2</option>
-						<option value="iDEAL-bank3">Bank 3</option>
-					</select>
-				{:else if method === "EFT Payment" }
-					<select class="payment-info" bind:value={selectedBank}>
-						<option value="bank1">Bank 1</option>
-						<option value="bank2">Bank 2</option>
-						<option value="bank3">Bank 3</option>
-					</select>
-				{/if}
-			{/if}
-			{/each}
-
-		</section>
+		{@render paymentOptions()}
 	</div>
 
 	<div class="right-step"  transition:fade>
-		<article class="review-summary payment-confirmation">
-			<h2>Please confirm your payment</h2>
-			<hr />
-			
-			<p class="review-item">
-				<span class="review-label">Recipient:</span>
-				<span class="review-value">{formData.recipient.name}</span>
-			</p>
-			
-			<p class="review-item">
-				<span class="review-label">Gift Amount:</span>
-				<span class="review-value">{formData.amount}</span>
-			</p>
-			
-			<p class="review-item">
-				<span class="review-label">Card Design:</span>
-				<span class="review-value">{formData.cardDesign}</span>
-			</p>
-			
-			{#if formData.message}
-			<p class="review-item message">
-				<span class="review-label">Message:</span>
-				<span class="review-value">{formData.message}</span>
-			</p>
-			{/if}
-
-			{#if formData.Purpose}
-			<p class="review-item">
-				<span class="review-label">Occasion:</span>
-				<span class="review-value">{formData.Purpose}</span>
-			</p>
-			{/if}
-
-		</article>
-		
+		{@render reviewSummary()}
 		<div class="button-container">
 			{@render button('submit')}
 		</div>
 	</div>
-</section>
+</section> -->
 
 <style>
 
-	.step-header {
+	/* .step-header {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
@@ -102,7 +126,7 @@
 	.step-header h2 {
 		font-size: clamp(1rem,4vw,2.5rem);
 		margin-right: 15rem;
-	}
+	} */
 	
 	.payment-input-container{
 		display: flex;
@@ -137,7 +161,7 @@
 		justify-content: space-between;
 		gap: 1rem;
 	}
-
+	
 	.review-summary {
 		align-self: baseline;
 		place-self: center;

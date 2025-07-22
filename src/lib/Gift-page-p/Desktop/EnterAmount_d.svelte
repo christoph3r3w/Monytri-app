@@ -1,7 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
-	let { selected, button, validateAmount, nextStep, min, max } = $props();
+	import {StepContainer} from '$lib';
+
+	let { formData,selected, button, validateAmount, nextStep, min, max,stepValidation,previousStep } = $props();
 	
 	let selectedAmount = $state('');
 
@@ -31,52 +33,52 @@
 	}
 </script>
 
+{#snippet amountOptions()}
+	<form onsubmit={() => {nextStep();preventDefault();}}>
+		<fieldset class="amount-input-container">
+			<label for='fixedAmount1'><input type="radio" id='fixedAmount1' name="fixedAmount" oninput={() => handleRadioInput('€25')} value="€25">&euro; 25</label>
+			<label for='fixedAmount2'><input type="radio" id='fixedAmount2' name="fixedAmount" oninput={() => handleRadioInput('€50')} value="€50">&euro; 50</label>
+			<label for='fixedAmount3'><input type="radio" id='fixedAmount3' name="fixedAmount" oninput={() => handleRadioInput('€100')} value="€100">&euro; 100</label>
+			<label for='fixedAmount4'><input type="radio" id='fixedAmount4' name="fixedAmount" oninput={() => handleRadioInput('€150')} value="€150">&euro; 150</label>
+		</fieldset>
+		<fieldset class="amount-input-container custom-amount-fieldset">
+			<label for="amount">Or enter a custom amount</label>
+			<input 
+			type="number" 
+			id="amount" 
+			oninput={handleNumberInput}
+			placeholder="&euro;"
+			min={min} 
+			max={max}
+			step="0.10" 
+			aria-required="true"
+			/>
+		</fieldset>
+		<!-- <div class="button-container">
+			{@render button('continue',2)}
+		</div> -->
+	</form>
+{/snippet}
 
-<section class="step-container" >
-	<div class="left-step"  >
-		<section class="step-header"  transition:fade>
-			{@render button('back')}
-			<h2>Select your gift amount</h2>
-		</section>
-	</div>
+<StepContainer 
+	{formData}
+	headerName="Select your gift amount"
+	stepType="amount"
+	currentStep={2}
+	{min}
+	{max}
+	{nextStep}
+	{previousStep}
+	{stepValidation}				
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	rightContent={amountOptions}
+/>
 
-	<div class="right-step"  transition:fade>
-		<form onsubmit={nextStep}>
-			<fieldset class="amount-input-container">
-				<label for='fixedAmount1'><input type="radio" id='fixedAmount1' name="fixedAmount" oninput={() => handleRadioInput('€25')} value="€25">&euro; 25</label>
-				<label for='fixedAmount2'><input type="radio" id='fixedAmount2' name="fixedAmount" oninput={() => handleRadioInput('€50')} value="€50">&euro; 50</label>
-				<label for='fixedAmount3'><input type="radio" id='fixedAmount3' name="fixedAmount" oninput={() => handleRadioInput('€100')} value="€100">&euro; 100</label>
-				<label for='fixedAmount4'><input type="radio" id='fixedAmount4' name="fixedAmount" oninput={() => handleRadioInput('€500')} value="€500">&euro; 500</label>
-			</fieldset>
-			<fieldset class="amount-input-container custom-amount-fieldset">
-				<label for="amount">Or enter a custom amount</label>
-				<input 
-				type="number" 
-				id="amount" 
-				oninput={handleNumberInput}
-				placeholder="&euro;"
-				min={min} 
-				max={max}
-				step="0.10" 
-				aria-required="true"
-				/>
-			</fieldset>
-			<div class="button-container">
-				{@render button('continue',2)}
-			</div>
-		</form>
-	</div>
-</section>
 
-<style>
-	.left-step {
-		height: fit-content;
-	}
 
-	.right-step {
-		grid-row: 1 / span 1;
-	}
-	
+<style>	
 	form:has(.amount-input-container){
 		display: flex;
 		flex-direction: column;
@@ -102,7 +104,6 @@
 		width: 100%;
 		gap: clamp(1vw,1.6rem,10cqh);
 		padding-top: 8dvh;
-		/* align-items: center; */
 		justify-content: center;
 		align-self: center;
 	}
@@ -148,7 +149,6 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
-		/* outline: solid rgb(128, 0, 0); */
 	}
 
 	form .amount-input-container:nth-of-type(2) label {

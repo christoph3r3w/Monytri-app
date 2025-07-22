@@ -1,6 +1,7 @@
 <script>
 	import { fade } from 'svelte/transition';
-	let { formData, recipients, selected, button } = $props();
+	import {StepContainer} from '$lib';
+	let { formData, recipients, selected, button,nextStep,stepValidation,previousStep } = $props();
 
 	let filteredRecipients = $derived(
 		formData.searchQuery 
@@ -13,8 +14,91 @@
 
 </script>
 
-<section class="step-container" >
-	<div class="left-step"  >
+{#snippet recipientsList1()}
+	<ul class="recipients-list">
+		{#each filteredRecipients as recipient}
+			<li class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}">
+				<button
+					type="button"
+					class="recipient-button"
+					onclick={() => selectRecipient(recipient)}
+				>
+					<div class="recipient-avatar">
+						{recipient.name.charAt(0).toUpperCase()}
+					</div>
+					<div class="recipient-info">
+						<h3>{recipient.name}</h3>
+						<p>{recipient.email}</p>
+					</div>
+					{#if formData.recipient?.id === recipient.id}
+						<div class="selected-indicator">
+							<svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+								<path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+					{/if}
+				</button>
+			</li>
+		{/each}
+	</ul>
+	
+	{#if filteredRecipients.length === 0}
+		<div class="no-results">
+			<p>No recipients found matching your search.</p>
+		</div>
+	{/if}
+{/snippet}
+
+{#snippet recipientsList2()}
+	<ul class="recipients-list">
+		{#each filteredRecipients as recipient}
+			<li 
+				class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}"
+				onclick={() => selected(recipient)}
+			>
+				<article class="recipient-info">
+				<div class="recipient-details">
+					{#if recipient.profilePic.length > 0 || recipient.profilePic !== ''}
+						<img src={recipient.profilePic} alt={''||recipient.name} class="profile-pic" />
+					{:else}
+					<div class="profile-letter">{recipient.name[0].toUpperCase()}</div>
+					{/if}
+					<span>
+						<h3>{recipient.name}</h3>
+						<p class="mail">{recipient.email}</p>
+						<button class="more-options">...</button> -->
+						<!-- Here needs to come a component that when you click on a specific recipient's button, more option buttons will appear. You should get the possibility to:
+						- Remove them from this list
+						- Other options -->
+					</span>
+				</div>
+				<p class="last-sent">Last sent: {recipient.lastSent}</p>
+			</article>
+		</li>
+		<hr>
+		{/each}
+	</ul>
+{/snippet}
+
+<StepContainer 
+	{formData}
+	headerName="Choose Recipient"
+	stepType="recipient"
+	currentStep={1}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+	{recipients}
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	rightContent={recipientsList2}
+/>
+
+
+<!-- <section class="step-container" >
+	<div class="left-step" >
+		
 		<section class="step-header"  transition:fade>
 			{@render button('back')}
 			<h2>Choose Recipient</h2>
@@ -45,56 +129,14 @@
 	</div>
 	
 	<div class="right-step"  transition:fade>
-		<ul class="recipients-list">
-			{#each filteredRecipients as recipient}
-				<li 
-					class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}"
-					onclick={() => selected(recipient)}
-					>
-					<article class="recipient-info">
-						<div class="recipient-details">
-							{#if recipient.profilePic.length > 0 || recipient.profilePic !== ''}
-								<img src={recipient.profilePic} alt={''||recipient.name} class="profile-pic" />
-							{:else}
-								<div class="profile-letter">{recipient.name[0].toUpperCase()}</div>
-							{/if}
-							<span>
-								<h3>{recipient.name}</h3>
-								<p class="mail">{recipient.email}</p>
-								<button class="more-options">...</button>
-								<!-- Here needs to come a component that when you click on a specific recipient's button, more option buttons will appear. You should get the possibility to:
-								- Remove them from this list
-								- Other options -->
-							</span>
-						</div>
-						<p class="last-sent">Last sent: {recipient.lastSent}</p>
-					</article>
-				</li>
-				<hr>
-			{/each}
-		</ul>
-		
+		{@render recipientsList2()}
 		<div class="button-container">
 			{@render button('continue',1)}
 		</div>
 	</div>
-</section>
+</section> -->
 
 <style>
-
-	.left-step {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		border-radius: 10px;
-	}
-
-	.step-header {
-		display: flex;
-		align-items: end;
-		margin-bottom: 1rem;
-		width: 100%;
-	}
 
 	.recipients-list{ 
 		flex: 1 1 70%;
@@ -146,19 +188,16 @@
 			width: 100%;
 		}
 		
-		.profile-pic {
+		.profile-pic,.profile-letter {
 			width: clamp(50px, 10vw, 70px);
-			aspect-ratio: 1;
-			border-radius: 50%;
-			margin-right: 1rem;
-		}
-
-		.profile-letter {	
-			width: clamp(50px, 10vw, 70px);
-			aspect-ratio: 1;
+			height: clamp(50px, 10vw, 70px);
+			aspect-ratio: 1/1;
 			border-radius: 50%;
 			margin-right: 1rem;
 			background-color: var(--primary-darkgreen-550);
+		}
+
+		.profile-letter {		
 			color: white;
 			display: flex;
 			align-items: center;

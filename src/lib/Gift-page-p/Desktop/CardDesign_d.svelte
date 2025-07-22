@@ -2,7 +2,8 @@
 	import { goto } from '$app/navigation';
 	import {fade} from 'svelte/transition';
 	import { observe } from '../Shared/useViewportAction.js';
-	let { formData, validateCardDesign,button } = $props();
+	import {StepContainer} from '$lib';
+	let { formData, validateCardDesign,button,nextStep,stepValidation,previousStep } = $props();
 	let cardContainer;
 	let currentCardIndex = $state(0);
 	let observer;
@@ -54,7 +55,84 @@
 		}
 	});
 </script>
-<section class="step-container">
+
+{#snippet cardDesignOptions()}
+	<span class="option-select">
+		{#each cardDesigns as cardDesign, index}
+		<input type="radio" id={cardDesign.id} name="cardDesign" value={cardDesign.id}
+		checked={currentCardIndex === index}
+		onclick={() => selectCard(index)}>
+		{/each}
+	</span>
+	<article class="card-designs-container" bind:this={cardContainer}>
+		<ul class="card-design-options">
+			{#each cardDesigns as cardDesign, index}
+				<li 
+				id="{cardDesign.id}"
+				class="card-option {currentCardIndex === index ? 'selected' : ''}" 
+				style="--card-color:{cardDesign.primaryColor};--card-background:{cardDesign.cardBackground};--card-background-message:{cardDesign.cardbackgroundMessage};"
+				use:observe={{
+					onEnter: () => {
+						console.log(`Card ${cardDesign.id} entered view!`);
+						// Find and check the radio input
+						const radioInput = document.getElementById(cardDesign.id);
+						if (cardDesign.id) {
+							radioInput.checked = true;
+							// Trigger the onclick handler to update formData
+							validateCardDesign(cardDesign.id);
+						}
+					},
+					threshold: .8
+				}}>
+					<label for="{cardDesign.id}">
+					<section class="card simple-card" 
+						style="background-image: url('{encodeURI(cardDesign.cardBackground)}');"
+						>
+						<h3>{'Monytri'|| cardDesign.name}</h3>
+						<p>Stock gift card</p>
+						<span>€{formData.amount}</span>
+					</section>
+					<p>Tap the card below to customise your message </p>
+					<section class="card message-input" 
+						style="background-image: url('{encodeURI(cardDesign.cardbackgroundMessage)}');"
+						>
+						<h4>Monytri</h4>
+						<p>{formData.currentDate || ''}</p>
+						<label for="message"> 
+							<textarea 
+							id="message" 
+							bind:value={formData.message}
+							rows="3"
+							maxlength="150"
+							placeholder="Create a custom message"
+							tabindex="{currentCardIndex === index ? 0 : -1}"
+								></textarea>
+						</label>
+						<span>€{formData.amount}</span>
+					</section>
+					</label>
+				</li>
+			{/each}
+		</ul>
+		
+	</article>
+{/snippet}
+
+<StepContainer 
+	{formData}
+	headerName="Select a gift card"
+	stepType="card-design"
+	currentStep={4}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	showSkipButton={true}
+	rightContent={cardDesignOptions}
+/>
+<!-- <section class="step-container">
 	<div class="left-step" >
 		<section class="step-header"  transition:fade>
 			{@render button('back')}
@@ -66,79 +144,15 @@
 	</div>
 
 	<div class="right-step"  transition:fade>
-		<span class="option-select">
-			{#each cardDesigns as cardDesign, index}
-			<input type="radio" id={cardDesign.id} name="cardDesign" value={cardDesign.id}
-			checked={currentCardIndex === index}
-			onclick={() => selectCard(index)}>
-			{/each}
-		</span>
-		<article class="card-designs-container" bind:this={cardContainer}>
-			<ul class="card-design-options">
-				{#each cardDesigns as cardDesign, index}
-					<li 
-					id="{cardDesign.id}"
-					class="card-option {currentCardIndex === index ? 'selected' : ''}" 
-					style="--card-color:{cardDesign.primaryColor};--card-background:{cardDesign.cardBackground};--card-background-message:{cardDesign.cardbackgroundMessage};"
-					use:observe={{
-						onEnter: () => {
-							console.log(`Card ${cardDesign.id} entered view!`);
-							// Find and check the radio input
-							const radioInput = document.getElementById(cardDesign.id);
-							if (cardDesign.id) {
-								radioInput.checked = true;
-								// Trigger the onclick handler to update formData
-								validateCardDesign(cardDesign.id);
-							}
-						},
-						threshold: .8
-					}}>
-						<label for="{cardDesign.id}">
-						<section class="card simple-card" 
-							  style="background-image: url('{encodeURI(cardDesign.cardBackground)}');"
-							>
-							  <h3>{'Monytri'|| cardDesign.name}</h3>
-							  <p>Stock gift card</p>
-							  <span>€{formData.amount}</span>
-						</section>
-						<p>Tap the card below to customise your message </p>
-						<section class="card message-input" 
-							  style="background-image: url('{encodeURI(cardDesign.cardbackgroundMessage)}');"
-							>
-							  <h4>Monytri</h4>
-							<p>{formData.currentDate || ''}</p>
-							<label for="message"> 
-								<textarea 
-								id="message" 
-								bind:value={formData.message}
-								rows="3"
-								maxlength="150"
-								placeholder="Create a custom message"
-								tabindex="{currentCardIndex === index ? 0 : -1}"
-									></textarea>
-							</label>
-							<span>€{formData.amount}</span>
-						</section>
-						</label>
-					</li>
-				{/each}
-			</ul>
-			
-		</article>
+		{@render cardDesignOptions()}
 		<div class="button-container">
 			{@render button('continue',4)}
 			{@render button('skip',4)}
 		</div>
 	</div>
-</section>
+</section> -->
 
 <style>
-
-	.right-step{
-		height: 100%;
-		flex-direction: column;
-	}
-	
 	/* main container */
 	.card-designs-container {
 		flex: 1 2 90%;

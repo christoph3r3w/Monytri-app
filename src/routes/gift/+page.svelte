@@ -316,7 +316,7 @@
 	{:else if type === 'submit'}
 		<button 
 			class="submit-button"
-			onclick={submitForm}
+			onclick={() => submitForm()}
 			>
 			Confirm & pay €{formData.amount}
 		</button>
@@ -333,9 +333,12 @@
 		{#if currentStep === 1}
 			<Recipient_D
 				recipients={recipients} 
-				formData={formData}
+				{formData}
 				selected={selectRecipient}
-				button={buttonType}
+				
+				{nextStep}
+				{previousStep}
+				{stepValidation}				
 			/>
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}
@@ -345,7 +348,8 @@
                 min={formData.recipient?.amountMin}
 				{validateAmount}
 				{nextStep}
-				button={buttonType}
+				{previousStep}
+				{stepValidation}
 			/>	
 
 		<!-- step 3 choose proposal -->
@@ -353,21 +357,31 @@
 			<Purpose_D
 				{formData}
 				{validatePurpose}
-				button={buttonType}
+				
+				{nextStep}
+				{previousStep}
+				{stepValidation}
 			/>
 		<!-- Step 4: Choose Card Design -->
 		{:else if currentStep === 4}
 			<CardDesign_D
 				{formData}
 				{validateCardDesign}
-				button={buttonType}
+				
+				{nextStep}
+				{previousStep}
+				{stepValidation}
 			/>
 		<!-- Step 5: Review and Confirm -->
 		{:else if currentStep === 5}
 			<GiftReview_D
 				{formData}
 				{validatePayment}
-				button={buttonType}
+				{nextStep}
+				{previousStep}
+				{stepValidation}
+				submitForm={submitForm}
+				
 			/>
 		{/if}
 	{:else if $isMobile}
