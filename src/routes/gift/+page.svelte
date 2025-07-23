@@ -339,7 +339,6 @@
 			Confirm & pay €{formData.amount}
 		</button>
 	{:else if type === 'blank'}
-		<!-- Default button rendering -->
 		<span class="blank"></span>
 	{/if}
 {/snippet}
@@ -356,7 +355,6 @@
 				recipients={recipients} 
 				{formData}
 				selected={selectRecipient}
-				
 				{nextStep}
 				{previousStep}
 				{stepValidation}				
@@ -368,7 +366,6 @@
 				max={formData.recipient?.amountMax} 
                 min={formData.recipient?.amountMin}
 				{validateAmount}
-				
 				{nextStep}
 				{previousStep}
 				{stepValidation}
@@ -379,7 +376,6 @@
 			<Purpose_D
 				{formData}
 				{validatePurpose}
-				
 				{nextStep}
 				{previousStep}
 				{stepValidation}
@@ -389,7 +385,6 @@
 			<CardDesign_D
 				{formData}
 				{validateCardDesign}
-				
 				{nextStep}
 				{previousStep}
 				{stepValidation}
@@ -403,7 +398,6 @@
 				{previousStep}
 				{stepValidation}
 				submitForm={submitForm}
-				
 			/>
 		{/if}
 	{:else if $isMobile}
@@ -415,7 +409,6 @@
 				selected={selectRecipient}
 				button={buttonType}
 			/>
-			
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}
 			<EnterAmount_M
@@ -461,6 +454,7 @@
 	:root {
 		--progressbar-height: 4px;
 	}
+
 	.transfer-wizard {
 		position: relative;
 		grid-column: 1 / -1;
@@ -496,284 +490,22 @@
 		transition: width 0.3s ease;
 	}
 
-	:global(.step-container){
-		position: relative;
-		grid-column: left / right;
-		grid-row: 2 / -1;
-		display: grid;
-		grid-template-columns: subgrid;
-		gap: 1rem;
-		padding: 1rem;
-		height: 100%;
-		width: 100%;
-		background-color: var(--general-background-color);
-	}
-
-	:global(.left-step) {
-		position: relative;
-		grid-column: left ;
-		grid-row: 1 / -1;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		width: 100%;
-		overflow: clip;
-		overflow-x: visible;
-		flex-wrap: wrap;
-		padding-block: 3rem;
-		padding-inline: 3rem;
-	}
-
-	:global(.left-step p)  {
-		font-size: clamp(1rem,3vw,1.9rem);
-		font-weight: 300;
-		max-width: 50ch;
-		margin-bottom: 1.813rem;
-	}
-
-	/* needs to be refactored to work universaly */
-	/* the icon should alway be in the middle  */
-	/* the search should match the figam icon */
-	:global(label:has([type="search"])) {
-		position: relative;
-		display: flex;
-		justify-self: center;
-		align-items: center;
-		width: 100%;
-		height: fit-content;
-		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
-
-
-		& .search-icon{
-			top: 16%;
-			left: 1rem;
-			position: absolute;
-			scale: clamp(0.2,0.85,0.89);
-		}
-			
-		&:focus-within .search-icon {
-			display: none;
-		}
-
-		/* @supports not (selector(&::placeholder)) {
-			& .search-icon {
-				display: none;
-			}
-		} */
-	}
-
-	:global(input[type="search"]) {
-		border: none;
-		background-color: var(--white);
-		width: 100%;
-		font-size: clamp(1rem,1.1rem,2.5rem);
-		padding: 1.5rem;
-		padding-block: clamp(1%,.8rem,1rem);
-		border-radius: 6rem;
-		transition: 0.8s ease;
-		
-		&:focus,:focus-within {
-			outline: none;
-			background-color: #4b7a5b2a;
-		}
-
-		&::placeholder {padding-left: 2rem;transition: 120ms ease-out;}
-
-		&:focus::placeholder {padding: 0;}
-	}
-
-	:global(.step-header) {
-		display: flex;
-		align-items: center;
-		height: clamp(fit-content,1vh ,4rem);
-		margin-bottom: clamp(1rem,1vh ,4rem);
-		
-		& button{
-			flex: 0 1 20%;
-			height: 100%;
-			align-items: baseline;
-
-			@container style(--mobile:1) {
-				display: flex;
-				align-items: center;
-				flex: 0 1 20%;
-				height: 60%;
-				
-				svg {
-					height: fit-content;
-				}
-			}
-		}
-		
-		& h2{
-			flex: 2 1 20%;
-			height: 100%;
-			width: 100%;
-			font-size: clamp(1rem,5cqw ,2.5rem);
-			text-wrap:nowrap; 
-			outline: solid red;
-			
-			@container style(--mobile:1) {
-				/* text-align: center; */
-				/* display: flex;
-				align-items: center; */
-				/* text-wrap:nowrap; */
-				/* font-size: clamp(1rem,5vw ,2rem); */
-				/* padding-inline: 0; */
-			}
-		}
-		
-		& .back-button {
-			position: absolute;
-			top: 1rem;
-			left:-2rem ;
-			background: none;
-			border: none;
-			display: flex;
-			cursor: pointer;
-			height: clamp(1rem,5vh ,4rem);
-			padding-left: 4%;
-			cursor: pointer;
-			z-index: 5;
-		}
-
-		& .back-button svg{
-			height: fit-content;
-			width: fit-content;
-		}
-
-		& .back-button svg path{
-			fill: var(--black);
-		}	
-	}
-	:global(.right-step) {
-		position: relative;
-		grid-column: right;
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-		width: 100%;
-		overflow: hidden;
-		padding-inline: 1%;
-		padding-top: 3rem;
-	}
-
 	:global(.amount-number-input-container ){
 		display: flex;
 		flex-direction: column;
 		margin-bottom:10% ;
 	}
-	
-	:is(.amount-input-container,.amount-number-input-container) input {
-		width: 100%;
-		padding: 0.75rem;
-		border: 1px solid #e0e0e0;
-		border-radius: 4px;
-	}
-	/* needs to be deleted */
-	/* :global(.right-step .button-container)  {
-		display: flex;
-		width: 100%;
 
-		& .continue-button{
-			flex: 0 1 50%;
-			min-width: 50%;
-			height: fit-content;
-		}
-
-		& .skip-button{
-			flex: 0 1 20%;
-			width: 100%;
-			height: fit-content;
-		}
-
-		& .submit-button{
-			flex: 0 1 60%;
-			min-width: 50%;
-			height: fit-content;
-		}
-	}
-	
-	:global(div.button-container) {
+	:global(.skip-button,.back-button) {
 		position: relative;
-		grid-column: 1/-1;
-		display: flex;
-		flex-direction: row-reverse;
 		width: 100%;
+		padding: 0;
 		height: fit-content;
-		margin-bottom:5%;
-		margin-top: min(2dvh,3rem);
-		
-		container-type: inline-size;
-		
-		@container style(--mobile:1) {
-			position: relative;
-			grid-column: 1/-1;
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			flex: 0 1 fit-content;
-			flex-direction: column-reverse;
-			align-self: self-end;
-		}
-	}
-
-	.continue-button, .submit-button,.skip-button {
-		position: relative;
-		bottom: var(--body-padding);
-		right:0;
-		width:50%;
-		padding: clamp(1rem,1vw,1rem);
-		background-color: #4B7A5B;
-		color: white;
-		border: none;
-		border-radius: 4px;
-		cursor: pointer;
-		font-weight: 500;
-
-		@container style(--mobile:1) {
-			position: relative;
-			width: 100%;
-			right: 0;
-			bottom: auto;
-			align-items: end;
-		}
-	}
-	
-	.continue-button.disabled {
-		background-color: #cccccc;
-		cursor: not-allowed;
-	}
-
-	.skip-button,.back-button {
-		background-color: #4B7A5B;
-		cursor: pointer;
-		
-		@container style(--mobile:1) {
-			position: relative;
-			width: 100%;
-			background-color: #666;
-			padding: 0;
-			height: fit-content;
-
-			svg path{
-				stroke: var(--black);
-				fill: var(--black);
-			}
-		}
-	}
-
-	.skip-button{
-		display: flex;
-		justify-content: center;
-		background: none;
-		color: var(--primary-darkgreen-550);
-		text-decoration: underline;
-
-		@container style(--mobile:1) {
-			margin-bottom: 0;
-		}
-	} */
+		svg path{
+			stroke: var(--black);
+			fill: var(--black);
+		}		
+	}	
 
 	@media (width <= 930px) {
 		:global(.transfer-wizard) {
@@ -820,6 +552,46 @@
 			padding-inline: var(--body-padding) !important;
 			background-color: var(--white) !important;
 		}
+
+		:global(.skip-button,.back-button) {
+			position: relative;
+			width: 100%;
+			height: unset !important;
+			padding-block: 5%;
+
+			svg path{
+				stroke: var(--black);
+				fill: var(--black);
+			}
+		}	
+
+		:global(.step-header .blank) {
+			flex: 0 1 20%;
+			align-items: baseline;
+		}
+
+		:global(label:has([type="search"])) {
+			position: relative;
+			display: flex;
+			justify-self: center;
+			align-items: center;
+			width: 100%;
+			height: fit-content;
+			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
+
+			& .search-icon{
+				position: absolute;
+				top: 16%;
+				left: 1rem;
+				scale: clamp(0.2,0.85,0.89);
+			}
+				
+			&:focus-within .search-icon {
+				display: none;
+			}
+		}
+
+
 	}
 
 </style>

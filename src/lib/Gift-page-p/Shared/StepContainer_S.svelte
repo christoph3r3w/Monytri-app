@@ -43,7 +43,7 @@
 </script>
 
 <!-- Button rendering snippet -->
-{#snippet buttonType(type, step)}
+{#snippet buttonType(type,step)}
 	{#if type === 'back'}
 		<button class="back-button" onclick={currentStep > 1 ? previousStep : () => history.back()}>
 			{#if !$isMobile}
@@ -60,10 +60,8 @@
 		<button 
 			class="continue-button {stepValidation[step] ? 'active' : 'disabled'}"
 			disabled={!stepValidation[step]}
-			onclick={() => {
-				console.log('continue clicked');
-				nextStep();
 			}}
+			onclick={nextStep}
 			>
 			Continue
 		</button>
@@ -71,27 +69,50 @@
 		<button
 			class="skip-button"
 			onclick={() => {
-				// Clear data for the current step based on stepType
-				switch(stepType) {
-					case 'purpose':
+				// Clear data for the current step
+				switch(step) {
+					case 3: // Purpose step
 						formData.Purpose = null;
 						break;
-					case 'card-design':
+					case 4: // Card Design step
 						formData.cardDesign = 'default';
 						formData.message = '';
 						break;
 				}
-				nextStep();
+				currentStep++;
 			}}>
 			Skip
 		</button>
 	{:else if type === 'submit'}
 		<button 
 			class="submit-button"
-			onclick={() => {submitForm()}}
+			onclick={() => submitForm()}
 			>
 			Confirm & pay €{formData.amount}
 		</button>
+	{:else if type === 'skip-to'}
+		<button 
+			class="skip-to-button"
+			onclick={() => {
+				switch(step) {
+					case 1: 
+						currentStep = 1;
+						break;
+					case 2: 
+						currentStep = 2;
+						break;
+					case 3: 
+						currentStep = 3;
+						break;
+					case 4: 
+						currentStep = 4;
+						break;
+				}
+			}}>
+			Edit
+		</button>
+	{:else if type === 'blank'}
+		<span class="blank"></span>
 	{/if}
 {/snippet}
 
@@ -138,18 +159,18 @@
 	{#if leftContent}
 		{@render leftContent()}
 	{:else if stepType === 'recipient'}
-		<p>Please select your recipient to send to.</p>
+		<p class="subtext">Please select your recipient to send to.</p>
 		{@render searchComponent('Search Recipients')}
 		{@render errorMessage(formData.errors?.[currentStep])}
 	{:else if stepType === 'purpose'}
-		<p>Personalise your gift card by selecting an occasion</p>
+		<p class="subtext">Personalise your gift card by selecting an occasion</p>
 		{@render searchComponent('Search purpose')}
 		{@render errorMessage(formData.errors?.[currentStep])}
 	{:else if stepType === 'amount'}
 		<!-- Amount step typically doesn't need left content -->
 		 <p></p>
 	{:else if stepType === 'card-design'}
-		<p>Choose a design for your gift card</p>
+		<p class="subtext">Choose a design for your gift card</p>
 		{@render errorMessage(formData.errors?.[currentStep])}
 	{:else if stepType === 'payment'}
 		<!-- Payment step content is usually in right side -->
@@ -198,7 +219,7 @@
 
 <style>
 
-:global(.step-container){
+	:global(.step-container){
 		position: relative;
 		grid-column: left / right;
 		grid-row: 2 / -1;
@@ -217,22 +238,36 @@
 		}
 	}
 
-
-
-	.left-step {
+	:global(.left-step) {
 		position: relative;
+		grid-column: left ;
+		grid-row: 1 / -1;
 		display: flex;
 		flex-direction: column;
+		height: 100%;
+		width: 100%;
+		overflow: clip;
+		overflow-x: visible;
+		flex-wrap: wrap;
+		padding-block: 3rem;
+		padding-inline: 3rem;
 		border-radius: 10px;
 	}
 
+
 	:global(.step-header) {
-		/* outline: #d32f2f solid; */
 		display: flex;
 		align-items: center;
 		height: clamp(fit-content,1vh ,4rem);
 		margin-bottom: clamp(1rem,1vh ,4rem);
 		width: 100%;
+	}
+
+	:global(.left-step p.subtext) {
+		font-size: clamp(1rem,3vw,1.9rem);
+		font-weight: 300;
+		max-width: 50ch;
+		margin-bottom: 1.813rem;
 	}
 
 	:global(.step-header h2) {
@@ -241,145 +276,76 @@
 		width: 100%;
 		font-size: clamp(1.5rem,5cqw ,2.5rem);
 		text-wrap:nowrap; 
-		outline: cornflowerblue;
-			
-		/* @container style(--mobile:1) {
-			display: flex;
-			align-items: center;
-			text-wrap:nowrap;
-			font-size: clamp(1rem,5vw ,2rem);
-			padding-inline: 0;
-		} */
 	}
 
-	/* .step-container {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 2rem;
-		min-height: 70vh;
-		padding: 1rem;
-	} */
+	/* needs to be refactored to work universaly */
+	/* the icon should alway be in the middle  */
+	/* the search should match the figam icon */
+	:global(label:has([type="search"])) {
+		position: relative;
+		display: flex;
+		justify-self: center;
+		align-items: center;
+		width: 100%;
+		height: fit-content;
+		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 
+		& .search-icon{
+			position: absolute;
+			top: 16%;
+			left: 1rem;
+			scale: clamp(0.2,0.85,0.89);
+		}
+			
+		&:focus-within .search-icon {
+			display: none;
+		}
+	}
+
+	:global(input[type="search"]) {
+		border: none;
+		background-color: var(--white);
+		width: 100%;
+		font-size: clamp(1rem,1.1rem,2.5rem);
+		padding: 1.5rem;
+		padding-block: clamp(1%,.8rem,1rem);
+		border-radius: 6rem;
+		transition: 0.8s ease;
+		box-shadow: inset 0 0 20px -17px #4b7a5b;
+		
+		&:focus,:focus-within {
+			outline: none;
+			background-color: #4b7a5b2a;
+			box-shadow: inset 0 0 20px -15px #717e7580;
+		}
+	}
+
+	:global(input[type="search"])::placeholder {
+		padding-left: 2rem;
+		transition: 120ms ease-out;
+	}
+
+	:global(input[type="search"]:is(:focus,:focus-within))::placeholder {
+		padding: 0; 
+	}
+
+	/* right side */
 	
-	.right-step {
+	:global(.right-step) {
+		flex: 1 1 100%;
+		position: relative;
+		grid-column: right;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		flex: 1 1 100%;
-	}
-	
-	/* .step-header {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 2rem;
-	} */
-
-	/* .step-header h2 {
-		font-size: clamp(1rem, 4vw, 2.5rem);
-		margin: 0;
-	}
-	
-	.search-container {
-		position: relative;
-		margin-bottom: 1rem;
-	}
-	
-	.search-label {
-		position: relative;
-		display: block;
+		height: 100%;
 		width: 100%;
+		overflow: hidden;
+		padding-inline: 1%;
+		padding-top: 3rem;
 	}
-	
-	.search-input {
-		width: 100%;
-		padding: 1rem 3rem 1rem 1rem;
-		border: 2px solid #ccc;
-		border-radius: 8px;
-		font-size: 1rem;
-		background-color: var(--white, #fff);
-	}
-	
-	.search-icon {
-		position: absolute;
-		right: 1rem;
-		top: 50%;
-		transform: translateY(-50%);
-		pointer-events: none;
-	} */
-	
-	.error-message {
-		color: var(--error-red, #d32f2f);
-		font-size: 0.875rem;
-		margin-top: 0.5rem;
-		padding: 0.5rem;
-		background-color: var(--error-bg, #ffebee);
-		border-radius: 4px;
-		border-left: 4px solid var(--error-red, #d32f2f);
-	}
-	
-	/* .button-container {
-		display: flex;
-		justify-content: flex-end;
-		gap: 1rem;
-		align-items: center;
-	} */
-	
-	
-	
-	/* .continue-button {
-		padding: 1rem 2rem;
-		border: none;
-		border-radius: 8px;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-	 */
-	/* .continue-button.active {
-		background-color: var(--primary-green, #4caf50);
-		color: white;
-	}
-	
-	.continue-button.disabled {
-		background-color: var(--grey-300, #ccc);
-		color: var(--grey-500, #999);
-		cursor: not-allowed;
-	} */
-	
-	/* .skip-button {
-		background: none;
-		border: 2px solid var(--grey-400, #999);
-		color: var(--grey-600, #666);
-		padding: 0.75rem 1.5rem;
-		border-radius: 8px;
-		font-size: 1rem;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-	
-	.skip-button:hover {
-		background-color: var(--grey-100, #f5f5f5);
-	} */
-	
-	/* .submit-button {
-		background-color: var(--primary-green, #4caf50);
-		color: white;
-		border: none;
-		padding: 1rem 2rem;
-		border-radius: 8px;
-		font-size: 1rem;
-		font-weight: 600;
-		cursor: pointer;
-		transition: background-color 0.2s ease;
-	}
-	
-	.submit-button:hover {
-		background-color: var(--primary-green-dark, #45a049);
-	} */
 
-	/* new */
+	/* buttons */
 	:global(.step-header button) {
 		flex: 0 1 20%;
 		align-items: baseline;
@@ -387,8 +353,6 @@
 
 	:global(.step-header .back-button)  {
 		/* border-radius: 50%; */
-		/* aspect-ratio: 1/1; */
-		/* outline: blue solid; */
 		height: clamp(1rem,5vh,4rem) ;
 		position: absolute;
 		top: .5rem;
@@ -408,12 +372,8 @@
 		}
 
 		svg path{
-			fill: var(--black);
+			fill: var(--black) ;
 		}	
-	}
-
-	.back-button:hover {
-		/* background-color: var(--grey-100, #f5f5f5); */
 	}
 
 	:global(.right-step .button-container)  {
@@ -427,17 +387,6 @@
 		margin-top: min(2dvh,3rem);
 		
 		container-type: inline-size;
-		
-		@container style(--mobile:1) {
-			position: relative;
-			grid-column: 1/-1;
-			display: flex;
-			flex-direction: column;
-			width: 100%;
-			flex: 0 1 fit-content;
-			flex-direction: column-reverse;
-			align-self: self-end;
-		}
 	}
 
 	:global(.step-container .button-container button) {
@@ -452,14 +401,6 @@
 		border-radius: 4px;
 		cursor: pointer;
 		font-weight: 500;
-
-		@container style(--mobile:1) {
-			position: relative;
-			width: 100%;
-			right: 0;
-			bottom: auto;
-			align-items: end;
-		}
 	}
 	
 	:global(.button-container .continue-button)  {
@@ -487,9 +428,6 @@
 		color: var(--primary-darkgreen-550);
 		text-decoration: underline;
 
-		@container style(--mobile:1) {
-			margin-bottom: 0;
-		}
 	}
 
 	:global(.right-step .button-container .submit-button)  {
@@ -498,30 +436,25 @@
 		height: fit-content;
 	}	
 
-	:global(.skip-button,.back-button) {
-		
-		@container style(--mobile:1) {
-			position: relative;
-			width: 100%;
-			padding: 0;
-			height: fit-content;
-
-			svg path{
-				stroke: var(--black);
-				fill: var(--black);
-			}
-		}
-	}	
+	.error-message {
+		color: var(--error-red, #d32f2f);
+		font-size: 0.875rem;
+		margin-top: 0.5rem;
+		padding: 0.5rem;
+		background-color: var(--error-bg, #ffebee);
+		border-radius: 4px;
+		border-left: 4px solid var(--error-red, #d32f2f);
+	}
 	 
 	/* Mobile responsive */
-	 @media (max-width: 768px) {
+	@media (max-width: 768px) {
 		.step-container {
 			grid-template-columns: 1fr;
 			gap: 1rem;
 		}
 		
 		.step-header h2 {
-			/* font-size: clamp(1.25rem, 5vw, 2rem); */
+			font-size: clamp(1.25rem, 5vw, 2rem);
 		}
 		
 		.button-container {
@@ -549,8 +482,6 @@
 			position: relative !important;
 			aspect-ratio:none;
 			flex: 0 1 20%;
-			/* height: 100%; */
-			/* width: 100%; */
 			font-size: clamp(1rem,5cqw ,2.5rem);
 			text-wrap:nowrap; 
 			top: 0;
@@ -567,5 +498,83 @@
 			grid-row: 2 / -1;
 		}
 	}
+
+	@media 
+	(-webkit-min-device-pixel-ratio: 3),
+	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 
+	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
+	{
+
+		:global(.step-container) {
+			grid-column: 1 / -1 !important;
+			grid-row: 2 / -1;
+		}
+		:global(.left-step) {
+			grid-column: 1 / -1 !important;
+			grid-row: 1 / span 1;
+			padding: 0 !important;
+		}
+
+		:global(.step-header) {
+			flex-direction: row;
+		}
+
+		:global(.step-header h2) {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-wrap:nowrap;
+			font-size: clamp(1rem,5vw,2rem);
+			padding-inline: 0;
+		 
+		}
+
+		:global(.step-header + p) {
+			margin-left: 4%;
+		}
+
+		:global(.step-header .back-button) {
+			position: relative !important;
+			aspect-ratio:none;
+			flex: 0 1 20%;
+			height: 100%;
+			width: 100%;
+			font-size: clamp(1rem,5cqw ,2.5rem);
+			text-wrap:nowrap; 
+			top: 0;
+			left: 0;
+		}
+
+		:global(.right-step) {
+			grid-column: 1 / -1 !important;
+			grid-row: 2 / span 1;
+			padding: 0 !important;
+		}
+
+		:global(.right-step .button-container) {
+			position: relative;
+			grid-column: 1/-1;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			flex: 0 1 fit-content;
+			flex-direction: column-reverse;
+			align-self: self-end;
+		}
+
+		:global(.right-step .button-container .skip-button) {
+			margin-bottom: 0;
+		}
+		
+		:global(.step-container .button-container button) {
+			position: relative;
+			width: 100%;
+			right: 0;
+			bottom: auto;
+			align-items: end;
+		}
+		
+	}
+
 
 </style>
