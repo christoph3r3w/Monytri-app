@@ -338,6 +338,9 @@
 			>
 			Confirm & pay €{formData.amount}
 		</button>
+	{:else if type === 'blank'}
+		<!-- Default button rendering -->
+		<span class="blank"></span>
 	{/if}
 {/snippet}
 

@@ -35,6 +35,7 @@
 	<section class="step-header">
 		{@render button('back')}
 		<h2>Enter Amount</h2>
+		{@render button('blank')}
 	</section>
 
 	<form onsubmit={nextStep}>

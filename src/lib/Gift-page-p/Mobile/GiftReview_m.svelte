@@ -14,6 +14,7 @@
 	<section class="step-header">
 		{@render button('back')}
 		<h2>Select a payment method</h2>
+		{@render button('blank')}
 	</section>
 	<section class="payment-input-container">
 		<!-- {#if formData.recipient.linkedCard !== null }

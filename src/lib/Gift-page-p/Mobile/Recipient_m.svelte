@@ -17,6 +17,7 @@
 				<section class="step-header">
 					{@render button('back')}
 					<h2>Choose Recipient</h2>
+					{@render button('blank')}
 				</section>
 					
 				<p>Please select your recipient to send to.</p>
@@ -74,6 +75,7 @@
 			</section>
 
 <style>
+	
 	section:has(.recipients-list){
 		position: relative;
 		display: flex;
