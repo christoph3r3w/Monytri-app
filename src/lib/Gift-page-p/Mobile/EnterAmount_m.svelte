@@ -42,7 +42,7 @@
 			<label for='fixedAmount1'><input type="radio" id='fixedAmount1' name="fixedAmount" oninput={() => handleRadioInput('€25')} value="€25">&euro; 25</label>
 			<label for='fixedAmount2'><input type="radio" id='fixedAmount2' name="fixedAmount" oninput={() => handleRadioInput('€50')} value="€50">&euro; 50</label>
 			<label for='fixedAmount3'><input type="radio" id='fixedAmount3' name="fixedAmount" oninput={() => handleRadioInput('€100')} value="€100">&euro; 100</label>
-			<label for='fixedAmount4'><input type="radio" id='fixedAmount4' name="fixedAmount" oninput={() => handleRadioInput('€500')} value="€500">&euro; 500</label>
+			<label for='fixedAmount4'><input type="radio" id='fixedAmount4' name="fixedAmount" oninput={() => handleRadioInput('€150')} value="€150">&euro; 150</label>
 		</fieldset>
 		<fieldset class="amount-input-container custom-amount-fieldset">
 			<label for="amount">Or enter a custom amount</label>

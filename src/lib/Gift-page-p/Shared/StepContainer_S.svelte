@@ -20,7 +20,7 @@
 		recipients = [],
 		selected = null,
 		min = 1,
-		max = 1000,
+		max = 150,
 		validateAmount = null,
 		validatePurpose = null,
 		validatePayment = null,
