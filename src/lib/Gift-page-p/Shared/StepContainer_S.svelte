@@ -39,7 +39,6 @@
 	
 	import { current, isMobile } from '$lib/store.js';
 	import { fade } from 'svelte/transition';
-
 </script>
 
 <!-- Button rendering snippet -->
@@ -60,7 +59,6 @@
 		<button 
 			class="continue-button {stepValidation[step] ? 'active' : 'disabled'}"
 			disabled={!stepValidation[step]}
-			}}
 			onclick={nextStep}
 			>
 			Continue
@@ -280,7 +278,7 @@
 
 	/* needs to be refactored to work universaly */
 	/* the icon should alway be in the middle  */
-	/* the search should match the figam icon */
+	/* the search should match the figma icon */
 	:global(label:has([type="search"])) {
 		position: relative;
 		display: flex;
@@ -330,7 +328,6 @@
 	}
 
 	/* right side */
-	
 	:global(.right-step) {
 		flex: 1 1 100%;
 		position: relative;
@@ -526,7 +523,6 @@
 			text-wrap:nowrap;
 			font-size: clamp(1rem,5vw,2rem);
 			padding-inline: 0;
-		 
 		}
 
 		:global(.step-header + p) {
@@ -575,6 +571,4 @@
 		}
 		
 	}
-
-
 </style>
