@@ -23,6 +23,7 @@ export {default as Logo} from './Shared/atoms/logo.svelte';
 export {default as Menu} from './Shared/molucule/Menu.svelte';
 export {default as Process_success_S} from './Gift-page-p/Shared/Process-succuess-component.svelte';
 export {default as InProgress_S} from './Shared/molucule/InProgress.svelte'
+export {default as ButtonGift} from './Gift-page-p/Shared/button-gift-page_S.svelte';
 
 // test components
 // export {default as PTest} from './test components/page test component.svelte'

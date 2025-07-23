@@ -338,6 +338,27 @@
 			>
 			Confirm & pay €{formData.amount}
 		</button>
+	{:else if type === 'skip-to'}
+		<button 
+			class="skip-to-button"
+			onclick={() => {
+				switch(step) {
+					case 1: 
+						currentStep = 1;
+						break;
+					case 2: 
+						currentStep = 2;
+						break;
+					case 3: 
+						currentStep = 3;
+						break;
+					case 4: 
+						currentStep = 4;
+						break;
+				}
+			}}>
+			Edit
+		</button>
 	{:else if type === 'blank'}
 		<span class="blank"></span>
 	{/if}

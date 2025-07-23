@@ -66,7 +66,7 @@
 					<span>
 						<h3>{recipient.name}</h3>
 						<p class="mail">{recipient.email}</p>
-						<button class="more-options">...</button> -->
+						<button class="more-options">...</button> 
 						<!-- Here needs to come a component that when you click on a specific recipient's button, more option buttons will appear. You should get the possibility to:
 						- Remove them from this list
 						- Other options -->
