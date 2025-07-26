@@ -1,6 +1,9 @@
-# Monytri Progressive Web App
+# Monytri Progressive Web App <img width="30" height="30" alt="Monytri Appe" src="./static/Monytri-01-1.png" />
 
-![Monytri App](./static/Monytri-01-1.png)
+<img width="1705" height="499" alt="image" src="https://github.com/user-attachments/assets/8aee68cd-b70b-4182-a315-482e4c46f59d" />
+<img width="175" height="501" alt="image" src="https://github.com/user-attachments/assets/236dd902-631c-4dfe-805d-9173d016726b" />
+
+
 
 ## Project Description
 
