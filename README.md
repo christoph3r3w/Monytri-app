@@ -3,18 +3,11 @@
 <img width="1705" height="499" alt="image" src="https://github.com/user-attachments/assets/8aee68cd-b70b-4182-a315-482e4c46f59d" />
 <img width="175" height="501" alt="image" src="https://github.com/user-attachments/assets/236dd902-631c-4dfe-805d-9173d016726b" />
 
-
-
 ## Project Description
 
 Monytri is a comprehensive financial technology platform designed to modernize digital money transfers and gift-giving experiences. This Progressive Web Application (PWA) serves as an MVP to demonstrate core service functionality to stakeholders and investors, utilizing modern web APIs and service worker systems to deliver native app-like performance across all devices.
 
 ## Core Features
-
-### Financial Services
-- **Digital Gift Transfers**: Streamlined money gifting with personalized digital cards
-- **Multi-Payment Integration**: Support for credit/debit cards, iDEAL, EFT, and PayPal
-- **Secure Transaction Processing**: Enterprise-grade security for all financial operations
 
 ### User Experience
 - **Progressive Web App**: Native app functionality through web technologies
@@ -31,10 +24,11 @@ Monytri is a comprehensive financial technology platform designed to modernize d
 ## Getting Started
 
 ### Production Environment
-Access the live application at: **[Insert Domain URL]**
 
 The application is deployed and maintained on Netlify with continuous integration.
 [![Netlify Status](https://api.netlify.com/api/v1/badges/08a4e3a9-42ce-4a4b-859f-cf756c1f2da3/deploy-status)](https://app.netlify.com/projects/monytri-alpha/deploys)
+
+Access the live application at: [**[Monytri MVP]**](https://monytri-alpha.netlify.app/)
 
 
 ### Development Environment
@@ -84,38 +78,14 @@ src/
 └── app.css         # Global styling and design system
 ```
 
-### Development Workflow
-The project follows modern development practices with automated testing, continuous integration, and progressive enhancement principles.
-
 ## Device Compatibility
 
-### Mobile Platforms
-- **iOS**: Safari, Chrome, Firefox (iOS 12+)
-- **Android**: Chrome, Samsung Internet, Firefox (Android 8+)
+This application functions on every mobile and desktop environment and browser.
 
-### Desktop Platforms
-- **Windows**: Chrome, Firefox, Edge
-- **macOS**: Chrome, Firefox, Safari
-- **Linux**: Chrome, Firefox
-
-### Tablet Support
-- Full compatibility across all modern tablet browsers
-- Responsive design adapts to various screen sizes
-
-## Security & Privacy
-
-### Data Protection
-- End-to-end encryption for all financial transactions
-- Compliance with GDPR and financial data protection standards
-- Secure storage practices with no persistent payment data
-
-### Authentication
-- Multi-factor authentication support
-- Secure session management
-- OAuth integration capabilities
 
 ## Project Status & Development
-
+This application is in its second phase, which should lead to the MVP that showcases the main functionalities.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/08a4e3a9-42ce-4a4b-859f-cf756c1f2da3/deploy-status)](https://app.netlify.com/projects/monytri-alpha/deploys)
 
 ## Support & Documentation
 
