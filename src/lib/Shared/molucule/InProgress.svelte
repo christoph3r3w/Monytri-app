@@ -19,11 +19,11 @@
 	}
 
 	*{
+		--rad:clamp(5px, 5vw, 10px);
 		user-select: none;
 	}
 
 	.message-container {
-		--rad:clamp(5px, 5vw, 10px);
 		position: absolute;
 		width: 30dvw;
 		height: auto;

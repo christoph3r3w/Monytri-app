@@ -22,8 +22,8 @@
 				</svg> -->
 				share
 			</button>
-		<p>send feedback or issues here ⬇️</p>
-		<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a>
+		<!-- <p>send feedback or issues here ⬇️</p>
+		<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a> -->
 	</div>
 	<br>
 	<p>

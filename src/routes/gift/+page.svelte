@@ -36,10 +36,11 @@
 		errors: {},
 		isLoading: false,
 		date: new Date(),
-		currentDate: null
-	});
+				get currentDate() {
+			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+		}
 
-	formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+	});
 	
 	// Step validation state
 	let stepValidation = $state({
@@ -429,14 +430,21 @@
 				{formData}
 				selected={selectRecipient}
 				button={buttonType}
+				{nextStep}
+				{previousStep}
+				{stepValidation}
 			/>
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}
 			<EnterAmount_M
 				{formData}
 				{validateAmount}
-				{nextStep}
 				button={buttonType}
+				{nextStep} 
+				{previousStep}
+				{stepValidation}
+				min={formData.recipient?.amountMin}
+				max={formData.recipient?.amountMax}
 			/>	
 		<!-- Step 3: Choose Purpose -->
 		{:else if currentStep === 3}
