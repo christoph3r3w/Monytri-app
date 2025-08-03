@@ -53,8 +53,8 @@
 
 {#snippet mobileHeadNav()}
 <section class="mobile-header">
-	<!-- goback and search button -->
-	 {#if $current === 'gift' || $current === 'gift-success'  }
+	<!-- no header for specific pages -->
+	 {#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success'}
 	 <nav class="goBack">
 		<button onclick={iconTask}>
 			<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">

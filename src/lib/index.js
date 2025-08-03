@@ -15,6 +15,8 @@ export {default as CardDesign_M} from './Gift-page-p/Mobile/CardDesign_m.svelte'
 export {default as GiftReview_M} from './Gift-page-p/Mobile/GiftReview_m.svelte';
 export {default as Balance_M} from './Home-page-p/mobile/Balance.svelte';
 export {default as HomeArticles_M} from './Home-page-p/mobile/Home-article.svelte';
+export {default as Benefactor_M} from './Request-page-p/mobile/Benefactors_m.svelte';
+export {default as RequestAmount_M} from './Request-page-p/mobile/RequestAmount_m.svelte';
 
 //Shared components
 export {default as Footer} from './Shared/molucule/Footer.svelte';
@@ -24,6 +26,7 @@ export {default as Menu} from './Shared/molucule/Menu.svelte';
 export {default as Process_success_S} from './Gift-page-p/Shared/Process-succuess-component.svelte';
 export {default as InProgress_S} from './Shared/molucule/InProgress.svelte'
 export {default as ButtonGift} from './Gift-page-p/Shared/button-gift-page_S.svelte';
+export {default as Request_success} from './Request-page-p/mobile/Request-process-succuess.svelte';
 
 // test components
 // export {default as PTest} from './test components/page test component.svelte'

@@ -127,7 +127,7 @@
 
 <!-- main application layout -->
 <section class="body-container">
-	{#if ($current == 'gift' && $isMobile) }
+	{#if ($current == 'gift' || $current == 'request' && $isMobile) }
 	{:else}
 	<header>
 		<Header {current}/>	
@@ -136,7 +136,7 @@
 	{#if menu_Open}
 		<Menu/>
 	{/if}
-	<main class={$current == 'gift'? 'giftOn':'' }>
+	<main class={$current == 'gift' || $current == 'request'? 'giftOn':'' }>
 		{@render children()}
 	</main>
 	<footer>
