@@ -70,7 +70,7 @@
 
 		&:is(:hover,:focus-within,:active) {
 			background-color: var(--primary-purple-400);
-			color: white;
+			color: var(--general-text-color);
 		}
 	}
 

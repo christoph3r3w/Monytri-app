@@ -346,7 +346,7 @@
 				flex-direction: column;
 				align-items: center;
 				justify-content:center;
-				color: var(--black);
+				color: var(--general-text-color);
 				border-radius: 8px;
 				padding: 1% 2%;
 

@@ -31,7 +31,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		color: var(--white);
+		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
 		margin-top: -2rem;
 	}
 

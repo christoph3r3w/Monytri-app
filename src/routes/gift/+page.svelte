@@ -579,7 +579,8 @@
 			padding: 0 ;
 			padding-top: 3% ;
 			padding-inline: var(--body-padding) !important;
-			background-color: var(--white) !important;
+			background-color: var(--general-background-color-secondary) !important;
+			color: var(--general-text-color) !important;
 		}
 
 		:global(.skip-button,.back-button) {

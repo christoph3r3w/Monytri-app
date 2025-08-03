@@ -191,6 +191,7 @@
 		height: 100svh;
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
+		color: var(--general-text-color);
 	}
 	
 	:global(.body-container){

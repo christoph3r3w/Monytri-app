@@ -69,15 +69,18 @@
 		align-items: center;
 		justify-content: center;
 		gap: 24px;
+		color: var(--general-text-color);
 	}
 	
 	.error-header h2{
 		font-size: clamp(1rem, calc(1rem + 2vw), 2.7rem);
+		color: var(--general-text-color);
 	}
 	
 	.error-header p{
 		flex: 1 1 100%;
 		text-align: center;
+		color: var(--general-text-color);
 	}
 	
 	.error-button-container {
@@ -132,7 +135,7 @@
 		
 		&:nth-of-type(1) {
 			background-color: var(--primary-green-500);
-			color: var(--white);
+			color: var(--general-text-color);
 		}
 		
 		&:nth-of-type(2) {
@@ -155,6 +158,7 @@
 			align-items: center;
 			width: 100cqw;
 			padding-inline: var(--body-padding);
+			color: var(--general-text-color);
 		}
 
 		.error-text > * {

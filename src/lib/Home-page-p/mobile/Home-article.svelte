@@ -76,7 +76,7 @@
 
 			.invest-tips h2{
 				font-size: 1.2rem;
-				color: var(--black);
+				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 25px;
 				margin-bottom: 2%;
@@ -85,6 +85,12 @@
 				justify-content: space-between;
 				align-items: center;
 			}
+
+			.arrow-icon svg path{
+				fill: var(--general-text-color);
+			}
+
+			/* .arrow-icon */
 
 			.invest-tips ul{
 				overflow-x: auto;
@@ -139,14 +145,14 @@
 
 			.invest-tips ul li p{
 				font-size: 14px;
-				color: var(--black);
+				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 120%;
 			}
 
 			.invest-tips ul li p:nth-of-type(2){
 				font-size: 12px;
-				color: var(--grey-500);
+				color: var(--general-text-color-secondary);
 				font-weight: 400;
 			}
 
@@ -156,7 +162,7 @@
 
 			.recent-blogs h2{
 				font-size: 1.2rem;
-				color: var(--black);
+				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 25px;
 				margin-bottom: 2%;
@@ -201,13 +207,13 @@
 				padding: 11px 3%;
 				width: 50%;
 				height: 100%;
-				background-color: var(--white);
+				background-color: color-mix(in srgb, var(--white), var(--general-background-color) 50%);
 				border-radius: 0 10px 10px 0;
 			}
 
 			.recent-blogs .blog-text .date{
 				font-size: 12px;
-				color: var(--grey-400);
+				color: var(--general-text-color-secondary);
 				font-weight: 400;
 				line-height: 120%;
 			}
@@ -248,6 +254,12 @@
 				font-weight: 400;
 				line-height: 120%;
 			}
+		}
+	}
+
+	@media (prefers-color-scheme: dark){
+		* img{
+			filter: brightness(.8) contrast(.9);
 		}
 	}
 		
