@@ -65,6 +65,7 @@
 	showLeftContent={true}
 	showRightContent={true}
 	showContinueButton={true}
+	showSkipButton={true}
 	rightContent={recipientsList2}
 />
 

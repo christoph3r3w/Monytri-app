@@ -1,5 +1,5 @@
 <script>
-	import StepContainer from '../Shared/StepContainer_S.svelte';
+	import {StepContainer} from '$lib';
 	import { onMount } from 'svelte';
 	
 	let { formData, nextStep, previousStep, stepValidation, min = 1, max = 1000 } = $props();
