@@ -17,6 +17,7 @@ export {default as Balance_M} from './Home-page-p/mobile/Balance.svelte';
 export {default as HomeArticles_M} from './Home-page-p/mobile/Home-article.svelte';
 export {default as Benefactor_M} from './Request-page-p/mobile/Benefactors_m.svelte';
 export {default as RequestAmount_M} from './Request-page-p/mobile/RequestAmount_m.svelte';
+export {default as RequestReview_M} from './Request-page-p/mobile/RequestReview_m.svelte'
 
 //Shared components
 export {default as Footer} from './Shared/molucule/Footer.svelte';
