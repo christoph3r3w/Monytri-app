@@ -50,8 +50,10 @@
 {/snippet}
 
 {#snippet recipientsList2()}
+	<!-- check if recent title is needed  -->
+	<h3 class="section-title">Most Recent</h3>
 	<ul class="recipients-list">
-		{#each filteredRecipients as recipient}
+		{#each filteredRecipients as recipient,i}
 			<li 
 				class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}"
 				onclick={() => selected(recipient)}
@@ -71,11 +73,11 @@
 						- Remove them from this list
 						- Other options -->
 					</span>
-				</div>
-				<p class="last-sent">Last sent: {recipient.lastSent}</p>
-			</article>
-		</li>
-		<hr>
+					</div>
+					<p class="last-sent">Last sent: {recipient.lastSent}</p>
+				</article>
+			</li>
+			<hr/>
 		{/each}
 	</ul>
 {/snippet}
@@ -93,48 +95,8 @@
 	showRightContent={true}
 	showContinueButton={true}
 	rightContent={recipientsList2}
-/>
-
-
-<!-- <section class="step-container" >
-	<div class="left-step" >
-		
-		<section class="step-header"  transition:fade>
-			{@render button('back')}
-			<h2>Choose Recipient</h2>
-		</section>
-		
-		<p>Please select your recipient to send to.</p>
-		
-		<section class="search-container">
-			<label for="search" class="search-label">
-				<input 
-				type="search" 
-				placeholder="Search Recipients" 
-				class="search-input"
-				bind:value={formData.searchQuery}
-				/>
-				{#if formData.searchQuery.length < 1}
-					<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
-						<path fill="#A0A0A0" d="M29.295 27.705l-5.762-5.761a13.058 13.058 0 0 0 3.092-8.444C26.625 6.263 20.738.375 13.5.375c-7.238 0-13.125 5.888-13.125 13.125s5.888 13.125 13.125 13.125c3.215 0 6.159-1.166 8.444-3.091l5.761 5.761a1.122 1.122 0 0 0 1.59 0c.44-.438.44-1.15 0-1.59ZM2.625 13.5c0-5.997 4.878-10.875 10.875-10.875S24.375 7.503 24.375 13.5s-4.878 10.875-10.875 10.875S2.625 19.497 2.625 13.5Z"/>
-					</svg>
-				{/if}
-			</label>
-		</section>
-		{#if formData.errors[1]}
-			<div class="error-message" transition:fade>
-					{formData.errors[1]}
-			</div>
-		{/if}
-	</div>
 	
-	<div class="right-step"  transition:fade>
-		{@render recipientsList2()}
-		<div class="button-container">
-			{@render button('continue',1)}
-		</div>
-	</div>
-</section> -->
+/>
 
 <style>
 

@@ -1,6 +1,7 @@
 <script>
 	import { fade } from 'svelte/transition';
-	let { formData, benefactors, selected, button } = $props();
+	import { StepContainer } from '$lib';
+	let { formData, benefactors, selected,nextStep,previousStep,stepValidation } = $props();
 
 	let filteredbenefactors = $derived(
 		formData.searchQuery 
@@ -13,66 +14,54 @@
 
 </script>
 
-			<section class="step-container" transition:fade>
-				<section class="step-header">
-					<!-- {@render button('back')} -->
-					<h2>Choose benefactor</h2>
-					{@render button('blank')}
-				</section>
-					
-				<p>Please select your benefactor to request to.</p>
-				
-				{#if formData.errors[1]}
-				<div class="error-message" transition:fade>
-					{formData.errors[1]}
-				</div>
-				{/if}
-				
-				<section>
-					<label for="search" class="search-label">
-						<input 
-						type="search" 
-						placeholder="Search benefactors" 
-						class="search-input"
-						bind:value={formData.searchQuery}
-						/>
-						{#if formData.searchQuery.length < 1}
-							<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
-								<path fill="#A0A0A0" d="M29.295 27.705l-5.762-5.761a13.058 13.058 0 0 0 3.092-8.444C26.625 6.263 20.738.375 13.5.375c-7.238 0-13.125 5.888-13.125 13.125s5.888 13.125 13.125 13.125c3.215 0 6.159-1.166 8.444-3.091l5.761 5.761a1.122 1.122 0 0 0 1.59 0c.44-.438.44-1.15 0-1.59ZM2.625 13.5c0-5.997 4.878-10.875 10.875-10.875S24.375 7.503 24.375 13.5s-4.878 10.875-10.875 10.875S2.625 19.497 2.625 13.5Z"/>
-							</svg>
-						{/if}
-					</label>
-					<h3 class="section-title">Most Recent</h3>
-					<ul class="benefactors-list">
-						{#each filteredbenefactors as benefactor}
-							<li 
-								class="benefactor-item {formData.benefactor?.id === benefactor.id ? 'selected' : ''}"
-								onclick={() => selected(benefactor)}
-								>
-								<article class="benefactor-info">
-									{#if benefactor.profilePic.length > 0 || benefactor.profilePic !== ''}
-										<img src={benefactor.profilePic} alt={''||benefactor.name} class="profile-pic" />
-									{:else}
-										<div class="profile-letter">{benefactor.name[0].toUpperCase()}</div>
-									{/if}
-									<div class="benefactor-details">
-										<h3>{benefactor.name}</h3>
-										<p>{benefactor.email}</p>
-										<p class="last-sent">Last sent: {benefactor.lastSent}</p>
-									</div>
-								</article>
-							</li>
+{#snippet benefactorList()}
+	<section>
+		<h3 class="section-title">Most Recent</h3>
+		<ul class="benefactors-list">
+			{#each filteredbenefactors as benefactor}
+				<li 
+					class="benefactor-item {formData.benefactor?.id === benefactor.id ? 'selected' : ''}"
+					onclick={() => selected(benefactor)}
+					>
+					<article class="benefactor-info">
+						{#if benefactor.profilePic.length > 0 || benefactor.profilePic !== ''}
+							<img src={benefactor.profilePic} alt={''||benefactor.name} class="profile-pic" />
 						{:else}
-							<li class="no-results">
-								No benefactors found
-							</li>
-						{/each}
-					</ul>
-				</section>
-				<div class="button-container">
-					{@render button('continue',1)}
-				</div>
-			</section>
+							<div class="profile-letter">{benefactor.name[0].toUpperCase()}</div>
+						{/if}
+						<div class="benefactor-details">
+							<h3>{benefactor.name}</h3>
+							<p>{benefactor.email}</p>
+							<p class="last-sent">Last sent: {benefactor.lastSent}</p>
+						</div>
+					</article>
+				</li>
+				<hr/>
+			{:else}
+				<li class="no-results">
+					No benefactors found
+				</li>
+			{/each}
+		</ul>
+	</section>
+
+{/snippet}
+
+<StepContainer 
+	{formData}
+	headerName="Choose a benefactor"
+	stepType="benefactor"
+	currentStep={1}
+	{nextStep}	
+	{previousStep}
+	{stepValidation}
+	{benefactors}
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	showSkipButton={''}
+	rightContent={benefactorList}
+/>
 
 <style>
 	
@@ -86,14 +75,15 @@
 		overflow-y: hidden;
 		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 	}
-
+	
 	.benefactors-list{ 
-		background-color: var(--white);
+		background-color: var(--general-background-color);
 		height: fit-content;
-		max-height: 50cqh;
+		max-height: 60cqh;
 		overflow-y: scroll !important;
 		padding-inline: 1cqw;
 		padding-block: 2%;
+		border-radius: 15px;
 
 		/* background-color: blue; */
 		.benefactor-item {

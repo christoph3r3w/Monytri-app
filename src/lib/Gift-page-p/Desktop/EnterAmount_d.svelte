@@ -74,6 +74,7 @@
 	showRightContent={true}
 	showContinueButton={true}
 	rightContent={amountOptions}
+	
 />
 
 

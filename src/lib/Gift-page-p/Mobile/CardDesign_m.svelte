@@ -2,7 +2,9 @@
 	import { goto } from '$app/navigation';
 	import {fade} from 'svelte/transition';
 	import { observe } from '../Shared/useViewportAction.js';
-	let { formData, validateCardDesign,button } = $props();
+	import { StepContainer } from '$lib'
+
+	let { formData,validateCardDesign,button,nextStep,previousStep,stepValidation } = $props();
 	let cardContainer;
 	let currentCardIndex = $state(0);
 	let observer;
@@ -13,8 +15,8 @@
 		{ id: 'design3', name: 'Design 3',cardBackground: './gift-page-assets/Gift card 2.png',cardbackgroundMessage:'./gift-page-assets/Message Card2.png' ,primaryColor:'#5AB1AA'},
 		{ id: 'design4', name: 'Design 4',cardBackground: './gift-page-assets/Gift card 3.png',cardbackgroundMessage:'./gift-page-assets/Message Card3.png' ,primaryColor:'#F2A550'},
 		{ id: 'design5', name: 'Design 5',cardBackground: './gift-page-assets/Gift card 5.png',cardbackgroundMessage:'./gift-page-assets/Message Card5.png' ,primaryColor:'#AFABED'},
-		{ id: 'design6', name: 'Design 6',cardBackground: '',cardbackgroundMessage:'' ,primaryColor:'purple'},
-		{ id: 'design7', name: 'Design 7',cardBackground: '',cardbackgroundMessage:'' ,primaryColor:'orange'},
+		{ id: 'design6', name: 'Design 6',cardBackground: './shared-assests/banner-deco.png',cardbackgroundMessage:'' ,primaryColor:'purple'},
+		{ id: 'design7', name: 'Design 7',cardBackground: './home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png',cardbackgroundMessage:'' ,primaryColor:'orange'},
 		{ id: 'design8', name: 'Design 8',cardBackground: '',cardbackgroundMessage:'' ,primaryColor:'red'}
 	]);
 
@@ -55,65 +57,71 @@
 
 </script>
 
-<section class="step-container" transition:fade>
-	<section class="step-header">
-		{@render button('back')}
-		<h2>Select a gift card</h2>
-		{@render button('skip',4)}
-
-	</section>
-	<p>Choose a card and write a message</p>
-	<span class="option-select">
-		{#each cardDesigns as cardDesign, index}
-		<input type="radio" id={cardDesign.id} name="cardDesign" value={cardDesign.id}
-		checked={currentCardIndex === index}
-		onclick={() => selectCard(index)}>
-		{/each}
-	</span>
-	<article class="card-designs-container" bind:this={cardContainer}>
-		<ul class="card-design-options">
+{#snippet cardDesignOption()}
+	
+		<p>Choose a card and write a message</p>
+		<span class="option-select">
 			{#each cardDesigns as cardDesign, index}
-			<li 
-			id="{cardDesign.id}"
-			class="card-option {currentCardIndex === index ? 'selected' : ''}" 
-			style="--card-color:{cardDesign.primaryColor};--card-background:{cardDesign.cardBackground};--card-background-message:{cardDesign.cardbackgroundMessage};">
-				<label for="{cardDesign.id}">
-				<section class="card simple-card" 
-					  style="background-image: url('{encodeURI(cardDesign.cardBackground)}');"
-					>
-					  <h3>{'Monytri'|| cardDesign.name}</h3>
-					  <p>Stock gift card</p>
-					  <span>€{formData.amount}</span>
-				</section>
-				<p>Tap the card below to customise your message </p>
-				<section class="card message-input" 
-					  style="background-image: url('{encodeURI(cardDesign.cardbackgroundMessage)}');"
-					>
-					  <h4>Monytri</h4>
-					<p>{formData.currentDate || ''}</p>
-					<label for="message"> 
-						<textarea 
-						id="message" 
-						bind:value={formData.message}
-						rows="3"
-						maxlength="150"
-						placeholder="Create a custom message"
-						tabindex="{currentCardIndex === index ? 0 : -1}"
+			<input type="radio" id={cardDesign.id} name="cardDesign" value={cardDesign.id}
+			checked={currentCardIndex === index}
+			onclick={() => selectCard(index)}>
+			{/each}
+		</span>
+		<article class="card-designs-container" bind:this={cardContainer}>
+			<ul class="card-design-options">
+				{#each cardDesigns as cardDesign, index}
+				<li 
+				id="{cardDesign.id}"
+				class="card-option {currentCardIndex === index ? 'selected' : ''}" 
+				style="--card-color:{cardDesign.primaryColor};">
+					<label for="{cardDesign.id}">
+					<section class="card simple-card" 
+						style="background-image: url('{cardDesign.cardBackground? encodeURI(cardDesign.cardBackground):'./shared-assests/banner-deco.png'}');"
+						>
+						<h3>{'Monytri'|| cardDesign.name}</h3>
+						<p>Stock gift card</p>
+						<span>€{formData.amount}</span>
+					</section>
+					<p>Tap the card below to customise your message </p>
+					<section class="card message-input" 
+						style="background-image: url('{cardDesign.cardbackgroundMessage? encodeURI(cardDesign.cardbackgroundMessage):'./shared-assests/Vector 6.png' }');"
+						>
+						<h4>Monytri</h4>
+						<p>{formData.currentDate || ''}</p>
+						<label for="message"> 
+							<textarea 
+							id="message" 
+							bind:value={formData.message}
+							rows="3"
+							maxlength="150"
+							placeholder="Create a custom message"
+							tabindex="{currentCardIndex === index ? 0 : -1}"
 							></textarea>
+						</label>
+						<span>€{formData.amount}</span>
+					</section>
 					</label>
-					<span>€{formData.amount}</span>
-				</section>
-				</label>
-			</li>
-		{/each}
-		</ul>
-		
-	</article>
+				</li>
+			{/each}
+			</ul>			
+		</article>
+{/snippet}
 
-<div class="button-container">
-	{@render button('continue',4)}
-</div>
-</section>
+<StepContainer 
+	{formData}
+	headerName="Select a gift card"
+	stepType="cardDesign"
+	currentStep={4}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	showSkipButton={true}
+	rightContent={cardDesignOption}
+					
+/>
 
 <style>
 
@@ -193,13 +201,17 @@
 		flex: 1 0 99cqw;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
+		/* justify-content: space-around; */
 		align-items: center;
 		border-radius: 14px;
 	}
 
 	.card-option label > p{
-		margin-top: 1rem;
+		flex:1 1 auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: end;
+		padding-block: 5%;
 	}
 
 	.card-option .card{

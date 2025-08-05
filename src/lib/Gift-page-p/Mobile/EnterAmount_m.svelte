@@ -1,8 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
+	import { StepContainer } from '$lib'
 	import { fade } from 'svelte/transition';
-	let { selected, button, validateAmount, nextStep, min, max } = $props();
-	
+
+	let { formData, selected, button, validateAmount, nextStep, previousStep,stepValidation, min, max } = $props();
 	let selectedAmount = $state('');
 
 	onMount(() => {
@@ -31,13 +32,7 @@
 	}
 </script>
 
-<section class="step-container" transition:fade>
-	<section class="step-header">
-		{@render button('back')}
-		<h2>Enter Amount</h2>
-		{@render button('blank')}
-	</section>
-
+{#snippet amountForm()}
 	<form onsubmit={nextStep}>
 		<fieldset class="amount-input-container">
 			<label for='fixedAmount1'><input type="radio" id='fixedAmount1' name="fixedAmount" oninput={() => handleRadioInput('€25')} value="€25">&euro; 25</label>
@@ -58,11 +53,24 @@
 			aria-required="true"
 			/>
 		</fieldset>
-		<div class="button-container">
-			{@render button('continue',2)}
-		</div>
 	</form>
-</section>
+
+{/snippet}
+
+<StepContainer
+	{formData}
+	headerName="Select your gift amount"
+	stepType="amount"
+	currentStep={2}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	rightContent={amountForm}
+	
+/>
 
 <style>
 	form:has(.amount-input-container){

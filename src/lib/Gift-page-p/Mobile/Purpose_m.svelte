@@ -1,8 +1,9 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	
-	let { formData, validatePurpose, button } = $props();
+	import { StepContainer } from '$lib'
+
+	let { formData,validatePurpose,button,nextStep,previousStep,stepValidation } = $props();
 
 	let PurposeList = $state([
 		{id: 1,name: 'Birthday',value: 'Birthday',img:'./purpose-assets/Party-3--Streamline-Brooklyn (Traced)party.png'},
@@ -28,30 +29,7 @@
 	}
 </script>
 
-<section class="step-container" transition:fade>			
-	<section class="step-header">
-		{@render button('back')}
-		<h2>Choose a purpose</h2>
-		{@render button('skip',3)}
-	</section>
-	
-	<p>Personalise your gift card by selecting an occasion</p>
-	
-	<section class="search-container">
-		<label for="search" class="search-label">
-			<input 
-			type="search" 
-			placeholder="Search purpose" 
-			class="search-input"
-			bind:value={formData.searchQuery}
-			/>
-			
-			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
-				<path fill="#A0A0A0" d="m29.295 27.705-5.762-5.761a13.058 13.058 0 0 0 3.092-8.444C26.625 6.263 20.738.375 13.5.375 6.263.375.375 6.263.375 13.5c0 7.238 5.888 13.125 13.125 13.125 3.215 0 6.159-1.166 8.444-3.091l5.761 5.761a1.122 1.122 0 0 0 1.59 0c.44-.438.44-1.15 0-1.59ZM2.625 13.5c0-5.997 4.878-10.875 10.875-10.875S24.375 7.503 24.375 13.5 19.497 24.375 13.5 24.375 2.625 19.497 2.625 13.5Z"/>
-			</svg>
-		</label>
-	</section>
-
+{#snippet purposeOptions()}
 	<article class="purpose-selction">
 		<ul class="purpose-options">
 			{#each searchPurpose as purpose}
@@ -77,10 +55,23 @@
 			{/each}	
 	</ul>
 	</article>
-<div class="button-container">
-	{@render button('continue',3)}
-</div>
-</section>
+{/snippet}
+
+<StepContainer
+	{formData}
+	headerName="Choose a purpose"
+	stepType="purpose"
+	currentStep={3}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+	showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+	showSkipButton={true}
+	rightContent={purposeOptions}
+	
+/>
 
 <style>
 	.purpose-selction {
