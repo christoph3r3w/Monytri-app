@@ -14,11 +14,13 @@
 		Process_success_S,
 	} from '$lib';
 	import { goto } from '$app/navigation';
-	import { fade } from 'svelte/transition';
+	import { fade,fly } from 'svelte/transition';
+	import {onMount} from 'svelte';	
   
 	// State management
 	let currentStep = $state(1);
-	let totalSteps = $state(5);
+	let totalSteps = $derived(Object.keys(stepValidation).length);
+	
 	
 	// Form data structure
 	let formData = $state({
@@ -289,84 +291,15 @@
 	<title>{$current}</title>	
 </svelte:head>
 
-<!-- button types  -->
-{#snippet buttonType(type,step)}
-	{#if type === 'back'}
-		<button class="back-button" onclick={currentStep > 1 ? previousStep : () => history.back()}>
-			{#if !$isMobile}
-				<svg width="31" height="26" viewBox="0 0 31 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M30.9986 11.3326H6.68859L15.5103 2.51096L13.1536 0.154297L0.308594 12.9993L13.1536 25.8443L15.5103 23.4876L6.68859 14.666H30.9986V11.3326Z" fill="black"/>
-				</svg>
-			{:else}
-				<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
-				</svg>
-			{/if}
-		</button>
-	{:else if type === 'continue'}
-		<button 
-			class="continue-button {stepValidation[step] ? 'active' : 'disabled'}"
-			disabled={!stepValidation[step]}
-			onclick={nextStep}
-			>
-			Continue
-		</button>
-	{:else if type === 'skip'}
-		<button
-			class="skip-button"
-			onclick={() => {
-				// Clear data for the current step
-				switch(step) {
-					case 3: // Purpose step
-						formData.Purpose = null;
-						break;
-					case 4: // Card Design step
-						formData.cardDesign = 'default';
-						formData.message = '';
-						break;
-				}
-				currentStep++;
-			}}>
-			Skip
-		</button>
-	{:else if type === 'submit'}
-		<button 
-			class="submit-button"
-			onclick={() => submitForm()}
-			>
-			Confirm & pay €{formData.amount}
-		</button>
-	{:else if type === 'skip-to'}
-		<button 
-			class="skip-to-button"
-			onclick={() => {
-				switch(step) {
-					case 1: 
-						currentStep = 1;
-						break;
-					case 2: 
-						currentStep = 2;
-						break;
-					case 3: 
-						currentStep = 3;
-						break;
-					case 4: 
-						currentStep = 4;
-						break;
-				}
-			}}>
-			Edit
-		</button>
-	{:else if type === 'blank'}
-		<span class="blank"></span>
-	{/if}
-{/snippet}
-
-<article class="transfer-wizard" transition:fade>
-	<!-- Progress indicator -->
+{#snippet progressBar()}
 	<div class="progress-bar">
 		<div class="progress" style="width: {progressPercentage}%"></div>
-	</div>
+	</div>	
+{/snippet}
+
+<article class="transfer-wizard" in:fly={{ y: 50, duration: 500,opacity:0 }} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
+	<!-- Progress indicator -->
+	{@render progressBar()}
 	{#if !$isMobile}
 		<!-- Step 1: Choose Recipient -->
 		{#if currentStep === 1}
@@ -426,7 +359,6 @@
 				recipients={recipients} 
 				{formData}
 				selected={selectRecipient}
-				button={buttonType}
 				{nextStep}
 				{previousStep}
 				{stepValidation}
@@ -436,7 +368,6 @@
 			<EnterAmount_M
 				{formData}
 				{validateAmount}
-				button={buttonType}
 				{nextStep} 
 				{previousStep}
 				{stepValidation}
@@ -448,21 +379,28 @@
 			<Purpose_M
 				{formData}
 				{validatePurpose}
-				button={buttonType}
+				{nextStep}
+				{previousStep}
+				{stepValidation}
 			/>
 		<!-- Step 4: Choose Card Design -->
 		{:else if currentStep === 4}
 			<CardDesign_M
 				{formData}
 				{validateCardDesign}
-				button={buttonType}
+				{nextStep}
+				{previousStep}
+				{stepValidation}
 			/>			
 		<!-- Step 5: Review and Confirm -->
 		{:else if currentStep === 5}
 			<GiftReview_M
 				{formData}
 				{validatePayment}
-				button={buttonType}
+				{nextStep}
+				{previousStep}
+				{stepValidation}
+				{submitForm}
 			/>
 		{/if}
 		<!-- Step 6: Transfer Success -->
@@ -567,18 +505,13 @@
 	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 
 	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
 	{
-		
-		:global(.step-container) {
-			display: flex ;
-			flex-direction: column;
-			width: 100%;
-			gap: 1cqh;
-			padding: 0 ;
-			padding-top: 3% ;
-			padding-inline: var(--body-padding) !important;
-			background-color: var(--general-background-color-secondary) !important;
-			color: var(--general-text-color) !important;
-		}
+
+		.progress {
+			position: relative;
+			height: 100%;
+			border-radius: 0 5px 5px 0;
+			transition: width 0.5s ease-out;
+		}	
 
 		:global(.skip-button,.back-button) {
 			position: relative;
@@ -591,32 +524,6 @@
 				fill: var(--black);
 			}
 		}	
-
-		:global(.step-header .blank) {
-			flex: 0 1 20%;
-			align-items: baseline;
-		}
-
-		:global(label:has([type="search"])) {
-			position: relative;
-			display: flex;
-			justify-self: center;
-			align-items: center;
-			width: 100%;
-			height: fit-content;
-			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
-
-			& .search-icon{
-				position: absolute;
-				top: 16%;
-				left: 1rem;
-				scale: clamp(0.2,0.85,0.89);
-			}
-				
-			&:focus-within .search-icon {
-				display: none;
-			}
-		}
 
 
 	}
