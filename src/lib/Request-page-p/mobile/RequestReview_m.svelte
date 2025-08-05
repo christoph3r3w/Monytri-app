@@ -18,9 +18,7 @@
 
 	onMount(() => {
 		canShare = !!navigator.share;
-		if (openRequest){
-			generateQR();
-		}
+		if (openRequest){generateQR();}
 	});
 
 	async function generateQR() {
@@ -76,7 +74,6 @@
 		window.location.href = `mailto:${formData.benefactor.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 	}
 
-
 	let {formData,validaterequest,button,nextStep,stepValidation,previousStep,submitForm} = $props();
 	let selectedMethod = $state('');
 	let selectedBank = $state('');
@@ -87,6 +84,7 @@
 	});
 </script>
 
+<!-- Need to check with the client to see which one they would prefer. -->
 {#snippet requestOptions()}
 	<article class="review-summary">
 		<div>
@@ -146,74 +144,33 @@
 	</article>
 {/snippet}
 
-{#snippet shareOption()}
-		<!-- <figure class="banner" >
-			<img src="./shared-assests/Monytri-01.png" alt="">
-		</figure> -->
-
-		<article class="share-container">
-
-			<figure class="qr-container">
-				{#if qrDataUrl.length > 0}
-				<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
-				<p>Scan the QR code to share Monytri</p>
-				{/if}
-				{#if qrDataUrl.length <= 0}
-					<button onclick={generateQR}>
-						generate QR code
-					</button>
-				{/if}
-			</figure>
-
-			<div class="share-button-container">
-				
-				{#if canShare}
-					<button onclick={nativeShare}>
-						share
-					</button>
-				{/if}
-				<button onclick={copyURL}>
-					copy to clipboard
-				</button>
-			</div>
-		</article>
-{/snippet}
-
 {#snippet shareOption2()}
-		<!-- <figure class="banner" >
-			<img src="./shared-assests/Monytri-01.png" alt="">
-		</figure> -->
-
-
-			<figure class="qr-container">
-				{#if qrDataUrl.length > 0 }
-				<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
-				<p>Scan the QR code to share </p>
-				{/if}
-				{#if qrDataUrl.length <= 0}
-					<button onclick={generateQR}>
-						generate QR code
-					</button>
-				{/if}
-			</figure>
-			
-				{#if canShare && openRequest}
-					<button class="share-button" onclick={nativeShare}>
-						share
-					</button>
-					{:else}
-					<button class="share-button" onclick={sendEmail}>
-						mail to {formData.benefactor.name}
-					</button>
-				{/if}
-
-				{#if openRequest}
-					<button class="share-button copy" onclick={copyURL}>
-						copy to clipboard
-					</button>
-				{/if}
-					
+	<figure class="qr-container">
+		{#if qrDataUrl.length > 0 }
+		<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
+		<p>Scan the QR code to share </p>
+		{/if}
+		{#if qrDataUrl.length <= 0}
+			<button onclick={generateQR}>
+				generate QR code
+			</button>
+		{/if}
+	</figure>
 	
+	{#if canShare && openRequest}
+		<button class="share-button" onclick={nativeShare}>
+			share
+		</button>
+		{:else}
+		<button class="share-button" onclick={sendEmail}>
+			mail to {formData.benefactor.name}
+		</button>
+	{/if}
+	{#if openRequest}
+		<button class="share-button copy" onclick={copyURL}>
+			copy to clipboard
+		</button>
+	{/if}
 {/snippet}
 
 
@@ -230,20 +187,9 @@
 	showContinueButton={false}
 	customButton={shareOption2}
 	leftContent={requestReview}
-
 />
 
 <style>
-
-	/* .request-input-container{
-		flex: 0 1 20cqh;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		padding: 3%;
-		font-size: clamp(1rem, 3vw, 1.5rem);
-		border-radius: 10px;
-	} */
 
 	.review-summary{
 		flex: 1 1 108%;
@@ -253,8 +199,6 @@
 		border-radius: 10px;
 		width: 100%;
 		height: fit-content;
-		/* justify-content: flex-end; */
-		/* outline: teal solid; */
 
 		@container style(--mobile:1) {
 			flex: 0 1 120%;
@@ -336,24 +280,6 @@
 		font-size: clamp(1rem,8vw,1.1rem);
 	}
 
-	/* figure.banner {
-		width: 100%;
-		aspect-ratio: 30/9;
-		background-color: var(--white);
-		background-size: cover;
-		display: grid;
-		place-items: center;
-		background: url('./shared-assests/banner-deco.png');
-		background-position:top center;
-		background-repeat: no-repeat;
-		background-size: cover;
-	}
-	
-	.banner img{
-		width: 60%;
-		height: auto;
-	} */
-
 	/* request review */
 	.request-summary{
 		flex: 1 1 100%;
@@ -418,13 +344,6 @@
 	}
 
 	/* ////////////////////////////////// */
-
-	.share-container{
-		padding-inline: 2rem;
-		padding-block: 1rem;
-		background-color: var(--primary-darkgreen-200);
-		/* outline: orangered solid; */
-	}
 
 	.qr-container{
 		min-height: fit-content;

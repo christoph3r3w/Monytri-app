@@ -12,9 +12,6 @@
 		GiftReview_D,
 		GiftReview_M,
 		Process_success_S,
-		EnterAmount_E,
-		Purpose_E,
-		Recipient_E
 	} from '$lib';
 	import { goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';

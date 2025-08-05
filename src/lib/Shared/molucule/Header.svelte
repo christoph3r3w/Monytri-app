@@ -63,9 +63,9 @@
 		</button>
 	</nav>
 	{:else}
+	<!-- goback and search button -->
 	<nav class="goBack othr">
 		<button onclick={iconTask}>
-			
 		{#if $current === 'home'}
 			<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="m19.53 18.47-3.841-3.841A8.705 8.705 0 0 0 17.75 9C17.75 4.175 13.825.25 9 .25S.25 4.175.25 9 4.175 17.75 9 17.75a8.705 8.705 0 0 0 5.629-2.061l3.841 3.841a.748.748 0 0 0 1.06 0 .749.749 0 0 0 0-1.06ZM1.75 9c0-3.998 3.252-7.25 7.25-7.25S16.25 5.002 16.25 9 12.998 16.25 9 16.25 1.75 12.998 1.75 9Z" fill="white"/>

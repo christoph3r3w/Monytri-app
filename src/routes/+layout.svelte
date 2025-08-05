@@ -3,6 +3,8 @@
   	import {onNavigate,afterNavigate} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '../lib/store.js'
+	import { fade } from 'svelte/transition';
+
 	import '../app.css';
   
 	let { children } = $props();
@@ -127,7 +129,7 @@
 
 <!-- main application layout -->
 <section class="body-container">
-	{#if ($current == 'gift' || $current == 'request' && $isMobile) }
+	{#if ($current == 'gift' && $isMobile || $current == 'request' && $isMobile) }
 	{:else}
 	<header>
 		<Header {current}/>	
