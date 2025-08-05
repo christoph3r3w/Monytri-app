@@ -71,6 +71,7 @@
 	showContinueButton={true}
 	showSkipButton={true}
 	rightContent={purposeOptions}
+	
 />
 
 <style>

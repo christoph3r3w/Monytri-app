@@ -1,7 +1,8 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import {StepContainer} from '$lib';
-	let { formData, validatePayment,button,nextStep,stepValidation,previousStep,submitForm} = $props();
+
+	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm} = $props();
 	let selectedMethod = $state('');
 	let selectedBank = $state('');
 	let methods = $derived({
@@ -97,36 +98,7 @@
 	
 />
 
-<!-- <section class="step-container" >
-	<div class="left-step"  >
-		<section class="step-header" transition:fade>
-			{@render button('back')}
-			<h2>Select a payment method</h2>
-		</section>
-		{@render paymentOptions()}
-	</div>
-
-	<div class="right-step"  transition:fade>
-		{@render reviewSummary()}
-		<div class="button-container">
-			{@render button('submit')}
-		</div>
-	</div>
-</section> -->
-
 <style>
-
-	/* .step-header {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 2rem;
-	}
-
-	.step-header h2 {
-		font-size: clamp(1rem,4vw,2.5rem);
-		margin-right: 15rem;
-	} */
 	
 	.payment-input-container{
 		display: flex;

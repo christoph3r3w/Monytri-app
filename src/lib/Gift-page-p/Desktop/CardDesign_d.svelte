@@ -131,26 +131,8 @@
 	showContinueButton={true}
 	showSkipButton={true}
 	rightContent={cardDesignOptions}
+	
 />
-<!-- <section class="step-container">
-	<div class="left-step" >
-		<section class="step-header"  transition:fade>
-			{@render button('back')}
-			<div class="step-header-text">
-				<h2>Select a gift card</h2>
-			</div>
-		</section>
-		<p>Choose a card and write a message </p>
-	</div>
-
-	<div class="right-step"  transition:fade>
-		{@render cardDesignOptions()}
-		<div class="button-container">
-			{@render button('continue',4)}
-			{@render button('skip',4)}
-		</div>
-	</div>
-</section> -->
 
 <style>
 	/* main container */
