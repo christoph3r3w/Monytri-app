@@ -1,14 +1,17 @@
 <script>
+	import {current,isMobile} from '$lib/store.js';
 	import { onMount } from 'svelte';
-	import {Logo} from '$lib';
+	import {Logo,Benefactor_M,RequestAmount_M,Request_success} from '$lib';
 	import QRCode from 'qrcode';
 	import { goto } from '$app/navigation';
+	import { fade } from 'svelte/transition';
+
 
 	//  vecel does not let a user enter an application from the share page you need to start with the hoem page 
 	const homeUrl = window.location.origin
 	const shareUrl = `${homeUrl}/share`;
-	let qrDataUrl = '';
-	let canShare = false;
+	let qrDataUrl = $state('');
+	let canShare = $state(false);
 
 	onMount(() => {
 		canShare = !!navigator.share;
@@ -61,10 +64,292 @@
 		}
 	}
 
+	// Progress bar logic
+		// State management
+	let currentStep = $state(1);
+	let totalSteps = $state(5);
+	
+	// Form data structure
+	let formData = $state({
+		benefactor: null,
+		cardDesign: 'default',
+		Purpose: null,
+		DeliveryDate: null,
+		PaymentMethod: null,
+		amount: null,
+		message: '',
+		searchQuery: '',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+		get currentDate() {
+			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+		}
+	});
+	
+	// Step validation state
+	let stepValidation = $state({
+		1: false,
+		2: false,
+		3: true, // last step is always valid for the initial state
+	});
+
+	// Use provided benefactors or fallback to defaults
+	let benefactors = $state([
+		{
+		id: 1,
+		name: 'David Dick',
+		email: 'david.dick@artgallery.com',
+		lastSent: '2 days ago',
+		profilePic: './generic.png'
+		},
+		{
+		id: 2,
+		name: 'Chiara Liqui Lung',
+		email: 'chiara.chef@culinaryarts.it',
+		lastSent: '1 week ago',
+		profilePic: '/generic 2.png'
+		},
+		{
+		id: 3,
+		name: 'Christopher Willems',
+		email: 'chris.crypto@blockchain.tech',
+		lastSent: '3 days ago',
+		profilePic: ''
+		},
+		{
+		id: 4,
+		name: 'Jamila Jones',
+		email: 'jamila.books@literature.org',
+		lastSent: '5 days ago',
+		profilePic: '/generic.png'
+		},
+		{
+		id: 5,
+		name: 'Karnis Jansen',
+		email: 'karnis.music@symphony.nl',
+		lastSent: '2 weeks ago',
+		profilePic: ''
+		},
+		{
+		id: 7,
+		name: 'Maria Martina',
+		email: 'maria.fitness@healthclub.es',
+		lastSent: '1 day ago',
+		profilePic: '/generic 2.png'
+		},
+		{
+		id: 8,
+		name: 'Amy Frost',
+		email: 'amy.travel@wanderlust.com',
+		lastSent: '15 Aug 2024',
+		profilePic: '/generic 2.png'
+		},
+		{
+		id: 9,
+		name: 'Jeremy Clarkson',
+		email: 'jeremy.cars@topgear.uk',
+		lastSent: '15 Aug 2024',
+		profilePic: '/generic 2.png'
+		}
+	]);
+	
+	// Progress tracking
+	let currentProgress = $state(0);
+	let progressPercentage = $derived(currentProgress > 0 ? currentProgress : ((currentStep / totalSteps) - (1 / totalSteps)) * 100);
+
+	// Error handling function
+	function handleError(step, error) {
+		formData.errors[step] = error;
+		setTimeout(() => {
+			delete formData.errors[step];
+		}, 3000); // Clear error after 3 seconds
+	}
+
+	// Search benefactor functionality
+	function searchBenefactors(query) {
+		formData.searchQuery = query;
+		return benefactors.filter(benefactor => 
+			benefactor.name.toLowerCase().includes(query.toLowerCase()) ||
+			benefactor.email.toLowerCase().includes(query.toLowerCase())
+		);
+	}
+	
+	// Enhanced validation functions
+	function selectBenefactor(benefactor) {
+		if (!benefactor) {
+			handleError(1, 'Please select a benefactor');
+			return;
+		}
+		formData.benefactor = benefactor;
+		stepValidation[1] = true;
+		
+	}
+	
+	function nextStep() {
+		if (stepValidation[currentStep] && currentStep < totalSteps) {
+			currentStep++;
+		}
+	}
+	
+	function previousStep() {
+		if (currentStep > 1) {
+			currentStep--;
+		}
+	}
+	
+	function validateAmount(e) {
+		let finalAmount;
+		
+		if (e.target.type === 'radio') {
+			const customAmountInput = document.getElementById('amount');
+			if (customAmountInput) {
+			customAmountInput.value = ''; // Clear custom input when radio is selected
+			}
+			formData.amount = e.target.id;
+			finalAmount = parseFloat(e.target.value.replace('€', ''));
+		} else if (e.target.type === 'number') {
+			const radioButtons = document.querySelectorAll('input[name="fixedAmount"]');
+			radioButtons.forEach((radio) => (radio.checked = false)); // Clear radio selections
+			formData.amount = 'amount';
+			finalAmount = parseFloat(e.target.value);
+		} else {
+			formData.amount = 'amount';
+			finalAmount = parseFloat(e.target.value);
+			
+			const radioButtons = document.querySelectorAll('input[name="fixedAmount"]');
+			radioButtons.forEach((radio) => (radio.checked = false));
+		}
+		
+		if (finalAmount < formData.benefactor.amountMin  || isNaN(finalAmount) || finalAmount > formData.benefactor.amountMax) {
+			handleError(2, 'Please enter an amount between €10 and €100');
+			finalAmount = 0;
+			stepValidation[2] = false;
+			formData.amount = null;
+			return;
+		}
+		
+		formData.amount = finalAmount;
+		stepValidation[2] = true;
+	}
+
+	function validatePayment(e) {
+		stepValidation[5] = e.target.value && formData.PaymentMethod !== null;
+	}
+	
+	async function submitForm() {
+		formData.isLoading = true;
+		
+		try {
+			if (!formData.PaymentMethod) {
+				alert('Please select a payment method')
+				throw new Error('Please select a payment method');
+			}
+
+			if (!formData.benefactor) {
+				alert('Please select a benefactor')
+				throw new Error('Please select a benefactor');
+			}
+
+			currentProgress = 100;
+			
+			await new Promise(resolve => setTimeout(resolve, 1000));
+			// alertDialog.remove();
+			// Store form data in localStorage before redirecting
+			// localStorage.setItem('giftFormData', JSON.stringify(formData));
+			localStorage.setItem('giftFormData', 'hi');
+				
+			await goto('/gift-success');
+
+		} catch (error) {
+			handleError(5, error.message);
+		} finally {
+			formData.isLoading = false;
+		}
+	}
+
+	$effect(() => {
+		// Reset form data when the component is destroyed
+		return () => {
+			formData.benefactor = null;
+			formData.amount = null;
+			formData.DeliveryDate = null;
+			formData.amount = null;
+			formData.message = '';
+		};
+	});
+
+
 </script>
 
+{#snippet buttonType(type,step)}
+	{#if type === 'back'}
+		<button class="back-button" aria-label="Go back" onclick={currentStep > 1 ? previousStep : () => history.back()}>
+			<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
+			</svg>
+		</button>
+	{:else if type === 'continue'}
+		<button 
+			class="continue-button {stepValidation[step] ? 'active' : 'disabled'}"
+			disabled={!stepValidation[step]}
+			onclick={nextStep}
+			>
+			Continue
+		</button>
+	{:else if type === 'skip'}
+		<button
+			class="skip-button"
+			onclick={() => {
+				// Clear data for the current step
+				switch(step) {
+					case 3: // Purpose step
+						formData.Purpose = null;
+						break;
+					case 4: // Card Design step
+						formData.cardDesign = 'default';
+						formData.message = '';
+						break;
+				}
+				currentStep++;
+			}}>
+			Skip
+		</button>
+	{:else if type === 'submit'}
+		<button 
+			class="submit-button"
+			onclick={() => submitForm()}
+			>
+			Confirm & pay €{formData.amount}
+		</button>
+	{:else if type === 'skip-to'}
+		<button 
+			class="skip-to-button"
+			onclick={() => {
+				switch(step) {
+					case 1: 
+						currentStep = 1;
+						break;
+					case 2: 
+						currentStep = 2;
+						break;
+					case 3: 
+						currentStep = 3;
+						break;
+					case 4: 
+						currentStep = 4;
+						break;
+				}
+			}}>
+			Edit
+		</button>
+	{:else if type === 'blank'}
+		<span class="blank"></span>
+	{/if}
+{/snippet}
 
-<div class="container">
+
+<!-- <div class="container">
 	
 	<h2>Request coming soon</h2>	
 	
@@ -107,7 +392,6 @@
 		</div>
 	</article>
 
-	<!-- add socials here -->
 	<section class='socials-container'>
 		<h2>Follow us on</h2>
 		<div class="socials">
@@ -129,11 +413,53 @@
 		</div>
 	</section>
 	
-
 	<figure class="bottom-logo">
 		<Logo name={false}/>
 	</figure>
-</div>
+</div> -->
+
+<article class="transfer-wizard container" transition:fade>
+	<!-- Progress indicator -->
+	<div class="progress-bar">
+		<div class="progress" style="width: {progressPercentage}%"></div>
+	</div>
+	{#if $isMobile}
+		<!-- Step 1: Choose benefactor -->
+		{#if currentStep === 1}
+			<Benefactor_M 
+				{formData} 
+				{benefactors}
+				button={buttonType}
+				{nextStep} 
+				{previousStep} 
+				{stepValidation} 
+				selected={selectBenefactor}
+			/>
+		<!-- Step 2: Enter Amount -->
+		{:else if currentStep === 2}
+			<RequestAmount_M 
+				{formData} 
+				button={buttonType}
+				{nextStep} 
+				{previousStep} 
+				{stepValidation} 
+				{validateAmount}
+			/>
+		<!-- step 3 success -->
+		{:else if currentStep === 3}
+			<Request_success 
+				{formData} 	
+				{stepValidation} 
+			/>
+		{/if}
+	{:else}
+		<!-- Fallback content for unsupported devices -->
+		<div class="unsupported-device">
+			<p>Your device is not supported for this feature.</p>
+			<p>Please use a desktop or mobile device.</p>
+		</div>
+	{/if}
+</article>
 
 <style>
 	.container{
@@ -145,6 +471,42 @@
 		height: fit-content;
 		margin-bottom: 5rem;
 	}
+
+		.transfer-wizard {
+		position: relative;
+		grid-column: 1 / -1;
+		grid-row: 1 / span 1;
+		width: 100%;
+		overflow: hidden;
+		display: grid;
+		grid-template-columns: 
+		subgrid 
+		[left-start] repeat(5,[mid-left]) [left-end right-start] repeat(5,[mid-right]) [right-end];
+		grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr;
+		height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
+		max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); ;
+
+		container-type:normal;
+		container-name: transfer-wizard;
+	}
+	
+	.progress-bar {
+		position: relative;
+		grid-column: 1 / -1;
+		grid-row: 1 / 2;
+		height: var(--progressbar-height) ;
+		background-color: var(--general-background-color);
+		border-radius: 5px;
+	}
+
+	.progress {
+		position: relative;
+		height: 120%;
+		background-color: var(--primary-darkgreen-550);
+		border-radius: 5px;
+		transition: width 0.3s ease;
+	}
+
 
 	article,figure{
 		border-radius: 8px;

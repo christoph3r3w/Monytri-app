@@ -4,7 +4,19 @@
 	import {StepContainer} from '$lib';
 
 	
-	let { formData, validatePurpose,button,nextStep,stepValidation,previousStep } = $props();
+	let { 
+		formData, 
+		validatePurpose,
+		// New props for internal step management
+		currentStep = $bindable(),
+		stepValidation = $bindable(),
+		totalSteps = 5,
+		onStepChange = null,
+		
+		// Backward compatibility (optional)
+		nextStep = null,
+		previousStep = null 
+	} = $props();
 
 	let PurposeList = $state([
 		{id: 1,name: 'Birthday',value: 'Birthday',img:'./purpose-assets/Party-3--Streamline-Brooklyn (Traced)party.png'},
@@ -62,16 +74,19 @@
 	{formData}
 	headerName="Choose a purpose"
 	stepType="purpose"
-	currentStep={3}
-	{nextStep}
-	{previousStep}
-	{stepValidation}
+	bind:currentStep
+	bind:stepValidation
+	{totalSteps}
+	{onStepChange}
 	showLeftContent={true}
 	showRightContent={true}
 	showContinueButton={true}
 	showSkipButton={true}
 	rightContent={purposeOptions}
 	
+	
+	nextStep={nextStep}
+	previousStep={previousStep}
 />
 
 <style>
@@ -98,98 +113,68 @@
 		gap: clamp(1rem, 4cqw, 1.5rem);
 		border-radius: clamp(5px, 11cqw, 10px);
 		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
-
-
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		scrollbar-width:auto;  
-
-		container-type: inline-size;
-
-		&::-webkit-scrollbar {
-			width: 12px;
-			background-color: #f1f1f1;
-		}
-		
-		&::-webkit-scrollbar-track {
-			background: #f1f1f1;
-			border-radius: 4px;
-			margin-block: 0.5rem;
-		}
-		
-		&::-webkit-scrollbar-thumb {
-			background: var(--primary-darkgreen-550);
-			border-radius: 4px;
-			min-height: 40px;
-		}
-
-		&::-webkit-scrollbar-thumb:hover {
-			background: var(--primary-darkgreen-550);
-			opacity: 0.8;
-		}
-	}
-	
-	.purpose-option{
-		position: relative;
-		display: flex;
-		background-color: var(--general-background-color);
-		max-width: 300px;
-		flex: 1 1 40cqw;
-		aspect-ratio: 1;
-		border-radius: clamp(5px, 11cqw, 10px);
-		overflow: clip;
 	}
 
-	.purpose-option label{
-		position: relative;
-		width: 100%;
-		height: 100%;
+	.purpose-option {
 		display: flex;
-		flex-direction: column;
+		aspect-ratio: 1 / 1;
+		min-width: clamp(5rem, 15cqw, 8rem);
+		width: clamp(5rem, 15cqw, 8rem);
+		height: clamp(5rem, 15cqw, 8rem);
 		border-radius: clamp(5px, 11cqw, 10px);
-		overflow: clip;
-		padding-top: 5%;
-	
-		align-items: center;
-		justify-content: center;
+		background-color: var(--off-white);
+		transition: background-color 0.2s ease-in-out;
 		cursor: pointer;
 	}
 
-	.purpose-option:has(img) p{
-		width: fit-content;
-		height: fit-content;
-		padding: 2%;
-		margin-inline: 5%;
-		align-self:start;
-		border-radius: clamp(5px, 11cqw, 5px);
-		background-color: var(--white);
+	.purpose-option:hover {
+		background-color: var(--general-background-color);
+		scale: 1.02;
 	}
 
-	.purpose-option .purpose-icon-container{
-		flex: 1 2 auto;
-		width: 100%;
-		height: 90%;
-		display: flex;
-		justify-content: center;
-		aspect-ratio: 1;
-		border-radius: clamp(5px, 11cqw, 10px);
-		padding: 10%;
-	}
-
-	.purpose-option .purpose-icon{
-		object-fit: contain;
-		object-position: center;
-	}
-
-	.purpose-option:has(input:checked) {
-		outline: solid var(--primary-darkgreen-550);
-	}
-
-	.purpose-option input {
+	.purpose-option input[type="radio"] {
 		display: none;
-		width: clamp(100px, 20cqw, 200px);
-		aspect-ratio: 1;
 	}
 
-	
+	.purpose-option input[type="radio"]:checked + label {
+		background-color: var(--primary-darkgreen-550);
+		color: var(--white);
+	}
+
+	.purpose-option label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		padding: 0.5rem;
+		cursor: pointer;
+		border-radius: clamp(5px, 11cqw, 10px);
+		transition: background-color 0.2s ease-in-out;
+	}
+
+	.purpose-option label p {
+		margin: 0;
+		font-size: clamp(0.7rem, 2cqw, 1rem);
+		font-weight: 500;
+		line-height: 1.2;
+		text-wrap: balance;
+	}
+
+	.purpose-icon-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 60%;
+		margin-top: 0.5rem;
+	}
+
+	.purpose-icon {
+		max-width: 100%;
+		max-height: 100%;
+		object-fit: contain;
+	}
 </style>

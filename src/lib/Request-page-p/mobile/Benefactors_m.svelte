@@ -1,45 +1,45 @@
 <script>
 	import { fade } from 'svelte/transition';
-	import { StepContainer } from '$lib'
+	import { StepContainer } from '$lib';
+	let { formData, benefactors, selected,nextStep,previousStep,stepValidation } = $props();
 
-	let { formData, recipients, selected, button, nextStep,previousStep,stepValidation } = $props();
-
-	let filteredRecipients = $derived(
+	let filteredbenefactors = $derived(
 		formData.searchQuery 
-		? recipients.filter(recipient => 
-			recipient.name.toLowerCase().includes(formData.searchQuery.toLowerCase()) ||
-			recipient.email.toLowerCase().includes(formData.searchQuery.toLowerCase())
+		? benefactors.filter(benefactor => 
+			benefactor.name.toLowerCase().includes(formData.searchQuery.toLowerCase()) ||
+			benefactor.email.toLowerCase().includes(formData.searchQuery.toLowerCase())
 		)
-		: recipients
+		: benefactors
 	);
 
 </script>
-{#snippet recipientsList()}			
+
+{#snippet benefactorList()}
 	<section>
 		<h3 class="section-title">Most Recent</h3>
-		<ul class="recipients-list">
-			{#each filteredRecipients as recipient, i}
+		<ul class="benefactors-list">
+			{#each filteredbenefactors as benefactor}
 				<li 
-				class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}"
-				onclick={() => selected(recipient)}
-				>
-					<article class="recipient-info">
-						{#if recipient.profilePic.length > 0 || recipient.profilePic !== ''}
-							<img src={recipient.profilePic} alt={''||recipient.name} class="profile-pic" />
+					class="benefactor-item {formData.benefactor?.id === benefactor.id ? 'selected' : ''}"
+					onclick={() => selected(benefactor)}
+					>
+					<article class="benefactor-info">
+						{#if benefactor.profilePic.length > 0 || benefactor.profilePic !== ''}
+							<img src={benefactor.profilePic} alt={''||benefactor.name} class="profile-pic" />
 						{:else}
-							<div class="profile-letter">{recipient.name[0].toUpperCase()}</div>
+							<div class="profile-letter">{benefactor.name[0].toUpperCase()}</div>
 						{/if}
-						<div class="recipient-details">
-							<h3>{recipient.name}</h3>
-							<p>{recipient.email}</p>
-							<p class="last-sent">Last sent: {recipient.lastSent}</p>
+						<div class="benefactor-details">
+							<h3>{benefactor.name}</h3>
+							<p>{benefactor.email}</p>
+							<p class="last-sent">Last sent: {benefactor.lastSent}</p>
 						</div>
 					</article>
 				</li>
 				<hr/>
 			{:else}
 				<li class="no-results">
-					No recipients found
+					No benefactors found
 				</li>
 			{/each}
 		</ul>
@@ -47,25 +47,25 @@
 
 {/snippet}
 
-<StepContainer
+<StepContainer 
 	{formData}
-	headerName="Choose Recipient"
-	stepType="recipient"
+	headerName="Choose a benefactor"
+	stepType="benefactor"
 	currentStep={1}
-	{nextStep}
+	{nextStep}	
 	{previousStep}
 	{stepValidation}
-	{recipients}
+	{benefactors}
 	showLeftContent={true}
 	showRightContent={true}
 	showContinueButton={true}
-	rightContent={recipientsList}
-	
+	showSkipButton={''}
+	rightContent={benefactorList}
 />
 
 <style>
 	
-	section:has(.recipients-list){
+	section:has(.benefactors-list){
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -75,8 +75,8 @@
 		overflow-y: hidden;
 		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 	}
-
-	.recipients-list{ 
+	
+	.benefactors-list{ 
 		background-color: var(--general-background-color);
 		height: fit-content;
 		max-height: 60cqh;
@@ -86,7 +86,7 @@
 		border-radius: 15px;
 
 		/* background-color: blue; */
-		.recipient-item {
+		.benefactor-item {
 			position: relative;
 			display: flex;
 			justify-content: space-between;
@@ -97,15 +97,15 @@
 			margin-block: 0.5cqh 1dvh;
 		}
 		
-		.recipient-item:where(.selected) {
+		.benefactor-item:where(.selected) {
 			outline: solid 2px var(--primary-darkgreen-550);	
 
-			.recipient-details p {
+			.benefactor-details p {
 				color: var(--primary-darkgreen-550);
 			}
 		}
 		
-		.recipient-info {
+		.benefactor-info {
 			display: flex;
 			align-items: center;
 		}
@@ -130,12 +130,12 @@
 			font-weight: bold;
 		}
 		
-		.recipient-details h3 {
+		.benefactor-details h3 {
 			margin: 0;
 			font-size: 1rem;
 		}
 		
-		.recipient-details p {
+		.benefactor-details p {
 			margin: 0;
 			font-size: 0.875rem;
 			color: #666;
@@ -146,6 +146,26 @@
 		}	
 	}
 
+	section:has(label) {
+		flex: 1 1 90%;
+		background-color: var(--white);
+		border-radius: 12px;
+	}
+
+	section:has(label) label input {
+		background-color: var(--off-white);
+		margin-bottom: 3%;
+		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);		
+	}
+
+	.error-message {
+		background-color: #fee;
+		color: #c00;
+		padding: 0.5rem 1rem;
+		border-radius: 4px;
+		margin-bottom: 1rem;
+		text-align: center;
+	}
 
 	.no-results {
 		text-align: center;

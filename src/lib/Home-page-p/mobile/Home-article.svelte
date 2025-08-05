@@ -1,6 +1,12 @@
 	<section class="home-articles">
 		<article class="invest-tips">
-			<h2>Grow your investing skills!<span><img src="./home-page/arrow-right.png" alt=""></span></h2>
+			<h2>Grow your investing skills!
+				<span class="arrow-icon">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M21.6919 12.2869C21.6539 12.3789 21.599 12.4618 21.53 12.5308L14.53 19.5308C14.384 19.6768 14.192 19.7508 14 19.7508C13.808 19.7508 13.616 19.6778 13.47 19.5308C13.177 19.2378 13.177 18.7628 13.47 18.4698L19.1899 12.7498H3C2.586 12.7498 2.25 12.4138 2.25 11.9998C2.25 11.5858 2.586 11.2498 3 11.2498H19.189L13.469 5.52981C13.176 5.23681 13.176 4.76177 13.469 4.46877C13.762 4.17577 14.237 4.17577 14.53 4.46877L21.53 11.4688C21.599 11.5378 21.6539 11.6207 21.6919 11.7127C21.7679 11.8967 21.7679 12.1029 21.6919 12.2869Z" fill="#313131"/>
+					</svg>
+				</span>
+			</h2>
 			<ul>
 				<li>
 					<a href="/how-it-works" aria-label="article"></a>
@@ -24,7 +30,7 @@
 				<li>
 					<a href="/how-it-works" aria-label="article"></a>
 					<figure>
-						<img src="./home-page/homescreen-cash.png" alt="cash" width="177px" height="177px">
+						<img src="./home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png" alt="cash" width="177px" height="177px">
 						<figcaption>Ep.3</figcaption>
 					</figure>
 					<p>Ep.3: Why Monytri?</p>
@@ -33,7 +39,13 @@
 			</ul>
 		</article>
 		<article class="recent-blogs">
-			<h2>Recent Blogs<span><img src="./home-page/arrow-right.png" alt=""></span></h2>
+			<h2>Recent Blogs
+				<span class="arrow-icon">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M21.6919 12.2869C21.6539 12.3789 21.599 12.4618 21.53 12.5308L14.53 19.5308C14.384 19.6768 14.192 19.7508 14 19.7508C13.808 19.7508 13.616 19.6778 13.47 19.5308C13.177 19.2378 13.177 18.7628 13.47 18.4698L19.1899 12.7498H3C2.586 12.7498 2.25 12.4138 2.25 11.9998C2.25 11.5858 2.586 11.2498 3 11.2498H19.189L13.469 5.52981C13.176 5.23681 13.176 4.76177 13.469 4.46877C13.762 4.17577 14.237 4.17577 14.53 4.46877L21.53 11.4688C21.599 11.5378 21.6539 11.6207 21.6919 11.7127C21.7679 11.8967 21.7679 12.1029 21.6919 12.2869Z" fill="#313131"/>
+					</svg>
+				</span>
+			</h2>
 			<div class="blog-container">
 				<a href="/blog" aria-label="blog"></a>
 				<img src="./home-page/homescreen-team.png" alt="" width="177px" height="177px">
@@ -76,7 +88,7 @@
 
 			.invest-tips h2{
 				font-size: 1.2rem;
-				color: var(--black);
+				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 25px;
 				margin-bottom: 2%;
@@ -85,6 +97,11 @@
 				justify-content: space-between;
 				align-items: center;
 			}
+
+			.arrow-icon svg path{
+				fill: var(--general-text-color);
+			}
+
 
 			.invest-tips ul{
 				overflow-x: auto;
@@ -139,14 +156,14 @@
 
 			.invest-tips ul li p{
 				font-size: 14px;
-				color: var(--black);
+				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 120%;
 			}
 
 			.invest-tips ul li p:nth-of-type(2){
 				font-size: 12px;
-				color: var(--grey-500);
+				color: var(--general-text-color-secondary);
 				font-weight: 400;
 			}
 
@@ -156,7 +173,7 @@
 
 			.recent-blogs h2{
 				font-size: 1.2rem;
-				color: var(--black);
+				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 25px;
 				margin-bottom: 2%;
@@ -171,7 +188,6 @@
 				display: flex;
 				flex-direction: row;
 				width: 100%;
-				height: clamp(fit-content, 177px, 177px);
 				height: 177px;
 				container-type: inline-size;
 			}
@@ -201,13 +217,13 @@
 				padding: 11px 3%;
 				width: 50%;
 				height: 100%;
-				background-color: var(--white);
+				background-color: color-mix(in srgb, var(--white), var(--general-background-color) 50%);
 				border-radius: 0 10px 10px 0;
 			}
 
 			.recent-blogs .blog-text .date{
 				font-size: 12px;
-				color: var(--grey-400);
+				color: var(--general-text-color-secondary);
 				font-weight: 400;
 				line-height: 120%;
 			}
@@ -225,6 +241,7 @@
 				line-height: 120%;
 			}
 
+			/* author blog name */
 			.recent-blogs .blog-text span{
 				display: flex;
 				flex-direction: row;
@@ -248,6 +265,12 @@
 				font-weight: 400;
 				line-height: 120%;
 			}
+		}
+	}
+
+	@media (prefers-color-scheme: dark){
+		* img{
+			filter: brightness(.8) contrast(.9);
 		}
 	}
 		

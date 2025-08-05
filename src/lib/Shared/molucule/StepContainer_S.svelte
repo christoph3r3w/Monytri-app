@@ -37,8 +37,11 @@
 		customButton = null
 	} = $props();
 	
-	import { current, isMobile } from '$lib/store.js';
+	import { current, isMobile} from '$lib/store.js';
+	import { device } from '$lib/Device.js';
 	import { fade } from 'svelte/transition';
+
+	
 </script>
 
 <!-- Button rendering snippet -->
@@ -77,7 +80,7 @@
 						formData.message = '';
 						break;
 				}
-				currentStep++;
+				nextStep();
 			}}>
 			Skip
 		</button>
@@ -147,6 +150,11 @@
 	<section class="step-header" transition:fade>
 		{@render buttonType('back')}
 		<h2>{headerName}</h2>
+		{#if $isMobile && showSkipButton == false || showSkipButton === undefined || showSkipButton == ''}
+			{@render buttonType('blank')}
+		{:else if showSkipButton}
+			{@render buttonType('skip', currentStep)}
+		{/if}
 	</section>
 {/snippet}
 
@@ -165,38 +173,43 @@
 		{@render searchComponent('Search purpose')}
 		{@render errorMessage(formData.errors?.[currentStep])}
 	{:else if stepType === 'amount'}
-		<!-- Amount step typically doesn't need left content -->
-		 <p></p>
+		<!-- no default content -->
 	{:else if stepType === 'card-design'}
 		<p class="subtext">Choose a design for your gift card</p>
 		{@render errorMessage(formData.errors?.[currentStep])}
 	{:else if stepType === 'payment'}
-		<!-- Payment step content is usually in right side -->
+		<!-- no default content -->
+	{:else if stepType === 'benefactor'}
+		<p class="subtext">Please select a benefactor.</p>
+		{@render searchComponent('Search Benefactors')}
+		{@render errorMessage(formData.errors?.[currentStep])}
 	{/if}
 {/snippet}
 
 {#snippet rightSection()}
 	<!-- Render custom right content -->
-	{@render rightContent()}
-			
+	 {#if rightContent}
+		{@render rightContent()}
+	{/if}	
 	<!-- Button container -->
-	<div class="button-container">
-		{#if customButton}
-			{@render customButton()}
-		{:else if stepType === 'payment' || stepType === 'review'}
+	<div class="button-container {customButton? 'custom': ''}">
+		{#if stepType === 'payment' || stepType === 'review' && !customButton}
 			{@render buttonType('submit')}
 		{:else}
 			{#if showContinueButton}
 				{@render buttonType('continue', currentStep)}
 			{/if}
-			{#if showSkipButton}
-				{@render buttonType('skip')}
+			{#if !isMobile && showSkipButton}
+				{@render buttonType('skip', currentStep)}
+			{/if}
+			{#if customButton}
+				{@render customButton()}
 			{/if}
 		{/if}
 	</div>
 {/snippet}
 
-<section class="step-container">
+<section class="step-container" id={ $device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
 	<!-- left grid section -->
 	{#if showLeftContent && !$isMobile}
 		<article class="left-step">
@@ -505,7 +518,18 @@
 		:global(.step-container) {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
+		
+			display: flex ;
+			flex-direction: column;
+			width: 100%;
+			gap: 1cqh;
+			padding: 0 ;
+			padding-block: 3% ;
+			padding-inline: var(--body-padding) !important;
+			background-color: var(--general-background-color-secondary) !important;
+			color: var(--general-text-color) !important;
 		}
+
 		:global(.left-step) {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
@@ -541,6 +565,58 @@
 			left: 0;
 		}
 
+		:global(.step-header .blank) {
+			flex: 0 1 20%;
+			align-items: baseline;
+		}
+
+		/* Needs to be refactored. */
+		:global(.skip-button,.back-button) {
+			position: relative;
+			width: 100%;
+			height: unset !important;
+			padding-block: 5%;
+			/* outline:yellowgreen solid; */
+
+			svg path{
+				stroke: var(--black);
+				fill: var(--black);
+			}
+		}	
+
+		/* section:has(label) {
+			flex: 1 1 90%;
+			background-color: var(--white);
+			border-radius: 12px;
+		} */
+
+		section:has(label) label input {
+			background-color: var(--off-white);
+			margin-bottom: 3%;
+			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);		
+		}
+
+		:global(label:has([type="search"])) {
+			position: relative;
+			display: flex;
+			justify-self: center;
+			align-items: center;
+			width: 100%;
+			height: fit-content;
+			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
+
+			& .search-icon{
+				position: absolute;
+				top: 16%;
+				left: 1rem;
+				scale: clamp(0.2,0.85,0.89);
+			}
+				
+			&:focus-within .search-icon {
+				display: none;
+			}
+		}
+
 		:global(.right-step) {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
@@ -568,6 +644,50 @@
 			right: 0;
 			bottom: auto;
 			align-items: end;
+		}
+
+		:global(.button-container.custom) {
+			--gap:10px;
+			display: flex;
+			flex-direction: row ;
+			flex-wrap: wrap;
+			align-items: flex-start;
+			justify-content: center;
+			gap: var(--gap);
+		}
+		
+		:global(.custom > :nth-child(n)) {
+			margin: 0;
+			text-wrap: nowrap;
+			/* outline: solid rgb(61, 228, 11) 10px; */
+		}
+
+		:global(.button-container.custom:has(:nth-child(4):last-child) > :nth-child(n)) {
+			flex: 1 1 auto;
+			&:nth-child(1) {flex-basis:100%;}
+			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			&:nth-child(4) {flex-basis:calc(20% - var(--gap));}
+		}
+		:global(.button-container.custom:has(:nth-child(3):last-child) > :nth-child(n)) {
+			flex: 1 1 auto;
+			&:nth-child(1) {flex-basis:100%;}
+			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+		}
+		:global(.button-container.custom:has(:nth-child(2):last-child):nth-child(n)) {
+			flex: 1 1 auto;
+			&:nth-child(1) {flex-basis:calc(70% - var(--gap));}
+			&:nth-child(2) {flex-basis:calc(30% - var(--gap));}
+		}
+		
+		.error-message {
+			background-color: #fee;
+			color: #c00;
+			padding: 0.5rem 1rem;
+			border-radius: 4px;
+			margin-bottom: 1rem;
+			text-align: center;
 		}
 		
 	}
