@@ -4,8 +4,6 @@
 	import {onMount} from 'svelte'
 	import QRCode from 'qrcode';
 	import { goto } from '$app/navigation';
-	import { generate } from '@vue/compiler-core';
-
 
 	//  vercel does not let a user enter an application from the share page you need to start with the hoem page 
 	const homeUrl = window.location.origin
