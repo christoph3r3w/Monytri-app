@@ -17,7 +17,7 @@
 		align-items: center;
 		width: clamp(100px, fit-content, 10vw);
 		gap: 5px;
-		color: var(--black);
+		color: var(--general-text-color);
 		overflow: hidden;
 		transition: padding .8s ease-out;
 	}

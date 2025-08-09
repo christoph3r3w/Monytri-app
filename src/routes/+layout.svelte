@@ -149,6 +149,9 @@
 
 <style >
 	:root{
+		/* general color scheme */
+		color-scheme: light dark;
+
 		/* property that controls the toggle od desktop and mobile */
 		--mobile: 0;
 		--safe-area-inset-top: env(safe-area-inset-top, 0px);
@@ -309,8 +312,9 @@
 			top: 0;
 			inset-inline: 0;
 			padding-top: env(safe-area-inset-top);
-			transform: translate3d(0,0,0);
+			/* transform: translate3d(0,0,0); */
 			z-index: 100;
+
 		}
 				
 		:global(main){
@@ -321,6 +325,7 @@
 			overflow-y: scroll;
 			padding-top: calc(var(--header-height) );
 			margin-bottom: -1rem;
+			z-index: 1;
 			/* padding-bottom: calc(5rem + env(safe-area-inset-bottom)); */
 			/* background-color: rgb(61, 112, 153);
 			background-color: rgb(200, 224, 124);
