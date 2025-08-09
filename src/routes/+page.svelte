@@ -90,9 +90,22 @@
 			}
 
 			:global(header){
+				--_background-cut-off: 85%;
 				--body-padding: 5% ;
 				padding-inline: var(--body-padding) ;
 				z-index: 10;
+				overflow: visible;
+				height: var(--header-intro-height);
+
+				/* outline: solid red 5px !important;
+
+				background: 
+				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
+				linear-gradient(180deg, var(--primary-green-500));
+				background-repeat: no-repeat;
+				background-size: cover;
+				mix-blend-mode:normal; */
+
 			}
 	
 			:global(.home-wrapper){

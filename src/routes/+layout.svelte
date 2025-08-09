@@ -321,6 +321,7 @@
 			overflow-y: scroll;
 			padding-top: calc(var(--header-height) );
 			margin-bottom: -1rem;
+			z-index: 1;
 			/* padding-bottom: calc(5rem + env(safe-area-inset-bottom)); */
 			/* background-color: rgb(61, 112, 153);
 			background-color: rgb(200, 224, 124);

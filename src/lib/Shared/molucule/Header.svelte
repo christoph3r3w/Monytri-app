@@ -52,24 +52,16 @@
 {/snippet}
 
 {#snippet mobileHeadNav()}
-<section class="mobile-header">
-	<!-- no header for specific pages -->
-	 {#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success'}
-	 <nav class="goBack">
-		<button onclick={iconTask}>
-			<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
-			</svg>
-		</button>
-	</nav>
-	{:else}
-	<!-- goback and search button -->
-	<nav class="goBack othr">
-		<button onclick={iconTask}>
-		{#if $current === 'home'}
-			<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="m19.53 18.47-3.841-3.841A8.705 8.705 0 0 0 17.75 9C17.75 4.175 13.825.25 9 .25S.25 4.175.25 9 4.175 17.75 9 17.75a8.705 8.705 0 0 0 5.629-2.061l3.841 3.841a.748.748 0 0 0 1.06 0 .749.749 0 0 0 0-1.06ZM1.75 9c0-3.998 3.252-7.25 7.25-7.25S16.25 5.002 16.25 9 12.998 16.25 9 16.25 1.75 12.998 1.75 9Z" fill="white"/>
-			</svg>
+	<section class="mobile-header">
+		<!-- no header for specific pages -->
+		{#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success'}
+			<nav class="goBack">
+				<button onclick={iconTask}>
+					<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
+					</svg>
+				</button>
+			</nav>
 		{:else}
 			<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
@@ -91,11 +83,20 @@
 	</nav>
 	{/if}
 	</section>
-	{#if $current === 'home'}
+{/snippet}
+
+<div class="header">
+	{#if $isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true'}
+		{@render mobileHeadNav()}
+	{:else}
+		{@render desktopNav()}
+	{/if}
+</div>
+{#if $current === 'home' && $isMobile}
 	<section class="home-intro-section">
 		<Balance_M/>
 
-		<nav class="button-container">
+		<!-- <nav class="button-container">
 			<button onclick={goto("/gift")}>
 				<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M30.5398 6.04003C30.3452 6.2347 30.0892 6.33332 29.8332 6.33332C29.5772 6.33332 29.3212 6.23603 29.1265 6.04003L28.1665 5.08007V9.33332C28.1665 9.88532 27.7185 10.3333 27.1665 10.3333C26.6145 10.3333 26.1665 9.88532 26.1665 9.33332V5.08137L25.2065 6.04133C24.8158 6.432 24.1825 6.432 23.7918 6.04133C23.4012 5.65067 23.4012 5.01729 23.7918 4.62662L26.4585 1.95995C26.5505 1.86795 26.6612 1.79464 26.7838 1.74397C27.0278 1.64264 27.3038 1.64264 27.5478 1.74397C27.6705 1.79464 27.7812 1.86795 27.8732 1.95995L30.5398 4.62662C30.9305 5.01729 30.9305 5.64936 30.5398 6.04003ZM29.8332 16C29.8332 23.4867 23.6532 29.5386 16.1198 29.328C9.16384 29.1346 3.36651 23.336 3.17184 16.38C2.96118 8.8467 9.01318 2.66666 16.4998 2.66666C18.2692 2.66666 19.9585 3.0067 21.4958 3.64403C21.7092 3.73203 21.7918 3.98399 21.6972 4.19465C21.2025 5.29065 21.0172 6.57866 21.2972 7.93066C21.8145 10.4333 23.9852 12.3786 26.5278 12.6346C27.3532 12.7173 28.1545 12.6387 28.9012 12.416C29.1212 12.3507 29.3558 12.464 29.4132 12.6854C29.6865 13.74 29.8332 14.8547 29.8332 16ZM20.4625 18.6893C20.4625 17.0866 19.3758 15.692 17.8145 15.2974L15.6705 14.7653C15.3399 14.6826 15.0585 14.4974 14.8465 14.2267C14.6465 13.9734 14.5358 13.648 14.5358 13.3133C14.5358 12.488 15.2065 11.8174 16.0318 11.8174H16.9652C17.7278 11.8174 18.3665 12.3907 18.4532 13.1507C18.5145 13.7 19.0092 14.1 19.5585 14.0334C20.1079 13.972 20.5025 13.4774 20.4412 12.9281C20.2612 11.3254 19.0212 10.0893 17.4692 9.86392V9.33332C17.4692 8.78132 17.0212 8.33332 16.4692 8.33332C15.9172 8.33332 15.4692 8.78132 15.4692 9.33332V9.87206C13.8092 10.1441 12.5358 11.576 12.5358 13.3107C12.5358 14.0934 12.7985 14.8587 13.2718 15.456C13.7465 16.068 14.4238 16.5106 15.1838 16.7026L17.3278 17.2347C17.9958 17.404 18.4625 18.0013 18.4625 18.6867C18.4625 19.084 18.3065 19.4587 18.0225 19.7427C17.7385 20.0267 17.3639 20.1826 16.9665 20.1826H16.0332C15.2705 20.1826 14.6318 19.6093 14.5452 18.8493C14.4838 18.2999 13.9878 17.8973 13.4398 17.9666C12.8905 18.028 12.4958 18.5226 12.5572 19.0719C12.7345 20.6546 13.9452 21.8827 15.4692 22.1294V22.6667C15.4692 23.2187 15.9172 23.6667 16.4692 23.6667C17.0212 23.6667 17.4692 23.2187 17.4692 22.6667V22.1361C18.2092 22.0281 18.8958 21.7 19.4358 21.16C20.0985 20.4973 20.4625 19.6199 20.4625 18.6893Z" fill="#497951"/>
@@ -136,6 +137,7 @@
 		justify-content: space-between;
 		align-items: center;
 		height: 100%;
+		height: var(--header-height);
 		width: 100%;
 		gap: 1%;
 		border-bottom: solid 2px color-mix(in hsl, var(--grey-400), white 80%);
@@ -278,7 +280,7 @@
 			.header{
 				padding-inline: 0;
 			}
-			 /* Background Swirly Image decoration */
+			/* Background Swirly Image decoration */
 			:global(header::after){
 				--_background-cut-off: 85%;
 				content: '';
@@ -288,13 +290,14 @@
 				min-height: calc(var(--header-intro-height) + var(--header-height));
 				background: 
 				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
-				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off));
+				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off))
+				;
 				mask-image:
 				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off)) ;
 				background-repeat: no-repeat;
 				background-size: cover;
 				overflow: clip;
-				mix-blend-mode:normal;
+				
 			}
 
 			.home-intro-section{
