@@ -11,7 +11,7 @@
 	let navSelect = $derived($current);
 	
 	afterNavigate(() => {
-		console.log('current page is',navSelect,$current);
+		console.log('current page is',navSelect);
 	});
 
 </script>
@@ -31,16 +31,16 @@
 {/snippet}
 
 {#snippet legal()}
-<p>© Monytri 2023&nbsp; |&nbsp;</p>
-<p>
-	<a href="https://monytri.com/legal-documents/">Legal documents</a>&nbsp; |&nbsp; 
-</p>
-<p>
-	<a href="https://monytri.com/privacy-policy/">Privacy Policy</a>&nbsp; |&nbsp; 
-</p>
-<p>
-	<a href="https://monytri.com/cookie-policy-eu/" target="_blank" rel="noopener">Cookie Policy</a>
-</p>
+	<p>© Monytri 2023&nbsp; |&nbsp;</p>
+	<p>
+		<a href="https://monytri.com/legal-documents/">Legal documents</a>&nbsp; |&nbsp; 
+	</p>
+	<p>
+		<a href="https://monytri.com/privacy-policy/">Privacy Policy</a>&nbsp; |&nbsp; 
+	</p>
+	<p>
+		<a href="https://monytri.com/cookie-policy-eu/" target="_blank" rel="noopener">Cookie Policy</a>
+	</p>
 {/snippet}
 
 <!-- desktop footer -->

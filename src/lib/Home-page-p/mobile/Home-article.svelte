@@ -46,6 +46,8 @@
 					</svg>
 				</span>
 			</h2>
+
+			{#each {length:5} }
 			<div class="blog-container">
 				<a href="/blog" aria-label="blog"></a>
 				<img src="./home-page/homescreen-team.png" alt="" width="177px" height="177px">
@@ -61,6 +63,7 @@
 					</span>
 				</div>
 			</div>
+			{/each}
 		</article>
 	</section>
 
@@ -190,6 +193,7 @@
 				width: 100%;
 				height: 177px;
 				container-type: inline-size;
+				margin-bottom: 3%;
 			}
 
 			.recent-blogs .blog-container a{
