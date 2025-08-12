@@ -71,19 +71,11 @@
 	}
 
 	function sendEmail() {
-		const subject = `Request from ${formData.benefactor.name}`;
+		const subject = `Request for ${formData.benefactor.name}`;
 		const body = `You have received a request for an amount of €${formData.amount}.\n\nPlease visit the following link to view and respond to the request:\n${requestUrl}`;
 		window.location.href = `mailto:${formData.benefactor.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 	}
 
-	let {formData,validaterequest,button,nextStep,stepValidation,previousStep,submitForm} = $props();
-	let selectedMethod = $state('');
-	let selectedBank = $state('');
-	let methods = $derived({
-		"Linked Credit/Debit Card": "Card ending in **** **** 1234",
-		"iDEAL": "Select your bank",
-		"EFT request": "Select your bank"
-	});
 </script>
 
 <!-- Need to check with the client to see which one they would prefer. -->
@@ -116,8 +108,6 @@
 				<span class="review-value">{formData.message}</span>
 			</p>
 			{/if}
-	
-			
 		</div>
 	</article>
 {/snippet}

@@ -139,7 +139,7 @@
 		place-self: center;
 		display: flex;
 		flex-direction: column;
-		background-color: var(--white);
+		background-color: var(--general-background-color-secondary, var(--white));
 		border-radius: 10px;
 		padding: 40px;
 		box-shadow: 0 4px 8px -3px rgba(0, 0, 0, 0.1);
@@ -147,6 +147,9 @@
 		height: auto;
 		max-height: max(30dvh,fit-content);
 		max-width: 700px;
+		color: light-dark(var(--general-text-color), var(--black));
+		color: var(--general-text-color);
+
 		
 		@container style(--mobile:1) {
 			place-self: center;

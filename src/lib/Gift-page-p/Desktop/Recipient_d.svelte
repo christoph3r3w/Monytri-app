@@ -103,7 +103,7 @@
 		flex-direction: column;
 		min-width: 35dvw;
 		overflow-y: scroll;
-		background-color: var(--white);
+		background-color: light-dark(var(--white),var(--general-text-color-secondary));
 		gap: 1rem;
 		margin-bottom: 1rem;
 		padding-block: 2rem;
@@ -122,11 +122,13 @@
 			align-items: center;
 			padding: clamp(1%,1.5vw,3%);
 			cursor: pointer;
+			background-color: light-dark(var(--general-background-color), color-mix(in srgb, var(--general-text-color-secondary), var(--grey-400)));
+			/* background-color: var(--grey-500); */
+			border-radius: 10px;
 		}
 		
 		.recipient-item:where(.selected) {
 			outline: solid 2px var(--primary-darkgreen-550);	
-			border-radius: 10px;
 
 			.recipient-details p {
 				color: var(--primary-darkgreen-550);

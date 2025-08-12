@@ -154,7 +154,7 @@
 		}
 	}
 
-	/* chard select check boxes */
+	/* card select check boxes */
 	.option-select{
 		flex: 0 1 5%;
 		display: flex;
@@ -293,7 +293,7 @@
 		width: clamp(200px,420px 30cqw);
 		height: clamp(10cqi,50cqi,30cqh);
 		aspect-ratio: 14/9;
-		background-color: var(--white);
+		background-color: var(--general-background-color-secondary, var(--white));
 		display: grid;
 		grid-template-areas: a;
 		place-content: center;
@@ -303,6 +303,8 @@
 		background-repeat: no-repeat;
 		background-size: cover;
 		user-select: none;
+		color: light-dark(var(--general-text-color), var(--black));
+
 		/* outline: solid rgb(0, 255, 21); */
 	}
 	

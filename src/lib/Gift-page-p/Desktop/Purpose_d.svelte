@@ -88,7 +88,7 @@
 	
 	.purpose-options {
 		position: relative;
-		background-color: var(--white);
+		background-color: var(--general-background-color-secondary);
 		padding-inline: 3.3rem;
 		padding-block: 3rem;
 		display: flex;
@@ -163,7 +163,7 @@
 		margin-inline: 5%;
 		align-self:start;
 		border-radius: clamp(5px, 11cqw, 5px);
-		background-color: var(--white);
+		background-color: var(--general-background-color-secondary);
 	}
 
 	.purpose-option .purpose-icon-container{
