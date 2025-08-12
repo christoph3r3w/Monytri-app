@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { StepContainer} from '$lib'
 
-	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm} = $props();
+	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm, onPaymentMethodSelect } = $props();
 	let selectedMethod = $state('');
 	let selectedBank = $state('');
 	let methods = $derived({
@@ -20,7 +20,7 @@
 			<input type="radio" id='paymentMethod{i}' name="paymentMethod" 
 			bind:group={selectedMethod}
 			onclick={() =>{
-			formData.PaymentMethod = `${method}${selectedBank}`;
+			onPaymentMethodSelect?.(`${method}${selectedBank}`);
 			validatePayment
 			}} 
 			value="paymentMethod{i}{method}{selectedBank}">

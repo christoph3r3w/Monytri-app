@@ -14,19 +14,21 @@
 	// Form data structure
 	let formData = $state({
 		benefactor: null,
+		requestId: null,
 		cardDesign: 'default',
 		Purpose: null,
 		DeliveryDate: null,
 		requestMethod: null,
 		amount: null,
-		message: '',
+		message: 'check if needed',
 		searchQuery: '',
 		errors: {},
 		isLoading: false,
 		date: new Date(),
-		get currentDate() {
-			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
-		}
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
 	});
 	
 	// Step validation state
@@ -121,6 +123,11 @@
 			benefactor.email.toLowerCase().includes(query.toLowerCase())
 		);
 	}
+
+	// Callback to handle search query updates from child components
+	function updateSearchQuery(newQuery) {
+		formData.searchQuery = newQuery;
+	}
 	
 	// Enhanced validation functions
 	function selectBenefactor(benefactor) {
@@ -185,33 +192,67 @@
 	}
 	
 	// It needs to be checked and connected so that it sends proper form data to the back-end.
+	// Function to handle form submission - made with ai 
 	async function submitForm() {
 		formData.isLoading = true;
-		
-		try {
-			if (!formData.requestMethod) {
-				alert('Please select a request method')
-				throw new Error('Please select a request method');
-			}
 
 			if (!formData.benefactor) {
-				alert('Please select a benefactor')
+				alert('Please select a benefactor');
 				throw new Error('Please select a benefactor');
 			}
+			if (!formData.amount) {
+				handleError(2, 'Please enter a valid amount');
+				throw new Error('Invalid amount');
+			}
+
+			// Helpers
+			const toBase64Url = (bytes) => {
+				let binary = '';
+				for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+				return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+			};
+			const generateRequestId = () => {
+				const bytes = new Uint8Array(16);
+				crypto.getRandomValues(bytes);
+				return `req_${toBase64Url(bytes)}`; // 22-char base64url + prefix
+			};
+
+			// 1) Create request ID
+			const requestId = generateRequestId();
+
+			// 2) Create expiration (default 7 days)
+			const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+
+			// 3) Create a token that can be decoded (rid + exp), and a shareable URL
+			const payload = { rid: requestId, exp: expiresAt };
+			const token = toBase64Url(new TextEncoder().encode(JSON.stringify(payload)));
+			const origin = typeof window !== 'undefined' ? window.location.origin : '';
+			const shareUrl = `${origin}/request/${requestId}?token=${token}`;
+
+			// Attach to form data
+			formData.requestId = requestId;
+			formData.expiresAt = expiresAt;
+			formData.shareUrl = shareUrl;
+			formData.token = token;
 
 			currentProgress = 100;
-			
-			await new Promise(resolve => setTimeout(resolve, 1000));
-			// alertDialog.remove();
-			// Store form data in localStorage before redirecting
-			// They should actually store the link that should be sent to the backend to request the transformation of the form data.
-			// localStorage.setItem('giftFormData', JSON.stringify(formData));
-			localStorage.setItem('giftFormData', 'hi');
-				
-			await goto('/gift-success');
 
+			// Simulate network
+			await new Promise((resolve) => setTimeout(resolve, 800));
+
+			// Persist items needed for sharing/QR and backend handoff
+			localStorage.setItem('requestId', requestId);
+			localStorage.setItem('requestToken', token);
+			localStorage.setItem('requestShareUrl', shareUrl);
+			// Optionally store the full payload for preview/debug
+			// localStorage.setItem('requestFormData', JSON.stringify(formData));
+
+			console.log('Prepared request:', { requestId, expiresAt, shareUrl },formData);
+
+			// Move to success step
+			currentStep = 3;
 		} catch (error) {
-			handleError(currentStep, error.message);
+			handleError(currentStep, error.message ?? String(error));
 		} finally {
 			formData.isLoading = false;
 		}
@@ -316,6 +357,7 @@
 				{previousStep} 
 				{stepValidation} 
 				selected={selectBenefactor}
+				onSearchQueryUpdate={updateSearchQuery}
 			/>
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { StepContainer } from '$lib';
-	let { formData,selected,button,validateAmount,nextStep,previousStep,stepValidation } = $props();
+	let { formData,selected,button,validateAmount,nextStep,previousStep,stepValidation,submitForm } = $props();
 	
 	let selectedAmount = $state('');
 
@@ -31,6 +31,19 @@
 		validateAmount(event);
 	}
 </script>
+
+{#snippet submitForReview()}
+	<button 
+	type="submit"
+	class=" {stepValidation[2] ? 'active' : 'disabled'}"
+	disabled={!stepValidation[2]}
+	onclick={()=>{
+		nextStep();
+		submitForm();
+	}}>
+		continue
+	</button>
+{/snippet}
 
 {#snippet amountOption()}
 		<form onsubmit={nextStep}>
@@ -67,7 +80,8 @@
 	{stepValidation}
 	showLeftContent={true}
 	showRightContent={true}
-	showContinueButton={true}
+	showContinueButton={false}
+	customButton={submitForReview}
 	rightContent={amountOption}
 />
 

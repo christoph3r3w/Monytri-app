@@ -11,7 +11,6 @@
 		)
 		: recipients
 	);
-
 </script>
 
 {#snippet recipientsList1()}
@@ -54,8 +53,7 @@
 	<h3 class="section-title">Most Recent</h3>
 	<ul class="recipients-list">
 		{#each filteredRecipients as recipient,i}
-			<li 
-				class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}"
+			<li class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}"
 				onclick={() => selected(recipient)}
 			>
 				<article class="recipient-info">
@@ -95,7 +93,6 @@
 	showRightContent={true}
 	showContinueButton={true}
 	rightContent={recipientsList2}
-	
 />
 
 <style>

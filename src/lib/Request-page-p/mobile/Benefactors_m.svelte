@@ -1,16 +1,19 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import { StepContainer } from '$lib';
-	let { formData, benefactors, selected,nextStep,previousStep,stepValidation } = $props();
+	let { formData, benefactors, selected,nextStep,previousStep,stepValidation, onSearchQueryUpdate } = $props();
 
-	let filteredbenefactors = $derived(
-		formData.searchQuery 
-		? benefactors.filter(benefactor => 
-			benefactor.name.toLowerCase().includes(formData.searchQuery.toLowerCase()) ||
-			benefactor.email.toLowerCase().includes(formData.searchQuery.toLowerCase())
-		)
-		: benefactors
-	);
+	let filteredbenefactors = $derived.by(() => {
+		const list = Array.isArray(benefactors) ? benefactors : [];
+		const q = (formData?.searchQuery ?? '').trim().toLowerCase();
+		if (!q) return list;
+
+		return list.filter((b) => {
+			const name = String(b?.name ?? '').toLowerCase();
+			const email = String(b?.email ?? '').toLowerCase();
+			return name.includes(q) || email.includes(q);
+		});
+	});
 
 </script>
 
@@ -61,6 +64,7 @@
 	showContinueButton={true}
 	showSkipButton={''}
 	rightContent={benefactorList}
+	{onSearchQueryUpdate}
 />
 
 <style>

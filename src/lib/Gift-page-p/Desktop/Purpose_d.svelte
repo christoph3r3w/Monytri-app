@@ -4,7 +4,7 @@
 	import {StepContainer} from '$lib';
 
 	
-	let { formData, validatePurpose,button,nextStep,stepValidation,previousStep } = $props();
+	let { formData, validatePurpose,button,nextStep,stepValidation,previousStep, onSearchQueryUpdate, onPurposeSelect, onSkipPurpose } = $props();
 
 	let PurposeList = $state([
 		{id: 1,name: 'Birthday',value: 'Birthday',img:'./purpose-assets/Party-3--Streamline-Brooklyn (Traced)party.png'},
@@ -25,7 +25,7 @@
 	);
 
 	function handlePurposeSelect(purpose) {
-		formData.Purpose = purpose.value;
+		onPurposeSelect?.(purpose.value);
 		validatePurpose();
 	}
 </script>
@@ -71,7 +71,8 @@
 	showContinueButton={true}
 	showSkipButton={true}
 	rightContent={purposeOptions}
-	
+	{onSearchQueryUpdate}
+	{onSkipPurpose}
 />
 
 <style>

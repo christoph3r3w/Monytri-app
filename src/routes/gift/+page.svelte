@@ -154,6 +154,11 @@
 			recipient.email.toLowerCase().includes(query.toLowerCase())
 		);
 	}
+
+	// Callback to handle search query updates from child components
+	function updateSearchQuery(newQuery) {
+		formData.searchQuery = newQuery;
+	}
 	
 	// Enhanced validation functions
 	function selectRecipient(recipient) {
@@ -221,6 +226,11 @@
 		stepValidation[3] = true;
 	}
 
+	// Callback to handle purpose selection from child components
+	function selectPurpose(purposeValue) {
+		formData.Purpose = purposeValue;
+	}
+
 	//search pupose functionality
 	function searchPurpose(query) {
 		formData.searchQuery = query;
@@ -240,6 +250,21 @@
 
 	function validatePayment(e) {
 		stepValidation[5] = e.target.value && formData.PaymentMethod !== null;
+	}
+
+	// Callback to handle payment method selection from child components
+	function selectPaymentMethod(paymentMethod) {
+		formData.PaymentMethod = paymentMethod;
+	}
+
+	// Skip step callbacks
+	function skipPurpose() {
+		formData.Purpose = null;
+	}
+
+	function skipCardDesign() {
+		formData.cardDesign = 'default';
+		formData.message = '';
 	}
 	
 	async function submitForm() {
@@ -322,7 +347,6 @@
 				{previousStep}
 				{stepValidation}
 			/>	
-
 		<!-- step 3 choose proposal -->
 		{:else if currentStep === 3}
 			<Purpose_D
@@ -331,6 +355,9 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSearchQueryUpdate={updateSearchQuery}
+				onPurposeSelect={selectPurpose}
+				onSkipPurpose={skipPurpose}
 			/>
 		<!-- Step 4: Choose Card Design -->
 		{:else if currentStep === 4}
@@ -350,6 +377,7 @@
 				{previousStep}
 				{stepValidation}
 				submitForm={submitForm}
+				onPaymentMethodSelect={selectPaymentMethod}
 			/>
 		{/if}
 	{:else if $isMobile}
@@ -362,6 +390,7 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSearchQueryUpdate={updateSearchQuery}
 			/>
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}
@@ -382,6 +411,9 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSearchQueryUpdate={updateSearchQuery}
+				onPurposeSelect={selectPurpose}
+				onSkipPurpose={skipPurpose}
 			/>
 		<!-- Step 4: Choose Card Design -->
 		{:else if currentStep === 4}
@@ -401,6 +433,7 @@
 				{previousStep}
 				{stepValidation}
 				{submitForm}
+				onPaymentMethodSelect={selectPaymentMethod}
 			/>
 		{/if}
 		<!-- Step 6: Transfer Success -->

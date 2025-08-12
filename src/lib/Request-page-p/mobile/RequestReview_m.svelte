@@ -5,11 +5,15 @@
 	import QRCode from 'qrcode';
 	import { goto } from '$app/navigation';
 
+	let {formData,validaterequest,button,nextStep,stepValidation,previousStep,submitForm,currentProgress} = $props();
+	let selectedMethod = $state('');
+
 	//  vercel does not let a user enter an application from the share page you need to start with the hoem page 
 	const homeUrl = window.location.origin
 	// Later for this, they should go into the server.js
 	// It should also pick the important forum data information from the request validation process, hash it, and make it a link to send to the backend.
-	const requestUrl = `${homeUrl}/request?data=${encodeURIComponent(JSON.stringify(formData))}`;
+	// const requestUrl = `${homeUrl}/request?data=${encodeURIComponent(JSON.stringify(formData))}`;
+	const requestUrl = formData.shareUrl;
 	let qrDataUrl = $state('');
 	let canShare = $state(false);
 	let openRequest = $derived(formData.benefactor.name === 'Open request');

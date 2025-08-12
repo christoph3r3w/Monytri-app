@@ -34,7 +34,14 @@
 		// Snippet props
 		leftContent,
 		rightContent,
-		customButton = null
+		customButton = null,
+		
+		// Search query callback
+		onSearchQueryUpdate = null,
+		
+		// Skip step callbacks
+		onSkipPurpose = null,
+		onSkipCardDesign = null
 	} = $props();
 	
 	import { current, isMobile} from '$lib/store.js';
@@ -73,11 +80,10 @@
 				// Clear data for the current step
 				switch(step) {
 					case 3: // Purpose step
-						formData.Purpose = null;
+						onSkipPurpose?.();
 						break;
 					case 4: // Card Design step
-						formData.cardDesign = 'default';
-						formData.message = '';
+						onSkipCardDesign?.();
 						break;
 				}
 				nextStep();
@@ -125,9 +131,10 @@
 				type="search" 
 				placeholder={placeholder}
 				class="search-input"
-				bind:value={formData.searchQuery}
+				value={formData.searchQuery || ''}
+				oninput={(e) => onSearchQueryUpdate?.(e.target.value)}
 			/>
-			{#if formData.searchQuery.length < 1}
+			{#if (formData.searchQuery || '').length < 1}
 				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
 					<path fill="#A0A0A0" d="M29.295 27.705l-5.762-5.761a13.058 13.058 0 0 0 3.092-8.444C26.625 6.263 20.738.375 13.5.375c-7.238 0-13.125 5.888-13.125 13.125s5.888 13.125 13.125 13.125c3.215 0 6.159-1.166 8.444-3.091l5.761 5.761a1.122 1.122 0 0 0 1.59 0c.44-.438.44-1.15 0-1.59ZM2.625 13.5c0-5.997 4.878-10.875 10.875-10.875S24.375 7.503 24.375 13.5s-4.878 10.875-10.875 10.875S2.625 19.497 2.625 13.5Z"/>
 				</svg>
