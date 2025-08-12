@@ -20,7 +20,13 @@
 
 	onMount(() => {
 		canShare = !!navigator.share;
-		if (openRequest){generateQR();}
+	});
+	
+	$effect(() => {
+		if (openRequest && qrDataUrl.length <= 0 ) {
+			generateQR();
+		}
+		currentProgress = 100;
 	});
 
 	async function generateQR() {
@@ -83,7 +89,7 @@
 	<article class="review-summary">
 		<div>
 			
-			{#if formData.benefactor.name !== 'Open request'}
+			{#if formData.benefactor.name !== 'Open request' || formData.amount > 0}
 			<h2>Your request to {formData.benefactor.name}</h2>
 			<hr />
 			<!-- <p class="review-item">
@@ -114,7 +120,7 @@
 
 {#snippet requestReview()}
 	<article class="request-summary review-summary">
-		{#if !openRequest}
+		{#if !openRequest || formData.amount > 0}
 			{#if formData.benefactor.profilePic.length > 0 || formData.benefactor.profilePic !== ''}
 				<img src="{formData.benefactor.profilePic}" alt="{formData.benefactor.name} profile picture" class="benefactor-profile-pic" />
 			{:else}
@@ -133,6 +139,10 @@
 				<span class="review-label">Send Date:</span>
 				<span class="review-value">{formData.currentDate}</span>
 			</p>
+			<p class="review-date">
+				<span class="review-label">Expires at:</span>
+				<span class="review-value">{formData.expiresAt}</span>
+			</p>
 	</article>
 {/snippet}
 
@@ -149,7 +159,7 @@
 		{/if}
 	</figure>
 	
-	{#if canShare && openRequest}
+	{#if canShare && openRequest || formData.amount <= 0}
 		<button class="share-button" onclick={nativeShare}>
 			share
 		</button>

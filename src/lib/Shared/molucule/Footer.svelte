@@ -271,15 +271,15 @@
     	}
 
 		.mobile-nav{
-				position: relative;
-				grid-column: 1/-1;
-				grid-row: 1/2;
-				display: grid;
-				grid-template-columns: subgrid;	
-				grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(30px, 45%);		
-				width: 100cqw;
-				border-radius:inherit;
-				z-index: 100;
+			grid-column: 1/-1;
+			position: relative;
+			grid-row: 1/2;
+			display: grid;
+			grid-template-columns: subgrid;	
+			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(10px, 15%);		
+			width: 100cqw;
+			border-radius:inherit;
+			z-index: 100;
 		}
 			
 		.mobile-nav ul{

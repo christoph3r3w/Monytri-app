@@ -58,8 +58,12 @@
 
 		<nav class="button-container">
 			<div class="gifted">
-				<h1 title={undefined}>{Gifted}</h1>
-				<p>You have gifted</p>
+				{#if Gifted.length > 0 && Invested.length > 0}
+					<h1 title={undefined}>{Gifted}</h1>
+					<p>You have gifted</p>
+				{:else}
+					<h1 title={undefined}>let's start here</h1>
+				{/if}
 			</div>
 			<button onclick={goto("/gift")}>
 				<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +143,6 @@
 	.gifted h1{
 		color: var(--general-text-color-secondary);
 	}
-
 
 	.button-container button{
 		flex: 1 1 60%;

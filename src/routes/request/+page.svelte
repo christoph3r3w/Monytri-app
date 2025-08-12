@@ -196,6 +196,7 @@
 	async function submitForm() {
 		formData.isLoading = true;
 
+		try {
 			if (!formData.benefactor) {
 				alert('Please select a benefactor');
 				throw new Error('Please select a benefactor');
@@ -301,6 +302,7 @@
 				{previousStep} 
 				{stepValidation} 
 				{validateAmount}
+				{submitForm}
 			/>
 		{:else if currentStep === 3}
 			<RequestReview_M
@@ -310,6 +312,7 @@
 				{previousStep}
 				{stepValidation}
 				{submitForm}
+				{currentProgress}
 			/>
 		<!-- step 4 success -->
 		{:else if currentStep === 4}
