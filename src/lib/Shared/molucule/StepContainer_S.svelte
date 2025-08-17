@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	let { 
 		// Core data
 		formData, 
@@ -195,7 +195,7 @@
 
 {#snippet rightSection()}
 	<!-- Render custom right content -->
-	 {#if rightContent}
+	{#if rightContent}
 		{@render rightContent()}
 	{/if}	
 	<!-- Button container -->
@@ -273,7 +273,7 @@
 		border-radius: 10px;
 	}
 
-	:global(.step-header) {
+	.step-header{
 		display: flex;
 		align-items: center;
 		height: clamp(fit-content,1vh ,4rem);
@@ -495,7 +495,7 @@
 			padding: 0 !important;
 		}
 
-		:global(.step-header) {
+		.step-header {
 			flex-direction: row;
 		}
 
@@ -551,7 +551,7 @@
 			padding: 0 !important;
 		}
 
-		:global(.step-header) {
+		.step-header {
 			flex-direction: row;
 		}
 

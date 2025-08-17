@@ -414,7 +414,7 @@
 			padding: 0 !important;
 		}
 
-		:global(.step-header) .back-button{
+		.step-header .back-button{
 			position: relative !important;
 			top: 0;
 			left: 0;
