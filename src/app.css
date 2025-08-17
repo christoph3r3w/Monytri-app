@@ -86,7 +86,7 @@ a,button {
 	}
 
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: darknow) {
 	:root {
 		/* basic colors */
 		/* --general-background-color: #daeadd; */
