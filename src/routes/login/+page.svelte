@@ -4,7 +4,41 @@
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
 	import {user,isAuthenticated} from '$lib/user';
+	
+	let toggleRegister = $state(false);
+	let errorMessage = $state('');
+	let isLoading = $state(false);
+
+	let formData = $state({
+		email: '',
+		password: '',
+		name: ''
 	});
+
+	let currentStep = $state(1);
+	let totalSteps = $derived(Object.keys(stepValidation).length);
+	
+	function createStepValidation(totalSteps) {
+		let steps = {};
+		for (let i = 1; i <= totalSteps; i++) {
+			steps[i] = i === totalSteps; 
+		}
+		return steps;
+	}
+	let stepValidation = $state(createStepValidation(3));
+	
+	function nextStep() {
+		if (stepValidation[currentStep] && currentStep < totalSteps) {
+			currentStep++;
+		}
+	}
+	
+	function previousStep() {
+		if (currentStep > 1) {
+			currentStep--;
+		}
+	}
+	
 </script>
 
 <LoginStep 

@@ -88,6 +88,20 @@
 
 </section> -->
 
+<PageStepContainer
+    {formData}
+	headerName="Login or register"
+    subtext="Please login or register to continue"
+	currentStep={1}
+	{nextStep}
+	{previousStep}
+	{stepValidation}
+    showLeftContent={true}
+	showRightContent={true}
+	showContinueButton={true}
+    rightContent={loginForm}
+    customButton={loginButton}
+/>
     
 <style>
 	/* .login-container {

@@ -28,6 +28,7 @@ export {default as InProgress_S} from './Shared/molucule/InProgress.svelte'
 export {default as ButtonGift} from './Gift-page-p/Shared/button-gift-page_S.svelte';
 export {default as Request_success} from './Request-page-p/mobile/Request-process-succuess.svelte';
 export {default as StepContainer} from './Shared/molucule/StepContainer_S.svelte';
+export {default as PageStepContainer} from './Shared/molucule/PageStepContainer_S.svelte';
 export {default as LoginStep} from './Login-page/Login.svelte'
 
 // test components
