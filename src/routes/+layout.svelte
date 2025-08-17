@@ -390,5 +390,9 @@
 			padding-bottom: env(safe-area-inset-bottom);
 			z-index: 100;
 		}
+
+		:global(body.android-device){
+			--footer-height: calc(65px + var(--safe-area-inset-bottom));
+		}
 	}
 </style>

@@ -412,7 +412,7 @@
 		padding: 1%;
 	}
 
-:global(html:has(.mobile-device))
+:global(html:has(.isMobile))
 	.card-design-options{
 		display: none;
 	}
