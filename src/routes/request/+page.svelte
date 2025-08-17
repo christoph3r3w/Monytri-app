@@ -32,12 +32,15 @@
 	});
 	
 	// Step validation state
-	let stepValidation = $state({
-		1: false,
-		2: false,
-		3: true, // last step is always valid for the initial state
-	});
-
+	function createStepValidation(totalSteps) {
+		let steps = {};
+		for (let i = 1; i <= totalSteps; i++) {
+			steps[i] = i === totalSteps; 
+		}
+		return steps;
+	}
+	let stepValidation = $state(createStepValidation(3));
+	
 	// Use provided benefactors or fallback to defaults
 	let benefactors = $state([
 		{
