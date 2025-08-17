@@ -13,8 +13,8 @@
 		GiftReview_M,
 		Process_success_S,
 	} from '$lib';
-	import { goto } from '$app/navigation';
-	import { fade,fly } from 'svelte/transition';
+	import {goto} from '$app/navigation';
+	import {fade,fly} from 'svelte/transition';
 	import {onMount} from 'svelte';	
   
 	// State management
@@ -311,10 +311,6 @@
 		};
 	});
 </script>
-
-<svelte:head>
-	<title>{$current}</title>	
-</svelte:head>
 
 {#snippet progressBar()}
 	<div class="progress-bar">

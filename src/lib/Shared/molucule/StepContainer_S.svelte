@@ -201,7 +201,7 @@
 	<!-- Button container -->
 	<div class="button-container {customButton? 'custom': ''}">
 		{#if stepType === 'payment' || stepType === 'review' && !customButton}
-			{@render buttonType('submit')}
+			{@render buttonType('submit',currentStep)}
 		{:else}
 			{#if showContinueButton}
 				{@render buttonType('continue', currentStep)}
@@ -216,15 +216,16 @@
 	</div>
 {/snippet}
 
-<section class="step-container" id={ $device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
+<section class="step-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
 	<!-- left grid section -->
 	{#if showLeftContent && !$isMobile}
 		<article class="left-step">
 			{@render leftSection()}
 		</article>
 	{:else}
-			{@render leftSection()}
+		{@render leftSection()}
 	{/if}
+
 	<!-- right grid section -->
 	{#if showRightContent && !$isMobile}
 		<article class="right-step" transition:fade>

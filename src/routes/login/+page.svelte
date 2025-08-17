@@ -1,13 +1,9 @@
 <script>
 	import {current,isMobile} from '$lib/store.js';
-	import {Menu,InProgress_S} from '$lib'
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-
-	$effect(() => {
-		if ($current && !$isMobile) {
-			goto('/error');
-		} 	
+	import {Menu,InProgress_S,LoginStep} from '$lib'
+	import {onMount} from 'svelte';
+	import {goto} from '$app/navigation';
+	import {user,isAuthenticated} from '$lib/user';
 	});
 </script>
 

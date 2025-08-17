@@ -127,6 +127,10 @@
 	
 </script>
 
+<svelte:head>
+	<title>Monytri {$current}</title>
+</svelte:head>
+
 <!-- main application layout -->
 <section class="body-container">
 	{#if ($current == 'gift' && $isMobile || $current == 'request' && $isMobile) }
