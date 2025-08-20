@@ -135,9 +135,9 @@
 <section class="body-container">
 	{#if ($current == 'gift' && $isMobile || $current == 'request' && $isMobile) }
 	{:else}
-	<header>
-		<Header {current}/>	
-	</header>
+		<header>
+			<Header {current}/>	
+		</header>
 	{/if}
 	{#if menu_Open}
 		<Menu/>
@@ -232,8 +232,7 @@
 		align-content: start;
 		overflow-x: hidden;
 		overflow-y: visible;
-		/* overscroll-behavior-x: contain;
-		overscroll-behavior-y: contain; */
+		
 		
 		container-name: main;
 
@@ -338,7 +337,7 @@
 			&.giftOn{
 				padding-top: 0 !important;
 			}
-			
+
 			/* essential cascading layout styling */
 			/* needs to be simplified */
 			&:nth-child(n) > :is(:global(*)) {

@@ -126,13 +126,13 @@
 		color: var(--primary-green-500);
 	}
 	
-	.right-step{
+	/* .right-step{
 		flex: 1 1 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		gap: 1rem;
-	}
+	} */
 	
 	.review-summary {
 		align-self: baseline;

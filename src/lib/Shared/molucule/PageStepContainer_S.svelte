@@ -214,7 +214,7 @@
 
 <style>
 
-	:global(.page-container){
+	.page-container {
 		position: relative;
 		grid-column: 1 / -1;
 		grid-row: 1 / span 1;
@@ -236,7 +236,7 @@
 		}
 	}
 
-	:global(.left-step) {
+	.left-step {
 		position: relative;
 		grid-column: left ;
 		grid-row: 1 / -1;
@@ -245,7 +245,6 @@
 		height: 100%;
 		width: 100%;
 		overflow: clip;
-		overflow-x: visible;
 		flex-wrap: wrap;
 		padding-block: 3rem;
 		padding-inline: 3rem;
@@ -331,7 +330,7 @@
 		grid-column: right;
 	}
 
-	:global(.right-step) {
+	.right-step {
 		flex: 1 1 100%;
 		position: relative;
 		grid-column: left/right;
@@ -346,13 +345,12 @@
 	}
 
 	/* buttons */
-	:global(.step-header button) {
+	.step-header button {
 		flex: 0 1 20%;
 		align-items: baseline;
 	}
 
 	:global(.step-header .back-button)  {
-		/* border-radius: 50%; */
 		height: clamp(1rem,5vh,4rem) ;
 		position: absolute;
 		top: .5rem;
@@ -473,7 +471,7 @@
 
 	@media (width <= 930px) {
 
-		:global(.left-step) {
+		.left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
@@ -497,11 +495,12 @@
 			left: 0;
 		}
 
-		:global(.right-step) {
+		.right-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
 			padding: 0 !important;
 		}
+
 		:global(.page-container) {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;

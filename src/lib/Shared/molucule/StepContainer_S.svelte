@@ -238,8 +238,7 @@
 
 <style>
 
-	:global(.step-container){
-		position: relative;
+	.step-container{
 		grid-column: left / right;
 		grid-row: 2 / -1;
 		display: grid;
@@ -250,14 +249,14 @@
 		width: 100%;
 		background-color: var(--general-background-color);
 
-		& h3.section-title{
+		:global( h3.section-title){
 			position: relative;
 			margin-bottom: 1%;
 			font-size: clamp(1rem,10vw ,1.3rem);
 		}
 	}
 
-	:global(.left-step) {
+	.left-step {
 		position: relative;
 		grid-column: left ;
 		grid-row: 1 / -1;
@@ -348,7 +347,7 @@
 	}
 
 	/* right side */
-	:global(.right-step) {
+	.right-step {
 		flex: 1 1 100%;
 		position: relative;
 		grid-column: right;
@@ -363,7 +362,7 @@
 	}
 
 	/* buttons */
-	:global(.step-header button) {
+	.step-header button {
 		flex: 0 1 20%;
 		align-items: baseline;
 	}
@@ -452,7 +451,6 @@
 		background: none;
 		color: var(--primary-darkgreen-550);
 		text-decoration: underline;
-
 	}
 
 	:global(.right-step .button-container .submit-button)  {
@@ -489,7 +487,7 @@
 
 	@media (width <= 930px) {
 
-		:global(.left-step) {
+		.left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
@@ -513,7 +511,7 @@
 			left: 0;
 		}
 
-		:global(.right-step) {
+		.right-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
 			padding: 0 !important;
@@ -530,7 +528,7 @@
 	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
 	{
 
-		:global(.step-container) {
+		.step-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		
@@ -545,13 +543,13 @@
 			color: var(--general-text-color) !important;
 		}
 
-		:global(.left-step) {
+		.left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
 		}
 
-		.step-header {
+		:global(.step-header) {
 			flex-direction: row;
 		}
 
@@ -632,7 +630,7 @@
 			}
 		}
 
-		:global(.right-step) {
+		.right-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
 			padding: 0 !important;

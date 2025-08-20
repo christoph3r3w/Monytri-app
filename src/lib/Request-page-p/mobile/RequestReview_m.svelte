@@ -351,7 +351,6 @@
 		min-height: fit-content;
 		gap: 1rem;
 		margin-block: 6%;
-		/* max-width: 400px; */
 	}
 
 	.qr-container p{

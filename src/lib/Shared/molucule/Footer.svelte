@@ -1,18 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
-	import {afterNavigate,onNavigate} from '$app/navigation'
+	// import {afterNavigate,onNavigate} from '$app/navigation'
 	import{ goto } from '$app/navigation'
     import { Logo } from '$lib';
-	import { current } from '../../store.js';
+	import { current } from '$lib/store.js';
 
 	// create a store to keep track of the current page
 	// this will be used to set the active class on the mobile navigation
 	// and to set the active class on the footer/header navigation
 	let navSelect = $derived($current);
-	
-	afterNavigate(() => {
-		console.log('current page is',navSelect);
-	});
 
 </script>
 

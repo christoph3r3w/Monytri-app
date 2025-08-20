@@ -506,7 +506,7 @@
 			background-color: var(--white);	
 		}
 
-		:global(.left-step) {
+		.left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
@@ -518,12 +518,13 @@
 			left: 0;
 		}
 
-		:global(.right-step) {
+		.right-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
 			padding: 0 !important;
 		}
-		:global(.step-container) {
+
+		.step-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		}
@@ -540,18 +541,6 @@
 			height: 100%;
 			border-radius: 0 5px 5px 0;
 			transition: width 0.5s ease-out;
-		}	
-
-		:global(.skip-button,.back-button) {
-			position: relative;
-			width: 100%;
-			height: unset !important;
-			padding-block: 5%;
-
-			svg path{
-				stroke: var(--black);
-				fill: var(--black);
-			}
 		}	
 
 
