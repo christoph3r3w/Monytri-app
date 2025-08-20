@@ -41,30 +41,46 @@
 	
 </script>
 
-<LoginStep 
-	{formData}
-	{nextStep}
-	{previousStep}
-	{stepValidation}
-/>
+<section class="login-step-container">
+	<LoginStep 
+		{formData}
+		{nextStep}
+		{previousStep}
+		{stepValidation}
+	/>
+
+</section>
 
 <style>
-	/* .login-container {
+	.login-step-container {
 		position: relative;
 		grid-column: 1 / -1;
 		grid-row: 1 / span 1;
 		width: 100%;
 		overflow: hidden;
-		height: calc(100cqh - var(--header-height) + 10px);
-		max-height: calc(100dvh - var(--footer-height)); ;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
+		display: grid;
+		grid-template-columns: 
+		subgrid 
+		[left-start] repeat(5,[mid-left]) [left-end right-start] repeat(5,[mid-right]) [right-end];
+		grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr;
+		height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
+		max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); ;
+
+		container-type:normal;
+		container-name: transfer-wizard;
+
 	}
 
-	.login-container h1 {
+	@media (width <= 930px) {
+		.login-sep-container {
+			height: calc(100dvh - var(--footer-height));
+			background-color: var(--white);	
+		}
+
+	}
+
+
+	/* .login-container h1 {
 		margin-bottom: 20px;
 	}
 
