@@ -17,6 +17,17 @@
 		
 		try {
 			const formData = new FormData(e.target);
+			// Replace raw phone value with fully-qualified E.164 number if plugin initialized
+			if (phoneInput && typeof phoneInput.getNumber === 'function') {
+				const fullNumber = phoneInput.getNumber();
+				// Validate number using plugin utilities when available
+				if (phoneInput.isValidNumber && !phoneInput.isValidNumber()) {
+					errorMessage = 'Please enter a valid phone number.';
+					isLoading = false;
+					return;
+				}
+				if (fullNumber) formData.set('phone', fullNumber);
+			}
 			await user.login(formData.get('email'), formData.get('password'));
 		} catch (error) {
 			console.error('Login error:', error);
@@ -35,9 +46,67 @@
 	async function logout() {
         await user.logout();
 	};
+	
+	let form = $state()
+	async function submitTrigger() {
+		if (form && !isLoading) {
+			if (form.requestSubmit) form.requestSubmit();
+			else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+		}
+	}
+
+	let phoneInputField = $state(); // DOM ref for the <input>
+	let phoneInput; // intl-tel-input instance
+
+	onMount(async () => {
+		if (typeof window === 'undefined') return;
+		const factory = window.intlTelInput;
+		if (!phoneInputField || typeof factory !== 'function') {
+			console.warn('intlTelInput not available yet.');
+			return;
+		}
+		phoneInput = factory(phoneInputField, {
+			allowDropdown: true,
+			initialCountry: 'auto',
+			separateDialCode: true,
+			nationalMode: false,
+			autoPlaceholder: 'polite',
+			formatOnDisplay: true,
+			preferredCountries: ['us','gb','nl','de','fr'],
+			utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
+			geoIpLookup: async (cb) => {
+				try {
+					const res = await fetch('https://ipapi.co/json/');
+					const data = await res.json();
+					cb(data?.country_code || 'US');
+				} catch {
+					cb('US');
+				}
+			}
+		});
+
+		// Keep input formatted as user types (blur for final format)
+		phoneInputField.addEventListener('blur', () => {
+			if (phoneInput && phoneInput.isValidNumber && phoneInput.isValidNumber()) {
+				// Format the number internationally for display
+				const formatted = phoneInput.getNumber();
+				if (formatted) phoneInputField.value = formatted; // display full number
+			} else if (phoneInput && !phoneInput.isValidNumber()) {
+				errorMessage = 'Invalid phone number';
+			}
+		});
+	});
+
 
 </script>
 
+<svelte:head>
+	<link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css"
+   />
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+</svelte:head>
 
 {#snippet pageHeader()}
 	<Logo name={true}/>
@@ -57,6 +126,18 @@
 		<form class="login-form" onsubmit={login} bind:this={form}>
 			<label for="email">Email</label>
 			<input name="email" type="email" placeholder="Email" id="email" required autocomplete="email" disabled={isLoading} />
+			<label for="phone">Phone</label>
+			<input 
+				id="phone"
+				type="tel"
+				bind:this={phoneInputField}
+				name="phone"
+				placeholder="Enter phone number"
+				autocomplete="tel"
+				required
+				disabled={isLoading}
+				value="+31623984571"
+			/>
 			<label for="validate">Password:</label>
 			<input name="password" type="password" placeholder="Password" id="validate" value="monytriapp" required autocomplete="current-password" disabled={isLoading} />		
 		</form>
@@ -213,6 +294,30 @@
 
 	}
 
+	:global( .login-form .iti > :nth-child(n)){
+		border: solid 1px;
+		border-radius: 8px;
+		border-color: var(--general-text-color-secondary);
+	}
+	
+	:global(.login-form [role="combobox"]) {
+		width: 100%;
+		border-radius: 8px;
+		background-color: transparent !important;
+	}
+
+	:global(.login-form .iti input[type="tel"]) {
+		margin-left: 5rem;
+		width: 100%;
+		max-width: 320px;
+		padding-left: 3% !important;
+	}
+
+	/* Overrides specific to the phone dropdown so user can choose country code */
+	:global(.iti__country-container) { z-index: 20; }
+	:global(.iti__country-list) { z-index: 9999; max-height: 240px; overflow-y: auto; }
+	/* Improve flag button affordance */
+	:global(.iti__flag-container) { cursor: pointer; }
 
 
 	a.forgot-p {
