@@ -6,6 +6,11 @@
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 
+	let notOnLogin = $state(false);
+	$effect(() => {
+		notOnLogin = $current == 'login'? false : true;
+	});
+	
 	function iconTask (){
         if ($current === 'home') {
             // On homepage, activate search functionality
@@ -32,9 +37,11 @@
 
 {#snippet desktopNav()}
 	<nav class="logo">
-		<Logo name={true}/>
+		<h1>
+			<Logo name={true}/>
+		</h1>
 	</nav>
-	<nav class="menu">
+	<nav class="menu" style='{notOnLogin == false? '--not-on-login:false;': '--not-on-login:true;'}' >
 		<menu>
 			{@render desktopRoutes()}
 		</menu>
@@ -47,7 +54,7 @@
 {#snippet mobileHeadNav()}
 	<section class="mobile-header">
 		<!-- no header for specific pages -->
-		{#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success'}
+		{#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success' }
 			<nav class="goBack">
 				<button onclick={iconTask}>
 					<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,6 +107,11 @@
 {/if}
 
 <style>
+	:root{
+		--not-on-login: 'true';
+		transition-behavior: allow-discrete;
+	}
+
 	.header {
 		display: flex;
 		justify-content: space-between;
@@ -121,14 +133,19 @@
 
 	nav.logo{
 		flex: 0 1 fit-content;
+
+		@container style(--not-on-login:1) {
+			outline: solid red;
+		}
 	}
 
 	/* desktop navigation */
-	nav:nth-of-type(2){
+	nav.menu{
+		display: flex;
 		flex: 1 1 fit-content ;
 		justify-content: end;
-
-		@container (width < 730px){
+		
+		@container (width < 730px) or style(--not-on-login: 1) {
 			display: none;
 		}
 	}

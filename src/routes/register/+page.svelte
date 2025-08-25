@@ -9,17 +9,15 @@
 	let errorMessage = $state('');
 	let isLoading = $state(false);
 
+	// Only redirect if already authenticated (so user can't see register) – do NOT push unauthenticated users to /login here
 	function checkSignIn() {
 		if ($isAuthenticated) {
 			goto('/');
-		} else {
-			goto('/login');
-			console.warn('Login failed. Please check your credentials.');
 		}
 	}
 
 	$effect(() => {
-		checkSignIn()
+		checkSignIn();
 	})
 
 	const register = async (e) => {

@@ -49,7 +49,7 @@ export function updateCurrentFromPath() {
             current.set('login');
             break;
         default:
-            current.set('/');
+            current.set(null);
             break;
     }
 }

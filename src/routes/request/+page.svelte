@@ -282,7 +282,7 @@
 	</div>	
 {/snippet}
 
-<article class="transfer-wizard " in:fly={{ y: 50, duration: 500,opacity:0 }} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
+<article class="transfer-wizard " in:fly={{y:50,duration:500,opacity:0.5}} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
 	<!-- Progress indicator -->
 	{@render progressBar()}
 	{#if $isMobile}
@@ -307,6 +307,7 @@
 				{validateAmount}
 				{submitForm}
 			/>
+		<!-- Step 3: Review and Send -->
 		{:else if currentStep === 3}
 			<RequestReview_M
 				{formData}

@@ -2,12 +2,12 @@
 	export let name = false;
 </script>
 
-<a href="/">
+<a href="/" class="logo">
 	<picture>
 		<img src="Monytri-01-1.png" alt="logo" width="40px" />
 	</picture>
 	{#if name}
-		<h1>monytri</h1>
+		<span class="logo-name">monytri</span>
 	{/if}
 </a>
 
@@ -40,7 +40,7 @@
 		}
 	}
 	
-	h1 {
+	.logo-name {
 		flex: 0 0 fit-content;
 		font-size: clamp(1rem,2rem,2rem);
 		font-weight: 600;

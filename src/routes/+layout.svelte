@@ -2,7 +2,8 @@
 	import {onMount} from 'svelte';
   	import {onNavigate,afterNavigate} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
-	import {current,isMobile,menuOpen, updateCurrentFromPath} from '../lib/store.js'
+	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
+	import {isAuthenticated,user} from '$lib/user';
 	import { fade } from 'svelte/transition';
 
 	import '../app.css';
@@ -11,6 +12,8 @@
 
 	let menu_Open = $derived($menuOpen);
 
+	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
+	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !$isAuthenticated);
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -133,7 +136,7 @@
 
 <!-- main application layout -->
 <section class="body-container">
-	{#if ($current == 'gift' && $isMobile || $current == 'request' && $isMobile) }
+	{#if $isMobile && noHeaderPage}
 	{:else}
 		<header>
 			<Header {current}/>	
@@ -142,12 +145,15 @@
 	{#if menu_Open}
 		<Menu/>
 	{/if}
-	<main class={$current == 'gift' || $current == 'request'? 'giftOn':'' }>
-		{@render children()}
-	</main>
-	<footer>
-		<Footer {current}/>
-	</footer>
+		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage}>
+			{@render children()}
+		</main>
+	{#if $isMobile && noFooterPage}
+	{:else}
+		<footer>
+			<Footer {current}/>
+		</footer>
+	{/if}
 </section>
 
 
@@ -190,6 +196,11 @@
 		outline-offset: 2px;
 	}
 
+	:global(html){
+		overscroll-behavior-x: contain;
+		overscroll-behavior-y: contain;
+	}
+
 	:global(body){
 		width: 100%;
 		margin: 0;
@@ -210,7 +221,7 @@
 		min-height: 100dvh;
 		background-color: var(--general-background-color);
 		overflow-x: clip;
-		overflow-y:auto;
+		/* overflow-y:auto; */
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 	}
@@ -250,7 +261,6 @@
 		&:nth-of-type(1) > :is(:global(*)) {
 			grid-column: 1/ span 1;
 			grid-row: 1/span 1;
-			height: 100%;
 		}
 
 		&:nth-of-type(1):has(:global(*) ~ :global(*)) > :nth-child(n)  {
@@ -296,6 +306,7 @@
 			display: flex !important;
 			flex-direction: column;
 			min-height: revert;
+			min-height: 100%;
 			max-height: 100%;
 			overflow: hidden;
 		}
@@ -334,8 +345,8 @@
 			background-color: rgb(200, 224, 124);
 			background-color: rgb(224, 124, 224); */
 			
-			&.giftOn{
-				padding-top: 0 !important;
+			&.noHeaderPage{
+				padding-top: 0 ;
 			}
 
 			/* essential cascading layout styling */
@@ -346,7 +357,7 @@
 				
 				min-height: 100% ;
 				max-height: fit-content;
-				max-height: calc(99svh - var(--header-height) - var(--footer-height) - env(safe-area-inset-bottom));
+				max-height: calc(100svh - var(--header-height) - var(--footer-height) - env(safe-area-inset-bottom));
 				height: fit-content;
 				
 				display: grid;
@@ -357,7 +368,18 @@
 				/* background-color:  rgb(162, 255, 0); */
 			}
 
-			
+			&.noHeaderPage > :is(:global(*)) {max-height: calc(100svh - var(--footer-height) - env(safe-area-inset-bottom));}
+			&.noFooterPage > :is(:global(*)) {max-height: calc(100svh + var(--footer-height) );
+				height: 100svh ;
+			}
+
+			&:has(.noHeaderPage,.noFooterPage) {
+				height: 100dvh;
+				max-height: 100dvh;
+				margin-bottom: 0;
+				margin: 0;
+			}
+
 			&:nth-of-type(1) {
 				grid-column: content ;
 				overflow-y: scroll;

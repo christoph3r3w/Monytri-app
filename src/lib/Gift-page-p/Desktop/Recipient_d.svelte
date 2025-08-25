@@ -104,6 +104,7 @@
 		min-width: 35dvw;
 		overflow-y: scroll;
 		background-color: light-dark(var(--white),var(--general-text-color-secondary));
+		background-color: var(--general-background-color-secondary);
 		gap: 1rem;
 		margin-bottom: 1rem;
 		padding-block: 2rem;
@@ -123,7 +124,7 @@
 			padding: clamp(1%,1.5vw,3%);
 			cursor: pointer;
 			background-color: light-dark(var(--general-background-color), color-mix(in srgb, var(--general-text-color-secondary), var(--grey-400)));
-			/* background-color: var(--grey-500); */
+			background-color: var(--general-background-color-secondary);
 			border-radius: 10px;
 		}
 		

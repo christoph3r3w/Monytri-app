@@ -318,7 +318,7 @@
 	</div>	
 {/snippet}
 
-<article class="transfer-wizard" in:fly={{ y: 50, duration: 500,opacity:0 }} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
+<article class="transfer-wizard" in:fly={{y:50, duration:500,opacity:0.5}} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
 	<!-- Progress indicator -->
 	{@render progressBar()}
 	{#if !$isMobile}

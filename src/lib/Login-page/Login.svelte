@@ -138,7 +138,7 @@
 				disabled={isLoading}
 				value="+31623984571"
 			/>
-			<label for="validate">Password:</label>
+			<label for="validate">Password</label>
 			<input name="password" type="password" placeholder="Password" id="validate" value="monytriapp" required autocomplete="current-password" disabled={isLoading} />		
 		</form>
 		<a class="forgot-p" href="/">forgot password</a>
@@ -158,7 +158,7 @@
 		{isLoading ? 'Logging in...' : 'Login'}
 	</button>
 
-	<button disabled>ios face id</button>
+	<!-- <button disabled>ios face id</button> -->
 	{@render logout1()}
 
 {/snippet}
@@ -291,7 +291,6 @@
 		display: flex;
 		flex-direction: row;
 		gap: 10px;
-
 	}
 
 	:global( .login-form .iti > :nth-child(n)){
