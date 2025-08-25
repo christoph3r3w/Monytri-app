@@ -4,6 +4,7 @@
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
 	import {user,isAuthenticated} from '$lib/user';
+	import {device} from '$lib/Device.js';
     let {formData,nextStep,previousStep,stepValidation} = $props();
 	
 	let toggleRegister = $state(false);
@@ -59,6 +60,14 @@
 	let phoneInput; // intl-tel-input instance
 
 	onMount(async () => {
+		// this works 
+		if ($isAuthenticated) {
+			login();
+			goto('/');
+		}else {
+			$user.logout();
+		}
+
 		if (typeof window === 'undefined') return;
 		const factory = window.intlTelInput;
 		if (!phoneInputField || typeof factory !== 'function') {
@@ -95,6 +104,8 @@
 				errorMessage = 'Invalid phone number';
 			}
 		});
+
+		
 	});
 
 
@@ -150,6 +161,7 @@
 {/snippet}
 
 {#snippet loginButtons()}
+	{#if !$isAuthenticated}
 	<button
 		type="button"
 		disabled={isLoading}
@@ -158,8 +170,17 @@
 		{isLoading ? 'Logging in...' : 'Login'}
 	</button>
 
-	<!-- <button disabled>ios face id</button> -->
-	{@render logout1()}
+	{:else}
+		{@render logout1()}
+	{/if}
+	<!-- {@render logout1()} -->
+
+	{#if $isMobile && $device.platform === 'Android' }
+		<button disabled>android fingerprint</button>
+	{/if }
+	{#if $isMobile && $device.platform === 'iOS' }
+		<button disabled>face id auth</button>
+	{/if }
 
 {/snippet}
 
@@ -174,23 +195,6 @@
 {#snippet logout1()}
     <button onclick={logout}>Logout</button>  
 {/snippet}
-
-<!-- <section class="login-container">
-	<h1>Login or register</h1>
-
-	{#if errorMessage}
-		<div class="error-message">
-			{errorMessage}
-		</div>
-	{/if}
-
-    {@render loginForm()}
-
-	{@render registerButton()}
-
-	{@render logout1()}
-
-</section> -->
 
 <PageStepContainer
     {formData}
@@ -272,12 +276,13 @@
 		margin-bottom: 1rem !important ;
 		width: 100%;
 		max-width: 400px;
-		padding: 4% 3%;
+		padding:clamp(1%,5%,3%) clamp(1%,2%,3%);
 		color: var(--general-text-color-secondary);
 		border: solid 1px;
 		border-radius: 8px;
 		border-color: var(--neutral-grey);
 		background-color: var(--white);
+		/* outline: solid red; */
 	}
 	
 	.login-form input::placeholder {
@@ -324,8 +329,18 @@
 		color: var(--primary-green-500);
 	}
 
+	:global(body:has(.login-form):has(.button-container.custom) .button-container.custom)  {
+		/* outline: solid red; */
+		align-items: start;
+		justify-content: start;
+		gap: 20px;
+
+	}
+
 	.to-register {
+		/* outline: solid red; */
 		flex: 1 1 1cqh;
+		max-width:400px ;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -350,6 +365,8 @@
 		background-color: var(--neutral-grey);
 	}
 
+
+
 	.error-message {
 		background-color: #fee;
 		color: var(--primary-red-500);
@@ -358,6 +375,27 @@
 		border-radius: 4px;
 		margin-bottom: 10px;
 		text-align: center;
+	}
+
+	@media (width <= 930px) {
+		:global(body:has(.login-form) .page-container > :nth-child(2))  {
+				align-items: center;
+		}
+
+		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom)  {
+			gap: 20px;
+			display: flex;
+			flex-direction: column-reverse;
+			align-items: center;
+		}
+		
+		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {
+			/* outline: solid red; */
+			/* flex-basis: 100% !important; */
+			max-width: 300px;
+		}
+
+
 	}
 
 </style>
