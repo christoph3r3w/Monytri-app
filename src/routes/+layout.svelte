@@ -70,7 +70,7 @@
 		
 		// Run when page fully loads (including all resources)
 		const handleFullPageLoad = () => {
-			console.log('Page fully loaded with all resources');
+			// console.log('Page fully loaded with all resources');
 			updateIsMobile(); // Update mobile detection after full page load
 		};
 		
@@ -121,11 +121,11 @@
 
 	// loggoing the current store value
 	current.subscribe(value => {
-		console.log('Current store value:', value);
+		// console.log('Current store value:', value);
 	});
 
 	isMobile.subscribe(value => {
-		console.log('isMobile store value:', value);
+		// console.log('isMobile store value:', value);
 	});
 	
 </script>

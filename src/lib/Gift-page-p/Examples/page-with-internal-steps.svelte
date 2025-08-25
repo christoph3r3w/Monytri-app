@@ -155,7 +155,7 @@
 	
 	// Step change handler
 	function handleStepChange(newStep, previousStep) {
-		console.log(`Step changed from ${previousStep} to ${newStep}`);
+		// console.log(`Step changed from ${previousStep} to ${newStep}`);
 		// Add any additional logic when steps change
 	}
 	

@@ -10,7 +10,7 @@ export class RateLimitHandler {
                 // Check if it's a rate limit error
                 if ((error.code === 429 || error.message?.includes('Rate limit')) && attempt < maxRetries - 1) {
                       const delay = baseDelay * Math.pow(2, attempt);
-                      console.log(`Rate limit hit, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`);
+                      // console.log(`Rate limit hit, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`);
                       await this.sleep(delay);
                       continue;
                 }

@@ -73,7 +73,7 @@
 				style="--card-color:{cardDesign.primaryColor};--card-background:{cardDesign.cardBackground};--card-background-message:{cardDesign.cardbackgroundMessage};"
 				use:observe={{
 					onEnter: () => {
-						console.log(`Card ${cardDesign.id} entered view!`);
+							// console.log(`Card ${cardDesign.id} entered view!`);
 						// Find and check the radio input
 						const radioInput = document.getElementById(cardDesign.id);
 						if (cardDesign.id) {

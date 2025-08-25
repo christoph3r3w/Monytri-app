@@ -10,7 +10,7 @@
 	bind:stepValidation
 	totalSteps={5}
 	onStepChange={(newStep, oldStep) => {
-		console.log(`Step changed from ${oldStep} to ${newStep}`);
+		// console.log(`Step changed from ${oldStep} to ${newStep}`);
 	}}
 	showSkipButton={true}
 	rightContent={purposeOptions}

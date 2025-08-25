@@ -21,7 +21,7 @@
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             if (outcome === 'accepted') {
-                console.log('App installed');
+				// console.log('App installed');
             }
             deferredPrompt = null;
             showInstall = false;

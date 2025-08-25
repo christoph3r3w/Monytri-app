@@ -14,7 +14,7 @@
 	function iconTask (){
         if ($current === 'home') {
             // On homepage, activate search functionality
-            console.log('Activating search');
+			// console.log('Activating search');
         } else if ($current === 'gift' || $current === 'gift-success') {
             history.back();
 		} else {
@@ -24,7 +24,7 @@
 
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
-		console.log('menu open is',$menuOpen);
+		// console.log('menu open is',$menuOpen);
 	}
 </script>
 

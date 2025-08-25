@@ -251,7 +251,7 @@
 			// Optionally store the full payload for preview/debug
 			// localStorage.setItem('requestFormData', JSON.stringify(formData));
 
-			console.log('Prepared request:', { requestId, expiresAt, shareUrl },formData);
+			// console.log('Prepared request:', { requestId, expiresAt, shareUrl },formData);
 
 			// Move to success step
 			currentStep = 3;
