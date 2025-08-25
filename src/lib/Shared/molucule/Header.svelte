@@ -2,6 +2,7 @@
 	import {goto} from '$app/navigation';
 	import {Logo,Balance_M} from '$lib'
 	import {current,isMobile,menuOpen} from '$lib/store.js'
+	import {isAuthenticated} from '$lib/user';
 
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
@@ -41,7 +42,7 @@
 			<Logo name={true}/>
 		</h1>
 	</nav>
-	<nav class="menu" style='{notOnLogin == false? '--not-on-login:false;': '--not-on-login:true;'}' >
+	<nav class="menu" style="{!$isAuthenticated ? 'display: none;' : ''}" >
 		<menu>
 			{@render desktopRoutes()}
 		</menu>
@@ -52,7 +53,7 @@
 {/snippet}
 
 {#snippet mobileHeadNav()}
-	<section class="mobile-header">
+	<section class="mobile-header" >
 		<!-- no header for specific pages -->
 		{#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success' }
 			<nav class="goBack">
