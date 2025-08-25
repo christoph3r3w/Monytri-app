@@ -149,8 +149,10 @@
 {#snippet shareOption2()}
 	<figure class="qr-container">
 		{#if qrDataUrl.length > 0 }
-		<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
-		<p>Scan the QR code to share </p>
+		<article class="qr-popup">
+			<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
+			<p>Scan the QR code to share </p>
+		</article>
 		{/if}
 		{#if qrDataUrl.length <= 0}
 			<button onclick={generateQR}>
@@ -351,6 +353,34 @@
 		min-height: fit-content;
 		gap: 1rem;
 		margin-block: 6%;
+		max-width: 400px;
+		z-index: 20 !important;
+	}
+
+	.qr-popup {
+		position: absolute;
+		top: 50%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		max-width: 80%;
+		padding: 1rem;
+		border-radius: 10px;
+		transform: translate(0, -10%);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition: background-color all 3s ease-in-out;
+		/* background-color: rgb(197, 38, 38); */
+		/* inset-inline: var(--body-padding); ; */
+
+	}
+
+	.qr-popup::before {
+		content:'5';
+		position: absolute;
+		inset: -100vw !important;
+		background-color: rgba(255, 255, 255, 0.5);
+		z-index: -1;
+		transition: background-color all 3s ease-in-out;
 	}
 
 	.qr-container p{
@@ -366,7 +396,7 @@
 
 	.share-button-container {
 		flex: 1 1 20%;
-		position: relative;
+		/* position: relative; */
 		display: flex;
 		flex-direction: column;
 		align-items: center;
