@@ -1,0 +1,19 @@
+{
+  "name": "monytri-auth-proxy",
+  "version": "1.0.0",
+  "description": "Per-tab authentication proxy for Appwrite",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-appwrite": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
