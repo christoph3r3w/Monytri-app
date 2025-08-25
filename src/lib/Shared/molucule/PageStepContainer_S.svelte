@@ -47,9 +47,9 @@
 		// onSkipCardDesign = null
 	} = $props();
 	
-	import { current, isMobile} from '$lib/store.js';
-	import { device } from '$lib/Device.js';
-	import { fade } from 'svelte/transition';
+	import {isMobile} from '$lib/store.js';
+	import {device} from '$lib/Device.js';
+	import {fade} from 'svelte/transition';
 
 	
 </script>
@@ -115,6 +115,24 @@
 	{/if}
 {/snippet}
 
+{#snippet buttonContainer()}
+	<div class="button-container {customButton? 'custom': ''}">
+		{#if stepType === 'default' && !customButton}
+			{@render buttonType('submit',currentStep)}
+		{:else}
+			{#if showContinueButton}
+				{@render buttonType('continue', currentStep)}
+			{/if}
+			{#if !$isMobile && showSkipButton}
+				{@render buttonType('skip', currentStep)}
+			{/if}
+			{#if customButton}
+				{@render customButton()}
+			{/if}
+		{/if}
+	</div>		
+{/snippet}
+
 <!-- Search component snippet for recipient and purpose steps -->
 {#snippet searchComponent(placeholder)}
 	<section class="search-container">
@@ -124,7 +142,7 @@
 				placeholder={placeholder}
 				class="search-input"
 				value={formData.searchQuery || ''}
-				oninput={(e) => onSearchQueryUpdate?.(e.target.value)}
+				oninput={(e: Event) => onSearchQueryUpdate?.((e.target as HTMLInputElement).value)}
 			/>
 			{#if (formData.searchQuery || '').length < 1}
 				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
@@ -149,9 +167,9 @@
 	<section class="step-header" transition:fade>
 		{@render buttonType('back', currentStep)}
 		<h2>{headerName}</h2>
-		{#if $isMobile && showSkipButton == false || showSkipButton === undefined || showSkipButton == ''}
+		{#if $isMobile && showSkipButton == false || showSkipButton === undefined || showSkipButton === null}
 			{@render buttonType('blank', currentStep)}
-		{:else if showSkipButton}
+		{:else if showSkipButton && $isMobile}
 			{@render buttonType('skip', currentStep)}
 		{/if}
 	</section>
@@ -175,59 +193,49 @@
 		{@render rightContent()}
 	{/if}	
 	<!-- Button container -->
-	<div class="button-container {customButton? 'custom': ''}">
-		{#if stepType === 'default' || !customButton}
-			{@render buttonType('submit',currentStep)}
-		{:else}
-			{#if showContinueButton}
-				{@render buttonType('continue', currentStep)}
-			{/if}
-			{#if !isMobile && showSkipButton}
-				{@render buttonType('skip', currentStep)}
-			{/if}
-			{#if customButton}
-				{@render customButton()}
-			{/if}
-		{/if}
-	</div>
+	{@render buttonContainer()}
 {/snippet}
 
 <section class="page-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
-	<!-- left grid section -->
-	{#if showLeftContent && !$isMobile}
-		<article class="left-step">
-			{@render leftSection()}
+	{#if !$isMobile}
+		<!-- left grid section -->
+		{#if showLeftContent }
+			<article class="left-step">
+				{@render leftSection()}
+			</article>
+		{/if}
+		
+		<!-- right grid section -->
+		{#if showRightContent }
+			<article class="right-step" transition:fade>
+				{@render rightSection()}
+			</article>
+		{/if}
+	{:else if $isMobile}
+		<article class="mobile-step">
+			{#if leftContent}{@render leftSection()}{/if}
+			{#if rightContent}{@render rightContent()}{/if}
 		</article>
-	{:else}
-		{@render leftSection()}
-	{/if}
-	
-	<!-- right grid section -->
-	{#if showRightContent && !$isMobile}
-		<article class="right-step" transition:fade>
-			{@render rightSection()}
-		</article>
-	{:else}
-		{@render rightSection()}
+		{@render buttonContainer()}
 	{/if}
 </section>
 
 <style>
 
 	.page-container {
+		grid-column: content !important;
+		grid-row: 1 / -1;
 		position: relative;
-		grid-column: 1 / -1;
-		grid-row: 1 / span 1;
+		display: grid;
+		grid-template-columns: subgrid;
 		width: 100%;
-		overflow: hidden;
-		height: calc(100cqh - var(--header-height) + 10px);
-		max-height: calc(100dvh - var(--footer-height)); ;
-		display: flex ;
-		flex-direction: column;
-		padding: 1rem;
-		height: 100%;
-		width: 100%;
+		height: calc(100cqh - var(--header-height) + 10px) ;
+		max-height: calc(100dvh - var(--footer-height)); 
 		background-color: var(--general-background-color);
+		overflow: hidden;
+		padding: 1rem;
+		/* flex-direction: column; */
+		/* outline: solid red; */
 
 		& h3.section-title{
 			position: relative;
@@ -242,7 +250,7 @@
 		grid-row: 1 / -1;
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		height: fit-content;
 		width: 100%;
 		overflow: clip;
 		flex-wrap: wrap;
@@ -513,26 +521,32 @@
 	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
 	{
 
-		:global(.page-container) {
+		.page-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		
 			display: flex !important;
 			flex-direction: column;
 			width: 100%;
+			height: 100dvh;
+			max-height: 100dvh;
 			gap: 1cqh;
 			padding: 0 ;
 			padding-block: 3% ;
 			padding-inline: var(--body-padding) !important;
-			/* background-color: var(--general-background-color-secondary) !important; */
+			background-color: var(--general-background-color-secondary) !important;
 			color: var(--general-text-color) !important;
-			background-color: #c00;
 		}
 
-		:global(.left-step) {
-			grid-column: 1 / -1 !important;
-			grid-row: 1 / span 1;
-			padding: 0 !important;
+		.mobile-step {
+			flex: 1 1 auto;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			overflow-y: auto;
+			/* outline: solid blue; */
 		}
 
 		.step-header {
@@ -583,12 +597,6 @@
 			}
 		}	
 
-		/* section:has(label) {
-			flex: 1 1 90%;
-			background-color: var(--white);
-			border-radius: 12px;
-		} */
-
 		section:has(label) label input {
 			background-color: var(--off-white);
 			margin-bottom: 3%;
@@ -616,24 +624,18 @@
 			}
 		}
 
-		:global(.right-step) {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / span 1;
-			padding: 0 !important;
-		}
-
-		:global(.right-step .button-container) {
+		.button-container {
 			position: relative;
 			grid-column: 1/-1;
+			grid-row: 2 / -1;
 			display: flex;
-			flex-direction: column;
 			width: 100%;
 			flex: 0 1 fit-content;
 			flex-direction: column-reverse;
-			align-self: self-end;
+			align-self: flex-end;
 		}
 
-		:global(.right-step .button-container .skip-button) {
+		:global(.button-container .skip-button) {
 			margin-bottom: 0;
 		}
 		
@@ -646,38 +648,33 @@
 		}
 
 		:global(.button-container.custom) {
-			--gap:10px;
+			--gap:10%;
 			display: flex;
 			flex-direction: row ;
 			flex-wrap: wrap;
-			align-items: flex-start;
+			align-items: flex-end;
 			justify-content: center;
 			gap: var(--gap);
-		}
-		
-		:global(.custom > :nth-child(n)) {
-			margin: 0;
-			text-wrap: nowrap;
-			/* outline: solid rgb(61, 228, 11) 10px; */
 		}
 
 		:global(.button-container.custom:has(:nth-child(4):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:100%;}
-			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
-			&:nth-child(4) {flex-basis:calc(20% - var(--gap));}
+			& :nth-child(1) {flex-basis:100%;}
+			& :nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& :nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& :nth-child(4) {flex-basis:calc(20% - var(--gap));}
 		}
-		:global(.button-container.custom:has(:nth-child(3):last-child) > :nth-child(n)) {
+		:global(.button-container.custom:has(>:nth-child(3):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:100%;}
-			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& :nth-child(1) {flex-basis:100%;}
+			& :nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& :nth-child(3) {flex-basis:calc(30% - var(--gap));}
 		}
-		:global(.button-container.custom:has(:nth-child(2):last-child):nth-child(n)) {
-			flex: 1 1 auto;
+		:global(.button-container.custom:has(>:nth-child(2):last-child):nth-child(n)) {
+			/* outline: solid red; */
+			flex: 0 1 auto;
 			&:nth-child(1) {flex-basis:calc(70% - var(--gap));}
-			&:nth-child(2) {flex-basis:calc(30% - var(--gap));}
+			&:nth-child(2) {flex-basis:calc(30% - var(--gap)); }
 		}
 		
 		.error-message {
@@ -688,6 +685,30 @@
 			margin-bottom: 1rem;
 			text-align: center;
 		}
+
+		/* .left-step {
+			grid-column: 1 / -1 !important;
+			grid-row: 1 / span 1;
+			padding: 0 !important;
+		} */
+
+		/* .right-step {
+			grid-column: 1 / -1 !important;
+			grid-row: 2 / span 1;
+			padding: 0 !important;
+		} */
+
+		/* section:has(label) {
+			flex: 1 1 90%;
+			background-color: var(--white);
+			border-radius: 12px;
+		} */
+
+		/* :global(.custom > :nth-child(n)) {
+			margin: 0;
+			text-wrap: nowrap;
+			outline: solid rgb(61, 228, 11) 10px;
+		} */
 		
 	}
 </style>
