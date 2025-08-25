@@ -47,6 +47,7 @@
 	import { current, isMobile} from '$lib/store.js';
 	import { device } from '$lib/Device.js';
 	import { fade } from 'svelte/transition';
+	import { goto } from '$app/navigation';
 
 	
 </script>
@@ -54,7 +55,7 @@
 <!-- Button rendering snippet -->
 {#snippet buttonType(type,step)}
 	{#if type === 'back'}
-		<button class="back-button" onclick={currentStep > 1 ? previousStep : () => history.back()}>
+		<button class="back-button" onclick={currentStep > 1 ? previousStep : () => goto('/')}>
 			{#if !$isMobile}
 				<svg width="31" height="26" viewBox="0 0 31 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M30.9986 11.3326H6.68859L15.5103 2.51096L13.1536 0.154297L0.308594 12.9993L13.1536 25.8443L15.5103 23.4876L6.68859 14.666H30.9986V11.3326Z" fill="black"/>
@@ -132,7 +133,7 @@
 				placeholder={placeholder}
 				class="search-input"
 				value={formData.searchQuery || ''}
-				oninput={(e) => onSearchQueryUpdate?.(e.target.value)}
+				oninput={(e: Event) => onSearchQueryUpdate?.((e.target as HTMLInputElement).value)}
 			/>
 			{#if (formData.searchQuery || '').length < 1}
 				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
@@ -155,11 +156,11 @@
 <!-- Step header snippet -->
 {#snippet stepHeader()}
 	<section class="step-header" transition:fade>
-		{@render buttonType('back')}
+		{@render buttonType('back', currentStep)}
 		<h2>{headerName}</h2>
-		{#if $isMobile && showSkipButton == false || showSkipButton === undefined || showSkipButton == ''}
-			{@render buttonType('blank')}
-		{:else if showSkipButton}
+		{#if $isMobile && showSkipButton == false || showSkipButton === undefined || showSkipButton === null}
+			{@render buttonType('blank', currentStep)}
+		{:else if showSkipButton && $isMobile}
 			{@render buttonType('skip', currentStep)}
 		{/if}
 	</section>
@@ -206,7 +207,7 @@
 			{#if showContinueButton}
 				{@render buttonType('continue', currentStep)}
 			{/if}
-			{#if !isMobile && showSkipButton}
+			{#if !$isMobile && showSkipButton}
 				{@render buttonType('skip', currentStep)}
 			{/if}
 			{#if customButton}
@@ -241,11 +242,14 @@
 	.step-container{
 		grid-column: left / right;
 		grid-row: 2 / -1;
+		
+		position: relative;
 		display: grid;
 		grid-template-columns: subgrid;
 		gap: 1rem;
 		padding: 1rem;
 		height: 100%;
+		/* max-height: calc(100dvh - var(--footer-height)- var(--header-height)); */
 		width: 100%;
 		background-color: var(--general-background-color);
 
@@ -253,6 +257,7 @@
 			position: relative;
 			margin-bottom: 1%;
 			font-size: clamp(1rem,10vw ,1.3rem);
+			display: none;
 		}
 	}
 
@@ -443,6 +448,7 @@
 		flex: 0 1 20%;
 		width: 100%;
 		height: fit-content;
+		text-decoration: underline !important;
 	}
 
 	:global(.right-step .button-container .skip-button)  {
@@ -584,16 +590,16 @@
 		}
 
 		/* Needs to be refactored. */
-		:global(.skip-button,.back-button) {
+			:global(.skip-button,.back-button) {
 			position: relative;
 			width: 100%;
 			height: unset !important;
-			padding-block: 5%;
-			/* outline:yellowgreen solid; */
+			padding-block: 5%!important;
+
 
 			svg path{
-				stroke: var(--general-text-color);
-				fill: var(--general-text-color);
+				stroke: var(--black);
+				fill: var(--black);
 			}
 		}	
 
