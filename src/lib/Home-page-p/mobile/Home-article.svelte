@@ -1,5 +1,5 @@
 	<section class="home-articles">
-		<article class="invest-tips">
+		<article class="invest-tips-container">
 			<h2>Grow your investing skills!
 				<span class="arrow-icon">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7,7 +7,7 @@
 					</svg>
 				</span>
 			</h2>
-			<ul>
+			<ul class="invest-tips-list">
 				<li>
 					<a href="/how-it-works" aria-label="article"></a>
 					<figure>
@@ -47,8 +47,9 @@
 				</span>
 			</h2>
 
-			{#each {length:5} }
-			<div class="blog-container">
+			<ul class="recent-blogs-list">
+			{#each {length:3}}
+			<li class="blog-container">
 				<a href="/blog" aria-label="blog"></a>
 				<img src="./home-page/homescreen-team.png" alt="" width="177px" height="177px">
 				<div class="blog-text">
@@ -62,12 +63,22 @@
 						<p>by Chiara</p>
 					</span>
 				</div>
-			</div>
+			</li>
 			{/each}
+			</ul>
 		</article>
 	</section>
 
 	<style>
+
+		.invest-tips-container ul{
+			overflow-x: auto;
+			overflow-y: hidden;
+			display: grid;
+			grid-auto-columns:min-content;
+			gap: 1rem;
+		}
+
 		:global(html:has(.home-wrapper) ) {
 		@media (-webkit-min-device-pixel-ratio: 3),
 		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi),
@@ -85,11 +96,12 @@
 				padding-inline: var(--body-padding);
 			}
 
-			.invest-tips{
+			.invest-tips-container{
 				margin-bottom: 3vh;
+				container-name:invest-tips-container; 
 			}
 
-			.invest-tips h2{
+			.invest-tips-container h2{
 				font-size: 1.2rem;
 				color: var(--general-text-color);
 				font-weight: 400;
@@ -105,24 +117,28 @@
 				fill: var(--general-text-color);
 			}
 
-
-			.invest-tips ul{
+			.invest-tips-container ul{
 				overflow-x: auto;
 				overflow-y: hidden;
 				display: grid;
 				grid-auto-flow:column;
-				grid-auto-columns: 50%;
-				gap: var(--body-padding);
+				grid-auto-columns: clamp(50%, 50%, 300px);
+				gap: 1rem;
+				max-height: 30% ;
 			}
 
-			.invest-tips ul li{
+			.invest-tips-container ul li{
 				position: relative;
 				width: 90%;
+				height: auto;
+				aspect-ratio: 1;
 				display: flex;
 				flex-direction: column;
+				/* outline: tomato solid 1px; */
+				/* max-width: 200px; */
 			}
 
-			.invest-tips ul li a{
+			.invest-tips-container ul li a{
 				width: 100%;
 				height: 100%;
 				position: absolute;
@@ -131,14 +147,14 @@
 				z-index: 1;
 			}
 
-			.invest-tips ul li figure{
+			.invest-tips-container ul li figure{
 				position: relative;
 				width: 100%;
 				height: 100%;
 				margin-bottom: 3%;
 			}
 
-			.invest-tips ul li figure img{
+			.invest-tips-container ul li figure img{
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
@@ -146,7 +162,7 @@
 				border-radius: 10px;
 			}
 
-			.invest-tips ul li figure figcaption{
+			.invest-tips-container ul li figure figcaption{
 				position: absolute;
 				top: 7px;
 				left: 7px;
@@ -157,14 +173,14 @@
 				border-radius: 8px;
 			}
 
-			.invest-tips ul li p{
+			.invest-tips-container ul li p{
 				font-size: 14px;
 				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 120%;
 			}
 
-			.invest-tips ul li p:nth-of-type(2){
+			.invest-tips-container ul li p:nth-of-type(2){
 				font-size: 12px;
 				color: var(--general-text-color-secondary);
 				font-weight: 400;
@@ -172,8 +188,10 @@
 
 			.recent-blogs{
 				margin-bottom: 3rem;
+				display: flex;
+				flex-direction: column;
 			}
-
+			
 			.recent-blogs h2{
 				font-size: 1.2rem;
 				color: var(--general-text-color);
@@ -186,11 +204,18 @@
 				align-items: center;
 			}
 
+			.recent-blogs .recent-blogs-list{
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 1rem;
+			}
+
 			.recent-blogs .blog-container{
 				position: relative;
 				display: flex;
 				flex-direction: row;
 				width: 100%;
+				max-width:400px ;
 				height: 177px;
 				container-type: inline-size;
 				margin-bottom: 3%;
@@ -231,6 +256,7 @@
 				font-weight: 400;
 				line-height: 120%;
 			}
+			
 			.recent-blogs .blog-text .blog-text-content{
 				flex: 1;
 				display: flex;
@@ -272,11 +298,17 @@
 		}
 	}
 
-	@media (prefers-color-scheme: dark){
-		* img{
-			filter: brightness(.8) contrast(.9);
+	@media (width >= 600px) {
+		.invest-tips-container ul{
+			grid-auto-flow: column;
+			grid-auto-columns: 200px !important;
 		}
 	}
 		
+	@media (prefers-color-scheme: dark){
+		* img{
+			filter: brightness(.9) contrast(.9);
+		}
+	}
 
 	</style>

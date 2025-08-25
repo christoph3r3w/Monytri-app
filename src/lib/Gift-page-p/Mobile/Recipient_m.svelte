@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { StepContainer } from '$lib'
 
-	let { formData, recipients, selected, button, nextStep,previousStep,stepValidation } = $props();
+	let { formData, recipients, selected, button, nextStep,previousStep,stepValidation, onSearchQueryUpdate } = $props();
 
 	let filteredRecipients = $derived(
 		formData.searchQuery 
@@ -60,7 +60,7 @@
 	showRightContent={true}
 	showContinueButton={true}
 	rightContent={recipientsList}
-	
+	{onSearchQueryUpdate}
 />
 
 <style>

@@ -10,9 +10,8 @@
 		date: new Date(),
 	});
 
-	onMount(() => {
-		formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric',hour12: true });
-	});
+	// Derive the current date instead of mutating formData
+	let currentDateFormatted = $derived(formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric',hour12: true }));
 
 </script>
 <section class="step-container">

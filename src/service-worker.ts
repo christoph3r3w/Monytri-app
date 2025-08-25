@@ -100,6 +100,6 @@ self.addEventListener('message', (event) => {
 })
 
 // just to check that the service worker is running
-console.log('service worker is running',{build,files,version});
+// console.log('service worker is running',{build,files,version});
 
 

@@ -1,18 +1,14 @@
 <script>
 	import { onMount } from 'svelte';
-	import {afterNavigate,onNavigate} from '$app/navigation'
+	// import {afterNavigate,onNavigate} from '$app/navigation'
 	import{ goto } from '$app/navigation'
     import { Logo } from '$lib';
-	import { current } from '../../store.js';
+	import { current } from '$lib/store.js';
 
 	// create a store to keep track of the current page
 	// this will be used to set the active class on the mobile navigation
 	// and to set the active class on the footer/header navigation
 	let navSelect = $derived($current);
-	
-	afterNavigate(() => {
-		console.log('current page is',navSelect);
-	});
 
 </script>
 
@@ -271,15 +267,15 @@
     	}
 
 		.mobile-nav{
-				position: relative;
-				grid-column: 1/-1;
-				grid-row: 1/2;
-				display: grid;
-				grid-template-columns: subgrid;	
-				grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(30px, 45%);		
-				width: 100cqw;
-				border-radius:inherit;
-				z-index: 100;
+			grid-column: 1/-1;
+			position: relative;
+			grid-row: 1/2;
+			display: grid;
+			grid-template-columns: subgrid;	
+			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(10px, 15%);		
+			width: 100cqw;
+			border-radius:inherit;
+			z-index: 100;
 		}
 			
 		.mobile-nav ul{

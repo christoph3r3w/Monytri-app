@@ -14,28 +14,33 @@
 	// Form data structure
 	let formData = $state({
 		benefactor: null,
+		requestId: null,
 		cardDesign: 'default',
 		Purpose: null,
 		DeliveryDate: null,
 		requestMethod: null,
 		amount: null,
-		message: '',
+		message: 'check if needed',
 		searchQuery: '',
 		errors: {},
 		isLoading: false,
 		date: new Date(),
-		get currentDate() {
-			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
-		}
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
 	});
 	
 	// Step validation state
-	let stepValidation = $state({
-		1: false,
-		2: false,
-		3: true, // last step is always valid for the initial state
-	});
-
+	function createStepValidation(totalSteps) {
+		let steps = {};
+		for (let i = 1; i <= totalSteps; i++) {
+			steps[i] = i === totalSteps; 
+		}
+		return steps;
+	}
+	let stepValidation = $state(createStepValidation(3));
+	
 	// Use provided benefactors or fallback to defaults
 	let benefactors = $state([
 		{
@@ -121,6 +126,11 @@
 			benefactor.email.toLowerCase().includes(query.toLowerCase())
 		);
 	}
+
+	// Callback to handle search query updates from child components
+	function updateSearchQuery(newQuery) {
+		formData.searchQuery = newQuery;
+	}
 	
 	// Enhanced validation functions
 	function selectBenefactor(benefactor) {
@@ -185,33 +195,68 @@
 	}
 	
 	// It needs to be checked and connected so that it sends proper form data to the back-end.
+	// Function to handle form submission - made with ai 
 	async function submitForm() {
 		formData.isLoading = true;
-		
-		try {
-			if (!formData.requestMethod) {
-				alert('Please select a request method')
-				throw new Error('Please select a request method');
-			}
 
+		try {
 			if (!formData.benefactor) {
-				alert('Please select a benefactor')
+				alert('Please select a benefactor');
 				throw new Error('Please select a benefactor');
 			}
+			if (!formData.amount) {
+				handleError(2, 'Please enter a valid amount');
+				throw new Error('Invalid amount');
+			}
+
+			// Helpers
+			const toBase64Url = (bytes) => {
+				let binary = '';
+				for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+				return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+			};
+			const generateRequestId = () => {
+				const bytes = new Uint8Array(16);
+				crypto.getRandomValues(bytes);
+				return `req_${toBase64Url(bytes)}`; // 22-char base64url + prefix
+			};
+
+			// 1) Create request ID
+			const requestId = generateRequestId();
+
+			// 2) Create expiration (default 7 days)
+			const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+
+			// 3) Create a token that can be decoded (rid + exp), and a shareable URL
+			const payload = { rid: requestId, exp: expiresAt };
+			const token = toBase64Url(new TextEncoder().encode(JSON.stringify(payload)));
+			const origin = typeof window !== 'undefined' ? window.location.origin : '';
+			const shareUrl = `${origin}/request/${requestId}?token=${token}`;
+
+			// Attach to form data
+			formData.requestId = requestId;
+			formData.expiresAt = expiresAt;
+			formData.shareUrl = shareUrl;
+			formData.token = token;
 
 			currentProgress = 100;
-			
-			await new Promise(resolve => setTimeout(resolve, 1000));
-			// alertDialog.remove();
-			// Store form data in localStorage before redirecting
-			// They should actually store the link that should be sent to the backend to request the transformation of the form data.
-			// localStorage.setItem('giftFormData', JSON.stringify(formData));
-			localStorage.setItem('giftFormData', 'hi');
-				
-			await goto('/gift-success');
 
+			// Simulate network
+			await new Promise((resolve) => setTimeout(resolve, 800));
+
+			// Persist items needed for sharing/QR and backend handoff
+			localStorage.setItem('requestId', requestId);
+			localStorage.setItem('requestToken', token);
+			localStorage.setItem('requestShareUrl', shareUrl);
+			// Optionally store the full payload for preview/debug
+			// localStorage.setItem('requestFormData', JSON.stringify(formData));
+
+			// console.log('Prepared request:', { requestId, expiresAt, shareUrl },formData);
+
+			// Move to success step
+			currentStep = 3;
 		} catch (error) {
-			handleError(currentStep, error.message);
+			handleError(currentStep, error.message ?? String(error));
 		} finally {
 			formData.isLoading = false;
 		}
@@ -231,79 +276,13 @@
 
 </script>
 
-{#snippet buttonType(type,step)}
-	{#if type === 'back'}
-		<button class="back-button" aria-label="Go back" onclick={currentStep > 1 ? previousStep : () => history.back()}>
-			<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
-			</svg>
-		</button>
-	{:else if type === 'continue'}
-		<button 
-			class="continue-button {stepValidation[step] ? 'active' : 'disabled'}"
-			disabled={!stepValidation[step]}
-			onclick={nextStep}
-			>
-			Continue
-		</button>
-	{:else if type === 'skip'}
-		<button
-			class="skip-button"
-			onclick={() => {
-				// Clear data for the current step
-				switch(step) {
-					case 3: // Purpose step
-						formData.Purpose = null;
-						break;
-					case 4: // Card Design step
-						formData.cardDesign = 'default';
-						formData.message = '';
-						break;
-				}
-				currentStep++;
-			}}>
-			Skip
-		</button>
-	{:else if type === 'submit'}
-		<button 
-			class="submit-button"
-			onclick={() => submitForm()}
-			>
-			Confirm & pay €{formData.amount}
-		</button>
-	{:else if type === 'skip-to'}
-		<button 
-			class="skip-to-button"
-			onclick={() => {
-				switch(step) {
-					case 1: 
-						currentStep = 1;
-						break;
-					case 2: 
-						currentStep = 2;
-						break;
-					case 3: 
-						currentStep = 3;
-						break;
-					case 4: 
-						currentStep = 4;
-						break;
-				}
-			}}>
-			Edit
-		</button>
-	{:else if type === 'blank'}
-		<span class="blank"></span>
-	{/if}
-{/snippet}
-
 {#snippet progressBar()}
 	<div class="progress-bar">
 		<div class="progress" style="width: {progressPercentage}%"></div>
 	</div>	
 {/snippet}
 
-<article class="transfer-wizard " in:fly={{ y: 50, duration: 500,opacity:0 }} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
+<article class="transfer-wizard " in:fly={{y:50,duration:500,opacity:0.5}} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
 	<!-- Progress indicator -->
 	{@render progressBar()}
 	{#if $isMobile}
@@ -316,6 +295,7 @@
 				{previousStep} 
 				{stepValidation} 
 				selected={selectBenefactor}
+				onSearchQueryUpdate={updateSearchQuery}
 			/>
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}
@@ -325,7 +305,9 @@
 				{previousStep} 
 				{stepValidation} 
 				{validateAmount}
+				{submitForm}
 			/>
+		<!-- Step 3: Review and Send -->
 		{:else if currentStep === 3}
 			<RequestReview_M
 				{formData}
@@ -334,6 +316,7 @@
 				{previousStep}
 				{stepValidation}
 				{submitForm}
+				{currentProgress}
 			/>
 		<!-- step 4 success -->
 		{:else if currentStep === 4}
@@ -429,24 +412,24 @@
 			background-color: var(--white);	
 		}
 
-		:global(.left-step) {
+		.left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
 		}
 
-		:global(.step-header) .back-button{
+		.step-header .back-button{
 			position: relative !important;
 			top: 0;
 			left: 0;
 		}
 
-		:global(.right-step) {
+		.right-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
 			padding: 0 !important;
 		}
-		:global(.step-container) {
+		.step-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		}

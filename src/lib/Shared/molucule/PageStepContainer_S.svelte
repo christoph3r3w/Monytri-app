@@ -21,15 +21,18 @@
 		selected = null,
 		min = 1,
 		max = 150,
-		validateAmount = null,
-		validatePurpose = null,
-		validatePayment = null,
+		// validateAmount = null,
+		// validatePurpose = null,
+		// validatePayment = null,
 		
 		// Layout configuration
 		showLeftContent = true,
 		showRightContent = true,
+		SubmitButton = '' as string | null,
 		showContinueButton = true,
 		showSkipButton = false,
+		subtext = '' as string | null,
+		searchQuery = '' as string | null,
 		
 		// Snippet props
 		leftContent,
@@ -40,14 +43,13 @@
 		onSearchQueryUpdate = null,
 		
 		// Skip step callbacks
-		onSkipPurpose = null,
-		onSkipCardDesign = null
+		// onSkipPurpose = null,
+		// onSkipCardDesign = null
 	} = $props();
 	
-	import { current, isMobile} from '$lib/store.js';
-	import { device } from '$lib/Device.js';
-	import { fade } from 'svelte/transition';
-	import { goto } from '$app/navigation';
+	import {isMobile} from '$lib/store.js';
+	import {device} from '$lib/Device.js';
+	import {fade} from 'svelte/transition';
 
 	
 </script>
@@ -55,7 +57,7 @@
 <!-- Button rendering snippet -->
 {#snippet buttonType(type,step)}
 	{#if type === 'back'}
-		<button class="back-button" onclick={currentStep > 1 ? previousStep : () => goto('/')}>
+		<button class="back-button" onclick={currentStep > 1 ? previousStep : () => history.back()}>
 			{#if !$isMobile}
 				<svg width="31" height="26" viewBox="0 0 31 26" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M30.9986 11.3326H6.68859L15.5103 2.51096L13.1536 0.154297L0.308594 12.9993L13.1536 25.8443L15.5103 23.4876L6.68859 14.666H30.9986V11.3326Z" fill="black"/>
@@ -77,18 +79,7 @@
 	{:else if type === 'skip'}
 		<button
 			class="skip-button"
-			onclick={() => {
-				// Clear data for the current step
-				switch(step) {
-					case 3: // Purpose step
-						onSkipPurpose?.();
-						break;
-					case 4: // Card Design step
-						onSkipCardDesign?.();
-						break;
-				}
-				nextStep();
-			}}>
+			onclick={() => {nextStep();}}>
 			Skip
 		</button>
 	{:else if type === 'submit'}
@@ -122,6 +113,24 @@
 	{:else if type === 'blank'}
 		<span class="blank"></span>
 	{/if}
+{/snippet}
+
+{#snippet buttonContainer()}
+	<div class="button-container {customButton? 'custom': ''}">
+		{#if stepType === 'default' && !customButton}
+			{@render buttonType('submit',currentStep)}
+		{:else}
+			{#if showContinueButton}
+				{@render buttonType('continue', currentStep)}
+			{/if}
+			{#if !$isMobile && showSkipButton}
+				{@render buttonType('skip', currentStep)}
+			{/if}
+			{#if customButton}
+				{@render customButton()}
+			{/if}
+		{/if}
+	</div>		
 {/snippet}
 
 <!-- Search component snippet for recipient and purpose steps -->
@@ -167,30 +176,14 @@
 {/snippet}
 
 {#snippet leftSection()}
-	{@render stepHeader()}
-				
+	{@render stepHeader()}		
 	<!-- Render custom left content or default based on step type -->
 	{#if leftContent}
 		{@render leftContent()}
-	{:else if stepType === 'recipient'}
-		<p class="subtext">Please select your recipient to send to.</p>
-		{@render searchComponent('Search Recipients')}
+	{:else }
+		{#if subtext}<p class="subtext">{subtext}</p>{/if}
 		{@render errorMessage(formData.errors?.[currentStep])}
-	{:else if stepType === 'purpose'}
-		<p class="subtext">Personalise your gift card by selecting an occasion</p>
-		{@render searchComponent('Search purpose')}
-		{@render errorMessage(formData.errors?.[currentStep])}
-	{:else if stepType === 'amount'}
-		<!-- no default content -->
-	{:else if stepType === 'card-design'}
-		<p class="subtext">Choose a design for your gift card</p>
-		{@render errorMessage(formData.errors?.[currentStep])}
-	{:else if stepType === 'payment'}
-		<!-- no default content -->
-	{:else if stepType === 'benefactor'}
-		<p class="subtext">Please select a benefactor.</p>
-		{@render searchComponent('Search Benefactors')}
-		{@render errorMessage(formData.errors?.[currentStep])}
+		{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 	{/if}
 {/snippet}
 
@@ -200,64 +193,54 @@
 		{@render rightContent()}
 	{/if}	
 	<!-- Button container -->
-	<div class="button-container {customButton? 'custom': ''}">
-		{#if stepType === 'payment' || stepType === 'review' && !customButton}
-			{@render buttonType('submit',currentStep)}
-		{:else}
-			{#if showContinueButton}
-				{@render buttonType('continue', currentStep)}
-			{/if}
-			{#if !$isMobile && showSkipButton}
-				{@render buttonType('skip', currentStep)}
-			{/if}
-			{#if customButton}
-				{@render customButton()}
-			{/if}
-		{/if}
-	</div>
+	{@render buttonContainer()}
 {/snippet}
 
-<section class="step-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
-	<!-- left grid section -->
-	{#if showLeftContent && !$isMobile}
-		<article class="left-step">
-			{@render leftSection()}
+<section class="page-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
+	{#if !$isMobile}
+		<!-- left grid section -->
+		{#if showLeftContent }
+			<article class="left-step">
+				{@render leftSection()}
+			</article>
+		{/if}
+		
+		<!-- right grid section -->
+		{#if showRightContent }
+			<article class="right-step" transition:fade>
+				{@render rightSection()}
+			</article>
+		{/if}
+	{:else if $isMobile}
+		<article class="mobile-step">
+			{#if leftContent}{@render leftSection()}{/if}
+			{#if rightContent}{@render rightContent()}{/if}
 		</article>
-	{:else}
-		{@render leftSection()}
-	{/if}
-
-	<!-- right grid section -->
-	{#if showRightContent && !$isMobile}
-		<article class="right-step" transition:fade>
-			{@render rightSection()}
-		</article>
-	{:else}
-		{@render rightSection()}
+		{@render buttonContainer()}
 	{/if}
 </section>
 
 <style>
 
-	.step-container{
-		grid-column: left / right;
-		grid-row: 2 / -1;
-		
+	.page-container {
+		grid-column: content !important;
+		grid-row: 1 / -1;
 		position: relative;
 		display: grid;
 		grid-template-columns: subgrid;
-		gap: 1rem;
-		padding: 1rem;
-		height: 100%;
-		/* max-height: calc(100dvh - var(--footer-height)- var(--header-height)); */
 		width: 100%;
+		height: calc(100cqh - var(--header-height) + 10px) ;
+		max-height: calc(100dvh - var(--footer-height)); 
 		background-color: var(--general-background-color);
+		overflow: hidden;
+		padding: 1rem;
+		/* flex-direction: column; */
+		/* outline: solid red; */
 
-		:global( h3.section-title){
+		& h3.section-title{
 			position: relative;
 			margin-bottom: 1%;
 			font-size: clamp(1rem,10vw ,1.3rem);
-			display: none;
 		}
 	}
 
@@ -267,17 +250,16 @@
 		grid-row: 1 / -1;
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		height: fit-content;
 		width: 100%;
 		overflow: clip;
-		overflow-x: visible;
 		flex-wrap: wrap;
 		padding-block: 3rem;
 		padding-inline: 3rem;
 		border-radius: 10px;
 	}
 
-	.step-header{
+	.step-header {
 		display: flex;
 		align-items: center;
 		height: clamp(fit-content,1vh ,4rem);
@@ -352,10 +334,14 @@
 	}
 
 	/* right side */
+	:global(body:has(.left-step) .right-step) {
+		grid-column: right;
+	}
+
 	.right-step {
 		flex: 1 1 100%;
 		position: relative;
-		grid-column: right;
+		grid-column: left/right;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -373,7 +359,6 @@
 	}
 
 	:global(.step-header .back-button)  {
-		/* border-radius: 50%; */
 		height: clamp(1rem,5vh,4rem) ;
 		position: absolute;
 		top: .5rem;
@@ -410,13 +395,13 @@
 		container-type: inline-size;
 	}
 
-	:global(.step-container .button-container button) {
+	:global(.page-container .button-container button) {
 		position: relative;
 		bottom: var(--body-padding);
 		right:0;
 		width:50%;
 		padding: clamp(1rem,1vw,1rem);
-		background-color: #4B7A5B;
+		background-color: var(--primary-green-500);
 		color: var(--white);
 		border: none;
 		border-radius: 4px;
@@ -424,8 +409,9 @@
 		font-weight: 500;
 
 		&.disabled {
-			background-color: #cccccc;
+			background-color: var(--white);
 			color: var(--general-text-color);
+			border-color: var(--primary-green-500);
 			cursor: not-allowed;
 		}
 	}
@@ -448,7 +434,6 @@
 		flex: 0 1 20%;
 		width: 100%;
 		height: fit-content;
-		text-decoration: underline !important;
 	}
 
 	:global(.right-step .button-container .skip-button)  {
@@ -457,6 +442,7 @@
 		background: none;
 		color: var(--primary-darkgreen-550);
 		text-decoration: underline;
+
 	}
 
 	:global(.right-step .button-container .submit-button)  {
@@ -477,7 +463,7 @@
 	 
 	/* Mobile responsive */
 	@media (max-width: 768px) {
-		.step-container {
+		.page-container {
 			grid-template-columns: 1fr;
 			gap: 1rem;
 		}
@@ -522,7 +508,8 @@
 			grid-row: 2 / span 1;
 			padding: 0 !important;
 		}
-		:global(.step-container) {
+
+		:global(.page-container) {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		}
@@ -534,13 +521,15 @@
 	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
 	{
 
-		.step-container {
+		.page-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		
-			display: flex ;
+			display: flex !important;
 			flex-direction: column;
 			width: 100%;
+			height: 100dvh;
+			max-height: 100dvh;
 			gap: 1cqh;
 			padding: 0 ;
 			padding-block: 3% ;
@@ -549,13 +538,18 @@
 			color: var(--general-text-color) !important;
 		}
 
-		.left-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 1 / span 1;
-			padding: 0 !important;
+		.mobile-step {
+			flex: 1 1 auto;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			overflow-y: auto;
+			/* outline: solid blue; */
 		}
 
-		:global(.step-header) {
+		.step-header {
 			flex-direction: row;
 		}
 
@@ -590,24 +584,18 @@
 		}
 
 		/* Needs to be refactored. */
-			:global(.skip-button,.back-button) {
+		:global(.skip-button,.back-button) {
 			position: relative;
 			width: 100%;
 			height: unset !important;
-			padding-block: 5%!important;
-
+			padding-block: 5%;
+			/* outline:yellowgreen solid; */
 
 			svg path{
-				stroke: var(--black);
-				fill: var(--black);
+				stroke: var(--general-text-color);
+				fill: var(--general-text-color);
 			}
 		}	
-
-		/* section:has(label) {
-			flex: 1 1 90%;
-			background-color: var(--white);
-			border-radius: 12px;
-		} */
 
 		section:has(label) label input {
 			background-color: var(--off-white);
@@ -636,28 +624,22 @@
 			}
 		}
 
-		.right-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / span 1;
-			padding: 0 !important;
-		}
-
-		:global(.right-step .button-container) {
+		.button-container {
 			position: relative;
 			grid-column: 1/-1;
+			grid-row: 2 / -1;
 			display: flex;
-			flex-direction: column;
 			width: 100%;
 			flex: 0 1 fit-content;
 			flex-direction: column-reverse;
-			align-self: self-end;
+			align-self: flex-end;
 		}
 
-		:global(.right-step .button-container .skip-button) {
+		:global(.button-container .skip-button) {
 			margin-bottom: 0;
 		}
 		
-		:global(.step-container .button-container button) {
+		:global(.page-container .button-container button) {
 			position: relative;
 			width: 100%;
 			right: 0;
@@ -666,38 +648,33 @@
 		}
 
 		:global(.button-container.custom) {
-			--gap:10px;
+			--gap:10%;
 			display: flex;
 			flex-direction: row ;
 			flex-wrap: wrap;
-			align-items: flex-start;
+			align-items: flex-end;
 			justify-content: center;
 			gap: var(--gap);
-		}
-		
-		:global(.custom > :nth-child(n)) {
-			margin: 0;
-			text-wrap: nowrap;
-			/* outline: solid rgb(61, 228, 11) 10px; */
 		}
 
 		:global(.button-container.custom:has(:nth-child(4):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:100%;}
-			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
-			&:nth-child(4) {flex-basis:calc(20% - var(--gap));}
+			& :nth-child(1) {flex-basis:100%;}
+			& :nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& :nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& :nth-child(4) {flex-basis:calc(20% - var(--gap));}
 		}
-		:global(.button-container.custom:has(:nth-child(3):last-child) > :nth-child(n)) {
+		:global(.button-container.custom:has(>:nth-child(3):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:100%;}
-			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& :nth-child(1) {flex-basis:100%;}
+			& :nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& :nth-child(3) {flex-basis:calc(30% - var(--gap));}
 		}
-		:global(.button-container.custom:has(:nth-child(2):last-child):nth-child(n)) {
-			flex: 1 1 auto;
+		:global(.button-container.custom:has(>:nth-child(2):last-child):nth-child(n)) {
+			/* outline: solid red; */
+			flex: 0 1 auto;
 			&:nth-child(1) {flex-basis:calc(70% - var(--gap));}
-			&:nth-child(2) {flex-basis:calc(30% - var(--gap));}
+			&:nth-child(2) {flex-basis:calc(30% - var(--gap)); }
 		}
 		
 		.error-message {
@@ -708,6 +685,30 @@
 			margin-bottom: 1rem;
 			text-align: center;
 		}
+
+		/* .left-step {
+			grid-column: 1 / -1 !important;
+			grid-row: 1 / span 1;
+			padding: 0 !important;
+		} */
+
+		/* .right-step {
+			grid-column: 1 / -1 !important;
+			grid-row: 2 / span 1;
+			padding: 0 !important;
+		} */
+
+		/* section:has(label) {
+			flex: 1 1 90%;
+			background-color: var(--white);
+			border-radius: 12px;
+		} */
+
+		/* :global(.custom > :nth-child(n)) {
+			margin: 0;
+			text-wrap: nowrap;
+			outline: solid rgb(61, 228, 11) 10px;
+		} */
 		
 	}
 </style>

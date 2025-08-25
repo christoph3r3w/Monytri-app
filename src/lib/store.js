@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 export const current = writable('home');
 export const isMobile = writable(false);
 export const menuOpen = writable(false);
+export const anAcount = writable(false);
 
 // Update current store based on window.location.pathname
 export function updateCurrentFromPath() {
@@ -44,8 +45,11 @@ export function updateCurrentFromPath() {
         case '/blog':
             current.set('blog');
             break;
+        case '/login':
+            current.set('login');
+            break;
         default:
-            current.set('/');
+            current.set('');
             break;
     }
 }

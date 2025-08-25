@@ -121,7 +121,6 @@
 			</a>
 		</div>
 	</section>
-	
 
 	<figure class="bottom-logo">
 		<Logo name={false}/>
@@ -130,19 +129,19 @@
 
 <style>
 	.container{
+		grid-column: content;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 2rem;
-		width: 100%;
-		height: fit-content;
-		margin-bottom: 5rem;
+		height: 100%;
 		padding-top: 3%;
 	}
 
 	article,figure{
 		border-radius: 8px;
 		width: 100%;
+		max-width: 600px;
 		height: fit-content;
 		display: flex;
 		flex-direction: column;
@@ -150,12 +149,12 @@
 		margin: 0 auto;
 		background-color: white;
 	}
-
+	
 	h2{
 		font-size: clamp(1rem,8vw,1.1rem);
 	}
 
-	.container > h2{
+	/* .container > h2{
 		position: relative;
 		margin-block: 3% 1rem;
 		width: 100%;
@@ -172,7 +171,7 @@
 			border-radius: 8px;
 			background-color: var(--grey-400);
 		}
-	}	
+	}	 */
 
 	figure.banner {
 		width: 100%;
@@ -263,10 +262,7 @@
 		margin-block: 2rem;
 	}
 
-
-
 	.bottom-logo{
 		background-color: unset;
-		margin-bottom: 2rem;
 	}
 </style>

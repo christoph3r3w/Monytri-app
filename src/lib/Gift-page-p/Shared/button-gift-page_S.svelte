@@ -22,6 +22,10 @@
 		validateAmount = null,
 		validatePurpose = null,
 		validatePayment = null,
+		
+		// Skip callbacks
+		onSkipPurpose = null,
+		onSkipCardDesign = null,
 				
 	} = $props();
 </script>
@@ -54,11 +58,10 @@
 				// Clear data for the current step
 				switch(step) {
 					case 3: // Purpose step
-						formData.Purpose = null;
+						onSkipPurpose?.();
 						break;
 					case 4: // Card Design step
-						formData.cardDesign = 'default';
-						formData.message = '';
+						onSkipCardDesign?.();
 						break;
 				}
 				currentStep++;

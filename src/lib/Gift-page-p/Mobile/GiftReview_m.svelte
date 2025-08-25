@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import { StepContainer} from '$lib'
 
-	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm} = $props();
+	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm, onPaymentMethodSelect } = $props();
 	let selectedMethod = $state('');
 	let selectedBank = $state('');
 	let methods = $derived({
@@ -20,7 +20,7 @@
 			<input type="radio" id='paymentMethod{i}' name="paymentMethod" 
 			bind:group={selectedMethod}
 			onclick={() =>{
-			formData.PaymentMethod = `${method}${selectedBank}`;
+			onPaymentMethodSelect?.(`${method}${selectedBank}`);
 			validatePayment
 			}} 
 			value="paymentMethod{i}{method}{selectedBank}">
@@ -102,92 +102,6 @@
 	rightContent={paymentOptions}
 	submitForm={submitForm}
 />
-
-<!-- <section class="step-container" transition:fade>
-	<section class="step-header">
-		{@render button('back')}
-		<h2>Select a payment method</h2>
-		{@render button('blank')}
-	</section>
-	<section class="payment-input-container">
-		
-
-		{#each Object.entries(methods) as [method, info], i}
-		<label for='paymentMethod{i}'>
-			<input type="radio" id='paymentMethod{i}' name="paymentMethod" 
-			bind:group={selectedMethod}
-			onclick={() =>{
-			formData.PaymentMethod = `${method}${selectedBank}`;
-			validatePayment
-			}} 
-			value="paymentMethod{i}{method}{selectedBank}">
-			{method} 
-		</label>
-		{#if selectedMethod === `paymentMethod${i}${method}`}
-			<p class="payment-info">{info}</p>
-			{#if method === "iDEAL"}
-				<select class="payment-info" bind:value={selectedBank}>
-					<option value="iDEAL-bank1">Bank 1</option>
-					<option value="iDEAL-bank2">Bank 2</option>
-					<option value="iDEAL-bank3">Bank 3</option>
-				</select>
-			{:else if method === "EFT Payment" }
-				<select class="payment-info" bind:value={selectedBank}>
-					<option value="bank1">Bank 1</option>
-					<option value="bank2">Bank 2</option>
-					<option value="bank3">Bank 3</option>
-				</select>
-			{/if}
-		{/if}
-		{/each}
-
-
-	</section>
-
-	<article class="review-summary">
-		<div>
-			<h2>Please confirm your payment</h2>
-			<hr />
-			
-			<p class="review-item">
-				<span class="review-label">Recipient:</span>
-				<span class="review-value">{formData.recipient.name}</span>
-			</p>
-				
-			<p class="review-item">
-				<span class="review-label">Gift Amount:</span>
-				<span class="review-value">&euro;{formData.amount}</span>
-			</p>
-
-			<p class="review-item">
-				<span class="review-label">Delivery Date:</span>
-				<span class="review-value">{formData.currentDate}</span>
-				
-			<p class="review-item">
-				<span class="review-label">Card Design:</span>
-				<span class="review-value">{formData.cardDesign}</span>
-			</p>
-				
-			{#if formData.message}
-			<p class="review-item message">
-				<span class="review-label">Message:</span>
-				<span class="review-value">{formData.message}</span>
-			</p>
-			{/if}
-	
-			{#if formData.Purpose}
-				<p class="review-item">
-					<span class="review-label">Occasion:</span>
-					<span class="review-value">{formData.Purpose}</span>
-				</p>
-			{/if}
-		</div>
-	</article>
-		
-	<div class="button-container">
-		{@render button('submit')}
-	</div>
-</section> -->
 
 <style>
 

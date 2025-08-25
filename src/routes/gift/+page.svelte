@@ -13,8 +13,8 @@
 		GiftReview_M,
 		Process_success_S,
 	} from '$lib';
-	import { goto } from '$app/navigation';
-	import { fade,fly } from 'svelte/transition';
+	import {goto} from '$app/navigation';
+	import {fade,fly} from 'svelte/transition';
 	import {onMount} from 'svelte';	
   
 	// State management
@@ -154,6 +154,11 @@
 			recipient.email.toLowerCase().includes(query.toLowerCase())
 		);
 	}
+
+	// Callback to handle search query updates from child components
+	function updateSearchQuery(newQuery) {
+		formData.searchQuery = newQuery;
+	}
 	
 	// Enhanced validation functions
 	function selectRecipient(recipient) {
@@ -221,6 +226,11 @@
 		stepValidation[3] = true;
 	}
 
+	// Callback to handle purpose selection from child components
+	function selectPurpose(purposeValue) {
+		formData.Purpose = purposeValue;
+	}
+
 	//search pupose functionality
 	function searchPurpose(query) {
 		formData.searchQuery = query;
@@ -240,6 +250,21 @@
 
 	function validatePayment(e) {
 		stepValidation[5] = e.target.value && formData.PaymentMethod !== null;
+	}
+
+	// Callback to handle payment method selection from child components
+	function selectPaymentMethod(paymentMethod) {
+		formData.PaymentMethod = paymentMethod;
+	}
+
+	// Skip step callbacks
+	function skipPurpose() {
+		formData.Purpose = null;
+	}
+
+	function skipCardDesign() {
+		formData.cardDesign = 'default';
+		formData.message = '';
 	}
 	
 	async function submitForm() {
@@ -287,17 +312,13 @@
 	});
 </script>
 
-<svelte:head>
-	<title>{$current}</title>	
-</svelte:head>
-
 {#snippet progressBar()}
 	<div class="progress-bar">
 		<div class="progress" style="width: {progressPercentage}%"></div>
 	</div>	
 {/snippet}
 
-<article class="transfer-wizard" in:fly={{ y: 50, duration: 500,opacity:0 }} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
+<article class="transfer-wizard" in:fly={{y:50, duration:500,opacity:0.5}} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
 	<!-- Progress indicator -->
 	{@render progressBar()}
 	{#if !$isMobile}
@@ -322,7 +343,6 @@
 				{previousStep}
 				{stepValidation}
 			/>	
-
 		<!-- step 3 choose proposal -->
 		{:else if currentStep === 3}
 			<Purpose_D
@@ -331,6 +351,9 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSearchQueryUpdate={updateSearchQuery}
+				onPurposeSelect={selectPurpose}
+				onSkipPurpose={skipPurpose}
 			/>
 		<!-- Step 4: Choose Card Design -->
 		{:else if currentStep === 4}
@@ -350,6 +373,7 @@
 				{previousStep}
 				{stepValidation}
 				submitForm={submitForm}
+				onPaymentMethodSelect={selectPaymentMethod}
 			/>
 		{/if}
 	{:else if $isMobile}
@@ -362,6 +386,7 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSearchQueryUpdate={updateSearchQuery}
 			/>
 		<!-- Step 2: Enter Amount -->
 		{:else if currentStep === 2}
@@ -382,6 +407,9 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSearchQueryUpdate={updateSearchQuery}
+				onPurposeSelect={selectPurpose}
+				onSkipPurpose={skipPurpose}
 			/>
 		<!-- Step 4: Choose Card Design -->
 		{:else if currentStep === 4}
@@ -401,6 +429,7 @@
 				{previousStep}
 				{stepValidation}
 				{submitForm}
+				onPaymentMethodSelect={selectPaymentMethod}
 			/>
 		{/if}
 		<!-- Step 6: Transfer Success -->
@@ -477,24 +506,25 @@
 			background-color: var(--white);	
 		}
 
-		:global(.left-step) {
+		.left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
 		}
 
-		:global(.step-header) .back-button{
+		.step-header .back-button{
 			position: relative !important;
 			top: 0;
 			left: 0;
 		}
 
-		:global(.right-step) {
+		.right-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / span 1;
 			padding: 0 !important;
 		}
-		:global(.step-container) {
+
+		.step-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		}
@@ -511,18 +541,6 @@
 			height: 100%;
 			border-radius: 0 5px 5px 0;
 			transition: width 0.5s ease-out;
-		}	
-
-		:global(.skip-button,.back-button) {
-			position: relative;
-			width: 100%;
-			height: unset !important;
-			padding-block: 5%;
-
-			svg path{
-				stroke: var(--black);
-				fill: var(--black);
-			}
 		}	
 
 

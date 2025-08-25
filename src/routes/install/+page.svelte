@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
     import {current} from '$lib/store.js';
     let deferredPrompt = null;
     let showInstall = false;
@@ -20,7 +21,7 @@
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             if (outcome === 'accepted') {
-                console.log('App installed');
+				// console.log('App installed');
             }
             deferredPrompt = null;
             showInstall = false;
@@ -28,13 +29,9 @@
     }
 </script>
 
-<svelte:head>
-    <title>Install</title>
-</svelte:head>
-
 <div class="container">
 
-	<figure class="banner" style="background: url('./shared-assests/banner-deco.png')">
+	<figure class="banner" style="background-image: url('./shared-assests/banner-deco.png')">
 		<img src="./shared-assests/Monytri-01.png" alt="">
 	</figure>
 
@@ -63,6 +60,7 @@
             </p>
         {/if}
     </article>
+	<button onclick={() => goto('/')}>Go to Home</button>
 
 </div>
 
@@ -77,6 +75,7 @@
 	}
 
 	.container {
+		grid-column: content;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -115,12 +114,15 @@
 		margin: 0 auto;
 		background-color: white;
 	}
-
-	figure.banner{
-		width: 100%;
+	
+	.banner{
+		/* outline: solid blue; */
+		width: 80%;
+		max-width: 600px;
 		aspect-ratio: 30/9;
 		background-color: var(--white);
 		background-size: cover;
+		background-repeat: no-repeat;
 		display: grid;
 		place-items: center;
 	}
@@ -146,6 +148,7 @@
 		border-radius: 8px;
 		margin-top: 1rem;
 	}
+
 	button {
 		padding: 1rem 2rem;
 		border-radius: 5px;
@@ -155,4 +158,33 @@
 		font-size: 1rem;
 		cursor: pointer;
 	}
+
+		@media 
+		(-moz-min-device-pixel-ratio: 3),	
+		(-webkit-min-device-pixel-ratio: 3),
+		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) ,
+		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait) , 
+		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
+		{
+			.container {
+		
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 2rem;
+				width: 100%;
+				margin-bottom: 5rem;
+			}
+
+			.banner {
+				width: 100%;
+				max-width: 100%;
+				aspect-ratio: 30/9;
+			}
+
+		}
+
+
+
+
 </style>

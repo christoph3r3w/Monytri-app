@@ -2,7 +2,7 @@
 	import { fade } from 'svelte/transition';
 	import {StepContainer} from '$lib';
 
-	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm} = $props();
+	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm, onPaymentMethodSelect } = $props();
 	let selectedMethod = $state('');
 	let selectedBank = $state('');
 	let methods = $derived({
@@ -56,7 +56,7 @@
 			<input type="radio" id='paymentMethod{i}' name="paymentMethod" 
 			bind:group={selectedMethod}
 			onclick={() =>{
-				formData.PaymentMethod = `${method}${selectedBank}`;
+				onPaymentMethodSelect?.(`${method}${selectedBank}`);
 				validatePayment()
 			}} 
 			value="paymentMethod{i}{method}{selectedBank}">
@@ -126,20 +126,20 @@
 		color: var(--primary-green-500);
 	}
 	
-	.right-step{
+	/* .right-step{
 		flex: 1 1 100%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
 		gap: 1rem;
-	}
+	} */
 	
 	.review-summary {
 		align-self: baseline;
 		place-self: center;
 		display: flex;
 		flex-direction: column;
-		background-color: var(--white);
+		background-color: var(--general-background-color-secondary, var(--white));
 		border-radius: 10px;
 		padding: 40px;
 		box-shadow: 0 4px 8px -3px rgba(0, 0, 0, 0.1);
@@ -147,6 +147,9 @@
 		height: auto;
 		max-height: max(30dvh,fit-content);
 		max-width: 700px;
+		color: light-dark(var(--general-text-color), var(--black));
+		color: var(--general-text-color);
+
 		
 		@container style(--mobile:1) {
 			place-self: center;

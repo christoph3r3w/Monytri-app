@@ -55,11 +55,42 @@
 				Add Money
 			</a>
 		</article>
-
+		<div class="gifted outer">
+				{#if Gifted.length > 0 && Invested.length > 0}
+					<span class="gifted-content">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M16.321 6.42505L17.236 4.90002C17.564 4.35202 17.572 3.69296 17.257 3.13696C16.942 2.58096 16.373 2.25 15.735 2.25H8.26501C7.62601 2.25 7.05701 2.58196 6.74301 3.13696C6.42901 3.69296 6.43601 4.35202 6.76501 4.90002L7.67899 6.42505C4.73999 9.13705 3.25 12.019 3.25 15C3.25 16.583 3.881 21.75 12 21.75C20.119 21.75 20.75 16.583 20.75 15C20.75 12.019 19.261 9.13705 16.321 6.42505ZM8.048 3.87598C8.075 3.82898 8.13901 3.75 8.26501 3.75H15.735C15.861 3.75 15.925 3.82998 15.952 3.87598C15.979 3.92298 16.014 4.02005 15.949 4.12805L14.935 5.81897H9.065L8.05099 4.12805C7.98599 4.02005 8.021 3.92398 8.048 3.87598ZM12 20.25C5.457 20.25 4.75 16.579 4.75 15C4.75 12.382 6.165 9.79995 8.935 7.31995H15.065C17.836 9.79995 19.25 12.382 19.25 15C19.25 16.579 18.543 20.25 12 20.25ZM12.818 13.433L11.553 13.114C11.393 13.072 11.257 12.982 11.153 12.847C11.054 12.72 11 12.556 11 12.387C11 11.974 11.325 11.639 11.725 11.639H12.276C12.645 11.639 12.954 11.9251 12.996 12.3051C13.041 12.7171 13.406 13.011 13.824 12.968C14.236 12.923 14.532 12.551 14.487 12.14C14.379 11.163 13.665 10.3969 12.75 10.1949V10C12.75 9.586 12.414 9.25 12 9.25C11.586 9.25 11.25 9.586 11.25 10V10.193C10.251 10.414 9.5 11.312 9.5 12.387C9.5 12.888 9.66699 13.378 9.96399 13.762C10.265 14.157 10.696 14.442 11.182 14.567L12.447 14.886C12.773 14.97 13 15.269 13 15.613C13 15.813 12.923 16.002 12.782 16.145C12.645 16.285 12.465 16.361 12.275 16.361H11.724C11.355 16.361 11.046 16.0749 11.004 15.6949C10.958 15.2829 10.593 14.987 10.176 15.032C9.76399 15.077 9.468 15.449 9.513 15.86C9.621 16.837 10.335 17.6031 11.25 17.8051V18C11.25 18.414 11.586 18.75 12 18.75C12.414 18.75 12.75 18.414 12.75 18V17.807C13.164 17.716 13.545 17.509 13.851 17.198C14.269 16.774 14.5 16.211 14.5 15.614C14.5 14.584 13.81 13.688 12.818 13.433Z" fill="#121212"/>
+						</svg>
+						<h1 title={undefined}>{Gifted}</h1>
+					</span>
+					<p>You gifted</p>
+				{:else}
+				<span class="gifted-content">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16.321 6.42505L17.236 4.90002C17.564 4.35202 17.572 3.69296 17.257 3.13696C16.942 2.58096 16.373 2.25 15.735 2.25H8.26501C7.62601 2.25 7.05701 2.58196 6.74301 3.13696C6.42901 3.69296 6.43601 4.35202 6.76501 4.90002L7.67899 6.42505C4.73999 9.13705 3.25 12.019 3.25 15C3.25 16.583 3.881 21.75 12 21.75C20.119 21.75 20.75 16.583 20.75 15C20.75 12.019 19.261 9.13705 16.321 6.42505ZM8.048 3.87598C8.075 3.82898 8.13901 3.75 8.26501 3.75H15.735C15.861 3.75 15.925 3.82998 15.952 3.87598C15.979 3.92298 16.014 4.02005 15.949 4.12805L14.935 5.81897H9.065L8.05099 4.12805C7.98599 4.02005 8.021 3.92398 8.048 3.87598ZM12 20.25C5.457 20.25 4.75 16.579 4.75 15C4.75 12.382 6.165 9.79995 8.935 7.31995H15.065C17.836 9.79995 19.25 12.382 19.25 15C19.25 16.579 18.543 20.25 12 20.25ZM12.818 13.433L11.553 13.114C11.393 13.072 11.257 12.982 11.153 12.847C11.054 12.72 11 12.556 11 12.387C11 11.974 11.325 11.639 11.725 11.639H12.276C12.645 11.639 12.954 11.9251 12.996 12.3051C13.041 12.7171 13.406 13.011 13.824 12.968C14.236 12.923 14.532 12.551 14.487 12.14C14.379 11.163 13.665 10.3969 12.75 10.1949V10C12.75 9.586 12.414 9.25 12 9.25C11.586 9.25 11.25 9.586 11.25 10V10.193C10.251 10.414 9.5 11.312 9.5 12.387C9.5 12.888 9.66699 13.378 9.96399 13.762C10.265 14.157 10.696 14.442 11.182 14.567L12.447 14.886C12.773 14.97 13 15.269 13 15.613C13 15.813 12.923 16.002 12.782 16.145C12.645 16.285 12.465 16.361 12.275 16.361H11.724C11.355 16.361 11.046 16.0749 11.004 15.6949C10.958 15.2829 10.593 14.987 10.176 15.032C9.76399 15.077 9.468 15.449 9.513 15.86C9.621 16.837 10.335 17.6031 11.25 17.8051V18C11.25 18.414 11.586 18.75 12 18.75C12.414 18.75 12.75 18.414 12.75 18V17.807C13.164 17.716 13.545 17.509 13.851 17.198C14.269 16.774 14.5 16.211 14.5 15.614C14.5 14.584 13.81 13.688 12.818 13.433Z" fill="#121212"/>
+					</svg>
+					<h1 title={undefined}>let's start here</h1>
+				</span>
+				{/if}
+			</div>
 		<nav class="button-container">
-			<div class="gifted">
-				<h1 title={undefined}>{Gifted}</h1>
-				<p>You have gifted</p>
+			<div class="gifted inner">
+				{#if Gifted.length > 0 && Invested.length > 0}
+					<span class="gifted-content">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M16.321 6.42505L17.236 4.90002C17.564 4.35202 17.572 3.69296 17.257 3.13696C16.942 2.58096 16.373 2.25 15.735 2.25H8.26501C7.62601 2.25 7.05701 2.58196 6.74301 3.13696C6.42901 3.69296 6.43601 4.35202 6.76501 4.90002L7.67899 6.42505C4.73999 9.13705 3.25 12.019 3.25 15C3.25 16.583 3.881 21.75 12 21.75C20.119 21.75 20.75 16.583 20.75 15C20.75 12.019 19.261 9.13705 16.321 6.42505ZM8.048 3.87598C8.075 3.82898 8.13901 3.75 8.26501 3.75H15.735C15.861 3.75 15.925 3.82998 15.952 3.87598C15.979 3.92298 16.014 4.02005 15.949 4.12805L14.935 5.81897H9.065L8.05099 4.12805C7.98599 4.02005 8.021 3.92398 8.048 3.87598ZM12 20.25C5.457 20.25 4.75 16.579 4.75 15C4.75 12.382 6.165 9.79995 8.935 7.31995H15.065C17.836 9.79995 19.25 12.382 19.25 15C19.25 16.579 18.543 20.25 12 20.25ZM12.818 13.433L11.553 13.114C11.393 13.072 11.257 12.982 11.153 12.847C11.054 12.72 11 12.556 11 12.387C11 11.974 11.325 11.639 11.725 11.639H12.276C12.645 11.639 12.954 11.9251 12.996 12.3051C13.041 12.7171 13.406 13.011 13.824 12.968C14.236 12.923 14.532 12.551 14.487 12.14C14.379 11.163 13.665 10.3969 12.75 10.1949V10C12.75 9.586 12.414 9.25 12 9.25C11.586 9.25 11.25 9.586 11.25 10V10.193C10.251 10.414 9.5 11.312 9.5 12.387C9.5 12.888 9.66699 13.378 9.96399 13.762C10.265 14.157 10.696 14.442 11.182 14.567L12.447 14.886C12.773 14.97 13 15.269 13 15.613C13 15.813 12.923 16.002 12.782 16.145C12.645 16.285 12.465 16.361 12.275 16.361H11.724C11.355 16.361 11.046 16.0749 11.004 15.6949C10.958 15.2829 10.593 14.987 10.176 15.032C9.76399 15.077 9.468 15.449 9.513 15.86C9.621 16.837 10.335 17.6031 11.25 17.8051V18C11.25 18.414 11.586 18.75 12 18.75C12.414 18.75 12.75 18.414 12.75 18V17.807C13.164 17.716 13.545 17.509 13.851 17.198C14.269 16.774 14.5 16.211 14.5 15.614C14.5 14.584 13.81 13.688 12.818 13.433Z" fill="#121212"/>
+						</svg>
+						<h1 title={undefined}>{Gifted}</h1>
+					</span>
+					<p>You gifted</p>
+				{:else}
+				<span class="gifted-content">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M16.321 6.42505L17.236 4.90002C17.564 4.35202 17.572 3.69296 17.257 3.13696C16.942 2.58096 16.373 2.25 15.735 2.25H8.26501C7.62601 2.25 7.05701 2.58196 6.74301 3.13696C6.42901 3.69296 6.43601 4.35202 6.76501 4.90002L7.67899 6.42505C4.73999 9.13705 3.25 12.019 3.25 15C3.25 16.583 3.881 21.75 12 21.75C20.119 21.75 20.75 16.583 20.75 15C20.75 12.019 19.261 9.13705 16.321 6.42505ZM8.048 3.87598C8.075 3.82898 8.13901 3.75 8.26501 3.75H15.735C15.861 3.75 15.925 3.82998 15.952 3.87598C15.979 3.92298 16.014 4.02005 15.949 4.12805L14.935 5.81897H9.065L8.05099 4.12805C7.98599 4.02005 8.021 3.92398 8.048 3.87598ZM12 20.25C5.457 20.25 4.75 16.579 4.75 15C4.75 12.382 6.165 9.79995 8.935 7.31995H15.065C17.836 9.79995 19.25 12.382 19.25 15C19.25 16.579 18.543 20.25 12 20.25ZM12.818 13.433L11.553 13.114C11.393 13.072 11.257 12.982 11.153 12.847C11.054 12.72 11 12.556 11 12.387C11 11.974 11.325 11.639 11.725 11.639H12.276C12.645 11.639 12.954 11.9251 12.996 12.3051C13.041 12.7171 13.406 13.011 13.824 12.968C14.236 12.923 14.532 12.551 14.487 12.14C14.379 11.163 13.665 10.3969 12.75 10.1949V10C12.75 9.586 12.414 9.25 12 9.25C11.586 9.25 11.25 9.586 11.25 10V10.193C10.251 10.414 9.5 11.312 9.5 12.387C9.5 12.888 9.66699 13.378 9.96399 13.762C10.265 14.157 10.696 14.442 11.182 14.567L12.447 14.886C12.773 14.97 13 15.269 13 15.613C13 15.813 12.923 16.002 12.782 16.145C12.645 16.285 12.465 16.361 12.275 16.361H11.724C11.355 16.361 11.046 16.0749 11.004 15.6949C10.958 15.2829 10.593 14.987 10.176 15.032C9.76399 15.077 9.468 15.449 9.513 15.86C9.621 16.837 10.335 17.6031 11.25 17.8051V18C11.25 18.414 11.586 18.75 12 18.75C12.414 18.75 12.75 18.414 12.75 18V17.807C13.164 17.716 13.545 17.509 13.851 17.198C14.269 16.774 14.5 16.211 14.5 15.614C14.5 14.584 13.81 13.688 12.818 13.433Z" fill="#121212"/>
+					</svg>
+					<h1 title={undefined}>let's start here</h1>
+				</span>
+				{/if}
 			</div>
 			<button onclick={goto("/gift")}>
 				<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -105,16 +136,14 @@
 
 	.balance-info {
 		display: flex;
-		flex-direction: row;
-		gap: 1rem;
+		flex-direction: column;
 		width: fit-content;
-		padding: 1% 1%;
-		border-radius: 8px;
+		height: 100%;
 		align-items: center;
-	}
-
-	.button-container{
-		box-shadow: 0px 4px 10px 0px #5858581A ;
+		align-items: flex-start;
+		padding: 1% 1%;
+		gap: 10%;
+		border-radius: 8px;
 	}
 
 	:is(.invested,.gifted) h1{
@@ -127,17 +156,89 @@
 		white-space: nowrap;
 		width: 100%;
 	}
-
-	.gifted{
-		margin-bottom: 3%;
-	}
 	
 	:is(.invested,.gifted) p{
 		font-size: clamp(10px,12px,12px);	
 	}
+	.invested{
+		font-weight: 500;
+		padding-top: 10%;
+		color: var(--general-text-color-invert);
+	}
+	.invested p {
+		font-size: 1.2rem;
+		font-weight: 300;
+	}
 
-	.gifted h1{
-		color: var(--general-text-color-secondary);
+	.gifted{
+		color: var(--general-text-color);
+	}
+
+	.gifted.outer{
+		display: none;
+	}
+
+	.gifted.inner{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		outline: solid 1px var(--neutral-grey);
+	}
+
+	.gifted-content {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		max-height: 50px;
+		width: 70%;
+		min-width: fit-content;
+		font-weight: 300;
+		text-wrap: nowrap;
+		border: none ;
+		border-radius: 82px;
+		gap: 5%;
+		/* outline: solid red; */
+	}
+
+	.gifted-content svg{
+		--d:clamp(.8rem,5vw,25px);
+		min-width: var(--d);
+		height: var(--d);
+		aspect-ratio: 1;
+		color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
+		path{
+			fill: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
+			fill:goldenrod;
+		}
+	}
+
+	.gifted.inner svg{
+		--d:clamp(.8rem,5vw,50px);
+	}
+
+	.gifted.inner h1{
+		width: fit-content;
+	}
+
+	.gifted.inner p{
+		font-size: 1rem;
+		font-weight: 300;}
+	
+	.button-container {
+		position: relative;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+		width: clamp(50%,68.4%,300px);
+		height: 18cqh;
+		border-radius: 8px;
+		background-color: var(--general-background-color,white);
+		color: var(--general-text-color);
+		box-shadow: 0px 4px 10px 0px #5858581A ;
 	}
 
 
@@ -167,41 +268,20 @@
 		padding-top: 3%;
 	}
 
-	.balance-section:has(.button-container) .balance-info {
-		flex-direction: column;
-		align-items: flex-start;
-		height: 100%;
-		gap: 20%;
-	}
-
-	.balance-section:has(.button-container) .balance-info .invested p {
-		font-size: 1.2rem;
-		font-weight: 300;
-	}
-
-	.balance-section:has(.button-container) .balance-info .add-money-link {
-		font-size: 1.2rem;
-		font-weight: 300;
-		flex-direction: row;
-		width: 100%;
-		align-self: end;
-		justify-self: end ;
-		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
-		border-color:light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)) ;
-		fill: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
-	}
-
 	.add-money-link{
 		display: flex;
+		flex-direction: row;
 		align-items: center;
 		justify-content: center;
 		gap: 4%;
-		max-height: 50px;
 		min-width: fit-content;
+		width: 100%;
+		max-height: 50px;
 		font-size: clamp(0.8rem, 3vw, 2rem);
+		font-weight: 300;
 		text-wrap: nowrap;
-		color: var(--general-text-color);
-		border: solid var(--general-text-color) 2px;
+		color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
+		border: 2px solid ;
 		border-radius: 82px;
 		padding: 9% clamp(10px,2%, 3%);
 	}
@@ -213,21 +293,11 @@
 	}
 
 	.add-money-link svg path{
-		fill: var(--general-text-color);
+		fill: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
 	}
 
-	.balance-section:has(.button-container) .button-container {
-		position: relative;
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		grid-template-rows: 1fr 1fr;
-		height: 20cqh;
-		width: clamp(50%,68.4%,300px);
-		border-radius: 8px;
-		background-color: var(--general-background-color,white);
-		color: var(--general-text-color);
-	}
 
+	/* devider line */
 	.button-container::before{
 		content: '';
 		width: 1px;
@@ -253,12 +323,24 @@
 
 	@media (width <= 600px) {
 
+		:root{
+			--move-top:-4cqh;
+			--margin-top:calc(var(--header-height) + var(--move-top) * 3);
+			/* --margin-top:calc(var(--header-height) / 3  ); */
+		}
+
 		.balance-section {
 			flex-direction: column;
 			align-items: center;
-			gap: 1rem;
+			gap: calc(25% + var(--move-top));
+			/* gap: calc(var(--margin-top)  30%); */
 			padding: 0;
 			width: 100%;
+			/* margin-top: -3rem; */
+			/* margin-top: var(--margin-top); */
+			margin-top: var(--move-top);
+			align-self: end;
+			transform-origin: bottom;
 		}
 		
 		.balance-section:has(.button-container) {
@@ -290,22 +372,57 @@
 			display: none;
 		}
 
-		.gifted h1{
-			font-size: clamp(1rem,7vw,2.5rem);
+		.balance-section .gifted.inner{
+			display: none !important;
 		}
 
-		.button-container{
+		.gifted.outer {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 4%;
+			min-width: fit-content;
+			font-size: clamp(0.5rem, 2vw, 1rem);
+			text-wrap: nowrap;
+			color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
+		}
+
+		.gifted-content {
+			display: flex;
+			min-width: fit-content;
+			width: 100%;
+			max-height: 50px;
+			font-size: clamp(0.8rem, 3vw, 2rem);
+			font-weight: 300;
+			border: 2px solid ;
+			border-radius: 82px;
+			padding: 9% clamp(10px,2%, 3%);
+			gap: 0;
+		}
+
+		.gifted h1{
+			max-height: 50px;
+			padding: 9% clamp(5px,5vw, 1%);
+			font-size: clamp(.5rem,7vw,1.3rem);
+		}
+
+		.gifted.outer p{
+			translate: 0 10px;
+		}
+
+		.balance-section:has(.button-container) .button-container {
 			position: relative;
 			display:flex;
 			flex-direction: row;
 			align-items: center;
-			width: clamp(50%,300px,90%);
-			gap: 1%;
-			min-width: fit-content;
-			height: 84px;
 			justify-self: baseline;
-			border-radius: 8px;
+			min-width: fit-content;
+			width: clamp(50%,250px,80%);
+			height: 84px;
+			gap: 1%;
 			padding: 2%;
+			border-radius: 8px;
 			background-color: var(--general-background-color,white);
 			box-shadow: 0px 4px 10px 0px #5858581A ;
 		}
@@ -313,9 +430,9 @@
 		.button-container::before{
 			content: '';
 			width: 1px;
-			height: 30%;
+			height: 50%;
 			position: absolute;
-			bottom: 10%;
+			bottom: 25% ;
 			left: 50%;
 			z-index: 1;
 			border-radius: inherit;

@@ -2,7 +2,8 @@
 	import {onMount} from 'svelte';
   	import {onNavigate,afterNavigate} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
-	import {current,isMobile,menuOpen, updateCurrentFromPath} from '../lib/store.js'
+	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
+	import {isAuthenticated,user} from '$lib/user';
 	import { fade } from 'svelte/transition';
 
 	import '../app.css';
@@ -11,6 +12,8 @@
 
 	let menu_Open = $derived($menuOpen);
 
+	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
+	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !$isAuthenticated);
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -67,7 +70,7 @@
 		
 		// Run when page fully loads (including all resources)
 		const handleFullPageLoad = () => {
-			console.log('Page fully loaded with all resources');
+			// console.log('Page fully loaded with all resources');
 			updateIsMobile(); // Update mobile detection after full page load
 		};
 		
@@ -118,32 +121,39 @@
 
 	// loggoing the current store value
 	current.subscribe(value => {
-		console.log('Current store value:', value);
+		// console.log('Current store value:', value);
 	});
 
 	isMobile.subscribe(value => {
-		console.log('isMobile store value:', value);
+		// console.log('isMobile store value:', value);
 	});
 	
 </script>
 
+<svelte:head>
+	<title>Monytri {$current}</title>
+</svelte:head>
+
 <!-- main application layout -->
 <section class="body-container">
-	{#if ($current == 'gift' && $isMobile || $current == 'request' && $isMobile) }
+	{#if $isMobile && noHeaderPage}
 	{:else}
-	<header>
-		<Header {current}/>	
-	</header>
+		<header>
+			<Header {current}/>	
+		</header>
 	{/if}
 	{#if menu_Open}
 		<Menu/>
 	{/if}
-	<main class={$current == 'gift' || $current == 'request'? 'giftOn':'' }>
-		{@render children()}
-	</main>
-	<footer>
-		<Footer {current}/>
-	</footer>
+		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage}>
+			{@render children()}
+		</main>
+	{#if $isMobile && noFooterPage}
+	{:else}
+		<footer>
+			<Footer {current}/>
+		</footer>
+	{/if}
 </section>
 
 
@@ -162,7 +172,7 @@
 		/* and other styling properties */
 		--body-padding: 2%;
 		--header-height: calc(8dvh + var(--safe-area-inset-top));
-		--footer-height: calc(65px + var(--safe-area-inset-bottom));
+		--footer-height: calc(60px + var(--safe-area-inset-bottom));
 
 		/* all the elements that will be animated */
 		will-change: transform, height, background-color, box-shadow, border-radius,position;
@@ -186,6 +196,11 @@
 		outline-offset: 2px;
 	}
 
+	:global(html){
+		overscroll-behavior-x: contain;
+		overscroll-behavior-y: contain;
+	}
+
 	:global(body){
 		width: 100%;
 		margin: 0;
@@ -206,7 +221,7 @@
 		min-height: 100dvh;
 		background-color: var(--general-background-color);
 		overflow-x: clip;
-		overflow-y:auto;
+		/* overflow-y:auto; */
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 	}
@@ -228,8 +243,7 @@
 		align-content: start;
 		overflow-x: hidden;
 		overflow-y: visible;
-		/* overscroll-behavior-x: contain;
-		overscroll-behavior-y: contain; */
+		
 		
 		container-name: main;
 
@@ -247,7 +261,6 @@
 		&:nth-of-type(1) > :is(:global(*)) {
 			grid-column: 1/ span 1;
 			grid-row: 1/span 1;
-			height: 100%;
 		}
 
 		&:nth-of-type(1):has(:global(*) ~ :global(*)) > :nth-child(n)  {
@@ -293,6 +306,7 @@
 			display: flex !important;
 			flex-direction: column;
 			min-height: revert;
+			min-height: 100%;
 			max-height: 100%;
 			overflow: hidden;
 		}
@@ -331,10 +345,10 @@
 			background-color: rgb(200, 224, 124);
 			background-color: rgb(224, 124, 224); */
 			
-			&.giftOn{
-				padding-top: 0 !important;
+			&.noHeaderPage{
+				padding-top: 0 ;
 			}
-			
+
 			/* essential cascading layout styling */
 			/* needs to be simplified */
 			&:nth-child(n) > :is(:global(*)) {
@@ -343,7 +357,7 @@
 				
 				min-height: 100% ;
 				max-height: fit-content;
-				max-height: calc(99svh - var(--header-height) - var(--footer-height) - env(safe-area-inset-bottom));
+				max-height: calc(100svh - var(--header-height) - var(--footer-height) - env(safe-area-inset-bottom));
 				height: fit-content;
 				
 				display: grid;
@@ -354,7 +368,18 @@
 				/* background-color:  rgb(162, 255, 0); */
 			}
 
-			
+			&.noHeaderPage > :is(:global(*)) {max-height: calc(100svh - var(--footer-height) - env(safe-area-inset-bottom));}
+			&.noFooterPage > :is(:global(*)) {max-height: calc(100svh + var(--footer-height) );
+				height: 100svh ;
+			}
+
+			&:has(.noHeaderPage,.noFooterPage) {
+				height: 100dvh;
+				max-height: 100dvh;
+				margin-bottom: 0;
+				margin: 0;
+			}
+
 			&:nth-of-type(1) {
 				grid-column: content ;
 				overflow-y: scroll;
@@ -385,6 +410,10 @@
 			transform: translate3d(0,0,0);
 			padding-bottom: env(safe-area-inset-bottom);
 			z-index: 100;
+		}
+
+		:global(body.android-device){
+			--footer-height: calc(65px + var(--safe-area-inset-bottom));
 		}
 	}
 </style>

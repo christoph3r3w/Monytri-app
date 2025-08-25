@@ -5,18 +5,28 @@
 	import QRCode from 'qrcode';
 	import { goto } from '$app/navigation';
 
+	let {formData,validaterequest,button,nextStep,stepValidation,previousStep,submitForm,currentProgress} = $props();
+	let selectedMethod = $state('');
+
 	//  vercel does not let a user enter an application from the share page you need to start with the hoem page 
 	const homeUrl = window.location.origin
 	// Later for this, they should go into the server.js
 	// It should also pick the important forum data information from the request validation process, hash it, and make it a link to send to the backend.
-	const requestUrl = `${homeUrl}/request?data=${encodeURIComponent(JSON.stringify(formData))}`;
+	// const requestUrl = `${homeUrl}/request?data=${encodeURIComponent(JSON.stringify(formData))}`;
+	const requestUrl = formData.shareUrl;
 	let qrDataUrl = $state('');
 	let canShare = $state(false);
 	let openRequest = $derived(formData.benefactor.name === 'Open request');
 
 	onMount(() => {
 		canShare = !!navigator.share;
-		if (openRequest){generateQR();}
+	});
+	
+	$effect(() => {
+		if (openRequest && qrDataUrl.length <= 0 ) {
+			generateQR();
+		}
+		currentProgress = 100;
 	});
 
 	async function generateQR() {
@@ -67,19 +77,11 @@
 	}
 
 	function sendEmail() {
-		const subject = `Request from ${formData.benefactor.name}`;
+		const subject = `Request for ${formData.benefactor.name}`;
 		const body = `You have received a request for an amount of €${formData.amount}.\n\nPlease visit the following link to view and respond to the request:\n${requestUrl}`;
 		window.location.href = `mailto:${formData.benefactor.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 	}
 
-	let {formData,validaterequest,button,nextStep,stepValidation,previousStep,submitForm} = $props();
-	let selectedMethod = $state('');
-	let selectedBank = $state('');
-	let methods = $derived({
-		"Linked Credit/Debit Card": "Card ending in **** **** 1234",
-		"iDEAL": "Select your bank",
-		"EFT request": "Select your bank"
-	});
 </script>
 
 <!-- Need to check with the client to see which one they would prefer. -->
@@ -87,7 +89,7 @@
 	<article class="review-summary">
 		<div>
 			
-			{#if formData.benefactor.name !== 'Open request'}
+			{#if formData.benefactor.name !== 'Open request' || formData.amount > 0}
 			<h2>Your request to {formData.benefactor.name}</h2>
 			<hr />
 			<!-- <p class="review-item">
@@ -112,15 +114,13 @@
 				<span class="review-value">{formData.message}</span>
 			</p>
 			{/if}
-	
-			
 		</div>
 	</article>
 {/snippet}
 
 {#snippet requestReview()}
 	<article class="request-summary review-summary">
-		{#if !openRequest}
+		{#if !openRequest || formData.amount > 0}
 			{#if formData.benefactor.profilePic.length > 0 || formData.benefactor.profilePic !== ''}
 				<img src="{formData.benefactor.profilePic}" alt="{formData.benefactor.name} profile picture" class="benefactor-profile-pic" />
 			{:else}
@@ -139,14 +139,20 @@
 				<span class="review-label">Send Date:</span>
 				<span class="review-value">{formData.currentDate}</span>
 			</p>
+			<p class="review-date">
+				<span class="review-label">Expires at:</span>
+				<span class="review-value">{formData.expiresAt}</span>
+			</p>
 	</article>
 {/snippet}
 
 {#snippet shareOption2()}
 	<figure class="qr-container">
 		{#if qrDataUrl.length > 0 }
-		<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
-		<p>Scan the QR code to share </p>
+		<article class="qr-popup">
+			<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
+			<p>Scan the QR code to share </p>
+		</article>
 		{/if}
 		{#if qrDataUrl.length <= 0}
 			<button onclick={generateQR}>
@@ -155,7 +161,7 @@
 		{/if}
 	</figure>
 	
-	{#if canShare && openRequest}
+	{#if canShare && openRequest || formData.amount <= 0}
 		<button class="share-button" onclick={nativeShare}>
 			share
 		</button>
@@ -347,7 +353,34 @@
 		min-height: fit-content;
 		gap: 1rem;
 		margin-block: 6%;
-		/* max-width: 400px; */
+		max-width: 400px;
+		z-index: 20 !important;
+	}
+
+	.qr-popup {
+		position: absolute;
+		top: 50%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		max-width: 80%;
+		padding: 1rem;
+		border-radius: 10px;
+		transform: translate(0, -10%);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		transition: background-color all 3s ease-in-out;
+		/* background-color: rgb(197, 38, 38); */
+		/* inset-inline: var(--body-padding); ; */
+
+	}
+
+	.qr-popup::before {
+		content:'5';
+		position: absolute;
+		inset: -100vw !important;
+		background-color: rgba(255, 255, 255, 0.5);
+		z-index: -1;
+		transition: background-color all 3s ease-in-out;
 	}
 
 	.qr-container p{
@@ -363,7 +396,7 @@
 
 	.share-button-container {
 		flex: 1 1 20%;
-		position: relative;
+		/* position: relative; */
 		display: flex;
 		flex-direction: column;
 		align-items: center;

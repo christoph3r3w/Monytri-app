@@ -58,6 +58,7 @@ a,button {
 		--general-background-color: var(--off-white);
 		--general-background-color-secondary:var(--white);
 		--general-text-color: var(--black);
+		--general-text-color-invert: var(--white);
 		--general-text-color-secondary: var(--grey-500);
 
 		/* pallet */
@@ -86,13 +87,14 @@ a,button {
 	}
 
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: darknow) {
 	:root {
 		/* basic colors */
 		/* --general-background-color: #daeadd; */
 		--general-background-color: color-mix( in srgb, rgb(0, 0, 0), var(--primary-green-500) 20%);
 		--general-background-color-secondary: color-mix( in srgb, rgba(0, 0, 0, 0.816), var(--primary-green-500) 10%);
 		--general-text-color: var(--off-white);
+		--general-text-color-invert: var(--off-white);
 		--general-text-color-secondary: var(--primary-darkgreen-200);
 
 

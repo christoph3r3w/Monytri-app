@@ -1,60 +1,146 @@
-// This is here to be tested. Apply it when it is needed to be applied. 
-// The idea is that it should export a variable called `device` which can be used to detect if it's a mobile or a desktop. 
+// Device detection store for mobile/desktop and platform identification
+// Provides reactive device information with proper cleanup and accurate updates
 import { readable } from 'svelte/store';
 
-// Media query for mobile-like screens
-const mobileQuery = window.matchMedia(
-	'(-webkit-min-device-pixel-ratio: 3), ' +
-	'(pointer: coarse) and (hover: none) and (min-resolution: 400dpi), ' +
-	'screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait), ' +
-	'screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)'
-);
+// Guard for SSR (SvelteKit) environments
+const hasWindow = typeof window !== 'undefined';
 
-// Detect platform from user agent
+// Media query identifying "mobile-like" environments
+const mobileQuery = hasWindow
+	? window.matchMedia(
+			[
+				'(max-width: 768px)',
+				'(pointer: coarse) and (hover: none)',
+				'(-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px)',
+				'(orientation: portrait) and (max-device-width: 900px)'
+			].join(', ')
+		)
+	: { matches: false, addEventListener: () => {}, removeEventListener: () => {} };
+
+// Normalised detection returning canonical platform name
 function detectPlatform() {
-	const ua = navigator.userAgent;
+	if (!hasWindow) return 'Unknown';
+	const ua = navigator.userAgent || '';
+	const platform = navigator.platform || '';
 
-	if (/iPhone|iPad|iPod/.test(ua) || 
-	    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
-		return 'iOS';
-	}
-	if (/Android/.test(ua)) return 'Android';
-	if (/Win/.test(ua)) return 'Windows';
-	if (/Mac/.test(ua)) return 'macOS';
-	if (/Linux/.test(ua)) return 'Linux';
+	// iPad (iPadOS 13+ identifies as MacIntel with touch points)
+	const isIPad = (/iPad/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+	const isIPhoneOrIPod = /iPhone|iPod/.test(ua);
+	const isIOS = isIPad || isIPhoneOrIPod;
+	const isAndroid = /Android|Adr/.test(ua);
+
+	if (isIOS) return 'iOS';
+	if (isAndroid) return 'Android';
+	if (/Win/.test(platform)) return 'Windows';
+	if (/Mac/.test(platform)) return 'macOS';
+	if (/Linux/.test(platform)) return 'Linux';
 	return 'Unknown';
 }
 
-export const device = readable(
-	{ isMobile: false, platform: detectPlatform() },
-	(set) => {
-		const update = () => {
-			set({
-				isMobile: mobileQuery.matches,
-				platform: detectPlatform()
-			});
-		};
+function computeState() {
+	const platform = detectPlatform();
+	const isMobile = mobileQuery.matches || (/iOS|Android/.test(platform));
+	const isApple = platform === 'iOS' || platform === 'macOS';
+	const isAndroid = platform === 'Android';
 
-		// Initial set
-		update();
+	return { isMobile, platform, isApple, isAndroid };
+}
 
-		// Update on media query change
-		mobileQuery.addEventListener('change', update);
+// Known platform-specific body classes we may manage
+const PLATFORM_CLASSES = [
+	'ios-device',
+	'android-device',
+	'windows-device',
+	'macos-device',
+	'linux-device',
+	'unknown-device'
+];
 
-		// Cleanup
-		return () => mobileQuery.removeEventListener('change', update);
+function applyBodyClasses(state) {
+	if (!hasWindow || !document?.body) return;
+	const { isMobile, platform, isApple, isAndroid } = state;
+
+	// First remove any previous platform classes to avoid accumulation (esp. during HMR / UA emulation)
+	PLATFORM_CLASSES.forEach(c => document.body.classList.remove(c));
+
+	document.body.classList.toggle('isMobile', isMobile);
+	document.body.classList.toggle('desktop-device', !isMobile);
+	document.body.classList.toggle('apple-device', isApple);
+	document.body.classList.toggle('android-device', isAndroid);
+	document.body.classList.add(`${platform.toLowerCase()}-device`);
+}
+
+// Eager initial application so classes exist before Svelte mounts (prevents flash / hesitation)
+let initialApplied = false;
+if (hasWindow) {
+	const initial = computeState();
+	applyBodyClasses(initial);
+	initialApplied = true;
+}
+
+// Main device store with dynamic updates
+export const device = readable(computeState(), (set) => {
+	if (!hasWindow) return () => {};
+
+	let current = computeState();
+	set(current);
+	if (!initialApplied) {
+		applyBodyClasses(current);
+		initialApplied = true;
 	}
-);
 
-if(import.meta.env.DEV){
-	device.subscribe(({isMobile}) => {
-		console.log('isMobile',isMobile);
-		if(isMobile){
-			document.body.classList.add('mobile-device');
-			document.body.classList.remove('desktop-device');
-		}else{
-			document.body.classList.add('desktop-device');
-			document.body.classList.remove('mobile-device');
+	const update = () => {
+		const next = computeState();
+		// Only emit & mutate DOM when something actually changed
+		if (
+			next.isMobile !== current.isMobile ||
+			next.platform !== current.platform ||
+			next.isApple !== current.isApple ||
+			next.isAndroid !== current.isAndroid
+		) {
+			current = next;
+			set(current);
+			applyBodyClasses(current);
+			if (import.meta.env.DEV) console.debug('Device Info:', current);
 		}
+	};
+
+	// Event listeners that can influence device characteristics
+	mobileQuery.addEventListener('change', update);
+	window.addEventListener('resize', update, { passive: true });
+	window.addEventListener('orientationchange', update, { passive: true });
+	// Some browsers may update userAgentData after visibility changes
+	document.addEventListener('visibilitychange', () => {
+		if (document.visibilityState === 'visible') update();
 	});
+
+	// UA Client Hints (if available) for more accurate platform (async)
+	if (navigator.userAgentData?.getHighEntropyValues) {
+		navigator.userAgentData
+			.getHighEntropyValues(['platform'])
+			.then(() => update())
+			.catch(() => {});
+	}
+
+	return () => {
+		mobileQuery.removeEventListener('change', update);
+		window.removeEventListener('resize', update);
+		window.removeEventListener('orientationchange', update);
+	};
+});
+
+export function cleanupDevice() {
+	if (!hasWindow || !document?.body) return;
+	// Remove managed classes
+	document.body.classList.remove(
+		'isMobile',
+		'desktop-device',
+		'apple-device',
+		'android-device',
+		...PLATFORM_CLASSES
+	);
+}
+
+if (hasWindow) {
+	window.addEventListener('beforeunload', cleanupDevice);
 }
