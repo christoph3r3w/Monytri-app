@@ -79,6 +79,45 @@ const createUser = () => {
 		}
 	}
 
+	// Session management helpers
+	async function listSessions() {
+		if (!isBrowser) return [];
+		try {
+			const sessions = await RateLimitHandler.withRetry(() => account.listSessions());
+			return sessions.sessions || [];
+		} catch (error) {
+			console.error('Failed to list sessions:', error);
+			return [];
+		}
+	}
+
+	async function deleteOtherSessions() {
+		if (!isBrowser) return;
+		try {
+			const sessions = await listSessions();
+			const deletePromises = sessions
+				.filter(session => !session.current)
+				.map(session => RateLimitHandler.withRetry(() => account.deleteSession(session.$id)));
+			
+			await Promise.all(deletePromises);
+			console.log(`Deleted ${deletePromises.length} other sessions`);
+		} catch (error) {
+			console.error('Failed to delete other sessions:', error);
+		}
+	}
+
+	async function deleteAllSessions() {
+		if (!isBrowser) return;
+		try {
+			await RateLimitHandler.withRetry(() => account.deleteSessions());
+			store.set(null);
+			console.log('Deleted all sessions');
+		} catch (error) {
+			console.error('Failed to delete all sessions:', error);
+			store.set(null);
+		}
+	}
+
 	// Debounced version of init for frequent calls
 	const debouncedInit = RateLimitHandler.debounce(init, 1000);
 
@@ -89,9 +128,15 @@ const createUser = () => {
 		login,
 		logout,
 		init,
-		checkUser: debouncedInit
+		checkUser: debouncedInit,
+		// Session management
+		listSessions,
+		deleteOtherSessions,
+		deleteAllSessions
 	};
 };
+
+
 
 export const user = createUser();
 export const isAuthenticated = writable(false);
