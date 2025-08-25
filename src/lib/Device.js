@@ -1,128 +1,146 @@
 // Device detection store for mobile/desktop and platform identification
-// Provides reactive device information with proper cleanup and efficient updates
+// Provides reactive device information with proper cleanup and accurate updates
 import { readable } from 'svelte/store';
 
-// Cached platform detection to avoid repeated user agent parsing
-let cachedPlatform = null;
+// Guard for SSR (SvelteKit) environments
+const hasWindow = typeof window !== 'undefined';
 
-// Media query for mobile-like screens - optimized for better device detection
-const mobileQuery = window.matchMedia(
-	'(max-width: 768px), ' +
-	'(pointer: coarse) and (hover: none), ' +
-	'(-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px), ' +
-	'(orientation: portrait) and (max-device-width: 900px)'
-);
+// Media query identifying "mobile-like" environments
+const mobileQuery = hasWindow
+	? window.matchMedia(
+			[
+				'(max-width: 768px)',
+				'(pointer: coarse) and (hover: none)',
+				'(-webkit-min-device-pixel-ratio: 2) and (max-width: 1024px)',
+				'(orientation: portrait) and (max-device-width: 900px)'
+			].join(', ')
+		)
+	: { matches: false, addEventListener: () => {}, removeEventListener: () => {} };
 
-// Efficient platform detection with caching
+// Normalised detection returning canonical platform name
 function detectPlatform() {
-	if (cachedPlatform) return cachedPlatform;
-	
-	const ua = navigator.userAgent;
-	const platform = navigator.platform;
+	if (!hasWindow) return 'Unknown';
+	const ua = navigator.userAgent || '';
+	const platform = navigator.platform || '';
 
-	// iOS detection (including iPadOS treated as desktop)
-	if (/iPhone|iPod/.test(ua) || 
-	    (/iPad/.test(ua) && 'ontouchend' in document)) {
-		cachedPlatform = 'iOS';
-	}
-	// iPad with desktop Safari (iPadOS 13+)
-	else if (platform === 'MacIntel' && navigator.maxTouchPoints > 1) {
-		cachedPlatform = 'iOS';
-	}
-	// Android
-	else if (/Android/.test(ua)) {
-		cachedPlatform = 'Android';
-	}
-	// Windows
-	else if (/Win/.test(platform)) {
-		cachedPlatform = 'Windows';
-	}
-	// macOS
-	else if (/Mac/.test(platform)) {
-		cachedPlatform = 'macOS';
-	}
-	// Linux
-	else if (/Linux/.test(platform)) {
-		cachedPlatform = 'Linux';
-	}
-	else {
-		cachedPlatform = 'Unknown';
-	}
+	// iPad (iPadOS 13+ identifies as MacIntel with touch points)
+	const isIPad = (/iPad/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+	const isIPhoneOrIPod = /iPhone|iPod/.test(ua);
+	const isIOS = isIPad || isIPhoneOrIPod;
+	const isAndroid = /Android|Adr/.test(ua);
 
-	return cachedPlatform;
+	if (isIOS) return 'iOS';
+	if (isAndroid) return 'Android';
+	if (/Win/.test(platform)) return 'Windows';
+	if (/Mac/.test(platform)) return 'macOS';
+	if (/Linux/.test(platform)) return 'Linux';
+	return 'Unknown';
 }
 
-// Main device store with efficient updates
-export const device = readable(
-	{ 
-		isMobile: mobileQuery.matches, 
-		platform: detectPlatform(),
-		isApple: false,
-		isAndroid: false
-	},
-	(set) => {
-		const platform = detectPlatform();
-		const isApple = platform === 'iOS' || platform === 'macOS';
-		const isAndroid = platform === 'Android';
+function computeState() {
+	const platform = detectPlatform();
+	const isMobile = mobileQuery.matches || (/iOS|Android/.test(platform));
+	const isApple = platform === 'iOS' || platform === 'macOS';
+	const isAndroid = platform === 'Android';
 
-		// Optimized update function - only updates when necessary
-		const update = () => {
-			const isMobile = mobileQuery.matches;
-			set({
-				isMobile,
-				platform,
-				isApple,
-				isAndroid
-			});
-		};
-
-		// Initial set
-		update();
-
-		// Listen for media query changes
-		mobileQuery.addEventListener('change', update);
-
-		// Cleanup function - ensures proper unsubscription
-		return () => {
-			mobileQuery.removeEventListener('change', update);
-		};
-	}
-);
-
-// Development-only subscription with proper cleanup
-let devUnsubscribe = null;
-
-if (import.meta.env.DEV) {
-	devUnsubscribe = device.subscribe(({ isMobile, platform, isApple, isAndroid }) => {
-		console.log('Device Info:', { isMobile, platform, isApple, isAndroid });
-		
-		// Efficiently manage CSS classes
-		document.body.classList.toggle('isMobile', isMobile);
-		document.body.classList.toggle('desktop-device', !isMobile);
-		document.body.classList.toggle('apple-device', isApple);
-		document.body.classList.toggle('android-device', isAndroid);
-		document.body.classList.toggle(`${platform.toLowerCase()}-device`, true);
-	});
+	return { isMobile, platform, isApple, isAndroid };
 }
 
-// Global cleanup function for session end
-export function cleanupDevice() {
-	if (devUnsubscribe) {
-		devUnsubscribe();
-		devUnsubscribe = null;
-	}
-	// Clear cached platform for potential re-initialization
-	cachedPlatform = null;
+// Known platform-specific body classes we may manage
+const PLATFORM_CLASSES = [
+	'ios-device',
+	'android-device',
+	'windows-device',
+	'macos-device',
+	'linux-device',
+	'unknown-device'
+];
+
+function applyBodyClasses(state) {
+	if (!hasWindow || !document?.body) return;
+	const { isMobile, platform, isApple, isAndroid } = state;
+
+	// First remove any previous platform classes to avoid accumulation (esp. during HMR / UA emulation)
+	PLATFORM_CLASSES.forEach(c => document.body.classList.remove(c));
+
+	document.body.classList.toggle('isMobile', isMobile);
+	document.body.classList.toggle('desktop-device', !isMobile);
+	document.body.classList.toggle('apple-device', isApple);
+	document.body.classList.toggle('android-device', isAndroid);
+	document.body.classList.add(`${platform.toLowerCase()}-device`);
 }
 
-// Auto-cleanup on page unload
-if (typeof window !== 'undefined') {
-	window.addEventListener('beforeunload', cleanupDevice);
-	
-	// Also cleanup on page visibility change (when tab becomes hidden)
-	document.addEventListener('visibilitychange', () => {
-		if (document.visibilityState === 'hidden') {
-			cleanupDevice();
+// Eager initial application so classes exist before Svelte mounts (prevents flash / hesitation)
+let initialApplied = false;
+if (hasWindow) {
+	const initial = computeState();
+	applyBodyClasses(initial);
+	initialApplied = true;
+}
+
+// Main device store with dynamic updates
+export const device = readable(computeState(), (set) => {
+	if (!hasWindow) return () => {};
+
+	let current = computeState();
+	set(current);
+	if (!initialApplied) {
+		applyBodyClasses(current);
+		initialApplied = true;
+	}
+
+	const update = () => {
+		const next = computeState();
+		// Only emit & mutate DOM when something actually changed
+		if (
+			next.isMobile !== current.isMobile ||
+			next.platform !== current.platform ||
+			next.isApple !== current.isApple ||
+			next.isAndroid !== current.isAndroid
+		) {
+			current = next;
+			set(current);
+			applyBodyClasses(current);
+			if (import.meta.env.DEV) console.debug('Device Info:', current);
 		}
+	};
+
+	// Event listeners that can influence device characteristics
+	mobileQuery.addEventListener('change', update);
+	window.addEventListener('resize', update, { passive: true });
+	window.addEventListener('orientationchange', update, { passive: true });
+	// Some browsers may update userAgentData after visibility changes
+	document.addEventListener('visibilitychange', () => {
+		if (document.visibilityState === 'visible') update();
 	});
+
+	// UA Client Hints (if available) for more accurate platform (async)
+	if (navigator.userAgentData?.getHighEntropyValues) {
+		navigator.userAgentData
+			.getHighEntropyValues(['platform'])
+			.then(() => update())
+			.catch(() => {});
+	}
+
+	return () => {
+		mobileQuery.removeEventListener('change', update);
+		window.removeEventListener('resize', update);
+		window.removeEventListener('orientationchange', update);
+	};
+});
+
+export function cleanupDevice() {
+	if (!hasWindow || !document?.body) return;
+	// Remove managed classes
+	document.body.classList.remove(
+		'isMobile',
+		'desktop-device',
+		'apple-device',
+		'android-device',
+		...PLATFORM_CLASSES
+	);
+}
+
+if (hasWindow) {
+	window.addEventListener('beforeunload', cleanupDevice);
 }
