@@ -232,7 +232,7 @@
 		height: calc(100cqh - var(--header-height) + 10px) ;
 		max-height: calc(100dvh - var(--footer-height)); 
 		background-color: var(--general-background-color);
-		overflow: hidden;
+		overflow: clip;
 		padding: 1rem;
 		/* flex-direction: column; */
 		/* outline: solid red; */
@@ -267,7 +267,7 @@
 		width: 100%;
 	}
 
-	:global(.left-step p.subtext) {
+	.left-step p.subtext {
 		font-size: clamp(1rem,3vw,1.9rem);
 		font-weight: 300;
 		max-width: 50ch;
@@ -589,7 +589,6 @@
 			width: 100%;
 			height: unset !important;
 			padding-block: 5%;
-			/* outline:yellowgreen solid; */
 
 			svg path{
 				stroke: var(--general-text-color);
@@ -648,7 +647,7 @@
 		}
 
 		:global(.button-container.custom) {
-			--gap:10%;
+			--gap:10px;
 			display: flex;
 			flex-direction: row ;
 			flex-wrap: wrap;
@@ -659,22 +658,21 @@
 
 		:global(.button-container.custom:has(:nth-child(4):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			& :nth-child(1) {flex-basis:100%;}
-			& :nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			& :nth-child(3) {flex-basis:calc(30% - var(--gap));}
-			& :nth-child(4) {flex-basis:calc(20% - var(--gap));}
+			& >:nth-child(1) {flex-basis:100%;}
+			& >:nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& >:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& >:nth-child(4) {flex-basis:calc(20% - var(--gap));}
 		}
 		:global(.button-container.custom:has(>:nth-child(3):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			& :nth-child(1) {flex-basis:100%;}
-			& :nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			& :nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& >:nth-child(1) {flex-basis:100%;}
+			& >:nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& >:nth-child(3) {flex-basis:calc(30% - var(--gap));}
 		}
 		:global(.button-container.custom:has(>:nth-child(2):last-child):nth-child(n)) {
-			/* outline: solid red; */
-			flex: 0 1 auto;
-			&:nth-child(1) {flex-basis:calc(70% - var(--gap));}
-			&:nth-child(2) {flex-basis:calc(30% - var(--gap)); }
+			flex: 0 1 ;
+			& >:nth-child(1) {flex-basis:calc(70% - var(--gap));}
+			& >:nth-child(2) {flex-basis:calc(30% - var(--gap)); }
 		}
 		
 		.error-message {
