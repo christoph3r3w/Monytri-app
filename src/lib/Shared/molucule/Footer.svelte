@@ -1,6 +1,5 @@
 <script>
 	import { onMount } from 'svelte';
-	// import {afterNavigate,onNavigate} from '$app/navigation'
 	import{ goto } from '$app/navigation'
     import { Logo } from '$lib';
 	import { current } from '$lib/store.js';

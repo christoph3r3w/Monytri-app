@@ -22,8 +22,7 @@ function detectPlatform() {
 	if (!hasWindow) return 'Unknown';
 	const ua = navigator.userAgent || '';
 	const platform = navigator.platform || '';
-
-	// iPad (iPadOS 13+ identifies as MacIntel with touch points)
+	
 	const isIPad = (/iPad/.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1));
 	const isIPhoneOrIPod = /iPhone|iPod/.test(ua);
 	const isIOS = isIPad || isIPhoneOrIPod;
@@ -46,7 +45,7 @@ function computeState() {
 	return { isMobile, platform, isApple, isAndroid };
 }
 
-// Known platform-specific body classes we may manage
+// Known platform
 const PLATFORM_CLASSES = [
 	'ios-device',
 	'android-device',

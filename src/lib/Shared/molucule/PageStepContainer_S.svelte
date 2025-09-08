@@ -233,6 +233,7 @@
 		max-height: calc(100dvh - var(--footer-height)); 
 		background-color: var(--general-background-color);
 		overflow: clip;
+		overflow-y: scroll;
 		padding: 1rem;
 		/* flex-direction: column; */
 		/* outline: solid red; */
