@@ -285,7 +285,7 @@
 		width: 100%;
 	}
 
-	:global(.left-step p.subtext) {
+	.left-step p.subtext {
 		font-size: clamp(1rem,3vw,1.9rem);
 		font-weight: 300;
 		max-width: 50ch;
@@ -683,21 +683,21 @@
 
 		:global(.button-container.custom:has(:nth-child(4):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:100%;}
-			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
-			&:nth-child(4) {flex-basis:calc(20% - var(--gap));}
+			& >:nth-child(1) {flex-basis:100%;}
+			& >:nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& >:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& >:nth-child(4) {flex-basis:calc(20% - var(--gap));}
 		}
 		:global(.button-container.custom:has(:nth-child(3):last-child) > :nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:100%;}
-			&:nth-child(2) {flex-basis:calc(50% - var(--gap));}
-			&:nth-child(3) {flex-basis:calc(30% - var(--gap));}
+			& >:nth-child(1) {flex-basis:100%;}
+			& >:nth-child(2) {flex-basis:calc(50% - var(--gap));}
+			& >:nth-child(3) {flex-basis:calc(30% - var(--gap));}
 		}
 		:global(.button-container.custom:has(:nth-child(2):last-child):nth-child(n)) {
 			flex: 1 1 auto;
-			&:nth-child(1) {flex-basis:calc(70% - var(--gap));}
-			&:nth-child(2) {flex-basis:calc(30% - var(--gap));}
+			& >:nth-child(1) {flex-basis:calc(70% - var(--gap));}
+			& >:nth-child(2) {flex-basis:calc(30% - var(--gap));}
 		}
 		
 		.error-message {

@@ -6,13 +6,21 @@
 import express from 'express';
 import cors from 'cors';
 import { Client, Account, ID } from 'node-appwrite';
+import { PUBLIC_APPWRITE_PROJECT_ID,PUBLIC_APPWRITE_ENDPOINT } from '$env/static/public';
+
 
 const app = express();
 const port = process.env.PORT || 3001;
 
 // Enable CORS for your Svelte app
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://localhost:4173'], // Add your dev/preview URLs
+    origin: [
+        'http://localhost:5173', 
+        'http://localhost:4173',
+        'http://localhost:3003',
+        'https://monytri-alpha.netlify.app', // Add your Netlify domain here
+        process.env.FRONTEND_URL // Allow dynamic frontend URL from environment
+    ], 
     credentials: true
 }));
 
@@ -28,8 +36,8 @@ function createClientForTab(tabToken) {
     }
 
     const client = new Client()
-        .setEndpoint('https://fra.cloud.appwrite.io/v1')
-        .setProject('689b931b001bb5a31e22'); // Your project ID
+        .setEndpoint(PUBLIC_APPWRITE_ENDPOINT )
+        .setProject(PUBLIC_APPWRITE_PROJECT_ID ); // Your project ID
 
     const account = new Account(client);
     

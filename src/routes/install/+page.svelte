@@ -1,14 +1,16 @@
 <script>
 	import { goto } from '$app/navigation';
     import {current} from '$lib/store.js';
+	import { device } from '$lib/Device';
+	import { onMount } from 'svelte';
+
     let deferredPrompt = null;
     let showInstall = false;
 
-    const userAgent = typeof navigator !== 'undefined' ? navigator.userAgent : '';
-    const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
-    const isAndroid = /Android/i.test(userAgent);
+    const isIOS = $device.isApple;
+    const isAndroid = $device.isAndroid;
 
-    if (typeof window !== 'undefined' && isAndroid) {
+    if (typeof window !== 'undefined' && $device.isAndroid) {
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;

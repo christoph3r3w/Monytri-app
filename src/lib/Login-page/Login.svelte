@@ -150,7 +150,16 @@
 				value="+31623984571"
 			/>
 			<label for="validate">Password</label>
-			<input name="password" type="password" placeholder="Password" id="validate" value="monytriapp" required autocomplete="current-password" disabled={isLoading} />		
+			<input 
+				name="password" 
+				type="password" 
+				placeholder="Password" 
+				id="validate" 
+				required 
+				autocomplete="current-password" 
+				disabled={isLoading} 
+				value="monytriapp" 
+			/>		
 		</form>
 		<a class="forgot-p" href="/">forgot password</a>
 	</article>
