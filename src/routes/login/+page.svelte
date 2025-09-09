@@ -38,7 +38,6 @@
 			currentStep--;
 		}
 	}
-	
 </script>
 
 <section class="login-step-container">
@@ -48,7 +47,6 @@
 		{previousStep}
 		{stepValidation}
 	/>
-
 </section>
 
 <style>
