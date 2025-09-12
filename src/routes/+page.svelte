@@ -192,29 +192,11 @@
 
 			}
 			
-			div.button-conatiner-dev {
-				position: relative;
-				margin-inline: 5%;
-				
-				button:nth-last-of-type(n + 3){
-					display: none;
-				}
-			}
-		}
-
-		.analitycs{
-			display: flex;
-			flex-direction: column;
-			
-			gap: 1rem;
-			width: 100%;
-			height: fit-content;
-			padding-inline: 5%;
-			padding-bottom: 5rem;
-			font-size: 1.2rem;
-			color: var(--general-text-color);
+			.button-conatiner-dev,.analitycs,:global(.home-wrapper .button-conatiner-dev + .logo) {
+			display: none;
 		}
 	}	
+}
 
 
 
