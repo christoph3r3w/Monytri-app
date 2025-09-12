@@ -70,7 +70,7 @@
 			</label>
 			<label>
 				Password:
-				<input type="password" placeholder="Password" name="password" required minlength="8" disabled={isLoading} />
+				<input type="password" placeholder="Password" name="password" required minlength="8" disabled={isLoading} value="monytriapp" />
 			</label>
 			<button type="submit" disabled={isLoading}>
 				{isLoading ? 'Creating account...' : 'Register'}

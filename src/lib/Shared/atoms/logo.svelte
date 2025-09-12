@@ -2,7 +2,7 @@
 	export let name = false;
 </script>
 
-<a href="/" class="logo">
+<a href="/" class="logo" id="logo">
 	<picture>
 		<img src="Monytri-01-1.png" alt="logo" width="40px" />
 	</picture>
@@ -28,7 +28,6 @@
 		height: fit-content;
 		transition: .5s ease;
 		z-index: 10;
-		background-color: var(--general-background-color);
 	}
 
 	picture img {

@@ -34,7 +34,7 @@ export function updateCurrentFromPath() {
             current.set('transactions');
             break;
         case '/stock-overview':
-            current.set('stock');
+            current.set('stock-overview');
             break;
         case '/settings':
             current.set('settings');

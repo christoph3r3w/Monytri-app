@@ -207,7 +207,7 @@
 
 <PageStepContainer
     {formData}
-    subtext="Please login or register to continue"
+    subtext=""
 	currentStep={1}
 	{nextStep}
 	{previousStep}

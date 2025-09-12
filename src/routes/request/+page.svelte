@@ -39,6 +39,7 @@
 		}
 		return steps;
 	}
+	
 	let stepValidation = $state(createStepValidation(3));
 	
 	// Use provided benefactors or fallback to defaults

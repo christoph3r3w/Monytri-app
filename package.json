@@ -11,7 +11,7 @@
     "test": "npm run test:e2e",
     "format": "prettier --write .",
     "lint": "prettier --check .",
-    "ionic:build": "npm run build",
+    "ionic:build": "cross-env VITE_IONIC_BUILD=true npm run build",
     "ionic:serve": "npm run dev"
   },
   "devDependencies": {
@@ -25,6 +25,7 @@
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "@vite-pwa/assets-generator": "^0.2.6",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^10.0.0",
     "prettier": "^3.3.2",
     "prettier-plugin-svelte": "^3.2.6",
     "svelte": "5.16.4",

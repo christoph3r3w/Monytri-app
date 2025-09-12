@@ -117,7 +117,6 @@
 		width: 100%;
 		height: fit-content;
 		margin-inline: auto;
-		/* border-radius: 50%; */
 		user-select: none;
 		cursor: none;
 		pointer-events: none;
