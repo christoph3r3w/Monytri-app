@@ -34,6 +34,7 @@
 	<!-- Top section of the home page on mobile. -->
 	<HomeArticles_M/>	
 	<div class="button-conatiner-dev">
+		<button onclick={goto("/transactions")}>Transactions</button>
 		<button onclick={goto("/gift")}>send a gift</button>
 		<button onclick={goto("/request")} disabled>request a gift</button>
 		<button onclick={goto("/share")}>share</button>
