@@ -11,7 +11,7 @@
     "test": "npm run test:e2e",
     "format": "prettier --write .",
     "lint": "prettier --check .",
-    "ionic:build": "cross-env VITE_IONIC_BUILD=true npm run build",
+    "ionic:build": "npm run build",
     "ionic:serve": "npm run dev"
   },
   "devDependencies": {
