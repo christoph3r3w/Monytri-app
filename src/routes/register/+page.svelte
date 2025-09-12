@@ -114,6 +114,7 @@
 	.login-container input {
 		padding: 10px;
 		width: 200px;
+		background-color: var(--white);
 	}
 
 	.login-container button {
