@@ -8,7 +8,7 @@ import { goto } from '$app/navigation';
 import { RateLimitHandler } from '$lib/rateLimitHandler';
 
 const isBrowser = typeof window !== 'undefined';
-const PROXY_BASE_URL = 'http://localhost:3001';
+const PROXY_BASE_URL = 'http://localhost:3003' || 'https://main--monytri-alpha.netlify.app/';
 
 // Generate or get existing tab token from sessionStorage
 function getTabToken() {
