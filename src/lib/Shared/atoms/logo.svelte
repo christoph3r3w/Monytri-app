@@ -2,7 +2,7 @@
 	export let name = false;
 </script>
 
-<a href="/" class="logo" id="logo">
+<a href="/" class="logo">
 	<picture>
 		<img src="Monytri-01-1.png" alt="logo" width="40px" />
 	</picture>

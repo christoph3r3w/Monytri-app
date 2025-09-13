@@ -109,7 +109,7 @@
 		display: none;
 	}
 
-	:global(.profile-container #logo){
+	:global(.profile-container .logo){
 		position: relative;
 		display: flex;
 		flex-direction: row;
@@ -125,7 +125,7 @@
 		flex: 1 1 fit-content;
 	}
 
-	:global(.profile-container #logo picture){
+	:global(.profile-container .logo picture){
 		width: clamp(1rem,5rem,3rem);
 		flex: 1 1 fit-content;
 		display: flex;
@@ -133,7 +133,7 @@
 		background-color: transparent;
 	}
 	
-	:global(.profile-container #logo img){
+	:global(.profile-container .logo img){
 		width: clamp(1rem,5rem,3rem);
 		aspect-ratio: 1/1;
 		height: fit-content;
