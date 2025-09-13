@@ -1,3 +1,4 @@
+export const prerender = true;
 
 export const load = ({ fetch, params }) => {
 	// Define the transaction data inside the load function
