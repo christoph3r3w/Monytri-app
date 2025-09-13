@@ -3,7 +3,7 @@ import {current, isMobile} from '$lib/store.js';
 
 // State management
 let currentStep = $state(1);
- let totalSteps = $state(5);
+let totalSteps = $state(5);
 
 // Form data structure
 let formData = $state({
