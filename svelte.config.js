@@ -22,7 +22,10 @@ const config = {
         }),
 		files: {
 			appTemplate: 'src/index.html', 
-		  },
+		},
+		prerender: {
+			 handleUnseenRoutes: 'warn' 
+		}
 	}
 };
 
