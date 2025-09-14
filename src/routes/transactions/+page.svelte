@@ -111,8 +111,8 @@
 }
 
 :global(body:has(:not(.left-step)) .transaction-container .right-step) {
-	grid-column: 1/-1 ;
-	grid-row: 2 / span 1;
+	/* grid-column: 1/-1 ; */
+	/* grid-row: 1 / span 1; */
 }
 
 
@@ -139,10 +139,12 @@ ul {
 	position: relative;
 	display: flex;
 	flex-direction: column;
+	/* align-self: center; */
+	max-height: 500px;
+	/* width: 90ch; */
 	gap: var(--gap);
 	padding: 1rem;
 	border-radius: .5rem;
-	max-height: 500px;
 	overflow-y: auto;
 	background-color: var(--general-background-color-secondary);
 	box-shadow: rgba(236, 236, 236, 0.199) 0px 0px 15px 0px;
@@ -151,11 +153,11 @@ ul {
 li{
 	position: relative;
 	height: fit-content;
+	min-height: 42px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: space-between;
-	min-height: 42px;
 }
 
 li:nth-last-of-type(n + 2)::after{
