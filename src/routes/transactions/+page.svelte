@@ -9,9 +9,29 @@
 	let transactionData = data.data
 	
 	// let {onSearchQueryUpdate} = $props();
+	let formData = {
+		benefactor: null,
+		requestId: null,
+		cardDesign: 'default',
+		Purpose: null,
+		DeliveryDate: null,
+		requestMethod: null,
+		amount: null,
+		message: 'check if needed',
+		searchQuery: '',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
+	};
+
 	let searchQuery = '';
 
 	function updateSearchQuery(newQuery) {
+		if(!formData){return}
 		formData.searchQuery = newQuery;
 	}
 
@@ -73,7 +93,6 @@
 
 <article class="transaction-container">	
 	<PageStepContainer
-    {formData}
 	stepType=''
 	headerName={$device.isMobile? '' :'Transactions'}
     subtext=""
