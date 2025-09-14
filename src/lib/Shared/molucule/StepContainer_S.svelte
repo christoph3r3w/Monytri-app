@@ -47,9 +47,7 @@
 	import { current, isMobile} from '$lib/store.js';
 	import { device } from '$lib/Device.js';
 	import { fade } from 'svelte/transition';
-	import { goto } from '$app/navigation';
-
-	
+	import { goto } from '$app/navigation';	
 </script>
 
 <!-- Button rendering snippet -->

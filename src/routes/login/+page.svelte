@@ -14,7 +14,8 @@
 		password: '',
 		name: ''
 	});
-
+	
+	let stepValidation = $state(createStepValidation(3));
 	let currentStep = $state(1);
 	let totalSteps = $derived(Object.keys(stepValidation).length);
 	
@@ -25,7 +26,7 @@
 		}
 		return steps;
 	}
-	let stepValidation = $state(createStepValidation(3));
+	
 	
 	function nextStep() {
 		if (stepValidation[currentStep] && currentStep < totalSteps) {

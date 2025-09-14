@@ -6,8 +6,8 @@
 
 
 
-	// Progress bar logic
-		// State management
+	// State management
+	let stepValidation = $state(createStepValidation(3));
 	let currentStep = $state(1);
 	let totalSteps = $derived(Object.keys(stepValidation).length);
 	
@@ -40,7 +40,7 @@
 		return steps;
 	}
 	
-	let stepValidation = $state(createStepValidation(3));
+	
 	
 	// Use provided benefactors or fallback to defaults
 	let benefactors = $state([

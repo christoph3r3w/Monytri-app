@@ -6,24 +6,24 @@ export async function load() {
 };
 
 
-	// let formData = $state({
-	// 	benefactor: null,
-	// 	requestId: null,
-	// 	cardDesign: 'default',
-	// 	Purpose: null,
-	// 	DeliveryDate: null,
-	// 	requestMethod: null,
-	// 	amount: null,
-	// 	message: 'check if needed',
-	// 	searchQuery: '',
-	// 	errors: {},
-	// 	isLoading: false,
-	// 	date: new Date(),
-	// 	get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
-	// 	expiresAt: null,
-	// 	shareUrl: null,
-	// 	token: null
-	// });
+	let formData = {
+		benefactor: null,
+		requestId: null,
+		cardDesign: 'default',
+		Purpose: null,
+		DeliveryDate: null,
+		requestMethod: null,
+		amount: null,
+		message: 'check if needed',
+		searchQuery: '',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
+	};
 
 	let transactionData = [
 		{ id:1, transactionType: 'sent', user:{name:'Dani',surname:'dune'}, amount: 21.10, slug:'tx-1-dani', date: '2024-10-01', status: 'completed' },
