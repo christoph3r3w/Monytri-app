@@ -14,7 +14,8 @@
 		password: '',
 		name: ''
 	});
-
+	
+	let stepValidation = $state(createStepValidation(3));
 	let currentStep = $state(1);
 	let totalSteps = $derived(Object.keys(stepValidation).length);
 	
@@ -25,7 +26,7 @@
 		}
 		return steps;
 	}
-	let stepValidation = $state(createStepValidation(3));
+	
 	
 	function nextStep() {
 		if (stepValidation[currentStep] && currentStep < totalSteps) {
@@ -62,7 +63,7 @@
 		[left-start] repeat(5,[mid-left]) [left-end right-start] repeat(5,[mid-right]) [right-end];
 		grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr;
 		height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
-		max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); ;
+		max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); 
 
 		container-type:normal;
 		container-name: transfer-wizard;

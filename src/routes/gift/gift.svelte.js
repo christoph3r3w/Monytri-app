@@ -2,11 +2,11 @@ import { goto } from '$app/navigation';
 import {current, isMobile} from '$lib/store.js';
 
 // State management
-export let currentStep = $state(1);
-export let totalSteps = $state(5);
+let currentStep = $state(1);
+let totalSteps = $state(5);
 
 // Form data structure
-export let formData = $state({
+let formData = $state({
 	recipient: null,
 	cardDesign: 'default',
 	Purpose: null,
@@ -24,7 +24,7 @@ export let formData = $state({
 formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
 
 // Step validation state
-export let stepValidation = $state({
+let stepValidation = $state({
 	1: false,
 	2: false,
 	3: false,
@@ -33,7 +33,7 @@ export let stepValidation = $state({
 });
 
 // Use provided recipients or fallback to defaults
-export let recipients = $state([
+let recipients = $state([
 	{
 	id: 1,
 	name: 'James May',
@@ -97,11 +97,11 @@ export let recipients = $state([
 ]);
 
 // Progress tracking
-export let currentProgress = $state(0);
-export let progressPercentage = $derived(currentProgress > 0 ? currentProgress : ((currentStep / totalSteps) - (1 / totalSteps)) * 100);
+let currentProgress = $state(0);
+let progressPercentage = $derived(currentProgress > 0 ? currentProgress : ((currentStep / totalSteps) - (1 / totalSteps)) * 100);
 
 // Error handling function
-export function handleError(step, error) {
+function handleError(step, error) {
 	formData.errors[step] = error;
 	setTimeout(() => {
 		delete formData.errors[step];
@@ -109,7 +109,7 @@ export function handleError(step, error) {
 }
 
 // Search recipient functionality
-export function searchRecipients(query) {
+function searchRecipients(query) {
 	formData.searchQuery = query;
 	return recipients.filter(recipient => 
 		recipient.name.toLowerCase().includes(query.toLowerCase()) ||
@@ -118,7 +118,7 @@ export function searchRecipients(query) {
 }
 
 // Enhanced validation functions
-export function selectRecipient(recipient) {
+function selectRecipient(recipient) {
 	if (!recipient) {
 		handleError(1, 'Please select a recipient');
 		return;
@@ -127,19 +127,19 @@ export function selectRecipient(recipient) {
 	stepValidation[1] = true;
 }
 
-export function nextStep() {
+function nextStep() {
 	if (stepValidation[currentStep] && currentStep < totalSteps) {
 		currentStep++;
 	}
 }
 
-export function previousStep() {
+function previousStep() {
 	if (currentStep > 1) {
 		currentStep--;
 	}
 }
 
-export function validateAmount(e) {
+function validateAmount(e) {
 	let finalAmount;
 
 	if (e.target.type === 'radio') {
@@ -174,7 +174,7 @@ export function validateAmount(e) {
 	stepValidation[2] = true;
 }
 
-export function validatePurpose() {
+function validatePurpose() {
 	if (!formData.Purpose) {
 		handleError(3, 'Please select a purpose');
 		return;
@@ -183,14 +183,14 @@ export function validatePurpose() {
 }
 
 //search purpose functionality
-export function searchPurpose(query) {
+function searchPurpose(query) {
 	formData.searchQuery = query;
 	return formData.Purpose.filter(purpose => 
 		purpose.toLowerCase().includes(query.toLowerCase())
 	);
 }
 
-export function validateCardDesign(cardDesignId) {
+function validateCardDesign(cardDesignId) {
 	if (!cardDesignId || cardDesignId === 'default') {
 		handleError(4, 'Please select a card design');
 		return;
@@ -199,11 +199,11 @@ export function validateCardDesign(cardDesignId) {
 	stepValidation[4] = true;
 }
 
-export function validatePayment(e) {
+function validatePayment(e) {
 	stepValidation[5] = e.target.value && formData.PaymentMethod !== null;
 }
 
-export async function submitForm() {
+async function submitForm() {
 	formData.isLoading = true;
 
 	try {
@@ -234,7 +234,7 @@ export async function submitForm() {
 	}
 }
 
-export function resetFormDataEffect() {
+function resetFormDataEffect() {
 	// Reset form data when the component is destroyed
 	return () => {
 		formData.recipient = null;

@@ -316,7 +316,8 @@
 				box-shadow: 0px 4px 10px 0px #5858581A ;
 			}
 
-			.button-container::before{
+			/* check if this is needed */
+			/* .button-container::before{
 				content: '';
 				width: 1px;
 				height: auto;
@@ -326,7 +327,8 @@
 				z-index: 1;
 				border-radius: inherit;
 				background-color: var(--neutral-grey);
-			}
+				outline: solid 1px red;
+			} */
 
 			.button-container button{
 				flex: 1 1 60%;

@@ -31,10 +31,11 @@ export function updateCurrentFromPath() {
             current.set('learn-more');
             break;
         case '/transactions':
-            current.set('transactions');
+        case '/transaction-instance':
+            current.set('transactions History');
             break;
         case '/stock-overview':
-            current.set('stock');
+            current.set('stock-overview');
             break;
         case '/settings':
             current.set('settings');

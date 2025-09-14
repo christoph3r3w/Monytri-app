@@ -28,7 +28,6 @@
 		height: fit-content;
 		transition: .5s ease;
 		z-index: 10;
-		background-color: var(--general-background-color);
 	}
 
 	picture img {

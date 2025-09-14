@@ -87,7 +87,7 @@
 			class="submit-button"
 			onclick={() => submitForm()}
 			>
-			Confirm & pay €{formData.amount}
+			Confirm & pay €{formData?.amount}
 		</button>
 	{:else if type === 'skip-to'}
 		<button 
@@ -116,8 +116,11 @@
 {/snippet}
 
 {#snippet buttonContainer()}
+
 	<div class="button-container {customButton? 'custom': ''}">
-		{#if stepType === 'default' && !customButton}
+		{#if stepType == '' || stepType === null || stepType === undefined}
+		
+		{:else if stepType === 'default' && !customButton}
 			{@render buttonType('submit',currentStep)}
 		{:else}
 			{#if showContinueButton}
@@ -141,10 +144,10 @@
 				type="search" 
 				placeholder={placeholder}
 				class="search-input"
-				value={formData.searchQuery || ''}
+				value={formData?.searchQuery || ''}
 				oninput={(e: Event) => onSearchQueryUpdate?.((e.target as HTMLInputElement).value)}
 			/>
-			{#if (formData.searchQuery || '').length < 1}
+			{#if (formData?.searchQuery || '').length < 1}
 				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
 					<path fill="#A0A0A0" d="M29.295 27.705l-5.762-5.761a13.058 13.058 0 0 0 3.092-8.444C26.625 6.263 20.738.375 13.5.375c-7.238 0-13.125 5.888-13.125 13.125s5.888 13.125 13.125 13.125c3.215 0 6.159-1.166 8.444-3.091l5.761 5.761a1.122 1.122 0 0 0 1.59 0c.44-.438.44-1.15 0-1.59ZM2.625 13.5c0-5.997 4.878-10.875 10.875-10.875S24.375 7.503 24.375 13.5s-4.878 10.875-10.875 10.875S2.625 19.497 2.625 13.5Z"/>
 				</svg>
@@ -176,15 +179,18 @@
 {/snippet}
 
 {#snippet leftSection()}
-	{@render stepHeader()}		
+	{#if headerName || stepType !== ''}
+		{@render stepHeader()}		
+	{/if}
 	<!-- Render custom left content or default based on step type -->
 	{#if leftContent}
+		{#if subtext}<p class="subtext">{subtext}</p>{/if}
 		{@render leftContent()}
 	{:else }
 		{#if subtext}<p class="subtext">{subtext}</p>{/if}
-		{@render errorMessage(formData.errors?.[currentStep])}
-		{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 	{/if}
+	{@render errorMessage(formData?.errors?.[currentStep])}
+	{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 {/snippet}
 
 {#snippet rightSection()}
@@ -213,7 +219,7 @@
 		{/if}
 	{:else if $isMobile}
 		<article class="mobile-step">
-			{#if leftContent}{@render leftSection()}{/if}
+			{#if showLeftContent}{@render leftSection()}{/if}
 			{#if rightContent}{@render rightContent()}{/if}
 		</article>
 		{@render buttonContainer()}
@@ -235,10 +241,8 @@
 		overflow: clip;
 		overflow-y: scroll;
 		padding: 1rem;
-		/* flex-direction: column; */
-		/* outline: solid red; */
 
-		& h3.section-title{
+		.section-title{
 			position: relative;
 			margin-bottom: 1%;
 			font-size: clamp(1rem,10vw ,1.3rem);
@@ -293,7 +297,8 @@
 		align-items: center;
 		width: 100%;
 		height: fit-content;
-		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
+		/* box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.281); */
+		
 
 		& .search-icon{
 			position: absolute;
@@ -317,6 +322,7 @@
 		border-radius: 6rem;
 		transition: 0.8s ease;
 		box-shadow: inset 0 0 20px -17px #4b7a5b;
+		/* outline: solid 1px; */
 		
 		&:focus,:focus-within {
 			outline: none;
@@ -342,7 +348,8 @@
 	.right-step {
 		flex: 1 1 100%;
 		position: relative;
-		grid-column: left/right;
+		grid-column: right;
+		grid-row: 1 / -1;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
@@ -351,6 +358,8 @@
 		overflow: hidden;
 		padding-inline: 1%;
 		padding-top: 3rem;
+		border-radius: 10px;
+		/* outline: solid blue; */
 	}
 
 	/* buttons */
@@ -535,7 +544,7 @@
 			padding: 0 ;
 			padding-block: 3% ;
 			padding-inline: var(--body-padding) !important;
-			background-color: var(--general-background-color-secondary) !important;
+			/* background-color: var(--general-background-color-secondary) !important; */
 			color: var(--general-text-color) !important;
 		}
 
@@ -585,7 +594,7 @@
 		}
 
 		/* Needs to be refactored. */
-		:global(.skip-button,.back-button) {
+		.skip-button,.back-button {
 			position: relative;
 			width: 100%;
 			height: unset !important;
@@ -600,7 +609,8 @@
 		section:has(label) label input {
 			background-color: var(--off-white);
 			margin-bottom: 3%;
-			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);		
+			box-shadow: 0 2px 10px -7px rgba(49, 49, 49, 0.171);		
+			box-shadow: 0 2px 8px -7px var(--grey-400);		
 		}
 
 		:global(label:has([type="search"])) {
@@ -614,9 +624,14 @@
 
 			& .search-icon{
 				position: absolute;
-				top: 16%;
+				/* top: 16%; */
+				inset-block: 13%;
 				left: 1rem;
-				scale: clamp(0.2,0.85,0.89);
+				scale: clamp(0.2,0.70,0.80);
+				/* background-color: red; */
+				fill: var(--black);
+				stroke:var(--black);
+				stroke-width: 1%;
 			}
 				
 			&:focus-within .search-icon {

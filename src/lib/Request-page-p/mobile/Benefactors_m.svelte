@@ -150,11 +150,13 @@
 		}	
 	}
 
-	section:has(label) {
+	/* needs to be removed */
+	/* section:has(label) {
 		flex: 1 1 90%;
 		background-color: var(--white);
 		border-radius: 12px;
-	}
+		outline: solid 1px red;
+	} */
 
 	section:has(label) label input {
 		background-color: var(--off-white);
@@ -164,7 +166,7 @@
 
 	.error-message {
 		background-color: #fee;
-		color: #c00;
+		color: var(--primary-red-500);
 		padding: 0.5rem 1rem;
 		border-radius: 4px;
 		margin-bottom: 1rem;

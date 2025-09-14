@@ -34,6 +34,7 @@
 	<!-- Top section of the home page on mobile. -->
 	<HomeArticles_M/>	
 	<div class="button-conatiner-dev">
+		<button onclick={goto("/transactions")}>Transactions</button>
 		<button onclick={goto("/gift")}>send a gift</button>
 		<button onclick={goto("/request")} disabled>request a gift</button>
 		<button onclick={goto("/share")}>share</button>
@@ -117,7 +118,6 @@
 		width: 100%;
 		height: fit-content;
 		margin-inline: auto;
-		/* border-radius: 50%; */
 		user-select: none;
 		cursor: none;
 		pointer-events: none;
@@ -192,29 +192,11 @@
 
 			}
 			
-			div.button-conatiner-dev {
-				position: relative;
-				margin-inline: 5%;
-				
-				button:nth-last-of-type(n + 3){
-					display: none;
-				}
-			}
-		}
-
-		.analitycs{
-			display: flex;
-			flex-direction: column;
-			
-			gap: 1rem;
-			width: 100%;
-			height: fit-content;
-			padding-inline: 5%;
-			padding-bottom: 5rem;
-			font-size: 1.2rem;
-			color: var(--general-text-color);
+			.button-conatiner-dev,.analitycs,:global(.home-wrapper .button-conatiner-dev + .logo) {
+			display: none;
 		}
 	}	
+}
 
 
 

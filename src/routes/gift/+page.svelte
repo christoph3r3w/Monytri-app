@@ -16,6 +16,15 @@
 	import {goto} from '$app/navigation';
 	import {fade,fly} from 'svelte/transition';
 	import {onMount} from 'svelte';	
+
+	// Step validation state
+	let stepValidation = $state({
+		1: false,
+		2: false,
+		3: false,
+		4: false,
+		5: true, // Review step is always valid
+	});
   
 	// State management
 	let currentStep = $state(1);
@@ -41,14 +50,7 @@
 
 	});
 	
-	// Step validation state
-	let stepValidation = $state({
-		1: false,
-		2: false,
-		3: false,
-		4: false,
-		5: true, // Review step is always valid
-	});
+	
 
 	// Use provided recipients or fallback to defaults
 	let recipients = $state([
@@ -489,7 +491,7 @@
 		margin-bottom:10% ;
 	}
 
-	:global(.skip-button,.back-button) {
+	.skip-button,.back-button {
 		position: relative;
 		width: 100%;
 		padding: 0;
