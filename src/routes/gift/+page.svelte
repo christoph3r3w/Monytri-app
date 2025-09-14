@@ -491,7 +491,7 @@
 		margin-bottom:10% ;
 	}
 
-	:global(.skip-button,.back-button) {
+	.skip-button,.back-button {
 		position: relative;
 		width: 100%;
 		padding: 0;

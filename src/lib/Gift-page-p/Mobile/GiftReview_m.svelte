@@ -65,6 +65,7 @@
 			<p class="review-item">
 				<span class="review-label">Delivery Date:</span>
 				<span class="review-value">{formData.currentDate}</span>
+			</p>
 				
 			<p class="review-item">
 				<span class="review-label">Card Design:</span>
@@ -206,10 +207,11 @@
 		}
 	}
 
-	.button-container {
+	/* .button-container {
 		flex: 0 1 10%;
 		display: flex;
 		justify-content: center;
-	}
+		outline: solid red;
+	} */
 
 </style>

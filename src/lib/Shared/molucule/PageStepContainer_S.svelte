@@ -241,10 +241,8 @@
 		overflow: clip;
 		overflow-y: scroll;
 		padding: 1rem;
-		/* flex-direction: column; */
-		/* outline: solid red; */
 
-		& h3.section-title{
+		.section-title{
 			position: relative;
 			margin-bottom: 1%;
 			font-size: clamp(1rem,10vw ,1.3rem);
@@ -596,7 +594,7 @@
 		}
 
 		/* Needs to be refactored. */
-		:global(.skip-button,.back-button) {
+		.skip-button,.back-button {
 			position: relative;
 			width: 100%;
 			height: unset !important;

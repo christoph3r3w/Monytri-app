@@ -251,7 +251,7 @@
 		width: 100%;
 		background-color: var(--general-background-color);
 
-		:global( h3.section-title){
+		.section-title{
 			position: relative;
 			margin-bottom: 1%;
 			font-size: clamp(1rem,10vw ,1.3rem);
@@ -588,17 +588,19 @@
 		}
 
 		/* Needs to be refactored. */
-			:global(.skip-button,.back-button) {
+			.skip-button,.back-button {
 			position: relative;
 			width: 100%;
 			height: unset !important;
 			padding-block: 5%!important;
 
 
+			
 			svg path{
-				stroke: var(--black);
-				fill: var(--black);
+				stroke: var(--general-text-color);
+				fill: var(--general-text-color);
 			}
+			
 		}	
 
 		/* section:has(label) {
