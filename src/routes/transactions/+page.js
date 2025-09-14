@@ -1,31 +1,6 @@
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-    return {
-        data: transactionData
-    };
-};
-
-
-	let formData = {
-		benefactor: null,
-		requestId: null,
-		cardDesign: 'default',
-		Purpose: null,
-		DeliveryDate: null,
-		requestMethod: null,
-		amount: null,
-		message: 'check if needed',
-		searchQuery: '',
-		errors: {},
-		isLoading: false,
-		date: new Date(),
-		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
-		expiresAt: null,
-		shareUrl: null,
-		token: null
-	};
-
-	let transactionData = [
+		let transactionData = [
 		{ id:1, transactionType: 'sent', user:{name:'Dani',surname:'dune'}, amount: 21.10, slug:'tx-1-dani', date: '2024-10-01', status: 'completed' },
 		{ id:2, transactionType: 'received', user:{name:'David',surname:'Dick'}, amount: 125, slug:'2dd-r', date: '2024-10-02', status: 'pending' },
 		{ id:3, transactionType: 'received', user:{name:'Chiara',surname:'Liqui Lung'}, amount: '45', slug:'3cl-r', date: '2024-10-03', status: 'failed' },
@@ -41,3 +16,12 @@ export async function load() {
 		{ id:13, transactionType: 'sent', user:{name:'Amy',surname:'Frost'}, amount: '1.90', slug:'13af-r', date: '2024-10-13', status: 'completed' },
 		{ id:14, transactionType: 'sent', user:{name:'Maria',surname:'Martina'}, amount: '120', slug:'14mm-s', date: '2024-10-14', status: 'pending' }
 	]
+
+
+    return {
+        data: transactionData
+    };
+};
+
+
+
