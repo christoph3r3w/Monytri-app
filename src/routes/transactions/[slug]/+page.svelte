@@ -120,7 +120,6 @@
 
 <article class="transaction-instance-container">	
 	<PageStepContainer
-    {formData}
 	stepType=''
 	headerName={$device.isMobile? '' :' '}
     subtext=""
