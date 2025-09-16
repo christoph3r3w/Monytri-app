@@ -25,8 +25,18 @@ const config = {
 		},
 		prerender: {
 			 handleUnseenRoutes: 'warn' 
+		},
+		
+
+	},
+	vitePlugin: {
+		inspector: {
+			toggleKeyCombo: 'alt-x',
+			showToggleButton: 'always',
+			holdMode: false,
 		}
 	}
+
 };
 
 export default config;
