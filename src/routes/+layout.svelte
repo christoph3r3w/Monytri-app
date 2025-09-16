@@ -3,17 +3,17 @@
   	import {onNavigate,afterNavigate} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
-	import {isAuthenticated,user} from '$lib/user';
+	// import {isAuthenticated,user} from '$lib/user';
 	import { fade } from 'svelte/transition';
-
 	import '../app.css';
-  
-	let { children } = $props();
+
+	let {data,authenticated, children} = $props();
 
 	let menu_Open = $derived($menuOpen);
 
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
-	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !$isAuthenticated);
+	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
+	// let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !authenticatedd);
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -31,9 +31,12 @@
 			});
 		});
 	}
+	
 
 	
 	$effect(() => {
+		
+		
 		detectSWUpdate();
 
 		// Function to update isMobile store value

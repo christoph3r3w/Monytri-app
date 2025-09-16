@@ -61,6 +61,12 @@
 
 	onMount(async () => {
 		// this works 
+		// if ($isAuthenticated) {
+		// 	login();
+		// 	goto('/');
+		// }else {
+		// 	$user.logout();
+		// }
 		if ($isAuthenticated) {
 			login();
 			goto('/');

@@ -452,7 +452,6 @@
 		background: none;
 		color: var(--primary-darkgreen-550);
 		text-decoration: underline;
-
 	}
 
 	:global(.right-step .button-container .submit-button)  {

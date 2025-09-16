@@ -10,6 +10,7 @@
 	let userName = $derived($user?.name || $user?.email || 'Guest')
 	const logout = async () => {
 		await user.logout();
+		goto('/login');
 	};
 
 </script>
