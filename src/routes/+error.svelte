@@ -9,7 +9,7 @@
 	{#if $isMobile}
 		<section class="error-message mobile"  transition:fade>
 			<div class="error-text">
-				<img src="./shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="not found">
+				<!-- <img src="./shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="not found"> -->
 				<h2>Page Not Found</h2>
 				<p>Oops! It looks like the page you're looking for doesn't exist or has moved. Please try again or go back to the home page.</p>
 			</div>
@@ -26,7 +26,7 @@
 		</section>
 		
 		<section class="error-message"  transition:fade>
-			<img src="./shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="becoming rich ">
+			<img src="/shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="becoming rich ">
 			<p>Oops! It looks like the page you're looking for doesn't exist or has moved. Please try again or go back to the home page.</p>
 			<a href="/">Back to Homepage</a>
 		</section>

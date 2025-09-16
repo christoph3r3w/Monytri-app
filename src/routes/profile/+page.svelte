@@ -17,7 +17,7 @@
 
 	<section class="profile-container">
 		{#if $user}
-			<img src="generic.png" alt="generic." width="50" height="50">
+			<img src="/generic.png" alt="generic." width="50" height="50">
 			<h1>Profile of {userName}</h1>
 			<p>This page is under construction. Please check back later.</p>
 			<div class="analitycs">

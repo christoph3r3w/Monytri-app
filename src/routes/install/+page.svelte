@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
     import {current} from '$lib/store.js';
 	import { device } from '$lib/Device';
@@ -33,8 +34,9 @@
 
 <div class="container">
 
-	<figure class="banner" style="background-image: url('./shared-assests/banner-deco.png')">
-		<img src="./shared-assests/Monytri-01.png" alt="">
+	<figure class="banner" style={`background-image: url('${base}/shared-assests/banner-deco.png')`}>
+		<!-- <img src={`${base}/shared-assests/Monytri-01.png`} alt=""> -->
+		<img src={`/shared-assests/Monytri-01.png`} alt="">
 	</figure>
 
     <article class="install-container">
