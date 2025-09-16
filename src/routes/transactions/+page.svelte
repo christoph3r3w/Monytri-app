@@ -35,7 +35,7 @@
 		formData.searchQuery = newQuery;
 	}
 
-	const numberFormatter = new Intl.NumberFormat('nl-NL', {
+	const numberFormatter = new Intl.NumberFormat('en-US', {
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2
 	});
@@ -83,7 +83,7 @@
 	</li>
 {/snippet}
 
-{#snippet a()}
+{#snippet aList()}
 		<ul>
 			{#each transactionData as TDU, i}
 				{@render b(TDU, i + 1)}
@@ -98,9 +98,11 @@
     subtext=""
     showLeftContent={true}
 	showRightContent={true}
-    rightContent={a}
+    rightContent={aList}
+	leftContent={$device.isMobile? null : null}
 	searchQuery="transactions"
 	onSearchQueryUpdate={updateSearchQuery}
+	{aList}
 	/>
 </article>
 
@@ -114,7 +116,6 @@
 	/* grid-column: 1/-1 ; */
 	/* grid-row: 1 / span 1; */
 }
-
 
 .transaction-container {
 	position: relative;
@@ -139,9 +140,7 @@ ul {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	/* align-self: center; */
-	max-height: 500px;
-	/* width: 90ch; */
+	max-height: calc(800px - var(--header-height) - var(--footer-height));
 	gap: var(--gap);
 	padding: 1rem;
 	border-radius: .5rem;

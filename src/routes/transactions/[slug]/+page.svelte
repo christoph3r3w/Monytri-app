@@ -7,7 +7,7 @@
 	import { onMount } from 'svelte';
 	
 	// Or you can get it from the data passed by the load function
-	let { data } = $props();
+	let { data, aList } = $props();
 	let TDU = $state(data.slug)
 	
 	// let {onSearchQueryUpdate} = $props();
@@ -32,7 +32,6 @@
 		token: null
 	});
 
-
 	const numberFormatter = new Intl.NumberFormat('nl-NL', {
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2
@@ -43,7 +42,6 @@
 		const safe = isNaN(num) ? 0 : num;
 		return '€' + numberFormatter.format(safe);
 	}	
-
 
 </script>
 
@@ -118,6 +116,19 @@
 	{/if}
 {/snippet}
 
+{#snippet d()}
+	{#if TDU.transactionType == 'sent' }
+	<button class="redo-button gift" onclick={goto('/gift')}>redo transaction</button>	
+	{:else if TDU.transactionType == 'received'}
+	<button class="redo-button request"onclick={goto('/request')}>redo transaction</button>	
+	{/if}
+	<!-- <button onclick={goto('/transactions')}>back to transactions</button> -->
+{/snippet}
+
+{#snippet e()}
+	{@render aList()}
+{/snippet}
+
 <article class="transaction-instance-container">	
 	<PageStepContainer
 	stepType=''
@@ -125,21 +136,22 @@
     subtext=""
     showLeftContent={true}
 	showRightContent={true}
+	showContinueButton={false}
 	leftContent={''}
 	rightContent={c}
+	customButton={d}
 	/>
 </article>
 
 <style>
 
 :global(body:has(:not(.left-step)) .transaction-instance-container .right-step) {
-	grid-column: 1/ -1 ;
+	grid-column: 1/-1;
 	grid-row: 1 / span 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
 
 .transaction-instance-container{
 	position: relative;
@@ -155,7 +167,6 @@
 	height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
 	max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); 
 	
-
 	container-type:normal;
 	container-name: instance-container;
 }
@@ -225,6 +236,21 @@ li > span{
 	font-weight: 500;
 	color: var(--text-color-primary);
 	text-transform: capitalize;
+}
+
+:global(.button-container):has(.redo-button){
+	flex-direction: column;
+	align-items: center;
+	justify-items: center;
+}
+
+:global(.button-container) button.redo-button{
+	width: 300px;
+	align-self: center;
+	justify-self: center;
+	transition: background-color 0.3s ease;
+
+	
 }
 
 
