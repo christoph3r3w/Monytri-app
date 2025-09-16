@@ -118,8 +118,10 @@
 {#snippet buttonContainer()}
 
 	<div class="button-container {customButton? 'custom': ''}">
-		{#if stepType == '' || stepType === null || stepType === undefined}
-		
+		{#if customButton && stepType == '' }
+			{@render customButton()}
+		{:else if stepType == '' || stepType === null || stepType === undefined }
+			{@render buttonType('blank',0)}
 		{:else if stepType === 'default' && !customButton}
 			{@render buttonType('submit',currentStep)}
 		{:else}
@@ -182,15 +184,17 @@
 	{#if headerName || stepType !== ''}
 		{@render stepHeader()}		
 	{/if}
+
 	<!-- Render custom left content or default based on step type -->
 	{#if leftContent}
 		{#if subtext}<p class="subtext">{subtext}</p>{/if}
+		{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 		{@render leftContent()}
 	{:else }
 		{#if subtext}<p class="subtext">{subtext}</p>{/if}
+		{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 	{/if}
 	{@render errorMessage(formData?.errors?.[currentStep])}
-	{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 {/snippet}
 
 {#snippet rightSection()}
@@ -241,12 +245,6 @@
 		overflow: clip;
 		overflow-y: scroll;
 		padding: 1rem;
-
-		.section-title{
-			position: relative;
-			margin-bottom: 1%;
-			font-size: clamp(1rem,10vw ,1.3rem);
-		}
 	}
 
 	.left-step {
@@ -297,6 +295,7 @@
 		align-items: center;
 		width: 100%;
 		height: fit-content;
+		margin-bottom: 2dvh;
 		/* box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.281); */
 		
 
@@ -548,7 +547,7 @@
 		}
 
 		.mobile-step {
-			flex: 1 1 auto;
+			flex: 0 2 fit-content;
 			display: flex;
 			flex-direction: column;
 			width: 100%;
@@ -627,7 +626,6 @@
 				inset-block: 13%;
 				left: 1rem;
 				scale: clamp(0.2,0.70,0.80);
-				/* background-color: red; */
 				fill: var(--black);
 				stroke:var(--black);
 				stroke-width: 1%;
@@ -662,6 +660,7 @@
 		}
 
 		:global(.button-container.custom) {
+			flex: 1 1 auto;
 			--gap:10px;
 			display: flex;
 			flex-direction: row ;

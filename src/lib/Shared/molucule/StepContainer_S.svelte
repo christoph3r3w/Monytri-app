@@ -251,12 +251,7 @@
 		width: 100%;
 		background-color: var(--general-background-color);
 
-		.section-title{
-			position: relative;
-			margin-bottom: 1%;
-			font-size: clamp(1rem,10vw ,1.3rem);
-			display: none;
-		}
+		
 	}
 
 	.left-step {
@@ -363,6 +358,7 @@
 		padding-inline: 1%;
 		padding-top: 3rem;
 	}
+
 
 	/* buttons */
 	.step-header button {
