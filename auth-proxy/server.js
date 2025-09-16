@@ -19,7 +19,8 @@ app.use(cors({
         'http://localhost:4173',
         'http://localhost:3003',
         'https://monytri-alpha.netlify.app', // Add your Netlify domain here
-        'https://main--monytri-alpha.netlify.app/', // Add your Netlify domain here
+        'https://main--monytri-alpha.netlify.app/',
+        'https://deploy-preview-24--monytri-alpha.netlify.app/', // Add your Netlify domain here
         process.env.FRONTEND_URL // Allow dynamic frontend URL from environment
     ], 
     credentials: true
