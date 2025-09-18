@@ -61,6 +61,12 @@
 
 	onMount(async () => {
 		// this works 
+		// if ($isAuthenticated) {
+		// 	login();
+		// 	goto('/');
+		// }else {
+		// 	$user.logout();
+		// }
 		if ($isAuthenticated) {
 			login();
 			goto('/');
@@ -374,8 +380,6 @@
 		background-color: var(--neutral-grey);
 	}
 
-
-
 	.error-message {
 		background-color: #fee;
 		color: var(--primary-red-500);
@@ -388,14 +392,16 @@
 
 	@media (width <= 930px) {
 		:global(body:has(.login-form) .page-container > :nth-child(2))  {
-				align-items: center;
+			align-items: center;
 		}
 
 		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom)  {
+			/* flex: 0 1 auto; */
 			gap: 20px;
 			display: flex;
 			flex-direction: column-reverse;
 			align-items: center;
+			justify-content: end;
 		}
 		
 		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {

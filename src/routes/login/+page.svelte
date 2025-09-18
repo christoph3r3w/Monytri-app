@@ -71,8 +71,9 @@
 	}
 
 	@media (width <= 930px) {
-		.login-sep-container {
-			height: calc(100dvh - var(--footer-height));
+		.login-step-container {
+			min-height: 100svh;
+			max-width: 100dvh;
 			background-color: var(--white);	
 		}
 

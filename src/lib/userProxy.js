@@ -8,7 +8,7 @@ import { goto } from '$app/navigation';
 import { RateLimitHandler } from '$lib/rateLimitHandler';
 
 const isBrowser = typeof window !== 'undefined';
-const PROXY_BASE_URL = 'http://localhost:3003' || 'https://main--monytri-alpha.netlify.app/';
+const PROXY_BASE_URL = 'http://localhost:3003' || 'https://monytri.app' ;
 
 // Generate or get existing tab token from sessionStorage
 function getTabToken() {
@@ -120,7 +120,7 @@ const createProxyUser = () => {
         
         // For registration, we still need to use direct Appwrite
         // since the proxy doesn't implement registration yet
-        const { account, ID } = await import('$lib/appwrite');
+        const { account, ID } = await import('$lib/server/appwrite');
         
         try {
             await RateLimitHandler.withRetry(() => account.create(ID.unique(), email, password, name));

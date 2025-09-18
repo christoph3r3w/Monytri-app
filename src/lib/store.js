@@ -49,6 +49,9 @@ export function updateCurrentFromPath() {
         case '/login':
             current.set('login');
             break;
+        case '/stock-overview/calculator':
+            current.set('calculator');
+            break;
         default:
             current.set('');
             break;

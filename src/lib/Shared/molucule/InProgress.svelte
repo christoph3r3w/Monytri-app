@@ -1,9 +1,14 @@
+<script>
+	import { base } from '$app/paths';
+</script>
+
 <article class="message-container">
 	<header class="message-header">
 		<h2>in progress</h2>
 	</header>
 	<section class="message-body">
-		<img src="./shared-assests/team-brainstorming.png" alt="team-brainstorming">
+	<!-- <img src={`${base}/shared-assests/team-brainstorming.png`} alt="team-brainstorming"> -->
+	<img src={`/shared-assests/team-brainstorming.png`} alt="team-brainstorming">
 		<p>Oops! Looks like you've stumbled upon a page that's still under construction. Our team is working hard to bring this content to life. In the meantime, feel free to return to our home page.</p>
 		<a href="/" >
 			go home

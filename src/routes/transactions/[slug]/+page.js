@@ -1,6 +1,21 @@
 export const prerender = false;
 
+
+
 export const load = ({ fetch, params }) => {
+
+let formData = {
+		amount: null,
+		message: 'check if needed',
+		searchQuery:'',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
+	};
 	// Define the transaction data inside the load function
 	const transactionData = [
 		{ id:1, transactionType: 'sent', user:{name:'Dani',surname:'dune'}, amount: 21.10, slug:'tx-1-dani', date: '2024-10-01', status: 'completed' },
@@ -21,11 +36,11 @@ export const load = ({ fetch, params }) => {
 
 	// Filter the data based on the slug parameter
 	const filteredData = transactionData.filter(tx => tx.slug === params.slug)[0];
-	console.log('Filtered transaction:', filteredData);
+	// console.log('Filtered transaction:', filteredData);
 
 	return {
 		// Return the filtered transaction data
-		slug: filteredData
+		slug: {TDU: filteredData, formData}
 	};
 }
 

@@ -47,14 +47,14 @@
 		{
 		id: 999,
 		name: 'Open request',
-		profilePic: './shared-assests/banner-deco2.png'
+		profilePic: '/shared-assests/banner-deco2.png'
 		},
 		{
 		id: 1,
 		name: 'David Dick',
 		email: 'david.dick@artgallery.com',
 		lastSent: '2 days ago',
-		profilePic: './generic.png'
+		profilePic: '/generic.png'
 		},
 		{
 		id: 2,

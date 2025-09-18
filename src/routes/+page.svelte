@@ -6,10 +6,12 @@
 	import { goto } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
 	import { user,isAuthenticated } from '$lib/user';
+	import {page} from '$app/stores';
 
 	function checkSignIn() {
 		if (!$isAuthenticated) {
 			goto('/login');
+			
 		}
 	}
 	onMount(() => {
@@ -22,6 +24,7 @@
 
 	const logout = async () => {
 		await user.logout();
+		goto('/login');
 	};
 
 </script>
@@ -35,6 +38,7 @@
 	<HomeArticles_M/>	
 	<div class="button-conatiner-dev">
 		<button onclick={goto("/transactions")}>Transactions</button>
+		<button onclick={goto("/stock-overview")}>Stock overview</button>
 		<button onclick={goto("/gift")}>send a gift</button>
 		<button onclick={goto("/request")} disabled>request a gift</button>
 		<button onclick={goto("/share")}>share</button>

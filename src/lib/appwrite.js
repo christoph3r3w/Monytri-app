@@ -1,11 +1,13 @@
 import { Client, Account, Databases } from 'appwrite';
-import { PUBLIC_APPWRITE_PROJECT_ID,PUBLIC_APPWRITE_ENDPOINT } from '$env/static/public';
+import { PUBLIC_APPWRITE_PROJECT_ID, PUBLIC_APPWRITE_ENDPOINT } from '$env/static/public';
 
-export const client = new Client();
+// Create Appwrite client-side configuration
+// This file only contains public information safe to use in the browser
+const client = new Client();
 
 client
     .setEndpoint(PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(PUBLIC_APPWRITE_PROJECT_ID); // Replace with your project ID
+    .setProject(PUBLIC_APPWRITE_PROJECT_ID);
 
 export const account = new Account(client);
 export const databases = new Databases(client);

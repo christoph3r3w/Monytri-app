@@ -97,11 +97,26 @@
 
 <style>
 
+	:root {
+		--moveRight: 5rem;
+	}
+
+	.section-title{
+		position: relative;
+		margin-bottom: 1%;
+		font-size: clamp(1rem,10vw ,1.3rem);
+		margin-left: calc(var(--moveRight) + 0.125rem);
+		/* display: none; */
+	}
+
+
 	.recipients-list{ 
 		flex: 1 1 70%;
 		display: flex;
 		flex-direction: column;
+		align-self: end;
 		min-width: 35dvw;
+		width: calc(100% - var(--moveRight));
 		overflow-y: scroll;
 		background-color: light-dark(var(--white),var(--general-text-color-secondary));
 		background-color: var(--general-background-color-secondary);
@@ -111,6 +126,7 @@
 		padding-inline: 2rem;
 		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 		border-radius: 10px;
+		transform-origin: left;
 
 		scrollbar-width:auto;
 		overflow-y: scroll;
@@ -171,24 +187,26 @@
 			position: relative;
 			display: flex;
 			flex-direction: column;
+			justify-content:center ;
 			gap: 0.5rem;
 			width: 100%;
 		}
 		
 		.recipient-details span h3 {
 			margin: 0;
-			font-size: 1rem;
+			font-size: 1.25rem;
 		}
 		
 		.recipient-details span p {
 			margin: 0;
 			font-size: clamp(0.8rem, 1vw, 1rem);
-			color: #666;
+			font-weight: 500;
+			color: var(--general-text-color-secondary);
 		}
 
 		.recipient-details span button {
 			position: absolute;
-			top: -30%;
+			top: 0;
 			right: 0;
 			background-color: transparent;
 			border: none;
@@ -203,8 +221,9 @@
 	}
 
 	.last-sent {
-		font-size: 0.8rem;
-		color: #666;
+		font-size: .9rem;
+		font-weight: 600;
+		color: var(--general-text-color-secondary);
 	}
 
 	hr:nth-last-of-type(1) {

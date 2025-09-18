@@ -30,6 +30,11 @@ export {default as Request_success} from './Request-page-p/mobile/Request-proces
 export {default as StepContainer} from './Shared/molucule/StepContainer_S.svelte';
 export {default as PageStepContainer} from './Shared/molucule/PageStepContainer_S.svelte';
 export {default as LoginStep} from './Login-page/Login.svelte'
+export {default as Brokers} from './Stock-overview-p/Brokers.svelte';
+export {default as Announcements} from './Stock-overview-p/Announcements.svelte';
+export {default as Calculator} from './Stock-overview-p/Calc-components/Calculator.svelte';
+export {default as PortfolioDetail} from './Stock-overview-p/Portfolio-detail.svelte';
+
 
 // test components
 // export {default as PTest} from './test components/page test component.svelte'

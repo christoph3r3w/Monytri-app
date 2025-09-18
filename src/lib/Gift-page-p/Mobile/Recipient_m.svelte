@@ -76,6 +76,13 @@
 		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 	}
 
+	.section-title{
+		position: relative;
+		margin-bottom: 1%;
+		font-size: clamp(1rem,10vw ,1.3rem);
+	}
+
+
 	.recipients-list{ 
 		background-color: var(--general-background-color);
 		height: fit-content;
@@ -85,7 +92,6 @@
 		padding-block: 2%;
 		border-radius: 15px;
 
-		/* background-color: blue; */
 		.recipient-item {
 			position: relative;
 			display: flex;
