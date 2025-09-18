@@ -2,7 +2,7 @@ import { user } from '$lib/user';
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 500).toFixed(2);
+	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 1000).toFixed(2);
 
     let formData = {
 		benefactor: null,
@@ -27,7 +27,7 @@ export async function load() {
 	let brokers = [
 		{
 			name: "eToro",
-			logo: "/brokers/etoro.png",
+			logo: "",
 			link: "https://www.etoro.com/",
 			description:
 				"eToro is a social trading and multi-asset brokerage company that focuses on providing financial and copy trading services.",
@@ -35,7 +35,7 @@ export async function load() {
 		},
 		{
 			name: "Robinhood",
-			logo: "/brokers/robinhood.png",
+			logo: "",
 			link: "https://robinhood.com/",
 			description:
 				"Robinhood offers commission-free trading of stocks, ETFs, and cryptocurrencies via a mobile-first platform.",
@@ -43,7 +43,7 @@ export async function load() {
 		},
 		{
 			name: "Fidelity",
-			logo: "/brokers/fidelity.png",
+			logo: "",
 			link: "https://www.fidelity.com/",
 			description:
 				"Fidelity provides investment management, retirement planning, brokerage, and other financial services.",
@@ -51,7 +51,7 @@ export async function load() {
 		},
 		{
 			name: "Getbux",
-			logo: "/brokers/getbucks.png",
+			logo: "/brokers/BUX brokers logo 10.png",
 			link: "https://www.getbucks.com/",
 			description:
 				"Getbucks offers accessible financial services and lending products in selected markets.",
@@ -59,7 +59,7 @@ export async function load() {
 		},
 		{
 			name: "Degiro",
-			logo: "/brokers/dejiro.png",
+			logo: "/brokers/Degiro broker logo.png",
 			link: "https://www.dejiro.com/",
 			description:
 				"Dejiro provides a straightforward platform for trading global equities and ETFs.",
@@ -67,7 +67,7 @@ export async function load() {
 		},
 		{
 			name: "Interactive Brokers",
-			logo: "/brokers/interactive-brokers.png",
+			logo: "/brokers/Interactive Brokers logo..png",
 			link: "https://www.interactivebrokers.com/",
 			description:
 				"Interactive Brokers offers a professional-grade platform with global market access and advanced trading tools.",
@@ -78,9 +78,8 @@ export async function load() {
 	let usersBrokers = [
 		// {name: "eToro",logo: "",link:"" , balance: 0},
 		// {name: "Robinhood",logo: "",link:"" , balance: 0},
-		// {name: "Interactive Brokers",logo: "",link:"" , balance: 0}
+		// {name: "Interactive Brokers",logo: "/brokers/Interactive Brokers logo 2..png",link:"" , balance: 0}
 	];
-
 
 	let totalBalance = brokers.reduce((acc, broker) => acc + broker.balance, 0);
 	let averageBalance = totalBalance / brokers.length;

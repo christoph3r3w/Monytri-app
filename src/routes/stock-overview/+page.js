@@ -2,7 +2,7 @@ import { user } from '$lib/user';
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {
-	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 500).toFixed(2);
+	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 1000).toFixed(2);
 
     let formData = {
 		benefactor: null,
@@ -23,11 +23,48 @@ export async function load() {
 		token: null
 	};
 	
+	let announcements = [
+		{
+			img: {src:`/announcment-c/Announcement money.png`,bgColor:"#FFF3E0",bgPosition:"contain"},
+			date: "1 Sep 2025",
+			title: "Sign up with BUX and get €100 free for you to invest!",
+			partner: "Bux",
+			link: "/blog"
+		},
+		{
+			img: {src:`/announcment-c/Teamwork-5--Streamline-Brooklyn (Traced) .png`,bgColor:"#f2eade",bgPosition:"contain"},
+			date: "29 Aug 2024",
+			title: "Refer a friend and get €20 EACH when they sign up!",
+			partner: "Avatrade",
+			link: "/blog"
+		},
+		{
+			img: {src:`/announcment-c/Announcement Orange.png`,bgColor:"#ff6d3a",bgPosition:"contain"},
+			date: "23 Aug 2024",
+			title: "Investor Today has some new stocks for you!",
+			partner: "Investor Today",
+			link: "/blog"
+		},
+		{
+			img: {src:`/home-page/homescreen-team.png`,bgColor:"white",bgPosition:"cover"},
+			date: "Aug 20, 2023",
+			title: "Are you saving enough?",
+			partner: "Monytri",
+			link: "/blog"
+		},
+		{
+			img: {src:`/home-page/homescreen-team.png`,bgColor:"#E3F2FD",bgPosition:"cover"},
+			date: "Aug 20, 2023",
+			title: "Are you saving enough?",
+			partner: "Monytri",
+			link: "/blog"
+		}
+	];
 
 	let brokers = [
 		{
 			name: "eToro",
-			logo: "/brokers/etoro.png",
+			logo: "",
 			link: "https://www.etoro.com/",
 			description:
 				"eToro is a social trading and multi-asset brokerage company that focuses on providing financial and copy trading services.",
@@ -35,7 +72,7 @@ export async function load() {
 		},
 		{
 			name: "Robinhood",
-			logo: "/brokers/robinhood.png",
+			logo: "",
 			link: "https://robinhood.com/",
 			description:
 				"Robinhood offers commission-free trading of stocks, ETFs, and cryptocurrencies via a mobile-first platform.",
@@ -43,7 +80,7 @@ export async function load() {
 		},
 		{
 			name: "Fidelity",
-			logo: "/brokers/fidelity.png",
+			logo: "",
 			link: "https://www.fidelity.com/",
 			description:
 				"Fidelity provides investment management, retirement planning, brokerage, and other financial services.",
@@ -51,7 +88,7 @@ export async function load() {
 		},
 		{
 			name: "Getbux",
-			logo: "/brokers/getbucks.png",
+			logo: "/brokers/BUX brokers logo 10.png",
 			link: "https://www.getbucks.com/",
 			description:
 				"Getbucks offers accessible financial services and lending products in selected markets.",
@@ -59,7 +96,7 @@ export async function load() {
 		},
 		{
 			name: "Degiro",
-			logo: "/brokers/dejiro.png",
+			logo: "/brokers/Degiro broker logo.png",
 			link: "https://www.dejiro.com/",
 			description:
 				"Dejiro provides a straightforward platform for trading global equities and ETFs.",
@@ -67,18 +104,18 @@ export async function load() {
 		},
 		{
 			name: "Interactive Brokers",
-			logo: "/brokers/interactive-brokers.png",
+			logo: "/brokers/Interactive Brokers logo..png",
 			link: "https://www.interactivebrokers.com/",
 			description:
 				"Interactive Brokers offers a professional-grade platform with global market access and advanced trading tools.",
 			balance: rand()
-		}
+		},
 	];
 
 	let usersBrokers = [
-		{name: "eToro",logo: "",link:"" , balance: 0},
-		{name: "Robinhood",logo: "",link:"" , balance: 0},
-		{name: "Interactive Brokers",logo: "",link:"" , balance: 0}
+		// {name: "eToro",logo: "",link:"" , balance: 0},
+		// {name: "Robinhood",logo: "",link:"" , balance: 0},
+		// {name: "Interactive Brokers",logo: "/brokers/Interactive Brokers logo 2..png",link:"" , balance: 0}
 	];
 
 
@@ -134,7 +171,8 @@ export async function load() {
 			totalBalance, 
 			averageBalance,
 			portfolio, 
-			formData 
+			formData,
+			announcements, 
 		}
 
 	};
