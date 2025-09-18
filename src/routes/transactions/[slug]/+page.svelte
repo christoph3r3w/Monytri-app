@@ -8,40 +8,17 @@
 	
 	// Or you can get it from the data passed by the load function
 	let { data, aList } = $props();
-	let TDU = $state(data.slug)
-	
-	// let {onSearchQueryUpdate} = $props();
-	let searchQuery = '';
-
-	let formData = $state({
-		benefactor: null,
-		requestId: null,
-		cardDesign: 'default',
-		Purpose: null,
-		DeliveryDate: null,
-		requestMethod: null,
-		amount: null,
-		message: 'check if needed',
-		searchQuery:'',
-		errors: {},
-		isLoading: false,
-		date: new Date(),
-		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
-		expiresAt: null,
-		shareUrl: null,
-		token: null
-	});
-
-	const numberFormatter = new Intl.NumberFormat('nl-NL', {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2
-	});
+	let {TDU, formData} = $state(data.slug)
 
 	function formatCurrency(value) {
-		const num = Number(value);
-		const safe = isNaN(num) ? 0 : num;
-		return '€' + numberFormatter.format(safe);
-	}	
+		const number = typeof value === 'string' ? parseFloat(value) : value;
+		return new Intl.NumberFormat('en-IE', {
+			style: 'currency',
+			currency: 'EUR',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		}).format(number);
+	}
 
 </script>
 
@@ -53,9 +30,9 @@
 				<li>
 					Transfer amount
 					{#if a.transactionType == 'sent'}
-					<span style="color:var(--primary-red-500)">- {formatCurrency(a.amount)}</span>
+					<span style="text-decoration: underline var(--primary-red-500)">- {formatCurrency(a.amount)}</span>
 					{:else}
-					<span style="color:var(--primary-green-500)">{formatCurrency(a.amount)}</span>
+					<span style="text-decoration: underline var(--primary-green-500)">{formatCurrency(a.amount)}</span>
 					{/if}
 				</li>
 				<li>Transfer ID<span>#{a.id}</span></li>
@@ -122,7 +99,7 @@
 	{:else if TDU.transactionType == 'received'}
 	<button class="redo-button request"onclick={goto('/request')}>redo transaction</button>	
 	{/if}
-	<!-- <button onclick={goto('/transactions')}>back to transactions</button> -->
+	<button onclick={goto('/transactions')}>back to transactions</button>
 {/snippet}
 
 {#snippet e()}
@@ -133,8 +110,8 @@
 	<PageStepContainer
 	stepType=''
 	headerName={$device.isMobile? '' :' '}
-    subtext=""
-    showLeftContent={true}
+   subtext=""
+   showLeftContent={true}
 	showRightContent={true}
 	showContinueButton={false}
 	leftContent={''}
@@ -242,15 +219,14 @@ li > span{
 	flex-direction: column;
 	align-items: center;
 	justify-items: center;
+	gap: 1rem;
 }
 
-:global(.button-container) button.redo-button{
+:global(.button-container) button{
 	width: 300px;
 	align-self: center;
 	justify-self: center;
 	transition: background-color 0.3s ease;
-
-	
 }
 
 
