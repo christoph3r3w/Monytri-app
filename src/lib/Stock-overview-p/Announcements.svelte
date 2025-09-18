@@ -1,44 +1,5 @@
 <script>
-	import { base } from '$app/paths';
-	let {} = $props();
-
-	let announcements = [
-		{
-			img: {src:`/announcment-c/Announcement money.png`,bgColor:"#FFF3E0",bgPosition:"contain"},
-			date: "1 Sep 2025",
-			title: "Sign up with BUX and get €100 free for you to invest!",
-			partner: "Bux",
-			link: "/blog"
-		},
-		{
-			img: {src:`/announcment-c/Teamwork-5--Streamline-Brooklyn (Traced) .png`,bgColor:"#f2eade",bgPosition:"contain"},
-			date: "29 Aug 2024",
-			title: "Refer a friend and get €20 EACH when they sign up!",
-			partner: "Avatrade",
-			link: "/blog"
-		},
-		{
-			img: {src:`/announcment-c/Announcement Orange.png`,bgColor:"#ff6d3a",bgPosition:"contain"},
-			date: "23 Aug 2024",
-			title: "Investor Today has some new stocks for you!",
-			partner: "Investor Today",
-			link: "/blog"
-		},
-		{
-			img: {src:`/home-page/homescreen-team.png`,bgColor:"white",bgPosition:"cover"},
-			date: "Aug 20, 2023",
-			title: "Are you saving enough?",
-			partner: "Monytri",
-			link: "/blog"
-		},
-		{
-			img: {src:`/home-page/homescreen-team.png`,bgColor:"#E3F2FD",bgPosition:"cover"},
-			date: "Aug 20, 2023",
-			title: "Are you saving enough?",
-			partner: "Monytri",
-			link: "/blog"
-		}
-	];
+	let {announcements} = $props();	
 </script>
 
 	<ul class="announcements-list">
@@ -46,7 +7,6 @@
 		<li class="announcements-contain blog-container" style="--bg-color:{img.bgColor}; --bg-position:{img.bgPosition}">
 			<a href={link || "/blog"} aria-label="blog"></a>
 			<img src={img.src || `/home-page/homescreen-team.png`} alt="" width="177px" height="177px">
-			<!-- <img src={img.src || `${base}/home-page/homescreen-team.png`} alt="" width="177px" height="177px"> -->
 			<div class="blog-text">
 				<p class="date">{date}</p>
 				<div class="blog-text-content">
@@ -81,7 +41,8 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: space-between;
+	/* justify-content: space-between; */
+	gap: clamp(0px, 1px + 2%, 2lvw);
 	width: 100%;
 	max-width: 100%;
 	height: 110px;
@@ -108,6 +69,7 @@
 	object-position: center;
 	border-radius: 10px 0 0 10px;
 	margin: 2%;
+	/* outline: solid; */
 }
 	
 .announcements-list .blog-text{
