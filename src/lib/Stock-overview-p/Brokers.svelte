@@ -8,24 +8,18 @@
 	let totalBalance = brokersList.reduce((acc, broker) => acc + broker.balance, 0);
 	let averageBalance = totalBalance / brokersList.length;
 	
-	let defaultImg = "/shared-assests/Vector 6.png"
+	let defaultImg = "/brokers/bank.png"
 </script>
 
-{#snippet listItem(b) }
+{#snippet listItem(b)}
 	<li title="{b.description}">
 		<span>
 			<img
-				src={defaultImg || b.logo}
+				src={b.logo? b.logo : defaultImg}
 				alt={b.name + ' logo'}
 				width="24"
 				height="24"
-				onerror={(e) => {
-					const img = e.currentTarget;
-					if (!img.dataset.fallback) {
-						img.src = defaultImg;
-						img.dataset.fallback = '1';
-					}
-				}}
+				
 			/>
 			<p>{b.name}</p>
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +42,6 @@
 		{/each}
 	{/if}
 </ul>
-<p>average balance: {averageBalance}</p>
 
 <style>
 
