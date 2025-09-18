@@ -1,7 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
-    import {current} from '$lib/store.js';
+   import {current} from '$lib/store.js';
 	import { device } from '$lib/Device';
 	import { onMount } from 'svelte';
 
