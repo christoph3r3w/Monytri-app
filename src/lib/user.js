@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { goto } from '$app/navigation';
-import { account,ID } from '$lib/appwrite';
+import { account, ID } from '$lib/appwrite';
 import { RateLimitHandler } from '$lib/rateLimitHandler';
 
 // Avoid auth calls in server-side, so that a user is not shared between requests
@@ -146,5 +146,6 @@ export const authReady = writable(false); // becomes true after first init attem
 if (isBrowser) {
 	user.subscribe((value) => {
 		isAuthenticated.set(value !== null);
+		authReady.set(true); // Ensure authReady is true after user state changes
 	});
 }

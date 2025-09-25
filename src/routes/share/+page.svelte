@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import {Logo} from '$lib';
 	import QRCode from 'qrcode';
@@ -63,7 +64,8 @@
 <div class="container">
 		
 	<figure class="banner">
-		<img src="./shared-assests/Monytri-01.png" alt="">
+		<img src={`/shared-assests/Monytri-01.png`} alt="">
+		<!-- <img src={`${base}/shared-assests/Monytri-01.png`} alt=""> -->
 	</figure>
 
 	<article class="share-container">
@@ -180,7 +182,8 @@
 		background-size: cover;
 		display: grid;
 		place-items: center;
-		background: url('./shared-assests/banner-deco.png');
+		background: url('/shared-assests/banner-deco.png');
+		/* background: url('${base}/shared-assests/banner-deco.png'); */
 		background-position:top center;
 		background-repeat: no-repeat;
 		background-size: cover;

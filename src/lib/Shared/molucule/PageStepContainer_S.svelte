@@ -5,7 +5,7 @@
 		
 		// Step configuration
 		headerName, 
-		stepType = 'default', // 'recipient', 'amount', 'purpose', 'card-design', 'payment', 'review'
+		stepType = 'default', // 'recipient', 'amount', 'payment', 'review'
 		currentStep = 1,
 		
 		// Navigation functions
@@ -33,6 +33,7 @@
 		showSkipButton = false,
 		subtext = '' as string | null,
 		searchQuery = '' as string | null,
+		searchValue = '' as string | null,
 		
 		// Snippet props
 		leftContent,
@@ -41,17 +42,16 @@
 		
 		// Search query callback
 		onSearchQueryUpdate = null,
-		
-		// Skip step callbacks
-		// onSkipPurpose = null,
-		// onSkipCardDesign = null
 	} = $props();
 	
 	import {isMobile} from '$lib/store.js';
 	import {device} from '$lib/Device.js';
 	import {fade} from 'svelte/transition';
 
-	
+	$effect(() => {
+		console.log(searchValue);
+		console.log(searchQuery);	
+	});
 </script>
 
 <!-- Button rendering snippet -->
@@ -94,17 +94,13 @@
 			class="skip-to-button"
 			onclick={() => {
 				switch(step) {
-					case 1: 
-						currentStep = 1;
+					case 1: currentStep = 1;
 						break;
-					case 2: 
-						currentStep = 2;
+					case 2: currentStep = 2;
 						break;
-					case 3: 
-						currentStep = 3;
+					case 3: currentStep = 3;
 						break;
-					case 4: 
-						currentStep = 4;
+					case 4: currentStep = 4;
 						break;
 				}
 			}}>
@@ -118,8 +114,10 @@
 {#snippet buttonContainer()}
 
 	<div class="button-container {customButton? 'custom': ''}">
-		{#if stepType == '' || stepType === null || stepType === undefined}
-		
+		{#if customButton && stepType == '' }
+			{@render customButton()}
+		{:else if stepType == '' || stepType === null || stepType === undefined }
+			{@render buttonType('blank',0)}
 		{:else if stepType === 'default' && !customButton}
 			{@render buttonType('submit',currentStep)}
 		{:else}
@@ -139,15 +137,16 @@
 <!-- Search component snippet for recipient and purpose steps -->
 {#snippet searchComponent(placeholder)}
 	<section class="search-container">
-		<label for="search" class="search-label">
+		<label for={"search-" + placeholder} class="search-label">
 			<input 
+				id={"search-" + placeholder}
 				type="search" 
 				placeholder={placeholder}
 				class="search-input"
-				value={formData?.searchQuery || ''}
+				value={searchValue}
 				oninput={(e: Event) => onSearchQueryUpdate?.((e.target as HTMLInputElement).value)}
 			/>
-			{#if (formData?.searchQuery || '').length < 1}
+			{#if searchValue === ''}
 				<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" class="search-icon">
 					<path fill="#A0A0A0" d="M29.295 27.705l-5.762-5.761a13.058 13.058 0 0 0 3.092-8.444C26.625 6.263 20.738.375 13.5.375c-7.238 0-13.125 5.888-13.125 13.125s5.888 13.125 13.125 13.125c3.215 0 6.159-1.166 8.444-3.091l5.761 5.761a1.122 1.122 0 0 0 1.59 0c.44-.438.44-1.15 0-1.59ZM2.625 13.5c0-5.997 4.878-10.875 10.875-10.875S24.375 7.503 24.375 13.5s-4.878 10.875-10.875 10.875S2.625 19.497 2.625 13.5Z"/>
 				</svg>
@@ -182,15 +181,17 @@
 	{#if headerName || stepType !== ''}
 		{@render stepHeader()}		
 	{/if}
+
 	<!-- Render custom left content or default based on step type -->
 	{#if leftContent}
 		{#if subtext}<p class="subtext">{subtext}</p>{/if}
+		{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 		{@render leftContent()}
 	{:else }
 		{#if subtext}<p class="subtext">{subtext}</p>{/if}
+		{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 	{/if}
 	{@render errorMessage(formData?.errors?.[currentStep])}
-	{#if searchQuery}{@render searchComponent(`Search ${searchQuery}`)}{/if}
 {/snippet}
 
 {#snippet rightSection()}
@@ -238,15 +239,8 @@
 		height: calc(100cqh - var(--header-height) + 10px) ;
 		max-height: calc(100dvh - var(--footer-height)); 
 		background-color: var(--general-background-color);
-		overflow: clip;
-		overflow-y: scroll;
+		overflow: hidden ;
 		padding: 1rem;
-
-		.section-title{
-			position: relative;
-			margin-bottom: 1%;
-			font-size: clamp(1rem,10vw ,1.3rem);
-		}
 	}
 
 	.left-step {
@@ -297,8 +291,7 @@
 		align-items: center;
 		width: 100%;
 		height: fit-content;
-		/* box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.281); */
-		
+		margin-bottom: 2dvh;		
 
 		& .search-icon{
 			position: absolute;
@@ -359,7 +352,6 @@
 		padding-inline: 1%;
 		padding-top: 3rem;
 		border-radius: 10px;
-		/* outline: solid blue; */
 	}
 
 	/* buttons */
@@ -452,7 +444,6 @@
 		background: none;
 		color: var(--primary-darkgreen-550);
 		text-decoration: underline;
-
 	}
 
 	:global(.right-step .button-container .submit-button)  {
@@ -543,13 +534,15 @@
 			gap: 1cqh;
 			padding: 0 ;
 			padding-block: 3% ;
-			padding-inline: var(--body-padding) !important;
-			/* background-color: var(--general-background-color-secondary) !important; */
 			color: var(--general-text-color) !important;
 		}
 
+		.page-container > *{
+			padding-inline: var(--body-padding);
+		}
+
 		.mobile-step {
-			flex: 1 1 auto;
+			flex: 0 2 fit-content;
 			display: flex;
 			flex-direction: column;
 			width: 100%;
@@ -609,7 +602,6 @@
 		section:has(label) label input {
 			background-color: var(--off-white);
 			margin-bottom: 3%;
-			box-shadow: 0 2px 10px -7px rgba(49, 49, 49, 0.171);		
 			box-shadow: 0 2px 8px -7px var(--grey-400);		
 		}
 
@@ -620,15 +612,12 @@
 			align-items: center;
 			width: 100%;
 			height: fit-content;
-			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 
 			& .search-icon{
 				position: absolute;
-				/* top: 16%; */
 				inset-block: 13%;
 				left: 1rem;
 				scale: clamp(0.2,0.70,0.80);
-				/* background-color: red; */
 				fill: var(--black);
 				stroke:var(--black);
 				stroke-width: 1%;
@@ -663,6 +652,7 @@
 		}
 
 		:global(.button-container.custom) {
+			flex: 1 1 auto;
 			--gap:10px;
 			display: flex;
 			flex-direction: row ;
@@ -698,31 +688,6 @@
 			border-radius: 4px;
 			margin-bottom: 1rem;
 			text-align: center;
-		}
-
-		/* .left-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 1 / span 1;
-			padding: 0 !important;
-		} */
-
-		/* .right-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / span 1;
-			padding: 0 !important;
-		} */
-
-		/* section:has(label) {
-			flex: 1 1 90%;
-			background-color: var(--white);
-			border-radius: 12px;
-		} */
-
-		/* :global(.custom > :nth-child(n)) {
-			margin: 0;
-			text-wrap: nowrap;
-			outline: solid rgb(61, 228, 11) 10px;
-		} */
-		
+		}		
 	}
 </style>

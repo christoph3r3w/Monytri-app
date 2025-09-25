@@ -44,6 +44,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.15",
     "appwrite": "^18.1.1",
+    "chart.js": "^4.5.0",
     "netlify": "^23.5.1",
     "qrcode": "^1.5.4"
   }

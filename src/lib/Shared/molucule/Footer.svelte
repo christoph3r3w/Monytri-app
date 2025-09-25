@@ -1,14 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import{ goto } from '$app/navigation'
-    import { Logo } from '$lib';
+   import { Logo } from '$lib';
 	import { current } from '$lib/store.js';
-
-	// create a store to keep track of the current page
-	// this will be used to set the active class on the mobile navigation
-	// and to set the active class on the footer/header navigation
 	let navSelect = $derived($current);
-
 </script>
 
 {#snippet about()}
@@ -74,14 +69,14 @@
 			</button>
 		</li>
 		<li>
-			<button href="/transactions" class:active={navSelect === 'transactions'} onclick={() => (goto('/transactions'))} aria-label="transactions">
+			<button href="/transactions" class:active={navSelect === 'transactions History'} onclick={() => (goto('/transactions'))} aria-label="transactions">
 				<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M12 4.8a7.2 7.2 0 1 1-7.195 6.932.9.9 0 1 0-1.799-.064A9 9 0 1 0 6 5.292V3.9a.9.9 0 0 0-1.8 0v3.6a.9.9 0 0 0 .9.9h3.6a.9.9 0 0 0 0-1.8H7.237A7.176 7.176 0 0 1 12 4.8Zm.6 2.7a.9.9 0 0 0-1.8 0v4.8a.9.9 0 0 0 .9.9h3.6a.9.9 0 1 0 0-1.8h-2.7V7.5Z" fill="white"/>
 				</svg>			
 			</button>
 		</li>
 		<li>
-			<button href="/stock-overview" class:active={navSelect === 'stock'} onclick={() => (goto('/stock-overview'))} aria-label="stock overview">
+			<button href="/stock-overview" class:active={navSelect === 'stock-overview'} onclick={() => (goto('/stock-overview'))} aria-label="stock overview">
 				<svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M8 11.75V7.5c0-.417.146-.77.438-1.062A1.451 1.451 0 0 1 9.5 6c.416 0 .77.145 1.063.438.293.293.438.647.437 1.062v4.25c0 .417-.146.771-.437 1.063a1.442 1.442 0 0 1-1.063.437c-.417 0-.771-.146-1.062-.437A1.453 1.453 0 0 1 8 11.75Zm5-.225V3.5c0-.417.146-.77.438-1.062A1.451 1.451 0 0 1 14.5 2c.416 0 .77.145 1.063.438.293.293.438.647.437 1.062v8.025c0 .5-.154.875-.462 1.125-.308.25-.654.375-1.038.375a1.6 1.6 0 0 1-1.037-.375c-.307-.25-.462-.625-.463-1.125Zm-10 3.45V11.5c0-.417.146-.77.438-1.062A1.452 1.452 0 0 1 4.5 10c.416 0 .77.145 1.063.438.293.293.438.647.437 1.062v3.475c0 .5-.154.875-.462 1.125-.308.25-.654.375-1.038.375a1.6 1.6 0 0 1-1.037-.375c-.307-.25-.462-.625-.463-1.125Zm2.4 6.075c-.433 0-.738-.204-.913-.612-.175-.408-.104-.77.213-1.088l4.1-4.1a1 1 0 0 1 .663-.3.894.894 0 0 1 .687.25L13 17.65l5.6-5.6H18a.965.965 0 0 1-.712-.288.973.973 0 0 1-.288-.712c0-.283.095-.52.288-.712A.97.97 0 0 1 18 10.05h3c.283 0 .521.096.713.288.192.192.288.43.287.712v3a.968.968 0 0 1-.288.713.964.964 0 0 1-.712.287.973.973 0 0 1-.712-.288.965.965 0 0 1-.288-.712v-.6l-6.25 6.25a1 1 0 0 1-.663.3.894.894 0 0 1-.687-.25L9.55 17.3 6.1 20.75a1.097 1.097 0 0 1-.312.213.89.89 0 0 1-.388.087Z" fill="white"/>
 				</svg>			
@@ -271,7 +266,7 @@
 			grid-row: 1/2;
 			display: grid;
 			grid-template-columns: subgrid;	
-			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(10px, 15%);		
+			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(0px, 15%);		
 			width: 100cqw;
 			border-radius:inherit;
 			z-index: 100;

@@ -1,53 +1,37 @@
 <script>
 	import {current} from '$lib/store.js';
 	import {device} from '$lib/Device.js';
-	import {InProgress_S,PageStepContainer} from '$lib';
+	import {PageStepContainer} from '$lib';
 	import {goto} from '$app/navigation';
 	import {onMount} from 'svelte';
 
-	let {data} = $props();
-	let transactionData = data.data
-	
-	// let {onSearchQueryUpdate} = $props();
-	let formData = {
-		benefactor: null,
-		requestId: null,
-		cardDesign: 'default',
-		Purpose: null,
-		DeliveryDate: null,
-		requestMethod: null,
-		amount: null,
-		message: 'check if needed',
-		searchQuery: '',
-		errors: {},
-		isLoading: false,
-		date: new Date(),
-		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
-		expiresAt: null,
-		shareUrl: null,
-		token: null
-	};
+	let {data,onSearchQueryUpdate} = $props();
+	let {transactionData, formData} = data.data
+	let search = $state('');
 
-	let searchQuery = '';
+	let filteredTransactions = $derived((transactionData) => {
+		if(search === ''){return transactionData}
+
+		const regex = new RegExp(search, 'i');
+		return transactionData.filter(tx => regex.test(tx.user.name) || regex.test(String(tx.amount)) || regex.test(tx.transactionType) || regex.test(tx.status) );
+	});	
 
 	function updateSearchQuery(newQuery) {
-		if(!formData){return}
+		search = newQuery;
 		formData.searchQuery = newQuery;
 	}
 
-	const numberFormatter = new Intl.NumberFormat('nl-NL', {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2
-	});
-
 	function formatCurrency(value) {
-		const num = Number(value);
-		const safe = isNaN(num) ? 0 : num;
-		return '€' + numberFormatter.format(safe);
-	}	
+		const number = typeof value === 'string' ? parseFloat(value) : value;
+		return new Intl.NumberFormat('en-IE', {
+			style: 'currency',
+			currency: 'EUR',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		}).format(number);
+	}
 
 </script>
-<!-- <InProgress_S /> -->
 
 {#snippet b(TDU,i)}
 	<li class="transaction-item-{i + 1}" key={i}>
@@ -83,10 +67,12 @@
 	</li>
 {/snippet}
 
-{#snippet a()}
+{#snippet aList()}
 		<ul>
-			{#each transactionData as TDU, i}
+			{#each filteredTransactions(transactionData) as TDU, i}
 				{@render b(TDU, i + 1)}
+				{:else}
+				<p class="no-results">No transactions found</p>
 			{/each}
 		</ul>
 {/snippet}
@@ -95,11 +81,13 @@
 	<PageStepContainer
 	stepType=''
 	headerName={$device.isMobile? '' :'Transactions'}
-    subtext=""
-    showLeftContent={true}
+   subtext=""
+   showLeftContent={true}
 	showRightContent={true}
-    rightContent={a}
+   rightContent={aList}
+	leftContent={$device.isMobile? null : null}
 	searchQuery="transactions"
+	searchValue={search}
 	onSearchQueryUpdate={updateSearchQuery}
 	/>
 </article>
@@ -114,7 +102,6 @@
 	/* grid-column: 1/-1 ; */
 	/* grid-row: 1 / span 1; */
 }
-
 
 .transaction-container {
 	position: relative;
@@ -139,9 +126,7 @@ ul {
 	position: relative;
 	display: flex;
 	flex-direction: column;
-	/* align-self: center; */
-	max-height: 500px;
-	/* width: 90ch; */
+	height: clamp(50dvh, 100%, calc(100% - var(--header-height) - var(--footer-height) - 10dvh));
 	gap: var(--gap);
 	padding: 1rem;
 	border-radius: .5rem;
@@ -185,6 +170,12 @@ li > span p{
 li > span .transaction-route{
 	position: absolute;
 	inset: 0;
+}
+
+.no-results {
+	text-align: center;
+	padding: 2rem;
+	color: #666;
 }
 
 

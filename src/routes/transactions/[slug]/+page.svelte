@@ -7,43 +7,22 @@
 	import { onMount } from 'svelte';
 	
 	// Or you can get it from the data passed by the load function
-	let { data } = $props();
-	let TDU = $state(data.slug)
-	
-	// let {onSearchQueryUpdate} = $props();
-	let searchQuery = '';
-
-	let formData = $state({
-		benefactor: null,
-		requestId: null,
-		cardDesign: 'default',
-		Purpose: null,
-		DeliveryDate: null,
-		requestMethod: null,
-		amount: null,
-		message: 'check if needed',
-		searchQuery:'',
-		errors: {},
-		isLoading: false,
-		date: new Date(),
-		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
-		expiresAt: null,
-		shareUrl: null,
-		token: null
-	});
-
-
-	const numberFormatter = new Intl.NumberFormat('nl-NL', {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2
-	});
+	let { data, aList } = $props();
+	let {TDU, formData} = $state(data.slug)
 
 	function formatCurrency(value) {
-		const num = Number(value);
-		const safe = isNaN(num) ? 0 : num;
-		return '€' + numberFormatter.format(safe);
-	}	
+		const number = typeof value === 'string' ? parseFloat(value) : value;
+		return new Intl.NumberFormat('en-IE', {
+			style: 'currency',
+			currency: 'EUR',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		}).format(number);
+	}
 
+	onMount(() => {
+		current.set('transactions History');
+	});
 
 </script>
 
@@ -55,9 +34,9 @@
 				<li>
 					Transfer amount
 					{#if a.transactionType == 'sent'}
-					<span style="color:var(--primary-red-500)">- {formatCurrency(a.amount)}</span>
+					<span style="text-decoration: underline var(--primary-red-500)">- {formatCurrency(a.amount)}</span>
 					{:else}
-					<span style="color:var(--primary-green-500)">{formatCurrency(a.amount)}</span>
+					<span style="text-decoration: underline var(--primary-green-500)">{formatCurrency(a.amount)}</span>
 					{/if}
 				</li>
 				<li>Transfer ID<span>#{a.id}</span></li>
@@ -118,28 +97,42 @@
 	{/if}
 {/snippet}
 
+{#snippet d()}
+	{#if TDU.transactionType == 'sent' }
+	<button class="redo-button gift" onclick={goto('/gift')}>redo transaction</button>	
+	{:else if TDU.transactionType == 'received'}
+	<button class="redo-button request"onclick={goto('/request')}>redo transaction</button>	
+	{/if}
+	<button onclick={goto('/transactions')}>back to transactions</button>
+{/snippet}
+
+{#snippet e()}
+	{@render aList()}
+{/snippet}
+
 <article class="transaction-instance-container">	
 	<PageStepContainer
 	stepType=''
 	headerName={$device.isMobile? '' :' '}
-    subtext=""
-    showLeftContent={true}
+   subtext=""
+   showLeftContent={true}
 	showRightContent={true}
+	showContinueButton={false}
 	leftContent={''}
 	rightContent={c}
+	customButton={d}
 	/>
 </article>
 
 <style>
 
 :global(body:has(:not(.left-step)) .transaction-instance-container .right-step) {
-	grid-column: 1/ -1 ;
+	grid-column: 1/-1;
 	grid-row: 1 / span 1;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
 
 .transaction-instance-container{
 	position: relative;
@@ -155,7 +148,6 @@
 	height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
 	max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); 
 	
-
 	container-type:normal;
 	container-name: instance-container;
 }
@@ -197,7 +189,7 @@ h2{
 ul {
 	display: flex;
 	flex-direction: column;
-	gap: .5rem;
+	gap: clamp(1px, 5dvh .5rem);
 	padding: 1rem;
 	border-radius: .5rem;
 	background-color: var(--general-background-color-secondary);
@@ -225,6 +217,20 @@ li > span{
 	font-weight: 500;
 	color: var(--text-color-primary);
 	text-transform: capitalize;
+}
+
+:global(.button-container):has(.redo-button){
+	flex-direction: column;
+	align-items: center;
+	justify-items: center;
+	gap: clamp(1svh, 5svh, 1rem);
+}
+
+:global(.button-container) button{
+	width: 300px;
+	align-self: center;
+	justify-self: center;
+	transition: background-color 0.3s ease;
 }
 
 

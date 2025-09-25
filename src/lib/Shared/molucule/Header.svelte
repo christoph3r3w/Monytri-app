@@ -48,7 +48,7 @@
 		</menu>
 	</nav>
 	<nav class="profile">
-		<button onclick={toggleMenu}><img src="generic.png" alt="generic person"></button>
+		<button onclick={toggleMenu}><img src="/generic.png" alt="generic person"></button>
 	</nav>
 {/snippet}
 
@@ -88,7 +88,7 @@
 			</nav>
 			<!-- profile menu -->
 			<nav class="profile">
-				<a href="/profile"><img src="generic.png" alt="generic person"></a>
+				<a href="/profile"><img src="/generic.png" alt="generic person"></a>
 			</nav>
 		{/if}
 	</section>

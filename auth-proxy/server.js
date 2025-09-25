@@ -10,7 +10,7 @@ import { PUBLIC_APPWRITE_PROJECT_ID,PUBLIC_APPWRITE_ENDPOINT } from '$env/static
 
 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3003;
 
 // Enable CORS for your Svelte app
 app.use(cors({
@@ -18,8 +18,8 @@ app.use(cors({
         'http://localhost:5173', 
         'http://localhost:4173',
         'http://localhost:3003',
-        'https://monytri-alpha.netlify.app', // Add your Netlify domain here
-        'https://main--monytri-alpha.netlify.app/', // Add your Netlify domain here
+        'https://monytri.app',
+         // Add your Netlify domain here
         process.env.FRONTEND_URL // Allow dynamic frontend URL from environment
     ], 
     credentials: true
