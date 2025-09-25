@@ -44,7 +44,7 @@
 
 {#snippet landingInfo()}
 		<article class="balance-info">
-			<div class="invested ">
+			<div class="invested">
 				<h1 title={undefined}>{Invested}</h1>
 				<p>Portfolio Value</p>
 			</div>
@@ -120,6 +120,7 @@
 	.balance-section {
 		display: flex;
 		height: fit-content;
+
 		gap: 1rem;
 		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
 		transition: margin 0.3s ease-in-out;
@@ -133,18 +134,24 @@
 		z-index: 10;
 		text-align: center;
 		margin-top: -1rem;
+
+		container-name: balance;
+		container-type: size;
 	}
+
 
 	.balance-info {
 		display: flex;
 		flex-direction: column;
 		width: fit-content;
 		height: calc(100% - (100% - var(--cut-off-height)));
-		max-height:  calc(var(--header-intro-height) - (100% - var(--cut-off-height)));
+		/* height: 100%; */
+		/* max-height:  calc(var(--header-intro-height) - (100% - var(--cut-off-height))); */
 		align-items: center;
 		padding: 0 1%;
 		gap: 10%;
 		border-radius: 8px;
+
 	}
 
 	:is(.invested,.gifted) h1{
@@ -164,9 +171,9 @@
 
 	.invested{
 		font-weight: 500;
-		padding-top: 10%;
 		color: var(--general-text-color-invert);
 	}
+
 	.invested p {
 		font-size: 1.2rem;
 		font-weight: 300;
@@ -228,7 +235,8 @@
 
 	.gifted.inner p{
 		font-size: 1rem;
-		font-weight: 300;}
+		font-weight: 300;
+	}
 	
 	.button-container {
 		position: relative;
@@ -243,7 +251,6 @@
 		color: var(--general-text-color);
 		box-shadow: 0px 4px 10px 0px #5858581A ;
 	}
-
 
 	.button-container button{
 		flex: 1 1 60%;
@@ -335,16 +342,19 @@
 		.balance-section {
 			flex-direction: column;
 			align-items: center;
-			gap: calc(25% + var(--move-top));
-			/* gap: calc(var(--margin-top)  30%); */
+			gap: calc(27% + var(--move-top));
 			padding: 0;
 			width: 100%;
-			/* margin-top: -3rem; */
-			/* margin-top: var(--margin-top); */
 			margin-top: var(--move-top);
 			align-self: end;
 			transform-origin: bottom;
+			/* gap: calc(var(--margin-top)  30%); */
+			/* margin-top: -3rem; */
+			/* margin-top: var(--margin-top); */
 		}
+
+		
+
 		
 		.balance-section:has(.button-container) {
 			justify-content: center;
@@ -371,13 +381,25 @@
 			text-align: center;
 		}
 
+		.invested p {
+			font-size: clamp(1rem,5vw,1.3rem);
+		}
+
 		.balance-section:has(.button-container) .balance-info .add-money-link {
 			display: none;
+		}
+
+		.gifted h1{
+			max-height: 50px;
+			font-size: clamp(.5rem,7vw,1.2rem);
+			/* padding: 9% clamp(5px,5vw, 1%); */
 		}
 
 		.balance-section .gifted.inner{
 			display: none !important;
 		}
+
+		
 
 		.gifted.outer {
 			display: flex;
@@ -391,6 +413,16 @@
 			color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
 		}
 
+		@container balance (height < 200px) {
+			.gifted.outer {
+				display: none !important;
+			}
+		}
+
+		.gifted.outer p{
+			translate: 0 40%;
+		}
+
 		.gifted-content {
 			display: flex;
 			min-width: fit-content;
@@ -400,18 +432,8 @@
 			font-weight: 300;
 			border: 2px solid ;
 			border-radius: 82px;
-			padding: 9% clamp(10px,2%, 3%);
+			padding: 7% clamp(10px,1.5%,3%);
 			gap: 0;
-		}
-
-		.gifted h1{
-			max-height: 50px;
-			padding: 9% clamp(5px,5vw, 1%);
-			font-size: clamp(.5rem,7vw,1.3rem);
-		}
-
-		.gifted.outer p{
-			translate: 0 10px;
 		}
 
 		.balance-section:has(.button-container) .button-container {
@@ -422,7 +444,7 @@
 			justify-self: baseline;
 			min-width: fit-content;
 			width: clamp(50%,250px,80%);
-			height: 84px;
+			height: clamp(fit-content,84px + var(--move-top),18cqh);
 			gap: 1%;
 			padding: 2%;
 			border-radius: 8px;
