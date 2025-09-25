@@ -175,7 +175,8 @@
 		/* and other styling properties */
 		--body-padding: 2%;
 		--header-height: calc(8dvh + var(--safe-area-inset-top));
-		--footer-height: calc(60px + var(--safe-area-inset-bottom));
+		--footer-height: calc(50px + var(--safe-area-inset-bottom));
+		--footer-height-2: minmax(316px,15dvh) ;
 
 		/* all the elements that will be animated */
 		will-change: transform, height, background-color, box-shadow, border-radius,position;
@@ -183,7 +184,7 @@
 		/* application general grid structure */
 		--grid--mobile-collums: var(--body-padding) [content-start] repeat(6,1fr) [content-end] var(--body-padding);
 		--grid-collums-gutter: 1rem;
-		--grid-collums-rows: [header-start] var(--header-height) [header-end main-start] 2fr [main-end footer-start] minmax(316px,15dvh) [footer-end];
+		--grid-collums-rows: [header-start] var(--header-height) [header-end main-start] 2fr [main-end footer-start] var(--footer-height-2) [footer-end];
 		--grid-collums-rows-gutter: 1rem;
 
 		/* property that controls the toggle od desktop and mobile */
@@ -409,7 +410,7 @@
 			right: 0;
 			left: 0;
 			width: 100lvw;
-			height: clamp(50px, 12dvh, var(--footer-height));
+			height: clamp(50px, 10dvh, var(--footer-height));
 			border-radius: var(--_nav-radius) var(--_nav-radius) 0 0;
 			transform: translate3d(0,0,0);
 			padding-bottom: env(safe-area-inset-bottom);
@@ -417,7 +418,7 @@
 		}
 
 		:global(body.android-device){
-			--footer-height: calc(65px + var(--safe-area-inset-bottom));
+			--footer-height: calc(60px + var(--safe-area-inset-bottom));
 		}
 	}
 </style>
