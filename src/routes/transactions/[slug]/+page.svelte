@@ -20,6 +20,10 @@
 		}).format(number);
 	}
 
+	onMount(() => {
+		current.set('transactions History');
+	});
+
 </script>
 
 {#snippet a(a)}
@@ -185,7 +189,7 @@ h2{
 ul {
 	display: flex;
 	flex-direction: column;
-	gap: .5rem;
+	gap: clamp(1px, 5dvh .5rem);
 	padding: 1rem;
 	border-radius: .5rem;
 	background-color: var(--general-background-color-secondary);
@@ -219,7 +223,7 @@ li > span{
 	flex-direction: column;
 	align-items: center;
 	justify-items: center;
-	gap: 1rem;
+	gap: clamp(1svh, 5svh, 1rem);
 }
 
 :global(.button-container) button{

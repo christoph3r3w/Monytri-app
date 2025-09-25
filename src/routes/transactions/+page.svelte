@@ -71,6 +71,8 @@
 		<ul>
 			{#each filteredTransactions(transactionData) as TDU, i}
 				{@render b(TDU, i + 1)}
+				{:else}
+				<p class="no-results">No transactions found</p>
 			{/each}
 		</ul>
 {/snippet}
@@ -168,6 +170,12 @@ li > span p{
 li > span .transaction-route{
 	position: absolute;
 	inset: 0;
+}
+
+.no-results {
+	text-align: center;
+	padding: 2rem;
+	color: #666;
 }
 
 
