@@ -136,7 +136,7 @@
 		margin-top: -1rem;
 
 		container-name: balance;
-		container-type: size;
+		container-type: inline-size;
 	}
 
 
@@ -144,9 +144,9 @@
 		display: flex;
 		flex-direction: column;
 		width: fit-content;
+		min-height:  calc(var(--header-intro-height) - var(--cut-off-height));
 		height: calc(100% - (100% - var(--cut-off-height)));
-		/* height: 100%; */
-		/* max-height:  calc(var(--header-intro-height) - (100% - var(--cut-off-height))); */
+		max-height:  calc(var(--header-intro-height) - (100% - var(--cut-off-height)));
 		align-items: center;
 		padding: 0 1%;
 		gap: 10%;
@@ -334,7 +334,7 @@
 	@media (width <= 600px) {
 
 		:root{
-			--move-top:-4cqh;
+			--move-top:-3cqh;
 			--margin-top:calc(var(--header-height) + var(--move-top) * 3);
 			/* --margin-top:calc(var(--header-height) / 3  ); */
 		}
@@ -342,7 +342,7 @@
 		.balance-section {
 			flex-direction: column;
 			align-items: center;
-			gap: calc(27% + var(--move-top));
+			gap: calc(25% + var(--move-top));
 			padding: 0;
 			width: 100%;
 			margin-top: var(--move-top);
@@ -350,12 +350,9 @@
 			transform-origin: bottom;
 			/* gap: calc(var(--margin-top)  30%); */
 			/* margin-top: -3rem; */
-			/* margin-top: var(--margin-top); */
+			margin-top: var(--margin-top);
 		}
-
-		
-
-		
+	
 		.balance-section:has(.button-container) {
 			justify-content: center;
 			align-items: center;
