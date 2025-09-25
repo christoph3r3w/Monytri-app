@@ -27,13 +27,20 @@
 	position: relative;
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-template-rows: auto;
+	justify-items: end;
+	align-items: start;
+	height: clamp(2dvh, 40dvh, 800px);
 	max-height:fit-content;
-	min-height: 100%;
 	max-width: 100%;
 	width: 100%;
 	gap: calc(var(--gap)/ 2);
 	border-radius: .5rem;
 	box-shadow: rgba(236, 236, 236, 0.199) 0px 0px 15px 0px;
+	overflow: visible;
+
+	container-type: inline-size;	
+
 }
 
 .announcements-list li{
@@ -41,7 +48,6 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	/* justify-content: space-between; */
 	gap: clamp(0px, 1px + 2%, 2lvw);
 	width: 100%;
 	max-width: 100%;
@@ -49,7 +55,7 @@
 	min-height: 2rem;
 	border-radius: 10px;
 	background-color: var(--bg-color ,var(--general-background-color-secondary));
-	
+
 	container-type: inline-size;	
 }
 
@@ -69,7 +75,6 @@
 	object-position: center;
 	border-radius: 10px 0 0 10px;
 	margin: 2%;
-	/* outline: solid; */
 }
 	
 .announcements-list .blog-text{
@@ -118,4 +123,16 @@
 	font-weight: 400;
 	line-height: 120%;
 }	
+
+@media 	(-webkit-min-device-pixel-ratio: 3),
+	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 
+	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
+	{
+		.announcements-list{
+			height: clamp(2dvh, 70dvh, 300vh);
+			max-height:fit-content; 
+			gap: calc(var(--gap)/ 6);
+		}
+	}
+
 </style>

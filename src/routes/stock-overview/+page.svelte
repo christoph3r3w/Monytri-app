@@ -107,7 +107,6 @@
 	grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr;
 	height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
 	max-height: calc(100lvh + var(--footer-height) + var(--progressbar-height)); 
-	max-height: 300lvh ;
 	background-color: var(--general-background-color);
 	overflow-y: auto;
 
@@ -188,7 +187,6 @@ section:is(.current-brokers, .announcements) h2{
 
 .current-brokers h2{
 	font-size: clamp(1rem,1.25rem,20vw);
-
 	font-weight: 400;
 	text-align: center;
 }
@@ -224,11 +222,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		position: fixed;
 		right: var(--body-padding);
 		bottom: var(--footer-height);
-		/* background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 30% ); */
-		/* padding:1rem;
-		min-height: 3rem;
-		align-items: end;
-		justify-content: start; */
 		z-index: 10;
 		width: 15vw;
 	}
@@ -250,7 +243,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 
 			svg path{
 				fill: var(--white);
-				/* stroke: var(--white); */
 			}
 
 			&:disabled {

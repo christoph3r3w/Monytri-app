@@ -52,6 +52,7 @@
 	font-size: 1.25rem;
 
 	background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 90% );
+	container: portfolio-overview / inline-size;
 }
 
 /* top rows */
@@ -68,8 +69,13 @@
 	border-radius: .5rem;
 	box-shadow: rgba(236, 236, 236, 0.199) 0px 0px 15px 0px;
 	background-color: var(--general-background-color-secondary);
+	box-shadow: 0 6px 35px -20px #89888840;
 
 	container-type: inline-size;
+
+	@container (width < 450px) {
+		flex-direction: column;
+	}
 }
 
 .portfolio-style-2 > span {
@@ -139,7 +145,6 @@
 	justify-content: space-between;
 	gap: 1rem;
 	margin-block: 1rem 1rem;
-	/* outline: solid; */
 }
 
 .portfolio-details span{
