@@ -334,7 +334,7 @@
 	@media (width <= 600px) {
 
 		:root{
-			--move-top:-3cqh;
+			--move-top:-3.8cqh;
 			--margin-top:calc(var(--header-height) + var(--move-top) * 3);
 			/* --margin-top:calc(var(--header-height) / 3  ); */
 		}
@@ -342,7 +342,7 @@
 		.balance-section {
 			flex-direction: column;
 			align-items: center;
-			gap: calc(25% + var(--move-top));
+			gap: calc(19% + var(--move-top));
 			padding: 0;
 			width: 100%;
 			margin-top: var(--move-top);
