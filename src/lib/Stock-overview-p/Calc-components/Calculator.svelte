@@ -188,8 +188,8 @@ let growthPercentage = $derived.by(() => {
       <label class="flex items-center gap-2">
         <span class="flex-nowrap w-max ">Start with €</span>
         <input type="number" bind:value={initialAmount} class="border p-2 w-32" step="0.01" />
-		<button onclick={toggleInitialAmount} class="w-min bg-green-600 text-white py-3 rounded p-1">portfolio</button>
-	</label>
+        <button onclick={toggleInitialAmount} class="w-min bg-green-600 text-white py-3 rounded p-1">portfolio</button>
+      </label>
 
       <label class="flex items-center gap-2">
         <span>Years</span>
@@ -247,7 +247,6 @@ let growthPercentage = $derived.by(() => {
 	}
 
 	.con{
-		/* outline: solid; */
 		overflow-x: hidden;
 		max-width: 100%;
 		margin-bottom: 5%;
@@ -258,11 +257,36 @@ let growthPercentage = $derived.by(() => {
 	}
 
 	.con > *{
-		/* outline: solid; */
+    overflow: hidden;
 	}
 
 	.con > *> *{
-		/* outline: solid; */
 		width: 99%;
 	}
+
+  .con > * form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .con > * form label {
+    all:unset;
+    display: flex;
+    width: clamp(150px, 100%, 300px);
+    align-items: center;
+    gap: 3%;
+  }
+
+  .con > * form label > * {
+    flex: 0 1 30%;
+    width: clamp(50px, 30%, 150px);
+  }
+
+  .con > * form label span{
+     flex: 0 1 fit-content;
+     text-wrap: nowrap;
+     margin-right: 1rem;
+  } 
+
 </style>

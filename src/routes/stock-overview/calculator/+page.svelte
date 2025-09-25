@@ -95,6 +95,10 @@
 
 /* calculator section */
 
+.calculator-section{
+	width: 100% ;
+} 
+
 .calculator-section h2{
 	color: var(--general-text-color);
 	font-weight: 500;
