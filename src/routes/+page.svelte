@@ -5,22 +5,33 @@
 	import { device } from '$lib/Device.js';
 	import { goto } from '$app/navigation';
 	import { redirect } from '@sveltejs/kit';
-	import { user,isAuthenticated } from '$lib/user';
+	import { user,isAuthenticated, authReady } from '$lib/user';
 	import {page} from '$app/stores';
 
-	function checkSignIn() {
-		if (!$isAuthenticated) {
-			goto('/login');
-			
+	async function checkSignIn() {
+		// Wait until auth system finished first check
+		if (!$authReady) return; // on next tick it will run again via reactive statement
+
+		// Prefer explicit user, fallback to local session hint
+		const hasSession = user.hasLocalSession && user.hasLocalSession();
+		if (!$user && !hasSession) {
+			// Only redirect if we are definitely not authenticated
+			await goto('/login');
+			console.log('Redirecting to login (no session/user).');
+			return; 
 		}
 	}
+
 	onMount(() => {
-		checkSignIn()
+		// Run once after mount; subsequent logic handled by reactive statement
+		checkSignIn();
 	});
 
-	$effect(() => {
-		checkSignIn()
-	});
+	// Re-run check when auth readiness or user changes
+	$: if ($authReady) {
+		checkSignIn();
+	}
+
 
 	const logout = async () => {
 		await user.logout();
