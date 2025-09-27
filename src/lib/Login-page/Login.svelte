@@ -45,7 +45,7 @@
 	};
 
 	async function logout() {
-        await user.logout();
+        await $user.logout();
 	};
 	
 	let form = $state()
@@ -67,11 +67,11 @@
 		// }else {
 		// 	$user.logout();
 		// }
-		if ($isAuthenticated) {
-			login();
+		if ($user) {
 			goto('/');
 		}else {
-			$user.logout();
+			$user.deleteAllSessions();
+			$user.login();
 		}
 
 		if (typeof window === 'undefined') return;

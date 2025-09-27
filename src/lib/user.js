@@ -6,6 +6,8 @@ import { RateLimitHandler } from '$lib/rateLimitHandler';
 // Avoid auth calls in server-side, so that a user is not shared between requests
 const isBrowser = typeof window !== 'undefined';
 
+const SESSION_FLAG_KEY = 'monytri-session-active'; // simple local session hint
+
 const createUser = () => {
 	const store = writable(null);
 	let lastCheckTime = 0;
@@ -29,6 +31,9 @@ const createUser = () => {
 			const userData = await RateLimitHandler.withRetry(() => account.get());
 			store.set(userData);
 			lastCheckTime = now;
+			if (isBrowser) {
+				localStorage.setItem(SESSION_FLAG_KEY, '1');
+			}
 		} catch (e) {
 			// Expected path when unauthenticated; suppress noisy error
 			if (e?.code === 401 || (typeof e?.message === 'string' && e.message.includes('missing scope'))) {
@@ -37,6 +42,9 @@ const createUser = () => {
 				console.error('Failed to get user data:', e);
 			}
 			store.set(null);
+			if (isBrowser) {
+				localStorage.removeItem(SESSION_FLAG_KEY);
+			}
 		} finally {
 			initInFlight = false;
 			authReady.set(true);
@@ -61,6 +69,7 @@ const createUser = () => {
 		try {
 			await RateLimitHandler.withRetry(() => account.createEmailPasswordSession(email, password));
 			await init(true); // Force refresh after login
+			localStorage.setItem(SESSION_FLAG_KEY, '1');
 			goto('/'); // Redirect to home page after login
 		} catch (error) {
 			console.error('Login failed:', error);
@@ -76,6 +85,9 @@ const createUser = () => {
 			console.error('Logout failed:', error);
 			// Still set store to null even if logout fails
 			store.set(null);
+		}
+		if (isBrowser) {
+			localStorage.removeItem(SESSION_FLAG_KEY);
 		}
 	}
 
@@ -132,7 +144,8 @@ const createUser = () => {
 		// Session management
 		listSessions,
 		deleteOtherSessions,
-		deleteAllSessions
+		deleteAllSessions,
+		hasLocalSession: () => isBrowser && !!localStorage.getItem(SESSION_FLAG_KEY)
 	};
 };
 

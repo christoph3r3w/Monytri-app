@@ -4,6 +4,13 @@
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
 	import {user,isAuthenticated} from '$lib/user';
+
+	onMount(() => {
+		if ($isAuthenticated || $user) {
+			current.set('home');
+			goto('/');
+		}
+	});
 	
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
