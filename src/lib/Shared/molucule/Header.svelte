@@ -195,6 +195,10 @@
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
 		{
 
+		:root{
+			--cut-off-height: 85%;
+		}
+
 		.header{
 			grid-column: 1/-1;
 			grid-row: 1/-1 ;
@@ -263,12 +267,13 @@
 
 		:global(html:has(.home-wrapper) ){
 			--body-padding: 0;
+
 			.header{
 				padding-inline: 0;
 			}
 			/* Background Swirly Image decoration */
 			:global(header::after){
-				--_background-cut-off: 85%;
+				--_background-cut-off: var(--cut-off-height);
 				content: '';
 				position: absolute;
 				top: 0;
@@ -276,14 +281,12 @@
 				min-height: calc(var(--header-intro-height) + var(--header-height));
 				background: 
 				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
-				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off))
-				;
+				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off));
 				mask-image:
 				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off)) ;
 				background-repeat: no-repeat;
 				background-size: cover;
 				overflow: clip;
-				
 			}
 
 			.home-intro-section{
@@ -296,7 +299,7 @@
 				align-items: center;
 				align-self: center;
 				justify-content: space-between;
-				min-height: var(--header-intro-height);
+				min-height: calc(var(--header-intro-height) - (100% - var(--cut-off-height)));
 				z-index: 10;
 				text-align: center;
 			}
@@ -330,7 +333,7 @@
 				outline: solid 1px red;
 			} */
 
-			.button-container button{
+			/* .button-container button{
 				flex: 1 1 60%;
 				display: flex;
 				height: 100%;
@@ -346,7 +349,7 @@
 					height: 2.5rem;
 					margin-bottom: 1%;
 				}
-			}
+			} */
 		}
 		
 

@@ -303,7 +303,6 @@
 		align-items: center;
 		width: 100%;
 		height: fit-content;
-		box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 
 		& .search-icon{
 			position: absolute;
@@ -618,7 +617,6 @@
 			align-items: center;
 			width: 100%;
 			height: fit-content;
-			box-shadow: 0 4px 8px -7px rgba(0, 0, 0, 0.1);
 
 			& .search-icon{
 				position: absolute;
