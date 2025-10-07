@@ -135,6 +135,7 @@
 
 <svelte:head>
 	<title>Monytri {$current}</title>
+	<meta name="theme-color" content="red"/>
 </svelte:head>
 
 <!-- main application layout -->
