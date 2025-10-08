@@ -177,7 +177,7 @@
 		--body-padding: 2%;
 		--header-height: calc(8dvh + var(--safe-area-inset-top));
 		--footer-height: calc(50px + var(--safe-area-inset-bottom));
-		--footer-height-2: minmax(316px,15dvh) ;
+		--footer-height-2: minmax(316px,15lvh) ;
 
 		/* all the elements that will be animated */
 		will-change: transform, height, background-color, box-shadow, border-radius,position;
