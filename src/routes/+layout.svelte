@@ -168,10 +168,10 @@
 
 		/* property that controls the toggle od desktop and mobile */
 		--mobile: 0;
-		--safe-area-inset-top: env(safe-area-inset-top, 0px);
+		/* --safe-area-inset-top: env(safe-area-inset-top, 0px);
 		--safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
 		--safe-area-inset-left: env(safe-area-inset-left, 0px);
-		--safe-area-inset-right: env(safe-area-inset-right, 0px);
+		--safe-area-inset-right: env(safe-area-inset-right, 0px); */
 
 		/* and other styling properties */
 		--body-padding: 2%;
@@ -410,7 +410,7 @@
 			bottom: -1px;
 			right: 0;
 			left: 0;
-			width: 100lvw;
+			width: 100dvw;
 			height: clamp(50px, 10dvh, var(--footer-height));
 			border-radius: var(--_nav-radius) var(--_nav-radius) 0 0;
 			transform: translate3d(0,0,0);
