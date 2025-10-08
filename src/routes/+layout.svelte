@@ -212,8 +212,8 @@
 		padding: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		max-height:100svh;
-		height: 100svh;
+		max-height:100lvh;
+		height: 100lvh;
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 		color: var(--general-text-color);
@@ -223,7 +223,7 @@
 		display: grid;
 		grid-template-columns: var(--body-padding) [content-start] repeat(12,1fr) [content-end] var(--body-padding);
 		grid-template-rows: [header-start] var(--header-height) [header-end main-start] min(calc(100dvh - var(--header-height)),100%) [main-end footer-start] minmax(316px,15dvh) [footer-end];
-		min-height: 100dvh;
+		min-height: 100lvh;
 		background-color: var(--general-background-color);
 		overflow-x: clip;
 		/* overflow-y:auto; */
