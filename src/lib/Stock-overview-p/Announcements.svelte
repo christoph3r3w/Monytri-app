@@ -124,11 +124,9 @@
 	line-height: 120%;
 }	
 
-@media 	(-webkit-min-device-pixel-ratio: 3) ,
-		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) and (display-mode: standalone)
-		/* (pointer: coarse) and (hover: none) and (min-resolution: 400dpi) and (display-mode: standalone), */
-		/* screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait), */
-		/* screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)  */
+@media 	(-webkit-min-device-pixel-ratio: 3),
+	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 
+	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
 	{
 		.announcements-list{
 			height: clamp(2dvh, 70dvh, 300vh);

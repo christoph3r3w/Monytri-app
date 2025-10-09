@@ -221,7 +221,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 	.button-container-calculator {
 		position: fixed;
 		right: var(--body-padding);
-		bottom: calc(5px + var(--footer-height));
+		bottom: var(--footer-height);
 		z-index: 10;
 		width: 15vw;
 	}
