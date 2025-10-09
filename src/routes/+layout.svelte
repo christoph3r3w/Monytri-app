@@ -308,7 +308,8 @@
 
 		:global(body){
 			overflow: hidden;
-			max-height:100lvh;
+			max-height:100dvh;
+			background-color: var(--general-background-color);
 		}
 
 		:global(.body-container){
