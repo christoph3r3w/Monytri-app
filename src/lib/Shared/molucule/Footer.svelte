@@ -323,4 +323,20 @@
 				z-index: 100;
 		}
     }
+
+	 @media not all and (display-mode: standalone) {
+	 	.mobile-nav{
+			grid-template-rows: min(0px, 15%) [content-start] 2fr [content-end] min(0px,20%);
+		}
+
+		.mobile-nav ul li {
+			padding: 2cqi;
+		}
+
+		.mobile-nav ul li:is(:hover,:focus-within,:visited),
+		.mobile-nav ul li:has(:is(a,button).active){
+			inset: 0;
+			border-radius: 50% ;
+		}
+	}
 </style>

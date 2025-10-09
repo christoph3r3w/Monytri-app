@@ -217,8 +217,8 @@
 		padding: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		max-height:100lvh;
-		height: 100lvh;
+		max-height:100dvh;
+		height: 100dvh;
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 		color: var(--general-text-color);
@@ -428,4 +428,24 @@
 			--footer-height: calc(60px + var(--safe-area-inset-bottom));
 		}
 	}
+
+	@media not all and (display-mode: standalone) {
+
+		:global(body){
+			overflow: hidden;
+			max-height:100lvh;
+			background-color: var(--general-background-color);
+		}
+
+		:global(footer){
+			--footer-height: calc(20px + var(--safe-area-inset-bottom));
+
+			position: fixed;
+			bottom : calc(1dvh + env(safe-area-inset-bottom));
+			width: 85dvw;
+			align-self: center;
+			place-self: center;
+			border-radius: 1pc;
+		}
+	}	
 </style>
