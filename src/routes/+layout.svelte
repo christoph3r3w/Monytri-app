@@ -31,6 +31,11 @@
 			});
 		});
 	}
+
+	onMount(async () => {
+		const eruda = (await import("eruda")).default;
+		eruda.init(); 
+	});
 	
 
 	
