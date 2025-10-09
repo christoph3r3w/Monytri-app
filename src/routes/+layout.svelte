@@ -433,8 +433,8 @@
 
 		:global(body){
 			overflow: hidden;
-			max-height:100lvh;
-			background-color: var(--general-background-color);
+			max-height:100lvh !important;
+			background-color: var(--general-background-color) !important;
 		}
 
 		:global(footer){
