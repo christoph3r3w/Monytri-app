@@ -31,11 +31,6 @@
 			});
 		});
 	}
-
-	onMount(async () => {
-		const eruda = (await import("eruda")).default;
-		eruda.init(); 
-	});
 	
 
 	
@@ -140,7 +135,6 @@
 
 <svelte:head>
 	<title>Monytri {$current}</title>
-	<meta name="theme-color" content="red"/>
 </svelte:head>
 
 <!-- main application layout -->
@@ -182,7 +176,7 @@
 		--body-padding: 2%;
 		--header-height: calc(8dvh + var(--safe-area-inset-top));
 		--footer-height: calc(50px + var(--safe-area-inset-bottom));
-		--footer-height-2: minmax(316px,15lvh) ;
+		--footer-height-2: minmax(316px,15dvh) ;
 
 		/* all the elements that will be animated */
 		will-change: transform, height, background-color, box-shadow, border-radius,position;
@@ -217,8 +211,8 @@
 		padding: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		max-height:100dvh;
-		height: 100dvh;
+		max-height:100svh;
+		height: 100svh;
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 		color: var(--general-text-color);
@@ -228,7 +222,7 @@
 		display: grid;
 		grid-template-columns: var(--body-padding) [content-start] repeat(12,1fr) [content-end] var(--body-padding);
 		grid-template-rows: [header-start] var(--header-height) [header-end main-start] min(calc(100dvh - var(--header-height)),100%) [main-end footer-start] minmax(316px,15dvh) [footer-end];
-		min-height: 100lvh;
+		min-height: 100dvh;
 		background-color: var(--general-background-color);
 		overflow-x: clip;
 		/* overflow-y:auto; */
@@ -308,8 +302,7 @@
 
 		:global(body){
 			overflow: hidden;
-			max-height:100dvh;
-			background-color: var(--general-background-color);
+			max-height:100svh;
 		}
 
 		:global(.body-container){
@@ -416,7 +409,7 @@
 			bottom: -1px;
 			right: 0;
 			left: 0;
-			width: 100dvw;
+			width: 100lvw;
 			height: clamp(50px, 10dvh, var(--footer-height));
 			border-radius: var(--_nav-radius) var(--_nav-radius) 0 0;
 			transform: translate3d(0,0,0);
@@ -428,24 +421,4 @@
 			--footer-height: calc(60px + var(--safe-area-inset-bottom));
 		}
 	}
-
-	@media not all and (display-mode: standalone) {
-
-		:global(body){
-			overflow: hidden;
-			max-height:100lvh !important;
-			background-color: var(--general-background-color) !important;
-		}
-
-		:global(footer){
-			--footer-height: calc(20px + var(--safe-area-inset-bottom));
-
-			position: fixed;
-			bottom : calc(1dvh + env(safe-area-inset-bottom));
-			width: 85dvw;
-			align-self: center;
-			place-self: center;
-			border-radius: 1pc;
-		}
-	}	
 </style>

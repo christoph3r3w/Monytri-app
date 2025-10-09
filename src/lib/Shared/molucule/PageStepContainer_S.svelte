@@ -533,7 +533,7 @@
 			max-height: 100dvh;
 			gap: 1cqh;
 			padding: 0 ;
-			padding-block: 0 3% ;
+			padding-block: 3% ;
 			color: var(--general-text-color) !important;
 		}
 
@@ -690,20 +690,4 @@
 			text-align: center;
 		}		
 	}
-
-	/* come back to this  */
-	/* They should be able to check if the mobile container is scrollable. It should apply a lower margin to make sure that the endpoint of the content is above the footer.  */
-
-	/* @media not all and (display-mode: standalone){
-	
-		.mobile-step {
-			container-type: inline-size;
-
-			@container (width > 100px) {
-				padding-bottom: calc(var(--footer-height) + 2rem);
-				display:none !important;
-				background-color: red;
-			}
-		}
-	} */
 </style>
