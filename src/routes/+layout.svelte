@@ -308,7 +308,7 @@
 
 		:global(body){
 			overflow: hidden;
-			max-height:100svh;
+			max-height:100lvh;
 		}
 
 		:global(.body-container){
