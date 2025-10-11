@@ -338,7 +338,7 @@
 			position: absolute;
 			top: 0;
 			inset-inline: 0;
-			/* padding-top: env(safe-area-inset-top); */
+			padding-top: env(safe-area-inset-top);
 			/* transform: translate3d(0,0,0); */
 			z-index: 100;
 
