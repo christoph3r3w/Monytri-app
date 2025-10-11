@@ -455,7 +455,7 @@
 		}
 	}	 */
 
-	@media not (display-mode: standalone)  {
+	@media not all and (display-mode: standalone)  {
 
 		:global(body.isMobile){
 			overflow: hidden;
