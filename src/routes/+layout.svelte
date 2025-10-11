@@ -467,7 +467,7 @@
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
-		:global(body) :global(footer) {
+		:global(body ) :global(footer) {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
