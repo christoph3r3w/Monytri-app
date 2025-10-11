@@ -224,15 +224,15 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		right: var(--body-padding);
 		bottom: var(--footer-height);
 		z-index: 10;
-		width: 15vw;
+		width: clamp(1rem, 5rem + 5svw , 4rem);
+		aspect-ratio: 1;
 	}
 
 	.button-container-calculator button{
 		position: relative;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width:100%;
+		display: grid;
+		place-content: center;
+		width:auto;
 		aspect-ratio: 1;
 		padding: clamp(1rem,1vw,1rem);
 		background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 30% );
