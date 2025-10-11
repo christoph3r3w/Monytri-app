@@ -191,6 +191,7 @@
 		display: flex;
 		flex-direction: row;
 		flex: 1;
+		
 		@container (width < 600px){
 			align-items: start;
 			padding-block: var(--body-padding);
@@ -265,7 +266,7 @@
 			grid-row: 1/2;
 			display: grid;
 			grid-template-columns: subgrid;	
-			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(0px, 15%);		
+			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(0px, 10%);		
 			width: 100cqw;
 			border-radius:inherit;
 			z-index: 100;
@@ -325,7 +326,7 @@
 
 	@media not all and (display-mode: standalone) {
 	 	.mobile-nav{
-			grid-template-rows: min(0px, 15%) [content-start] 2fr [content-end] min(0px,20%);
+			grid-template-rows: min(0px, 20%) [content-start] 1fr [content-end] min(0px,20%);
 		}
 
 		.mobile-nav ul li {

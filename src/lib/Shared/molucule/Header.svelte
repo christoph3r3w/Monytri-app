@@ -300,10 +300,10 @@
 				max-height: calc(var(--header-intro-height) );
 				z-index: 10;
 				text-align: center;
-				outline: solid red;
+				/* outline: solid red; */
 			}
 		
-			.button-container{
+			/* .button-container{
 				position: relative;
 				display:flex;
 				flex-direction: row;
@@ -316,7 +316,7 @@
 				background-color: white;
 				background-color: var(--general-background-color);
 				box-shadow: 0px 4px 10px 0px #5858581A ;
-			}
+			} */
 		}
 		
 

@@ -5,7 +5,7 @@
 	let Invested = $state(1500.75); // Example invested amount, replace with actual data source
 	let Gifted = $state(500.25); // Example gifted amount, replace with actual data source
 	
-	let investedRaw = 1500.75;
+	let investedRaw = 1503.75;
 	let giftedRaw = 500.25;
 
 	function balanceString(balance) {
@@ -99,7 +99,6 @@
 	.balance-section {
 		position: relative;
 		display: flex;
-		/* height: var(--header-intro-height); */
 		min-height: min(300px, var(--header-intro-height));
 		/* height: clamp(var(--header-intro-height), 300px, var(--header-intro-height)); */
 		max-height: fit-content;
@@ -155,6 +154,7 @@
 	.invested{
 		font-weight: 500;
 		color: var(--general-text-color-invert);
+		gap: 0;
 	}
 
 	.invested p {
@@ -164,6 +164,7 @@
 
 	.gifted{
 		color: var(--general-text-color); 
+		gap: 0;
 	}
 
 	.gifted.outer{
@@ -329,7 +330,7 @@
 			margin-top: var(--move-top);
 			align-self: end;
 			transform-origin: bottom;
-			gap: calc(var(--margin-top) + 8dvh);
+			gap: calc(var(--margin-top) + 5dvh);
 			margin-top: var(--margin-top);
 		}
 	
@@ -374,8 +375,7 @@
 		.balance-section .gifted.inner{
 			display: none !important;
 		}
-
-		
+	
 
 		.gifted.outer {
 			display: flex;

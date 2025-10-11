@@ -3,7 +3,6 @@
   	import {onNavigate,afterNavigate} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
-	// import {isAuthenticated,user} from '$lib/user';
 	import { fade } from 'svelte/transition';
 	import '../app.css';
 
@@ -14,6 +13,7 @@
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
 	// let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !authenticatedd);
+	
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -279,7 +279,6 @@
 			height: fit-content;
 			text-wrap: nowrap;
 			width: 100%;
-			/* background-color: rgb(222, 135, 135); */
 		}
 	}
 
@@ -322,7 +321,6 @@
 			max-height: 100%;
 			overflow: hidden;
 			will-change: transform, height, background-color, box-shadow, border-radius,position;
-
 		}
 
 		:global(header){
@@ -341,7 +339,6 @@
 			padding-top: env(safe-area-inset-top);
 			transform: translate3d(0,0,0);
 			z-index: 100;
-
 		}
 				
 		:global(main){
@@ -353,9 +350,6 @@
 			padding-top: calc(var(--header-height) );
 			margin-bottom: -1rem;
 			z-index: 1;
-			/* test */
-			padding-bottom: calc(5rem + env(safe-area-inset-bottom));
-			/* background-color: rgb(224, 124, 224); */
 			
 			&.noHeaderPage{
 				padding-top: 0 ;
