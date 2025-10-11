@@ -183,6 +183,8 @@
 				z-index: 10;
 				overflow: visible;
 				height: var(--header-intro-height);
+				height: var(--header-height);
+				height: calc(var(--header-intro-height));
 
 				/* outline: solid red 5px !important;
 

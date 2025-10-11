@@ -134,10 +134,6 @@
 
 	nav.logo{
 		flex: 0 1 fit-content;
-
-		@container style(--not-on-login:1) {
-			outline: solid red;
-		}
 	}
 
 	/* desktop navigation */
@@ -299,9 +295,12 @@
 				align-items: center;
 				align-self: center;
 				justify-content: space-between;
-				min-height: calc(var(--header-intro-height) - (100% - var(--cut-off-height)));
+				height: 100%;
+				/* max-height: calc(var(--header-intro-height) - (100% - var(--cut-off-height))); */
+				max-height: calc(var(--header-intro-height) );
 				z-index: 10;
 				text-align: center;
+				outline: solid red;
 			}
 		
 			.button-container{

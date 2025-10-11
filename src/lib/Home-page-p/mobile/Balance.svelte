@@ -97,8 +97,10 @@
 
 <style>
 	.balance-section {
+		position: relative;
 		display: flex;
-		height: fit-content;
+		height: var(--header-intro-height);
+		max-height: fit-content;
 
 		gap: 1rem;
 		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
@@ -252,9 +254,9 @@
 	/* section with button container */
 	.balance-section:has(.button-container) {
 		justify-content: center;
-		height: 100%;
 		align-items: unset;
 		padding-top: 3%;
+		height: 100%;
 	}
 
 	.add-money-link{
@@ -410,6 +412,11 @@
 			border-radius: 82px;
 			padding: 7% clamp(10px,1.5%,3%);
 			gap: 0;
+		}
+
+		.balance-section:has(.button-container) {
+			height: fit-content;
+			height: var(--header-intro-height);
 		}
 
 		.balance-section:has(.button-container) .button-container {
