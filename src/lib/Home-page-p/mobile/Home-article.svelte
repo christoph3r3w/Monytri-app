@@ -209,7 +209,7 @@
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1rem;
 				height: 100%;
-				outline: solid orange;
+				outline: solid rgb(17, 255, 0);
 			}
 
 			.recent-blogs .blog-container{

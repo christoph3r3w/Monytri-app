@@ -283,7 +283,7 @@
 		}
 	}
 
-	:global(footer){
+	footer{
 		position: relative;
 		grid-row: footer;
 		grid-column: 1/-1;
@@ -404,7 +404,7 @@
 		}
 				
 		/* footer styling for when the --mobile property is = 1 */
-		:global(footer){
+		footer{
 			--_nav-radius: clamp(8px,8px,8pc);
 			flex: 0 1 auto;
 			background-color: var(--primary-green-500);
@@ -443,7 +443,7 @@
 			padding-bottom: var(--footer-height);
 		}
 
-		:global(body.isMobile) :global(footer) {
+		:global(body.isMobile) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
@@ -467,11 +467,12 @@
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
-		:global(body ) :global(footer) {
+		:global(body) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
 			bottom : calc(1dvh + env(safe-area-inset-bottom));
+			bottom : env(safe-area-inset-bottom);
 			width: 85dvw;
 			align-self: center;
 			place-self: center;
