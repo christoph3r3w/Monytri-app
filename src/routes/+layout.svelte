@@ -455,7 +455,8 @@
 		}
 	}	 */
 
-	@media not all and (display-mode: standalone)  {
+	@media not all and (display-mode: standalone),
+	(pointer: coarse) and (hover: none) and (min-resolution: 400dpi)  {
 
 		:global(body.isMobile){
 			overflow: hidden;
@@ -467,7 +468,7 @@
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
-		:global(body.isMobile) :global(footer) {
+		:global(body) :global(footer) {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
