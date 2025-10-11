@@ -308,7 +308,7 @@
 
 		:global(body){
 			overflow: hidden;
-			max-height:100dvh;
+			min-height:100svh;
 			background-color: var(--general-background-color);
 		}
 
@@ -460,7 +460,7 @@
 
 		:global(body.isMobile){
 			overflow: hidden;
-			max-height:100lvh !important;
+			min-height:100lvh !important;
 			background-color: var(--general-background-color) !important;
 		}
 
