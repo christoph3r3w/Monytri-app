@@ -182,7 +182,7 @@
 		--body-padding: 2%;
 		--header-height: calc(8dvh + var(--safe-area-inset-top));
 		--footer-height: calc(50px + var(--safe-area-inset-bottom));
-		--footer-height-2: minmax(316px,15svh) ;
+		--footer-height-2: minmax(316px,15lvh) ;
 
 		/* all the elements that will be animated */
 		will-change: transform, height, background-color, box-shadow, border-radius,position;
@@ -308,7 +308,7 @@
 
 		:global(body){
 			overflow: hidden;
-			min-height:100svh;
+			max-height:100dvh;
 			background-color: var(--general-background-color);
 		}
 
@@ -455,16 +455,15 @@
 		}
 	}	 */
 
-	@media not all and (display-mode: standalone),
-	(pointer: coarse) and (hover: none) and (min-resolution: 400dpi)  {
+	@media not (display-mode: standalone)  {
 
 		:global(body.isMobile){
 			overflow: hidden;
-			min-height:100lvh !important;
+			max-height:100lvh !important;
 			background-color: var(--general-background-color) !important;
 		}
 
-		:global(body.isMobile) main > :global(.home-wrapper) > :global(*) {
+		:global(body.isMobile) main :global(.home-wrapper) > :global(*) {
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
