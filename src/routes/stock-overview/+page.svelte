@@ -85,6 +85,7 @@
 /* Fix the overflow between the page container and the stock overview container. */
 :global(.stockOverview-container > .page-container){
 	--gap:10%;
+	grid-row-start:1 ;
 	overflow-y: auto !important;
 	max-height: unset !important;
 	height: unset !important;
@@ -272,5 +273,14 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		display: none;
 	}
 }
+
+	@media not all and (display-mode: standalone), (pointer: coarse) and (hover: none) and (min-resolution: 400dpi),
+		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
+		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)  {
+		
+		:global(body.isMobile) :global(.stockOverview-container .mobile-step){
+			padding-bottom: calc(3rem + var(--footer-height) + var(--safe-area-inset-bottom)) ;
+		}
+	}
 </style>
 
