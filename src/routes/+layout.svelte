@@ -321,6 +321,8 @@
 			min-height: 100%;
 			max-height: 100%;
 			overflow: hidden;
+			will-change: transform, height, background-color, box-shadow, border-radius,position;
+
 		}
 
 		:global(header){
@@ -331,13 +333,12 @@
 			grid-template-columns: var(--grid--mobile-collums);
 			grid-template-rows: 1fr;
 			align-content: start;
-			will-change: transform, height, background-color, box-shadow, border-radius,position;
 			background-color: var(--primary-green-500);
 			height: clamp(50px, 100%, var(--header-height));
 			position: absolute;
 			top: 0;
 			inset-inline: 0;
-			padding-top: env(safe-area-inset-top);
+			/* padding-top: env(safe-area-inset-top); */
 			/* transform: translate3d(0,0,0); */
 			z-index: 100;
 
