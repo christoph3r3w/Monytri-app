@@ -94,7 +94,7 @@
 				height: fit-content;
 				padding-top: 1rem;
 				padding-inline: var(--body-padding);
-				
+
 				outline: solid rgb(17, 255, 0);
 
 			}
@@ -127,7 +127,7 @@
 				grid-auto-flow:column;
 				grid-auto-columns: clamp(50%, 50%, 300px);
 				gap: 1rem;
-				max-height: 30% ;
+				min-height: 30% ;
 			}
 
 			.invest-tips-container ul li{
@@ -309,10 +309,10 @@
 		}
 	}
 		
-	@media (prefers-color-scheme: dark){
+	/* @media (prefers-color-scheme: dark){
 		* img{
 			filter: brightness(.9) contrast(.9);
 		}
-	}
+	} */
 
 	</style>

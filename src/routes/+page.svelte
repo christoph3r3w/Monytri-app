@@ -90,6 +90,8 @@
 		/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
+		/* height: 100%; */
+		/* height: calc(120dvh - var(--footer-height)) ; */
 		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
 	}
 
@@ -168,7 +170,9 @@
 				width: 100%;
 				/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 				min-height: calc(101cqh - var(--header-height));
-				max-height: calc(120dvh - var(--footer-height)) ;
+				/* max-height: calc(120dvh - var(--footer-height)) ; */
+				max-height: unset;
+				/* height: calc(120dvh - var(--footer-height)) ; */
 				padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
 			}
 
