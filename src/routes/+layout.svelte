@@ -468,17 +468,20 @@
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
-		:global(body) footer {
+		:global(body.isMobile) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
-			bottom : calc(env(safe-area-inset-bottom) + 2dvh) !important;
-			/* bottom : env(safe-area-inset-bottom) !important; */
-			/* top: 0; */
+			bottom : 1dvh;
 			width: 85dvw;
 			align-self: center;
 			place-self: center;
 			border-radius: 1pc;
+		}
+
+		:global(body.ios-device) footer {
+			--footer-height: calc(50px + var(--safe-area-inset-bottom));
+			bottom : calc(env(safe-area-inset-bottom) + 10lvh) !important;
 		}
 	}	
 </style>
