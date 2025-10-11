@@ -481,7 +481,7 @@
 
 		:global(body.ios-device) footer {
 			--footer-height: calc(50px + var(--safe-area-inset-bottom));
-			bottom : calc(env(safe-area-inset-bottom) + 10lvh) !important;
+			bottom : calc(env(safe-area-inset-bottom) + 13lvh) !important;
 		}
 	}	
 </style>

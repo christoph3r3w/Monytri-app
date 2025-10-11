@@ -94,6 +94,9 @@
 				height: fit-content;
 				padding-top: 1rem;
 				padding-inline: var(--body-padding);
+				
+				outline: solid rgb(17, 255, 0);
+
 			}
 
 			.invest-tips-container{
@@ -209,7 +212,6 @@
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1rem;
 				height: 100%;
-				outline: solid rgb(17, 255, 0);
 			}
 
 			.recent-blogs .blog-container{
