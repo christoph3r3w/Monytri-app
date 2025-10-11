@@ -31,6 +31,11 @@
 			});
 		});
 	}
+
+	onMount(async () => {
+		const eruda = (await import("eruda")).default;
+		eruda.init(); 
+	});
 	
 
 	
@@ -135,6 +140,7 @@
 
 <svelte:head>
 	<title>Monytri {$current}</title>
+	<meta name="theme-color" content="red"/>
 </svelte:head>
 
 <!-- main application layout -->
