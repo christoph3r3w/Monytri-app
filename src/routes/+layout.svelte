@@ -471,7 +471,7 @@
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
-			bottom : calc(1dvh + env(safe-area-inset-bottom));
+			bottom : calc(1svh + env(safe-area-inset-bottom)) !important;
 			bottom : env(safe-area-inset-bottom);
 			width: 85dvw;
 			align-self: center;
