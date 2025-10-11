@@ -94,9 +94,6 @@
 				height: fit-content;
 				padding-top: 1rem;
 				padding-inline: var(--body-padding);
-
-				outline: solid rgb(17, 255, 0);
-
 			}
 
 			.invest-tips-container{
@@ -309,10 +306,10 @@
 		}
 	}
 		
-	/* @media (prefers-color-scheme: dark){
+	@media (prefers-color-scheme: dark){
 		* img{
-			filter: brightness(.9) contrast(.9);
+			filter: brightness(.9);
 		}
-	} */
+	}
 
 	</style>

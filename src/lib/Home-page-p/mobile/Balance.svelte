@@ -99,7 +99,9 @@
 	.balance-section {
 		position: relative;
 		display: flex;
-		height: var(--header-intro-height);
+		/* height: var(--header-intro-height); */
+		min-height: min(300px, var(--header-intro-height));
+		/* height: clamp(var(--header-intro-height), 300px, var(--header-intro-height)); */
 		max-height: fit-content;
 
 		gap: 1rem;
@@ -191,7 +193,6 @@
 		border: none ;
 		border-radius: 82px;
 		gap: 5%;
-		/* outline: solid red; */
 	}
 
 	.gifted-content svg{
@@ -317,7 +318,6 @@
 		:root{
 			--move-top:-3.8cqh;
 			--margin-top:calc(var(--header-height) + var(--move-top) * 3);
-			/* --margin-top:calc(var(--header-height) / 3  ); */
 		}
 
 		.balance-section {
@@ -329,8 +329,7 @@
 			margin-top: var(--move-top);
 			align-self: end;
 			transform-origin: bottom;
-			gap: calc(var(--margin-top) + 7dvh);
-			/* margin-top: -3rem; */
+			gap: calc(var(--margin-top) + 8dvh);
 			margin-top: var(--margin-top);
 		}
 	
@@ -370,7 +369,6 @@
 		.gifted h1{
 			max-height: 50px;
 			font-size: clamp(.5rem,7vw,1.2rem);
-			/* padding: 9% clamp(5px,5vw, 1%); */
 		}
 
 		.balance-section .gifted.inner{

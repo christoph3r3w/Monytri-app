@@ -317,38 +317,6 @@
 				background-color: var(--general-background-color);
 				box-shadow: 0px 4px 10px 0px #5858581A ;
 			}
-
-			/* check if this is needed */
-			/* .button-container::before{
-				content: '';
-				width: 1px;
-				height: auto;
-				position: absolute;
-				inset-block: 30%;
-				left: 50%;
-				z-index: 1;
-				border-radius: inherit;
-				background-color: var(--neutral-grey);
-				outline: solid 1px red;
-			} */
-
-			/* .button-container button{
-				flex: 1 1 60%;
-				display: flex;
-				height: 100%;
-				flex-direction: column;
-				align-items: center;
-				justify-content:center;
-				color: var(--general-text-color);
-				border-radius: 8px;
-				padding: 1% 2%;
-
-				svg{
-					width: 2.5rem;
-					height: 2.5rem;
-					margin-bottom: 1%;
-				}
-			} */
 		}
 		
 
