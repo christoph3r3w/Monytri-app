@@ -413,7 +413,8 @@
 			/* grid-template-rows: 1fr .3fr; */
 
 			position: relative;
-			bottom: -1px;
+			/* bottom: -1px; */
+			top: auto;
 			right: 0;
 			left: 0;
 			width: 100dvw;
@@ -471,8 +472,9 @@
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
-			bottom : calc(1svh + env(safe-area-inset-bottom)) !important;
-			bottom : env(safe-area-inset-bottom);
+			bottom : calc(env(safe-area-inset-bottom) + 2dvh) !important;
+			/* bottom : env(safe-area-inset-bottom) !important; */
+			/* top: 0; */
 			width: 85dvw;
 			align-self: center;
 			place-self: center;
