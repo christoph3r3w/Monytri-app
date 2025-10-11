@@ -459,22 +459,23 @@
 
 	@media not (display-mode: standalone)  {
 
-		:global(body.isMobile){
+		:global(body:not(.windows-device)){
 			overflow: hidden;
 			max-height:100lvh !important;
 			background-color: var(--general-background-color) !important;
 		}
 
-		:global(body.isMobile) main :global(.home-wrapper) > :global(*) {
+		:global(body:not(.windows-device)) main :global(.home-wrapper) > :global(*) {
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
-		:global(body.isMobile) footer {
+		:global(body:not(.windows-device)) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
 			bottom : 1dvh;
 			width: 85dvw;
+			max-width: 400px;
 			align-self: center;
 			place-self: center;
 			border-radius: 1pc;
