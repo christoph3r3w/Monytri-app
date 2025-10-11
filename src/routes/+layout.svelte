@@ -209,6 +209,7 @@
 	:global(html){
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
+		overflow: hidden;
 	}
 
 	:global(body){
@@ -228,10 +229,9 @@
 		display: grid;
 		grid-template-columns: var(--body-padding) [content-start] repeat(12,1fr) [content-end] var(--body-padding);
 		grid-template-rows: [header-start] var(--header-height) [header-end main-start] min(calc(100dvh - var(--header-height)),100%) [main-end footer-start] minmax(316px,15dvh) [footer-end];
-		min-height: 100lvh;
+		min-height: 100dvh;
 		background-color: var(--general-background-color);
 		overflow-x: clip;
-		/* overflow-y:auto; */
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 	}
