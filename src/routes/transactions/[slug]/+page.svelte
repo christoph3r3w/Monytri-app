@@ -177,7 +177,6 @@ section:is(.transaction-Details, .user-details){
 	width: 100%;
 	max-width: 400px;
 	margin-bottom:clamp(1svh,2svh,1rem); 
-	/* outline: solid red; */
 }
 
 h2{
