@@ -105,8 +105,6 @@ let growthPercentage = $derived.by(() => {
     results = data;
   }
 
-  
-
   // Chart / DOM effect: re-create chart whenever canvas or results change
   $effect(() => {
     if (!chartCanvas) return;
@@ -274,19 +272,27 @@ let growthPercentage = $derived.by(() => {
     all:unset;
     display: flex;
     width: clamp(150px, 100%, 300px);
+    max-width: 100%;
     align-items: center;
     gap: 3%;
+    /* outline: palevioletred solid ; */
+
+    @starting-style {
+      width: clamp(150px, 100%, 300px);
+    }
   }
 
   .con > * form label > * {
     flex: 0 1 30%;
     width: clamp(50px, 30%, 150px);
+
   }
 
   .con > * form label span{
      flex: 0 1 fit-content;
      text-wrap: nowrap;
      margin-right: 1rem;
+
   } 
 
 </style>

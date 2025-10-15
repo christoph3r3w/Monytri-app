@@ -113,7 +113,6 @@
 }
 
 /* brokers list  */
-
 section:is(.current-brokers){
 	grid-column: right;
 	grid-row: 1 / span 3;
