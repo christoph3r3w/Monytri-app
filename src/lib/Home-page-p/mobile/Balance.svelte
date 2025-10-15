@@ -121,6 +121,13 @@
 		container-type: size;
 	}
 
+	/* section with button container */
+	.balance-section:has(.button-container) {
+		justify-content: center;
+		align-items: unset;
+		padding-top: 3%;
+		height: 100%;
+	}
 
 	.balance-info {
 		display: flex;
@@ -171,16 +178,6 @@
 		display: none;
 	}
 
-	.gifted.inner{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-		outline: solid 1px var(--neutral-grey);
-	}
-
 	.gifted-content {
 		display: flex;
 		flex-direction: row;
@@ -208,6 +205,20 @@
 		}
 	}
 
+	.gifted.inner {
+	position: relative;
+		grid-column: 1 / -1;
+		grid-row: 1 / 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		color: var(--general-text-color);
+		/* background-color: turquoise; */
+	}
+
 	.gifted.inner svg{
 		--d:clamp(.8rem,5vw,50px);
 	}
@@ -220,6 +231,16 @@
 		font-size: 1rem;
 		font-weight: 300;
 	}
+
+	.gifted.inner::after{
+		content: '';
+		position: absolute;
+		/* inset: 0; */
+		bottom: 0;
+		width: 70%;
+		height: 1%;
+		background-color: color-mix( in srgb, var(--neutral-grey), transparent 85%);
+	}
 	
 	.button-container {
 		position: relative;
@@ -228,11 +249,24 @@
 		grid-template-rows: 1fr 1fr;
 		width: clamp(50%,50dvw ,300px);
 		max-width: 500px;
-		height: 18cqh;
 		border-radius: 8px;
 		background-color: var(--general-background-color,white);
 		color: var(--general-text-color);
 		box-shadow: 0px 4px 10px 0px #5858581A ;
+		/* height: 18cqh; */
+	}
+
+	/* .balance-section:has(.button-container) .button-container .gifted { */
+	.button-container .gifted.inner {
+		grid-column: 1 / -1;
+		grid-row: 1 / 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		color: var(--general-text-color);
+		/* background-color: turquoise; */
 	}
 
 	.button-container button{
@@ -253,14 +287,19 @@
 		}
 	}
 
-	/* section with button container */
-	.balance-section:has(.button-container) {
-		justify-content: center;
-		align-items: unset;
-		padding-top: 3%;
-		height: 100%;
+	/* devider line */
+	.button-container::before{
+		content: '';
+		width: 1px;
+		height: 30%;
+		position: absolute;
+		bottom: 10%;
+		left: 50%;
+		z-index: 1;
+		border-radius: inherit;
+		background-color: var(--neutral-grey);
 	}
-
+		
 	.add-money-link{
 		display: flex;
 		flex-direction: row;
@@ -287,31 +326,6 @@
 
 	.add-money-link svg path{
 		fill: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
-	}
-
-
-	/* devider line */
-	.button-container::before{
-		content: '';
-		width: 1px;
-		height: 30%;
-		position: absolute;
-		bottom: 10%;
-		left: 50%;
-		z-index: 1;
-		border-radius: inherit;
-		background-color: var(--neutral-grey);
-	}
-		
-	.balance-section:has(.button-container) .button-container .gifted {
-		grid-column: 1 / -1;
-		grid-row: 1 / 2;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		height: 100%;
-		color: var(--general-text-color);
 	}
 
 	@media (width <= 600px) {
@@ -375,7 +389,6 @@
 		.balance-section .gifted.inner{
 			display: none !important;
 		}
-	
 
 		.gifted.outer {
 			display: flex;
