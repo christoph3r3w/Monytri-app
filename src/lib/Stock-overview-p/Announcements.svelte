@@ -41,6 +41,8 @@
 
 	container-type: inline-size;	
 
+	outline: tomato solid;
+
 }
 
 .announcements-list li{
@@ -56,7 +58,9 @@
 	border-radius: 10px;
 	background-color: var(--bg-color ,var(--general-background-color-secondary));
 
-	container-type: inline-size;	
+	/* container-type: inline-size;	 */
+
+	outline: yellow solid;
 }
 
 .announcements-list li a{
