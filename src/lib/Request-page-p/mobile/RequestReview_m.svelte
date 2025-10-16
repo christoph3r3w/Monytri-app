@@ -123,7 +123,8 @@
 		{#if !openRequest || formData.amount > 0}
 			{#if formData.benefactor.profilePic.length > 0 || formData.benefactor.profilePic !== ''}
 				<img src="{formData.benefactor.profilePic}" alt="{formData.benefactor.name} profile picture" class="benefactor-profile-pic" />
-			{:else}
+			{/if}
+			{#if formData.benefactor.profilePic.length < 0 || formData.benefactor.profilePic == ''}
 				<p class="benefactor-letter">{formData.benefactor.name[0].toUpperCase()}</p>
 			{/if}
 			<h2>This is your request to {formData.benefactor.name}</h2>
@@ -148,13 +149,13 @@
 
 {#snippet shareOption2()}
 	<figure class="qr-container">
-		{#if qrDataUrl.length > 0 }
+		{#if qrDataUrl.length > 0 && !openRequest }
 		<article class="qr-popup">
 			<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
 			<p>Scan the QR code to share </p>
 		</article>
 		{/if}
-		{#if qrDataUrl.length <= 0}
+		{#if qrDataUrl.length <= 0 }
 			<button onclick={generateQR}>
 				generate QR code
 			</button>

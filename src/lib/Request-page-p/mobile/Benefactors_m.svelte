@@ -101,6 +101,8 @@
 			border-radius: 10px;
 			cursor: pointer;
 			margin-block: 0.5cqh 1dvh;
+			overflow: clip;
+			width: 98%;
 		}
 		
 		.benefactor-item:where(.selected) {
@@ -114,6 +116,7 @@
 		.benefactor-info {
 			display: flex;
 			align-items: center;
+			width: 100%;
 		}
 		
 		.profile-pic {
@@ -150,6 +153,10 @@
 		.last-sent {
 			display: none;
 		}	
+
+		hr{
+		margin-inline:3%;
+		}
 	}
 
 	/* needs to be removed */
