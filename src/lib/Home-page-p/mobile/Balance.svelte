@@ -137,11 +137,11 @@
 		width: fit-content;
 		align-items: center;
 		padding: 0 1%;
-		gap: 10%;
+		gap: .25rem;
 		border-radius: 8px;
 
 		/* debugging */
-		outline: solid rgb(213, 245, 11);
+		/* outline: solid rgb(213, 245, 11); */
 
 	}
 
@@ -180,7 +180,7 @@
 	.gifted.outer{
 		display: none;
 		/* debuging */
-		outline: solid blue;
+		/* outline: solid blue; */
 	}
 
 	.gifted-content {
