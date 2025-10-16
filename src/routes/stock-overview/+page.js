@@ -25,35 +25,35 @@ export async function load() {
 	
 	let announcements = [
 		{
-			img: {src:`/announcment-c/Announcement money.png`,bgColor:"#FFF3E0",bgPosition:"contain"},
+			img: {src:`./announcment-c/Announcement money.png`,bgColor:"#FFF3E0",bgPosition:"contain"},
 			date: "1 Sep 2025",
 			title: "Sign up with BUX and get €100 free for you to invest!",
 			partner: "Bux",
 			link: "/blog"
 		},
 		{
-			img: {src:`/announcment-c/Teamwork-5--Streamline-Brooklyn (Traced) .png`,bgColor:"#f2eade",bgPosition:"contain"},
+			img: {src:`./announcment-c/Teamwork-5--Streamline-Brooklyn (Traced) .png`,bgColor:"#f2eade",bgPosition:"contain"},
 			date: "29 Aug 2024",
 			title: "Refer a friend and get €20 EACH when they sign up!",
 			partner: "Avatrade",
 			link: "/blog"
 		},
 		{
-			img: {src:`/announcment-c/Announcement Orange.png`,bgColor:"#ff6d3a",bgPosition:"contain"},
+			img: {src:`./announcment-c/Announcement Orange.png`,bgColor:"#ff6d3a",bgPosition:"contain"},
 			date: "23 Aug 2024",
 			title: "Investor Today has some new stocks for you!",
 			partner: "Investor Today",
 			link: "/blog"
 		},
 		{
-			img: {src:`/home-page/homescreen-team.png`,bgColor:"white",bgPosition:"cover"},
+			img: {src:`./home-page/homescreen-team.png`,bgColor:"white",bgPosition:"cover"},
 			date: "Aug 20, 2023",
 			title: "Are you saving enough?",
 			partner: "Monytri",
 			link: "/blog"
 		},
 		{
-			img: {src:`/home-page/homescreen-team.png`,bgColor:"#E3F2FD",bgPosition:"cover"},
+			img: {src:`./home-page/homescreen-team.png`,bgColor:"#E3F2FD",bgPosition:"cover"},
 			date: "Aug 20, 2023",
 			title: "Are you saving enough?",
 			partner: "Monytri",
