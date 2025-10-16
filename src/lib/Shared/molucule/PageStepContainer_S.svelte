@@ -692,8 +692,7 @@
 	}
 
 	@media 
-	(-webkit-min-device-pixel-ratio: 3),
-	screen and (device-height <= 500px) and (height <= 500px) and (orientation: landscape)
+	screen and (device-height <= 500px) and (height <= 500px) and  (orientation: landscape)
 	{
 	
 		:global(.page-container) {
