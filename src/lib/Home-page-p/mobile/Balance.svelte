@@ -137,11 +137,11 @@
 		width: fit-content;
 		align-items: center;
 		padding: 0 1%;
-		gap: .25rem;
+		/* gap: .25rem; */
 		border-radius: 8px;
 
 		/* debugging */
-		/* outline: solid rgb(213, 245, 11); */
+		outline: solid rgb(213, 245, 11);
 
 	}
 
@@ -149,7 +149,7 @@
 		font-size: clamp(1rem,36px,2.5rem);
 		text-align: center;
 		align-self: center;
-		margin-bottom: .25rem ;
+		/* margin-bottom: .25rem ; */
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -180,7 +180,7 @@
 	.gifted.outer{
 		display: none;
 		/* debuging */
-		/* outline: solid blue; */
+		outline: solid blue;
 	}
 
 	.gifted-content {
