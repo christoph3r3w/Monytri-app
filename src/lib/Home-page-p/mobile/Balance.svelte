@@ -347,7 +347,7 @@
 			padding: 0;
 			width: 100%;
 			gap: calc(var(--margin-top) + 5dvh);
-			/* margin-top: var(--margin-top); */
+			margin-top: var(--margin-top);
 			align-self: end;
 			transform-origin: bottom;
 		}
@@ -399,7 +399,7 @@
 			flex-direction: column;
 			align-items: center;
 			/* justify-content: center; */
-			/* gap: 4%; */
+			gap: 4%;
 			min-width: fit-content;
 			font-size: clamp(0.5rem, 2vw, 1rem);
 			text-wrap: nowrap;
@@ -414,6 +414,7 @@
 
 		.gifted.outer p{
 			translate: 0 40%;
+			outline: orchid solid;
 		}
 
 		.gifted-content {
@@ -425,7 +426,7 @@
 			font-weight: 300;
 			border: 2px solid ;
 			border-radius: 82px;
-			padding: 7% clamp(10px,1.5%,3%);
+			padding: clamp(1%,7%,.7dvh) clamp(10px,1.5%,3%);
 			gap: 0;
 		}
 
