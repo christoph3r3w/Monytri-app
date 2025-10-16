@@ -2,8 +2,8 @@
 	import { onMount } from "svelte";
 	import { goto } from '$app/navigation';
 
-	let Invested = $state(1500.75); // Example invested amount, replace with actual data source
-	let Gifted = $state(500.25); // Example gifted amount, replace with actual data source
+	let Invested = $state(1500.75); 
+	let Gifted = $state(500.25); 
 	
 	let investedRaw = 1503.75;
 	let giftedRaw = 500.25;
@@ -88,9 +88,7 @@
 			</button>
 		</nav>
 {/snippet}
-<!-- This here should display two factors:
-1. How much you have invested
-2. How much you've gifted -->
+
 <section class="balance-section">
 	{@render landingInfo()}
 </section>
@@ -100,7 +98,6 @@
 		position: relative;
 		display: flex;
 		min-height: min(300px, var(--header-intro-height));
-		/* height: clamp(var(--header-intro-height), 300px, var(--header-intro-height)); */
 		max-height: fit-content;
 
 		gap: 1rem;
@@ -108,7 +105,6 @@
 		transition: margin 0.3s ease-in-out;
 		
 		position: fixed;
-		/* top: calc(var(--header-height)); */
 		inset-inline: 0;
 		
 		align-items: center;
@@ -121,6 +117,8 @@
 		container-type: size;
 
 		/* outline: solid; */
+		/* top: calc(var(--header-height)); */
+		/* height: clamp(var(--header-intro-height), 300px, var(--header-intro-height)); */
 	}
 
 	/* section with button container */
@@ -137,19 +135,13 @@
 		width: fit-content;
 		align-items: center;
 		padding: 0 1%;
-		/* gap: .25rem; */
 		border-radius: 8px;
-
-		/* debugging */
-		/* outline: solid rgb(213, 245, 11); */
-
 	}
 
 	:is(.invested,.gifted) h1{
 		font-size: clamp(1rem,36px,2.5rem);
 		text-align: center;
 		align-self: center;
-		/* margin-bottom: .25rem ; */
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
@@ -179,8 +171,6 @@
 
 	.gifted.outer{
 		display: none;
-		/* debuging */
-		/* outline: solid blue; */
 	}
 
 	.gifted-content {
@@ -221,7 +211,6 @@
 		height: 100%;
 		width: 100%;
 		color: var(--general-text-color);
-		/* background-color: turquoise; */
 	}
 
 	.gifted.inner svg{
@@ -257,10 +246,7 @@
 		background-color: var(--general-background-color,white);
 		color: var(--general-text-color);
 		box-shadow: 0px 4px 10px 0px #5858581A ;
-	
-		/* debugging */
-		/* outline: solid red; */
-	}
+		}
 
 	/* .balance-section:has(.button-container) .button-container .gifted { */
 	.button-container .gifted.inner {
@@ -272,7 +258,6 @@
 		justify-content: center;
 		height: 100%;
 		color: var(--general-text-color);
-		/* background-color: turquoise; */
 	}
 
 	.button-container button{
@@ -368,7 +353,6 @@
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
-			/* justify-content: center; */
 		}	
 
 		.invested h1{
@@ -398,7 +382,6 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			/* justify-content: center; */
 			gap: 4%;
 			min-width: fit-content;
 			font-size: clamp(0.5rem, 2vw, 1rem);
@@ -414,8 +397,6 @@
 
 		.gifted.outer p{
 			translate: 0 35%;
-			/* degugging */
-			/* outline: orchid solid; */
 		}
 
 		.gifted-content {
@@ -464,5 +445,43 @@
 			background-color: var(--neutral-grey);
 		}
 	}
+
+		@media 
+	(-webkit-min-device-pixel-ratio: 3),
+	screen and (device-height <= 500px) and (height <= 500px) and  (orientation: landscape)
+	{
+
+	@container balance (height < 150px) {
+			.gifted.inner {
+				display: none !important;
+			}
+
+			.add-money-link{
+				display: none;
+			}
+
+			.button-container {
+				position: relative;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 1fr 1fr;
+				width: clamp(50%,50dvw ,300px);
+				max-width: 500px;
+				border-radius: 8px;
+				background-color: var(--general-background-color,white);
+				color: var(--general-text-color);
+				box-shadow: 0px 4px 10px 0px #5858581A ;
+				padding-top: 4dvh;
+			}
+
+				.button-container::before{
+				height: 70%;
+				position: absolute;
+				bottom: 10%;
+			}
+		}
+	
+	}
+
 
 </style>
