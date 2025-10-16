@@ -143,6 +143,9 @@
 		gap: 10%;
 		border-radius: 8px;
 
+		/* debugging */
+		outline: solid rgb(213, 245, 11);
+
 	}
 
 	:is(.invested,.gifted) h1{
@@ -154,8 +157,7 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 100%;
-		/* debugging */
-		outline: solid rgb(213, 245, 11);
+		
 	}
 	
 	:is(.invested,.gifted) p{
