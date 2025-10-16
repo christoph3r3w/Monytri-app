@@ -85,6 +85,8 @@
 		height: fit-content;
 		max-height: 60cqh;
 		overflow-y: scroll !important;
+		scrollbar-width:auto;
+		overscroll-behavior: contain;
 		padding-inline: 1cqw;
 		padding-block: 2%;
 		border-radius: 15px;
