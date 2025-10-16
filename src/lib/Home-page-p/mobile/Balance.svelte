@@ -368,7 +368,7 @@
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
-			justify-content: center;
+			/* justify-content: center; */
 		}	
 
 		.invested h1{
@@ -398,8 +398,8 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: center;
-			gap: 4%;
+			/* justify-content: center; */
+			/* gap: 4%; */
 			min-width: fit-content;
 			font-size: clamp(0.5rem, 2vw, 1rem);
 			text-wrap: nowrap;
