@@ -538,7 +538,7 @@
 		}
 
 		.page-container > *{
-			padding-inline: var(--body-padding);
+			padding-inline: var(--body-padding) !important;
 		}
 
 		.mobile-step {

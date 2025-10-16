@@ -292,7 +292,11 @@ let growthPercentage = $derived.by(() => {
      flex: 0 1 fit-content;
      text-wrap: nowrap;
      margin-right: 1rem;
-
   } 
+
+  .con > * form button {
+    max-width: 100%;
+    transition: none;
+  }
 
 </style>

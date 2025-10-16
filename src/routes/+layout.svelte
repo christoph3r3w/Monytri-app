@@ -481,14 +481,14 @@
 	@media not (display-mode: standalone) and (width > 900px)  {
 
 		:global(body:not(.windows-device)) footer {
-			--footer-height: calc(20px + var(--safe-area-inset-bottom));
+			/* --footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
 			bottom : 1dvh;
 			width: 100dvw;
 			align-self: center;
 			place-self: center;
-			border-radius: 1pc;
+			border-radius: 1pc; */
 
 			outline: solid blue;
 		}
