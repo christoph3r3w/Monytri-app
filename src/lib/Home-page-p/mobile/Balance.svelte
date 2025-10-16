@@ -141,7 +141,7 @@
 		border-radius: 8px;
 
 		/* debugging */
-		outline: solid rgb(213, 245, 11);
+		/* outline: solid rgb(213, 245, 11); */
 
 	}
 
@@ -180,7 +180,7 @@
 	.gifted.outer{
 		display: none;
 		/* debuging */
-		outline: solid blue;
+		/* outline: solid blue; */
 	}
 
 	.gifted-content {
@@ -257,9 +257,9 @@
 		background-color: var(--general-background-color,white);
 		color: var(--general-text-color);
 		box-shadow: 0px 4px 10px 0px #5858581A ;
-		/* height: 18cqh; */
-
-		outline: solid red;
+	
+		/* debugging */
+		/* outline: solid red; */
 	}
 
 	/* .balance-section:has(.button-container) .button-container .gifted { */
@@ -413,8 +413,9 @@
 		}
 
 		.gifted.outer p{
-			translate: 0 40%;
-			outline: orchid solid;
+			translate: 0 35%;
+			/* degugging */
+			/* outline: orchid solid; */
 		}
 
 		.gifted-content {
