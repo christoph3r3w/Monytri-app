@@ -135,9 +135,6 @@
 		display: flex;
 		flex-direction: column;
 		width: fit-content;
-		/* min-height:  calc(var(--header-intro-height) - var(--cut-off-height));
-		height: calc(100% - (100% - var(--cut-off-height)));
-		max-height:  calc(var(--header-intro-height) - (100% - var(--cut-off-height))); */
 		align-items: center;
 		padding: 0 1%;
 		gap: 10%;
@@ -349,8 +346,7 @@
 			align-items: center;
 			padding: 0;
 			width: 100%;
-			/* gap: calc(19% + var(--move-top)); */
-			gap: calc(var(--margin-top) + 7dvh);
+			gap: calc(var(--margin-top) + 5dvh);
 			/* margin-top: var(--margin-top); */
 			align-self: end;
 			transform-origin: bottom;
