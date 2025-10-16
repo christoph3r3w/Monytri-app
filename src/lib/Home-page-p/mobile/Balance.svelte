@@ -149,13 +149,13 @@
 		font-size: clamp(1rem,36px,2.5rem);
 		text-align: center;
 		align-self: center;
-		margin-bottom: 2% ;
+		margin-bottom: .25rem ;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 100%;
 		/* debugging */
-		outline: solid rgb(102, 128, 0);
+		outline: solid rgb(213, 245, 11);
 	}
 	
 	:is(.invested,.gifted) p{
