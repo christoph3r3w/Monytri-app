@@ -690,4 +690,30 @@
 			text-align: center;
 		}		
 	}
+
+	@media 
+	(-webkit-min-device-pixel-ratio: 3),
+	screen and (device-height <= 500px) and (height <= 500px) and (orientation: landscape)
+	{
+	
+		:global(.page-container) {
+			height: 100dvh !important;
+		}
+
+		.page-container::after{
+			content: 'flip device';
+			position: absolute;
+			inset: -1rem;
+			display: grid;
+			place-content: center;
+			font-size: clamp(1rem,5vh,10svh);
+			background-color: var(--primary-green-500);
+			z-index: 100;
+		}
+	
+		.page-container > *{
+			visibility: hidden;
+		}
+	}
+
 </style>

@@ -211,6 +211,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		overflow: hidden !important;
 		max-height: unset !important;
 		height: unset !important;
+		/* height: unset ; */
 	}
 
 	:global(.stockOverview-container .mobile-step){
