@@ -40,7 +40,7 @@
 	overflow: visible;
 
 	container-type: inline-size;	
-
+	/* debugging */
 	outline: tomato solid;
 
 }
@@ -58,8 +58,8 @@
 	border-radius: 10px;
 	background-color: var(--bg-color ,var(--general-background-color-secondary));
 
-	/* container-type: inline-size;	 */
-
+	container-type: inline-size;	
+	/* debugging */
 	outline: yellow solid;
 }
 

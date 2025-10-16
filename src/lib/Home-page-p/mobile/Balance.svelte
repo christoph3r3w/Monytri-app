@@ -108,7 +108,7 @@
 		transition: margin 0.3s ease-in-out;
 		
 		position: fixed;
-		top: calc(var(--header-height));
+		/* top: calc(var(--header-height)); */
 		inset-inline: 0;
 		
 		align-items: center;
@@ -119,6 +119,8 @@
 
 		container-name: balance;
 		container-type: size;
+
+		/* outline: solid; */
 	}
 
 	/* section with button container */
@@ -152,6 +154,8 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		width: 100%;
+		/* debugging */
+		outline: solid rgb(102, 128, 0);
 	}
 	
 	:is(.invested,.gifted) p{
@@ -176,6 +180,8 @@
 
 	.gifted.outer{
 		display: none;
+		/* debuging */
+		outline: solid blue;
 	}
 
 	.gifted-content {
@@ -235,7 +241,6 @@
 	.gifted.inner::after{
 		content: '';
 		position: absolute;
-		/* inset: 0; */
 		bottom: 0;
 		width: 70%;
 		height: 1%;
@@ -254,6 +259,8 @@
 		color: var(--general-text-color);
 		box-shadow: 0px 4px 10px 0px #5858581A ;
 		/* height: 18cqh; */
+
+		outline: solid red;
 	}
 
 	/* .balance-section:has(.button-container) .button-container .gifted { */
@@ -338,14 +345,13 @@
 		.balance-section {
 			flex-direction: column;
 			align-items: center;
-			gap: calc(19% + var(--move-top));
 			padding: 0;
 			width: 100%;
-			margin-top: var(--move-top);
+			gap: calc(19% + var(--move-top));
+			gap: calc(var(--margin-top) + 5dvh);
+			/* margin-top: var(--margin-top); */
 			align-self: end;
 			transform-origin: bottom;
-			gap: calc(var(--margin-top) + 5dvh);
-			margin-top: var(--margin-top);
 		}
 	
 		.balance-section:has(.button-container) {
