@@ -478,19 +478,19 @@
 		}
 	}
 
-	@media not (display-mode: standalone) and (width > 900px)  {
-
-		:global(body:not(.windows-device)) footer {
-			/* --footer-height: calc(20px + var(--safe-area-inset-bottom));
-
+	@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
+		:global(.body-container)::after {
+			content: 'Please rotate your device';
 			position: fixed;
-			bottom : 1dvh;
-			width: 100dvw;
-			align-self: center;
-			place-self: center;
-			border-radius: 1pc; */
-
-			outline: solid blue;
+			inset: 0;
+			display: grid;
+			place-content: center;
+			font-size: clamp(1.2rem, 4vh, 2.5rem);
+			background-color: var(--primary-green-500);
+			color: white;
+			z-index: 100;
+			text-align: center;
+			padding: 1rem;
 		}
-	}	
+	}
 </style>
