@@ -1,6 +1,4 @@
 <script>
-	// revisit this to see if props are really needed
-	// let {formData, button} = $props()
 	import {onMount} from 'svelte';
 	import {fade} from 'svelte/transition';
 	import {isMobile} from '$lib/store.js';
@@ -32,8 +30,6 @@
 		
 		<section class="step-header"  transition:fade>
 			<div class="button-container">
-				<!-- revisit this to see if a back button is really needed -->
-				<!-- {@render button('back')} -->
 			</div>
 			<div class="step-header-text">
 				<h2>Gift Purchase Complete!</h2>
@@ -92,7 +88,7 @@
 	}
 	
 	.button-container {
-		position: absolute;
+		/* position: absolute; */
 		top: 0;
 		left: 0;
 		width: fit-content;
@@ -101,6 +97,8 @@
 		align-items: start;
 		justify-content: space-between;
 		padding:0;
+		margin-bottom: calc(var(--safe-area-inset-bottom) + 1rem);
+
 	}
 	
 	/* mobile */
@@ -114,12 +112,9 @@
 		height: 100dvh + var(--footer-height);
 		gap: 24px;
 		padding-top: 3rem;
+
 	}
-	
-	.success-message > * {
-		/* outline: solid pink; */
-	}
-	
+		
 	.success-message img {
 		width: fit-content;
 		object-position:top center;
@@ -171,7 +166,7 @@
 		}
 
 		.success-text > * {
-			width: 100cqw ;
+			width: 100% ;
 			max-width: 100%;
 			margin-bottom: min(1rem,2cqh);
 		}
