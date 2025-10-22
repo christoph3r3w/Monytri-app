@@ -480,19 +480,17 @@
 
 	@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
 		:global(.body-container)::after {
-			content: 'Please rotate your device';
+			content: 'Please rotate your device  ' url(/shared-assests/exclamation-circle-white.svg);
 			position: fixed;
 			inset: 0;
 			display: grid;
 			place-content: center;
+			
 			font-size: clamp(1.2rem, 6vh, 2.5rem);
 			color: white;
 			z-index: 100;
-			text-align: center;
+			text-align: bottom;
 			padding: 1rem;
-			/* background-position: center; */
-			/* background-repeat: no-repeat; */
-			background-size: cover;
 			animation: fadeIn .9s ease-out forwards;
 			backdrop-filter: blur(5px);
 			filter: blur(10px);
@@ -508,8 +506,7 @@
 		}
 		to {
 			filter: blur(0px);
-			background-color: var(--primary-green-500);
-			background-image: url('/home-page/homepage-intro-deco.png');
+			background-color: var(--primary-purple-400);
 		}
 	}
 </style>
