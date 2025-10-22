@@ -154,12 +154,12 @@
 	{#if menu_Open}
 		<Menu/>
 	{/if}
-		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage}>
+		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage} onclick={() => {if (menu_Open) menuOpen.set(false);}} >
 			{@render children()}
 		</main>
 	{#if $isMobile && noFooterPage}
 	{:else}
-		<footer>
+		<footer onclick={() => {if (menu_Open) menuOpen.set(false);}}>
 			<Footer {current}/>
 		</footer>
 	{/if}
@@ -498,15 +498,8 @@
 	}
 
 	@keyframes fadeIn {
-		from {
-			background-color: transparent;
-		}
-		50% {
-			filter: blur(0px);
-		}
-		to {
-			filter: blur(0px);
-			background-color: var(--primary-purple-400);
-		}
+		from {background-color: transparent;}
+		50% {filter: blur(0px);}
+		to {filter: blur(0px);background-color: var(--primary-purple-400);}
 	}
 </style>
