@@ -485,12 +485,31 @@
 			inset: 0;
 			display: grid;
 			place-content: center;
-			font-size: clamp(1.2rem, 4vh, 2.5rem);
-			background-color: var(--primary-green-500);
+			font-size: clamp(1.2rem, 6vh, 2.5rem);
 			color: white;
 			z-index: 100;
 			text-align: center;
 			padding: 1rem;
+			/* background-position: center; */
+			/* background-repeat: no-repeat; */
+			background-size: cover;
+			animation: fadeIn .9s ease-out forwards;
+			backdrop-filter: blur(5px);
+			filter: blur(10px);
+		}
+	}
+
+	@keyframes fadeIn {
+		from {
+			background-color: transparent;
+		}
+		50% {
+			filter: blur(0px);
+		}
+		to {
+			filter: blur(0px);
+			background-color: var(--primary-green-500);
+			background-image: url('/home-page/homepage-intro-deco.png');
 		}
 	}
 </style>
