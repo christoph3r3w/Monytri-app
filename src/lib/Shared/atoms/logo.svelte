@@ -1,13 +1,10 @@
 <script>
-	// import { base } from '$app/paths';
 	export let name = false;
 </script>
 
 <a href="/" class="logo">
 	<picture>
-		<img src={`/Monytri-01-1.png`} alt="logo" width="40px" />
-		<!-- <img src={`${base}/Monytri-01-1.png`} alt="logo" width="40px" /> -->
-	</picture>
+		<img src={`/Monytri-01-1.png`} alt="logo" width="40px" />	</picture>
 	{#if name}
 		<span class="logo-name">monytri</span>
 	{/if}

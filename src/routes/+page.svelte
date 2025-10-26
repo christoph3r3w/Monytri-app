@@ -90,8 +90,6 @@
 		/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
-		/* height: 100%; */
-		/* height: calc(120dvh - var(--footer-height)) ; */
 		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
 	}
 
@@ -108,7 +106,7 @@
 		margin-inline: auto;
 	}
 	
-	.button-conatiner-dev :is(a,button) {
+	.button-conatiner-dev :is(button) {
 		font-size: 2rem;
 		border: solid 2px var(--primary-purple-400) ;
 		border-radius: 50px;
@@ -139,7 +137,6 @@
 		cursor: none;
 		pointer-events: none;
 		flex: 1 1 fit-content;
-		/* outline: solid 2px var(--primary-purple-400); */
 	}
 
 		:global(.home-wrapper .button-conatiner-dev + .logo img){
@@ -168,11 +165,8 @@
 				flex-direction: column;
 				align-content: start;
 				width: 100%;
-				/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 				min-height: calc(101cqh - var(--header-height));
-				/* max-height: calc(120dvh - var(--footer-height)) ; */
 				max-height: unset;
-				/* height: calc(120dvh - var(--footer-height)) ; */
 				padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
 			}
 
@@ -185,16 +179,6 @@
 				height: var(--header-intro-height);
 				height: var(--header-height);
 				height: calc(var(--header-intro-height));
-
-				/* outline: solid red 5px !important;
-
-				background: 
-				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
-				linear-gradient(180deg, var(--primary-green-500));
-				background-repeat: no-repeat;
-				background-size: cover;
-				mix-blend-mode:normal; */
-
 			}
 	
 			:global(.home-wrapper){

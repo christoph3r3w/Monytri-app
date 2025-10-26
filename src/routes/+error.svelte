@@ -1,15 +1,13 @@
 <script>
-	// revisit this to see if props are really needed
-	// let {formData, button} = $props()
 	import {fade} from 'svelte/transition';
 	import {isMobile} from '$lib/store.js';
-
 </script>
+
 <section class="error-container">
 	{#if $isMobile}
 		<section class="error-message mobile"  transition:fade>
 			<div class="error-text">
-				<!-- <img src="./shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="not found"> -->
+				<img src="./shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="not found">
 				<h2>Page Not Found</h2>
 				<p>Oops! It looks like the page you're looking for doesn't exist or has moved. Please try again or go back to the home page.</p>
 			</div>
@@ -39,7 +37,6 @@
 		display: none;
 	}
 	
-
 	.error-container {
 		grid-column: 1/-1 !important;
 		grid-row: 1/-1 !important;
@@ -105,11 +102,7 @@
 		gap: 24px;
 		padding-top: 3rem;
 	}
-	
-	.error-message > * {
-		/* outline: solid pink; */
-	}
-	
+		
 	.error-message img {
 		width: fit-content;
 		object-position:top center;
@@ -196,6 +189,4 @@
 		width: 100%;
 		padding: clamp(10px, .9rem, 1rem) 1rem;
 	}
-
-
 </style>

@@ -255,8 +255,7 @@
 		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait) , 
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
 		{
-			
-        .footer-one,.footer-two{
+      .footer-one,.footer-two{
             display: none;
     	}
 

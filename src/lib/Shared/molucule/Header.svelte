@@ -25,7 +25,6 @@
 
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
-		// console.log('menu open is',$menuOpen);
 	}
 </script>
 
@@ -296,27 +295,10 @@
 				align-self: center;
 				justify-content: space-between;
 				height: 100%;
-				/* max-height: calc(var(--header-intro-height) - (100% - var(--cut-off-height))); */
 				max-height: calc(var(--header-intro-height) );
 				z-index: 10;
 				text-align: center;
-				/* outline: solid red; */
 			}
-		
-			/* .button-container{
-				position: relative;
-				display:flex;
-				flex-direction: row;
-				align-items: center;
-				width: clamp(50%,68.4%,248px);
-				min-width: fit-content;
-				height: 84px;
-				justify-self: baseline;
-				border-radius: 8px;
-				background-color: white;
-				background-color: var(--general-background-color);
-				box-shadow: 0px 4px 10px 0px #5858581A ;
-			} */
 		}
 		
 

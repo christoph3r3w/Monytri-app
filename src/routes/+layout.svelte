@@ -12,7 +12,6 @@
 
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
-	// let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !authenticatedd);
 	
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
@@ -40,7 +39,6 @@
 
 	
 	$effect(() => {
-		
 		
 		detectSWUpdate();
 
@@ -125,29 +123,18 @@
 
 	afterNavigate(() => {
 		updateCurrentFromPath();
-	});
-
-	// loggoing the current store value
-	current.subscribe(value => {
-		// console.log('Current store value:', value);
-	});
-
-	isMobile.subscribe(value => {
-		// console.log('isMobile store value:', value);
-	});
-	
+	});	
 </script>
 
 <svelte:head>
 	<title>Monytri {$current}</title>
-	<meta name="theme-color" content="red"/>
 </svelte:head>
 
 <!-- main application layout -->
-<section class="body-container">
+<section class="body-container" >
 	{#if $isMobile && noHeaderPage}
 	{:else}
-		<header>
+		<header >
 			<Header {current}/>	
 		</header>
 	{/if}
@@ -405,7 +392,6 @@
 			/* grid-template-rows: 1fr .3fr; */
 
 			position: relative;
-			/* bottom: -1px; */
 			top: auto;
 			right: 0;
 			left: 0;
@@ -421,32 +407,6 @@
 			--footer-height: calc(60px + var(--safe-area-inset-bottom));
 		}
 	}
-
-	/* @media not all and (display-mode: standalone), (pointer: coarse) and (hover: none) and (min-resolution: 400dpi),
-		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
-		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)  {
-
-		:global(body.isMobile){
-			overflow: hidden;
-			max-height:100lvh !important;
-			background-color: var(--general-background-color) !important;
-		}
-
-		:global(body.isMobile) main > :global(.home-wrapper) > :global(*) {
-			padding-bottom: var(--footer-height);
-		}
-
-		:global(body.isMobile) footer {
-			--footer-height: calc(20px + var(--safe-area-inset-bottom));
-
-			position: fixed;
-			bottom : calc(1dvh + env(safe-area-inset-bottom));
-			width: 85dvw;
-			align-self: center;
-			place-self: center;
-			border-radius: 1pc;
-		}
-	}	 */
 
 	@media not (display-mode: standalone)  {
 
@@ -489,8 +449,6 @@
 			font-size: clamp(1.2rem, 6vh, 2.5rem);
 			color: white;
 			z-index: 100;
-			text-align: bottom;
-			padding: 1rem;
 			animation: fadeIn .9s ease-out forwards;
 			backdrop-filter: blur(5px);
 			filter: blur(10px);
