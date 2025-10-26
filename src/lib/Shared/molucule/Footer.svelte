@@ -330,7 +330,7 @@
 
 		.mobile-nav ul li {
 			padding: 2cqi;
-			aspect-ratio: 1;
+			/* aspect-ratio: 1; */
 		}
 
 		.mobile-nav ul li:is(:hover,:focus-within,:visited),

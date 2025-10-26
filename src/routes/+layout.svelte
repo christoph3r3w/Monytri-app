@@ -425,10 +425,12 @@
 
 			position: fixed;
 			bottom : 1dvh;
+			inset-inline: auto;
 			width: 85dvw;
 			max-width: 400px;
 			align-self: center;
 			place-self: center;
+			justify-content: center;
 			border-radius: 1pc;
 		}
 
