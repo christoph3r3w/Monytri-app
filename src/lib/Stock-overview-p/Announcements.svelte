@@ -6,7 +6,7 @@
 		{#each announcements as {img, date, title, partner, link} }
 		<li class="announcements-contain blog-container" style="--bg-color:{img.bgColor}; --bg-position:{img.bgPosition}">
 			<a href={link || "/blog"} aria-label="blog"></a>
-			<!-- <img src={img.src || `/home-page/homescreen-team.png`} alt="" width="177px" height="177px"> -->
+			<img src={img.src || `/home-page/homescreen-team.png`} alt="" width="177px" height="177px">
 			<div class="blog-text">
 				<p class="date">{date}</p>
 				<div class="blog-text-content">
@@ -41,7 +41,7 @@
 
 	container-type: inline-size;	
 	/* debugging */
-	outline: tomato solid;
+	/* outline: tomato solid; */
 
 }
 
@@ -60,7 +60,7 @@
 
 	container-type: inline-size;	
 	/* debugging */
-	outline: yellow solid;
+	/* outline: yellow solid; */
 }
 
 .announcements-list li a{

@@ -178,7 +178,8 @@ let growthPercentage = $derived.by(() => {
   onMount(() => calculateInvestment());
 </script>
 
-<section class="con max-w-5xl mx-auto p-6 space-y-8">
+<!-- <section class="con max-w-5xl mx-auto p-6 space-y-8"> -->
+<section class="con mx-auto p-6 space-y-8">
 
  <div class="grid lg:grid-cols-2 gap-8">
     <!-- form -->
@@ -275,7 +276,6 @@ let growthPercentage = $derived.by(() => {
     max-width: 100%;
     align-items: center;
     gap: 3%;
-    /* outline: palevioletred solid ; */
 
     @starting-style {
       width: clamp(150px, 100%, 300px);
@@ -285,18 +285,21 @@ let growthPercentage = $derived.by(() => {
   .con > * form label > * {
     flex: 0 1 30%;
     width: clamp(50px, 30%, 150px);
-
+    max-width: fit-content;
   }
 
   .con > * form label span{
      flex: 0 1 fit-content;
      text-wrap: nowrap;
      margin-right: 1rem;
+     animation: none !important;
+     transition: none !important;
   } 
 
   .con > * form button {
-    max-width: 100%;
-    transition: none;
+    max-width: 99%;
+    transition: none !important;;
+    animation: none !important;
   }
 
 </style>
