@@ -176,7 +176,7 @@ section:is(.transaction-Details, .user-details){
 	border-radius: .5rem;
 	width: 100%;
 	max-width: 400px;
-	margin-block:1rem ;
+	margin-bottom:clamp(1svh,2svh,1rem); 
 }
 
 h2{
@@ -190,7 +190,8 @@ ul {
 	display: flex;
 	flex-direction: column;
 	gap: clamp(1px, 5dvh .5rem);
-	padding: 1rem;
+	padding: clamp(1%,3svh,1rem);
+	padding-bottom: 1svh;
 	border-radius: .5rem;
 	background-color: var(--general-background-color-secondary);
 	box-shadow: rgba(236, 236, 236, 0.199) 0px 0px 15px 0px;
@@ -233,5 +234,11 @@ li > span{
 	transition: background-color 0.3s ease;
 }
 
+@media (height < 620px){
+	.user-details{
+		height: 0;
+		opacity: 0;
+	}
+}
 
 </style>

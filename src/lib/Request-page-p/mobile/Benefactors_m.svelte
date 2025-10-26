@@ -85,6 +85,8 @@
 		height: fit-content;
 		max-height: 60cqh;
 		overflow-y: scroll !important;
+		scrollbar-width:auto;
+		overscroll-behavior: contain;
 		padding-inline: 1cqw;
 		padding-block: 2%;
 		border-radius: 15px;
@@ -99,6 +101,8 @@
 			border-radius: 10px;
 			cursor: pointer;
 			margin-block: 0.5cqh 1dvh;
+			overflow: clip;
+			width: 98%;
 		}
 		
 		.benefactor-item:where(.selected) {
@@ -112,6 +116,7 @@
 		.benefactor-info {
 			display: flex;
 			align-items: center;
+			width: 100%;
 		}
 		
 		.profile-pic {
@@ -148,6 +153,10 @@
 		.last-sent {
 			display: none;
 		}	
+
+		hr{
+		margin-inline:3%;
+		}
 	}
 
 	/* needs to be removed */

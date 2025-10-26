@@ -124,7 +124,7 @@
 				grid-auto-flow:column;
 				grid-auto-columns: clamp(50%, 50%, 300px);
 				gap: 1rem;
-				max-height: 30% ;
+				min-height: 30% ;
 			}
 
 			.invest-tips-container ul li{
@@ -208,6 +208,7 @@
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1rem;
+				height: 100%;
 			}
 
 			.recent-blogs .blog-container{
@@ -307,7 +308,7 @@
 		
 	@media (prefers-color-scheme: dark){
 		* img{
-			filter: brightness(.9) contrast(.9);
+			filter: brightness(.9);
 		}
 	}
 

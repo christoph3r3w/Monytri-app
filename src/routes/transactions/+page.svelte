@@ -131,6 +131,10 @@ ul {
 	padding: 1rem;
 	border-radius: .5rem;
 	overflow-y: auto;
+	overflow-y: scroll;
+	scrollbar-width:auto;
+	overscroll-behavior: contain;
+		
 	background-color: var(--general-background-color-secondary);
 	box-shadow: rgba(236, 236, 236, 0.199) 0px 0px 15px 0px;
 }
@@ -143,6 +147,7 @@ li{
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: space-between;
+	padding-block: clamp(0px, 1.2rem + 1.2dvw ,2rem);
 }
 
 li:nth-last-of-type(n + 2)::after{

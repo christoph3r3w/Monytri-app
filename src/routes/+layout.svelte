@@ -3,7 +3,6 @@
   	import {onNavigate,afterNavigate} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
-	// import {isAuthenticated,user} from '$lib/user';
 	import { fade } from 'svelte/transition';
 	import '../app.css';
 
@@ -13,7 +12,7 @@
 
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
-	// let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !authenticatedd);
+	
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -31,11 +30,15 @@
 			});
 		});
 	}
+
+	onMount(async () => {
+		const eruda = (await import("eruda")).default;
+		eruda.init(); 
+	});
 	
 
 	
 	$effect(() => {
-		
 		
 		detectSWUpdate();
 
@@ -120,17 +123,7 @@
 
 	afterNavigate(() => {
 		updateCurrentFromPath();
-	});
-
-	// loggoing the current store value
-	current.subscribe(value => {
-		// console.log('Current store value:', value);
-	});
-
-	isMobile.subscribe(value => {
-		// console.log('isMobile store value:', value);
-	});
-	
+	});	
 </script>
 
 <svelte:head>
@@ -138,22 +131,22 @@
 </svelte:head>
 
 <!-- main application layout -->
-<section class="body-container">
+<section class="body-container" >
 	{#if $isMobile && noHeaderPage}
 	{:else}
-		<header>
+		<header >
 			<Header {current}/>	
 		</header>
 	{/if}
 	{#if menu_Open}
 		<Menu/>
 	{/if}
-		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage}>
+		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage} onclick={() => {if (menu_Open) menuOpen.set(false);}} >
 			{@render children()}
 		</main>
 	{#if $isMobile && noFooterPage}
 	{:else}
-		<footer>
+		<footer onclick={() => {if (menu_Open) menuOpen.set(false);}}>
 			<Footer {current}/>
 		</footer>
 	{/if}
@@ -176,7 +169,7 @@
 		--body-padding: 2%;
 		--header-height: calc(8dvh + var(--safe-area-inset-top));
 		--footer-height: calc(50px + var(--safe-area-inset-bottom));
-		--footer-height-2: minmax(316px,15dvh) ;
+		--footer-height-2: minmax(316px,15lvh) ;
 
 		/* all the elements that will be animated */
 		will-change: transform, height, background-color, box-shadow, border-radius,position;
@@ -203,6 +196,7 @@
 	:global(html){
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
+		overflow: hidden;
 	}
 
 	:global(body){
@@ -211,8 +205,8 @@
 		padding: 0;
 		overflow-x: hidden;
 		overflow-y: auto;
-		max-height:100svh;
-		height: 100svh;
+		max-height:100lvh;
+		height: 100lvh;
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 		color: var(--general-text-color);
@@ -225,7 +219,6 @@
 		min-height: 100dvh;
 		background-color: var(--general-background-color);
 		overflow-x: clip;
-		/* overflow-y:auto; */
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 	}
@@ -273,11 +266,10 @@
 			height: fit-content;
 			text-wrap: nowrap;
 			width: 100%;
-			/* background-color: rgb(222, 135, 135); */
 		}
 	}
 
-	:global(footer){
+	footer{
 		position: relative;
 		grid-row: footer;
 		grid-column: 1/-1;
@@ -302,7 +294,8 @@
 
 		:global(body){
 			overflow: hidden;
-			max-height:100svh;
+			max-height:100dvh;
+			background-color: var(--general-background-color);
 		}
 
 		:global(.body-container){
@@ -314,6 +307,7 @@
 			min-height: 100%;
 			max-height: 100%;
 			overflow: hidden;
+			will-change: transform, height, background-color, box-shadow, border-radius,position;
 		}
 
 		:global(header){
@@ -324,16 +318,14 @@
 			grid-template-columns: var(--grid--mobile-collums);
 			grid-template-rows: 1fr;
 			align-content: start;
-			will-change: transform, height, background-color, box-shadow, border-radius,position;
 			background-color: var(--primary-green-500);
 			height: clamp(50px, 100%, var(--header-height));
 			position: absolute;
 			top: 0;
 			inset-inline: 0;
 			padding-top: env(safe-area-inset-top);
-			/* transform: translate3d(0,0,0); */
+			transform: translate3d(0,0,0);
 			z-index: 100;
-
 		}
 				
 		:global(main){
@@ -345,10 +337,6 @@
 			padding-top: calc(var(--header-height) );
 			margin-bottom: -1rem;
 			z-index: 1;
-			/* padding-bottom: calc(5rem + env(safe-area-inset-bottom)); */
-			/* background-color: rgb(61, 112, 153);
-			background-color: rgb(200, 224, 124);
-			background-color: rgb(224, 124, 224); */
 			
 			&.noHeaderPage{
 				padding-top: 0 ;
@@ -370,7 +358,6 @@
 				grid-template-rows: auto;
 				overflow-x: clip;
 				z-index: 0;
-				/* background-color:  rgb(162, 255, 0); */
 			}
 
 			&.noHeaderPage > :is(:global(*)) {max-height: calc(100svh - var(--footer-height) - env(safe-area-inset-bottom));}
@@ -388,7 +375,6 @@
 			&:nth-of-type(1) {
 				grid-column: content ;
 				overflow-y: scroll;
-				/* background-color:  rgb(55, 0, 255); */
 			}
 
 			&:nth-child(n) > .home-wrapper{
@@ -397,7 +383,7 @@
 		}
 				
 		/* footer styling for when the --mobile property is = 1 */
-		:global(footer){
+		footer{
 			--_nav-radius: clamp(8px,8px,8pc);
 			flex: 0 1 auto;
 			background-color: var(--primary-green-500);
@@ -406,10 +392,10 @@
 			/* grid-template-rows: 1fr .3fr; */
 
 			position: relative;
-			bottom: -1px;
+			top: auto;
 			right: 0;
 			left: 0;
-			width: 100lvw;
+			width: 100dvw;
 			height: clamp(50px, 10dvh, var(--footer-height));
 			border-radius: var(--_nav-radius) var(--_nav-radius) 0 0;
 			transform: translate3d(0,0,0);
@@ -420,5 +406,60 @@
 		:global(body.android-device){
 			--footer-height: calc(60px + var(--safe-area-inset-bottom));
 		}
+	}
+
+	@media not (display-mode: standalone)  {
+
+		:global(body:not(.windows-device)){
+			overflow: hidden;
+			max-height:100lvh !important;
+			background-color: var(--general-background-color) !important;
+		}
+
+		:global(body:not(.windows-device)) main :global(.home-wrapper) > :global(*) {
+			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
+		}
+
+		:global(body:not(.windows-device)) footer {
+			--footer-height: calc(20px + var(--safe-area-inset-bottom));
+
+			position: fixed;
+			bottom : 1dvh;
+			inset-inline: auto;
+			width: 85dvw;
+			max-width: 400px;
+			align-self: center;
+			place-self: center;
+			justify-content: center;
+			border-radius: 1pc;
+		}
+
+		:global(body.ios-device) footer {
+			--footer-height: calc(50px + var(--safe-area-inset-bottom));
+			bottom : calc(env(safe-area-inset-bottom) + 13lvh) !important;
+		}
+	}
+
+	@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) and (hover: none) and (pointer: coarse) {
+		:global(.body-container)::after {
+			content: 'Please rotate your device  ' url(/shared-assests/exclamation-circle-white.svg);
+			position: fixed;
+			inset: 0;
+			display: grid;
+			place-content: center;
+			
+			font-size: clamp(1.2rem, 6vh, 2.5rem);
+			color: white;
+			z-index: 100;
+			animation: fadeIn .9s ease-out forwards;
+			backdrop-filter: blur(5px);
+			filter: blur(10px);
+		}
+	}
+
+	@keyframes fadeIn {
+		from {background-color: transparent;}
+		50% {filter: blur(0px);}
+		to {filter: blur(0px);background-color: var(--primary-purple-400);}
 	}
 </style>

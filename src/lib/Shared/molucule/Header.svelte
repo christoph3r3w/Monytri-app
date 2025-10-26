@@ -25,7 +25,6 @@
 
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
-		// console.log('menu open is',$menuOpen);
 	}
 </script>
 
@@ -134,10 +133,6 @@
 
 	nav.logo{
 		flex: 0 1 fit-content;
-
-		@container style(--not-on-login:1) {
-			outline: solid red;
-		}
 	}
 
 	/* desktop navigation */
@@ -299,57 +294,11 @@
 				align-items: center;
 				align-self: center;
 				justify-content: space-between;
-				min-height: calc(var(--header-intro-height) - (100% - var(--cut-off-height)));
+				height: 100%;
+				max-height: calc(var(--header-intro-height) );
 				z-index: 10;
 				text-align: center;
 			}
-		
-			.button-container{
-				position: relative;
-				display:flex;
-				flex-direction: row;
-				align-items: center;
-				width: clamp(50%,68.4%,248px);
-				min-width: fit-content;
-				height: 84px;
-				justify-self: baseline;
-				border-radius: 8px;
-				background-color: white;
-				background-color: var(--general-background-color);
-				box-shadow: 0px 4px 10px 0px #5858581A ;
-			}
-
-			/* check if this is needed */
-			/* .button-container::before{
-				content: '';
-				width: 1px;
-				height: auto;
-				position: absolute;
-				inset-block: 30%;
-				left: 50%;
-				z-index: 1;
-				border-radius: inherit;
-				background-color: var(--neutral-grey);
-				outline: solid 1px red;
-			} */
-
-			/* .button-container button{
-				flex: 1 1 60%;
-				display: flex;
-				height: 100%;
-				flex-direction: column;
-				align-items: center;
-				justify-content:center;
-				color: var(--general-text-color);
-				border-radius: 8px;
-				padding: 1% 2%;
-
-				svg{
-					width: 2.5rem;
-					height: 2.5rem;
-					margin-bottom: 1%;
-				}
-			} */
 		}
 		
 

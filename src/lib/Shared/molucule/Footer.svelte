@@ -191,6 +191,7 @@
 		display: flex;
 		flex-direction: row;
 		flex: 1;
+		
 		@container (width < 600px){
 			align-items: start;
 			padding-block: var(--body-padding);
@@ -247,16 +248,14 @@
 	.mobile-nav{
 		display: none;
 	}
-
 	
-    @media 
+   @media 
 		(-webkit-min-device-pixel-ratio: 3),
 		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) ,
 		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait) , 
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
 		{
-			
-        .footer-one,.footer-two{
+      .footer-one,.footer-two{
             display: none;
     	}
 
@@ -266,7 +265,7 @@
 			grid-row: 1/2;
 			display: grid;
 			grid-template-columns: subgrid;	
-			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(0px, 15%);		
+			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(0px, 10%);		
 			width: 100cqw;
 			border-radius:inherit;
 			z-index: 100;
@@ -322,5 +321,22 @@
 				bottom: -70%;
 				z-index: 100;
 		}
-    }
+   }
+
+	@media not all and (display-mode: standalone) {
+	 	.mobile-nav{
+			grid-template-rows: min(0px, 20%) [content-start] 1fr [content-end] min(0px,20%);
+		}
+
+		.mobile-nav ul li {
+			padding: 2cqi;
+			/* aspect-ratio: 1; */
+		}
+
+		.mobile-nav ul li:is(:hover,:focus-within,:visited),
+		.mobile-nav ul li:has(:is(a,button).active){
+			inset: 0;
+			border-radius: 50% ;
+		}
+	}
 </style>

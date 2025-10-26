@@ -7,7 +7,6 @@
 		<h2>in progress</h2>
 	</header>
 	<section class="message-body">
-	<!-- <img src={`${base}/shared-assests/team-brainstorming.png`} alt="team-brainstorming"> -->
 	<img src={`/shared-assests/team-brainstorming.png`} alt="team-brainstorming">
 		<p>Oops! Looks like you've stumbled upon a page that's still under construction. Our team is working hard to bring this content to life. In the meantime, feel free to return to our home page.</p>
 		<a href="/" >
@@ -49,7 +48,6 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		/* display: none; */
 	}
 
 	.message-body {
@@ -105,10 +103,9 @@
 			position: absolute;
 			inset: 0 -30dvw;
 			background-color: color-mix( in srgb, rgba(243, 243, 243, 0.549), var(--primary-green-500) 20%);
-			/* backdrop-filter: blur(5px);
-			-webkit-backdrop-filter: blur(5px); */
+			backdrop-filter: blur(5px);
+			-webkit-backdrop-filter: blur(5px);
 			z-index: 10;
-			/* display: none; */
 		}
 
 		.message-container {
@@ -128,7 +125,6 @@
 			grid-column: 1 / -1;
 			width: 100%;
 			height: fit-content;
-			/* height: calc(100% - clamp(1rem,16dvh,100%)); */
 			justify-content: flex-start;
 			background-color: unset;
 			padding: unset;
