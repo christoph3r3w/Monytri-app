@@ -86,7 +86,6 @@
 		margin-inline: auto;
 	}
 	
-	
 	.button-conatiner-dev button {
 		font-size: 2rem;
 		border: solid 2px var(--primary-purple-400) ;
@@ -156,16 +155,6 @@
 				z-index: 10;
 				overflow: visible;
 				height: var(--header-intro-height);
-
-				/* outline: solid red 5px !important;
-
-				background: 
-				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
-				linear-gradient(180deg, var(--primary-green-500));
-				background-repeat: no-repeat;
-				background-size: cover;
-				mix-blend-mode:normal; */
-
 			}
 	
 			:global(.home-wrapper){

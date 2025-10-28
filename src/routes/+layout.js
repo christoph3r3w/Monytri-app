@@ -47,7 +47,7 @@ export const load = async ({ data }) => {
 //         }
 //     }
 
-    let investedRaw = 1500.88;
+    let investedRaw = 1505.88;
 	let giftedRaw = 501.25;
 
     return {

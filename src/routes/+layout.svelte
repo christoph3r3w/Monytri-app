@@ -12,7 +12,7 @@
 	let menu_Open = $derived($menuOpen);
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
-	// let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password' || !authenticatedd);
+
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -39,8 +39,6 @@
 
 	
 	$effect(() => {
-		
-		
 		detectSWUpdate();
 
 		// Function to update isMobile store value
