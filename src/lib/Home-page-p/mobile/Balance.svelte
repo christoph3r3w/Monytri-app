@@ -1,25 +1,8 @@
 <script>
 	import { onMount } from "svelte";
 	import { goto } from '$app/navigation';
-
-	let Invested = $state(1500.75); 
-	let Gifted = $state(500.25); 
-	
-	let investedRaw = 1503.75;
-	let giftedRaw = 500.25;
-
-	function balanceString(balance) {
-		const formatted = new Intl.NumberFormat('nl-NL', {
-			style: 'currency',
-			currency: 'EUR',
-		}).format(balance);
-		const maxLength = 10;
-		return formatted.length > maxLength ? formatted.slice(0, maxLength) + '…' : formatted;
-	}
-
-	Invested = balanceString(investedRaw);
-	Gifted = balanceString(giftedRaw);
-
+	let {data} = $props();
+	let {Invested,Gifted} = $derived(data.data);
 </script>
 
 {#snippet landingInfo()}
@@ -104,15 +87,21 @@
 		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
 		transition: margin 0.3s ease-in-out;
 		
+		align-items: unset;
+		/* align-self: center; */
+		justify-content: center;
+		height: 100%;
 		position: fixed;
 		inset-inline: 0;
-		
-		align-items: center;
-		align-self: center;
-		z-index: 10;
-		text-align: center;
-		margin-top: -1rem;
+		gap: 1rem;
 
+		text-align: center;
+		z-index: 10;
+		padding-top: 3%;
+		margin-top: -1rem;
+		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
+		transition: margin 0.3s ease-in-out;
+		
 		container-name: balance;
 		container-type: size;
 
@@ -127,6 +116,8 @@
 		align-items: unset;
 		padding-top: 3%;
 		height: 100%;
+		container-type: inline-size;
+
 	}
 
 	.balance-info {
@@ -136,10 +127,17 @@
 		align-items: center;
 		padding: 0 1%;
 		border-radius: 8px;
+		position: relative;
+		top: 20px;
 	}
 
-	:is(.invested,.gifted) h1{
+	.invested{
+		color: var(--general-text-color-invert);
+	}
+
+	.invested h1{
 		font-size: clamp(1rem,36px,2.5rem);
+		font-weight: 500;
 		text-align: center;
 		align-self: center;
 		overflow: hidden;
@@ -149,7 +147,7 @@
 		
 	}
 	
-	:is(.invested,.gifted) p{
+	.invested p{
 		font-size: clamp(10px,12px,12px);	
 	}
 
@@ -164,6 +162,7 @@
 		font-weight: 300;
 	}
 
+	/* gifted info */
 	.gifted{
 		color: var(--general-text-color); 
 		gap: 0;
@@ -189,14 +188,14 @@
 	}
 
 	.gifted-content svg{
-		--d:clamp(.8rem,5vw,25px);
-		min-width: var(--d);
-		height: var(--d);
+		--d:clamp(.8rem,5vw,20px);
+		width: var(--d);
+		height: clamp(1rem,var(--d),var(--d));
 		aspect-ratio: 1;
 		color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
 		path{
 			fill: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
-			fill:rgba(218, 165, 32, 0.877);
+			fill:goldenrod;
 		}
 	}
 
@@ -217,13 +216,23 @@
 		--d:clamp(.8rem,5vw,50px);
 	}
 
-	.gifted.inner h1{
-		width: fit-content;
+	.gifted h1{
+		font-size: clamp(1rem,36px,2.5rem);
+		text-align: center;
+		align-self: center;
+		margin-bottom: 2% ;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
 	}
 
-	.gifted.inner p{
-		font-size: 1rem;
-		font-weight: 300;
+	.gifted.outer{
+		display: none;
+	}
+
+	.gifted.outer p{
+		font-size: clamp(10px,12px,12px);	
 	}
 
 	.gifted.inner::after{
@@ -242,6 +251,7 @@
 		grid-template-rows: 1fr 1fr;
 		width: clamp(50%,50dvw ,300px);
 		max-width: 500px;
+		height: 24cqh;
 		border-radius: 8px;
 		background-color: var(--general-background-color,white);
 		color: var(--general-text-color);
@@ -258,6 +268,28 @@
 		justify-content: center;
 		height: 100%;
 		color: var(--general-text-color);
+	}
+
+	.button-container .gifted.inner{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+	}
+
+	.button-container .gifted.inner svg{
+		--d:clamp(.8rem,5vw,50px);
+	}
+
+	.button-container .gifted.inner h1{
+		width: fit-content;
+	}
+
+	.button-container .gifted.inner p{
+		font-size: 1rem;
+		font-weight: 300;
 	}
 
 	.button-container button{
@@ -298,6 +330,24 @@
 		justify-content: center;
 		gap: 4%;
 		min-width: fit-content;
+
+	}
+
+	.balance-section:has(.button-container) .button-container .gifted {
+		grid-column: 1 / -1;
+		grid-row: 1 / 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		color: var(--general-text-color);
+	}
+	
+	.add-money-link{
+		display: flex;
+		place-content: center;
+		gap: 4%;
 		width: 100%;
 		max-height: 50px;
 		font-size: clamp(0.8rem, 4vw, 1.125rem);
@@ -333,8 +383,19 @@
 			width: 100%;
 			gap: calc(var(--margin-top) + 5dvh);
 			margin-top: var(--margin-top);
+			gap: calc(19% + var(--move-top));
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			align-items: unset;
 			align-self: end;
+			justify-content: center;
 			transform-origin: bottom;
+			gap: calc(var(--margin-top) + 7dvh);
+			padding-top: 3%;
+			margin-top: var(--margin-top);
+
+			container-type: size;
 		}
 	
 		.balance-section:has(.button-container) {
@@ -353,15 +414,17 @@
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
+			justify-content: center;
+			top: 0;
 		}	
 
-		.invested h1{
+		.balance-info .invested h1{
 			font-size: clamp(1rem,10vw,2.5rem);
 			width: 100%;
 			text-align: center;
 		}
 
-		.invested p {
+		.balance-info .invested p {
 			font-size: clamp(1rem,5vw,1.3rem);
 		}
 
@@ -415,6 +478,34 @@
 		.balance-section:has(.button-container) {
 			height: fit-content;
 			height: var(--header-intro-height);
+		.gifted h1{
+			max-height: 50px;
+			font-size: clamp(.5rem,7vw,1.2rem);
+			padding: 3% clamp(5px,4vw,1%);
+		}
+
+		.gifted.outer {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 4%;
+			min-width: fit-content;
+			font-size: clamp(0.5rem, 2vw, 1rem);
+			text-wrap: nowrap;
+			color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
+		}
+
+		.gifted.outer p{
+			translate: 0 40%;
+		}
+
+		@container balance (height < 200px) {
+			.gifted.outer {
+				height: 0 !important;
+				overflow: hidden;
+				transition: 3ms ease-in-out;
+			}
 		}
 
 		.balance-section:has(.button-container) .button-container {
@@ -444,7 +535,15 @@
 			border-radius: inherit;
 			background-color: var(--neutral-grey);
 		}
-	}
+
+		.balance-section .button-container .gifted.inner{
+			display: none ;
+		}
+
+		.balance-section:has(.button-container) .add-money-link {
+			display: none;
+		}
+	}}
 
 		@media 
 	(-webkit-min-device-pixel-ratio: 3),

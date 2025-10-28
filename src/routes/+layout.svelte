@@ -8,11 +8,12 @@
 
 	let {data,authenticated, children} = $props();
 
-	let menu_Open = $derived($menuOpen);
 
+	let menu_Open = $derived($menuOpen);
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
 	
+
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
 		const registration = await navigator.serviceWorker.ready;
@@ -124,6 +125,7 @@
 	afterNavigate(() => {
 		updateCurrentFromPath();
 	});	
+
 </script>
 
 <svelte:head>
@@ -134,8 +136,8 @@
 <section class="body-container" >
 	{#if $isMobile && noHeaderPage}
 	{:else}
-		<header >
-			<Header {current}/>	
+		<header>
+			<Header {data}/>	
 		</header>
 	{/if}
 	{#if menu_Open}
@@ -241,7 +243,6 @@
 		overflow-x: hidden;
 		overflow-y: visible;
 		
-		
 		container-name: main;
 
 		/* grid positioning for all main content */
@@ -324,7 +325,6 @@
 			top: 0;
 			inset-inline: 0;
 			padding-top: env(safe-area-inset-top);
-			transform: translate3d(0,0,0);
 			z-index: 100;
 		}
 				
@@ -401,6 +401,8 @@
 			transform: translate3d(0,0,0);
 			padding-bottom: env(safe-area-inset-bottom);
 			z-index: 100;
+
+			
 		}
 
 		:global(body.android-device){

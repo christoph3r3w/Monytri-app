@@ -1,43 +1,25 @@
 <script>
-	import { onMount } from 'svelte';
-	import {Balance_M,HomeArticles_M,Logo } from '$lib'
-	import {current,anAcount} from '$lib/store.js';
-	import { device } from '$lib/Device.js';
-	import { goto } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
-	import { user,isAuthenticated, authReady } from '$lib/user';
-	import {page} from '$app/stores';
+    import { Balance_M, HomeArticles_M, Logo } from '$lib';
+    import { goto } from '$app/navigation';
 
-	async function checkSignIn() {
-		// Wait until auth system finished first check
-		if (!$authReady) return; // on next tick it will run again via reactive statement
+    const { data } = $props();
+    let { device, user, isAuthenticated, authReady } = data;
 
-		// Prefer explicit user, fallback to local session hint
-		const hasSession = user.hasLocalSession && user.hasLocalSession();
-		if (!$user && !hasSession) {
-			// Only redirect if we are definitely not authenticated
-			await goto('/login');
-			console.log('Redirecting to login (no session/user).');
-			return; 
-		}
-	}
+    // Authentication check using reactive state
+    $effect(() => {
+        if (!$authReady) return;
+        
+        const hasSession = user.hasLocalSession?.();
+        if (!$user && !hasSession) {
+            goto('/login');
+        }
+    });
 
-	onMount(() => {
-		// Run once after mount; subsequent logic handled by reactive statement
-		checkSignIn();
-	});
-
-	// Re-run check when auth readiness or user changes
-	$: if ($authReady) {
-		checkSignIn();
-	}
-
-
-	const logout = async () => {
-		await user.logout();
-		goto('/login');
-	};
-
+    // Logout handler
+    const logout = async () => {
+        await user.logout();
+        goto('/login');
+    };
 </script>
 
 <svelte:head>
@@ -60,8 +42,6 @@
 			<button onclick={logout}>Logout</button>
 		{/if}
 
-		<!-- <p>send feedback or issues here ⬇️</p>
-		<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a> -->
 	</div>
 	<Logo name={false} />
 	<div class="analitycs">
@@ -106,7 +86,8 @@
 		margin-inline: auto;
 	}
 	
-	.button-conatiner-dev :is(button) {
+	
+	.button-conatiner-dev button {
 		font-size: 2rem;
 		border: solid 2px var(--primary-purple-400) ;
 		border-radius: 50px;
@@ -139,12 +120,11 @@
 		flex: 1 1 fit-content;
 	}
 
-		:global(.home-wrapper .button-conatiner-dev + .logo img){
-			width: clamp(1rem,5rem,3rem);
-			height: auto;
-			aspect-ratio: 1/1;
-
-		}
+	:global(.home-wrapper .button-conatiner-dev + .logo img){
+		width: clamp(1rem,5rem,3rem);
+		height: auto;
+		aspect-ratio: 1/1;
+	}
 
 
 	/* for mobile */
@@ -171,12 +151,10 @@
 			}
 
 			:global(header){
-				--_background-cut-off: 85%;
 				--body-padding: 5% ;
 				padding-inline: var(--body-padding) ;
 				z-index: 10;
 				overflow: visible;
-				height: var(--header-intro-height);
 				height: var(--header-height);
 				height: calc(var(--header-intro-height));
 			}
