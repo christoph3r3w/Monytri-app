@@ -25,7 +25,7 @@
 		stepType=''
 		headerName={''}
 		subtext=""
-		showLeftContent={false}
+		showLeftContent={true}
 		showRightContent={true}
 		rightContent={a}
 		leftContent={$device.isMobile? null : null}
