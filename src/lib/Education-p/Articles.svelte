@@ -468,7 +468,6 @@ let recentBlog =[
 	@media (width >= 600px) {
 		.article-container ul{
 			grid-auto-flow: column;
-			grid-auto-columns: 200px !important;
 		}
 	}
 		

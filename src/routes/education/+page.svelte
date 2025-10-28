@@ -25,7 +25,7 @@
 		stepType=''
 		headerName={''}
 		subtext=""
-		showLeftContent={true}
+		showLeftContent={false}
 		showRightContent={true}
 		rightContent={a}
 		leftContent={$device.isMobile? null : null}
@@ -60,7 +60,11 @@ screen and (device-width < 900px) and (width <= 900px) and (orientation: portrai
 screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) {
 
 		:global(.edu-container > .page-container){
-			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 20px);
+			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 3rem);
+		}
+
+		:global(.edu-container > .mobile-step){
+			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 3rem);
 		}
 	}
 
