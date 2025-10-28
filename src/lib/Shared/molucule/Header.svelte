@@ -7,6 +7,8 @@
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 
+	let {data} = $props();
+
 	let notOnLogin = $state(false);
 	$effect(() => {
 		notOnLogin = $current == 'login'? false : true;
@@ -102,7 +104,7 @@
 </div>
 {#if $current === 'home' && $isMobile}
 	<section class="home-intro-section">
-		<Balance_M/>
+		<Balance_M {data}/>
 	</section>
 {/if}
 

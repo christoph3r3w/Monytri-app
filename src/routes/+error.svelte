@@ -35,11 +35,16 @@
 
 	:global(html:has(.error-container) header)  {
 		display: none;
+	}	
+
+	.error-container > * :not(a) {
+		pointer-events: none;
+		user-select: none;
 	}
-	
+
 	.error-container {
-		grid-column: 1/-1 !important;
-		grid-row: 1/-1 !important;
+		grid-column: content !important;
+		grid-row: 1/span 1 !important;
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -74,35 +79,19 @@
 		color: var(--general-text-color);
 	}
 	
-	.error-header p{
-		flex: 1 1 100%;
-		text-align: center;
-		color: var(--general-text-color);
-	}
-	
-	.error-button-container {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: fit-content;
-		display: flex;
-		flex-direction: unset;
-		align-items: start;
-		justify-content: space-between;
-		padding:0;
-	}
-	
 	.error-message {
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		flex: 1 1 80%;	
-		width: 50ch;
+		width: 100%;
+		max-width: 50ch;
 		gap: 24px;
 		padding-top: 3rem;
 	}
 		
+	
 	.error-message img {
 		width: fit-content;
 		object-position:top center;
@@ -115,25 +104,28 @@
 		font-size: 1.2rem;
 		max-width: 50vw;
 	}
-	
+
+	.error-button-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: fit-content;
+		display: flex;
+		flex-direction: unset;
+		align-items: start;
+		justify-content: space-between;
+	}
+
 	.error-message a {
 		text-decoration: none;
 		text-align: center;
 		font-size: 1rem;
 		min-width: 200px;
-		width: fit-content;
 		padding: 1rem 2rem;
 		border-radius: 5px;
 		border: solid var(--primary-green-500) 2px;
-		
-		&:nth-of-type(1) {
-			background-color: var(--primary-green-500);
-			color: var(--general-text-color);
-		}
-		
-		&:nth-of-type(2) {
-			color: var(--primary-green-500);
-		}
+		color: var(--general-text-color-invert);
+		background-color: var(--primary-green-500);
 	}
 
 	:global(.error-message.mobile) {
@@ -158,11 +150,6 @@
 			width: 100cqw ;
 			max-width: 100%;
 			margin-bottom: min(1rem,2cqh);
-		}
-
-		.error-text img {
-			height: clamp(20cqw,25cqh , 30cqh);
-			width: auto;
 		}
 
 		.error-text h2 {
