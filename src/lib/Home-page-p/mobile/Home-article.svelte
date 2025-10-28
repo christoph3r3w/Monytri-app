@@ -209,6 +209,7 @@
 				height: fit-content;
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1rem;
+
 			}
 
 			.recent-blogs .blog-container{

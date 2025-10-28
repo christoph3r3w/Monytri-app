@@ -41,7 +41,6 @@
 		pointer-events: none;
 		user-select: none;
 	}
-	
 
 	.error-container {
 		grid-column: content !important;

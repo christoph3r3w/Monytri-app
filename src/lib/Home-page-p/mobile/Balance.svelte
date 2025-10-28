@@ -5,6 +5,7 @@
 	let {Invested,Gifted} = $derived(data.data);
 </script>
 
+
 {#snippet landingInfo()}
 		<article class="balance-info">
 			<div class="invested">
@@ -56,6 +57,7 @@
 				{/if}
 			</div>
 
+
 			<button onclick={goto("/gift")}>
 				<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M30.5398 6.04003C30.3452 6.2347 30.0892 6.33332 29.8332 6.33332C29.5772 6.33332 29.3212 6.23603 29.1265 6.04003L28.1665 5.08007V9.33332C28.1665 9.88532 27.7185 10.3333 27.1665 10.3333C26.6145 10.3333 26.1665 9.88532 26.1665 9.33332V5.08137L25.2065 6.04133C24.8158 6.432 24.1825 6.432 23.7918 6.04133C23.4012 5.65067 23.4012 5.01729 23.7918 4.62662L26.4585 1.95995C26.5505 1.86795 26.6612 1.79464 26.7838 1.74397C27.0278 1.64264 27.3038 1.64264 27.5478 1.74397C27.6705 1.79464 27.7812 1.86795 27.8732 1.95995L30.5398 4.62662C30.9305 5.01729 30.9305 5.64936 30.5398 6.04003ZM29.8332 16C29.8332 23.4867 23.6532 29.5386 16.1198 29.328C9.16384 29.1346 3.36651 23.336 3.17184 16.38C2.96118 8.8467 9.01318 2.66666 16.4998 2.66666C18.2692 2.66666 19.9585 3.0067 21.4958 3.64403C21.7092 3.73203 21.7918 3.98399 21.6972 4.19465C21.2025 5.29065 21.0172 6.57866 21.2972 7.93066C21.8145 10.4333 23.9852 12.3786 26.5278 12.6346C27.3532 12.7173 28.1545 12.6387 28.9012 12.416C29.1212 12.3507 29.3558 12.464 29.4132 12.6854C29.6865 13.74 29.8332 14.8547 29.8332 16ZM20.4625 18.6893C20.4625 17.0866 19.3758 15.692 17.8145 15.2974L15.6705 14.7653C15.3399 14.6826 15.0585 14.4974 14.8465 14.2267C14.6465 13.9734 14.5358 13.648 14.5358 13.3133C14.5358 12.488 15.2065 11.8174 16.0318 11.8174H16.9652C17.7278 11.8174 18.3665 12.3907 18.4532 13.1507C18.5145 13.7 19.0092 14.1 19.5585 14.0334C20.1079 13.972 20.5025 13.4774 20.4412 12.9281C20.2612 11.3254 19.0212 10.0893 17.4692 9.86392V9.33332C17.4692 8.78132 17.0212 8.33332 16.4692 8.33332C15.9172 8.33332 15.4692 8.78132 15.4692 9.33332V9.87206C13.8092 10.1441 12.5358 11.576 12.5358 13.3107C12.5358 14.0934 12.7985 14.8587 13.2718 15.456C13.7465 16.068 14.4238 16.5106 15.1838 16.7026L17.3278 17.2347C17.9958 17.404 18.4625 18.0013 18.4625 18.6867C18.4625 19.084 18.3065 19.4587 18.0225 19.7427C17.7385 20.0267 17.3639 20.1826 16.9665 20.1826H16.0332C15.2705 20.1826 14.6318 19.6093 14.5452 18.8493C14.4838 18.2999 13.9878 17.8973 13.4398 17.9666C12.8905 18.028 12.4958 18.5226 12.5572 19.0719C12.7345 20.6546 13.9452 21.8827 15.4692 22.1294V22.6667C15.4692 23.2187 15.9172 23.6667 16.4692 23.6667C17.0212 23.6667 17.4692 23.2187 17.4692 22.6667V22.1361C18.2092 22.0281 18.8958 21.7 19.4358 21.16C20.0985 20.4973 20.4625 19.6199 20.4625 18.6893Z" fill="#497951"/>
@@ -72,9 +74,11 @@
 		</nav>
 {/snippet}
 
+
 <section class="balance-section">
 	{@render landingInfo()}
 </section>
+
 
 <style>
 	.balance-section {
@@ -87,21 +91,15 @@
 		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
 		transition: margin 0.3s ease-in-out;
 		
-		align-items: unset;
-		/* align-self: center; */
-		justify-content: center;
-		height: 100%;
 		position: fixed;
 		inset-inline: 0;
-		gap: 1rem;
-
-		text-align: center;
-		z-index: 10;
-		padding-top: 3%;
-		margin-top: -1rem;
-		color: light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%));
-		transition: margin 0.3s ease-in-out;
 		
+		align-items: center;
+		align-self: center;
+		z-index: 10;
+		text-align: center;
+		margin-top: -1rem;
+
 		container-name: balance;
 		container-type: size;
 
@@ -116,8 +114,6 @@
 		align-items: unset;
 		padding-top: 3%;
 		height: 100%;
-		container-type: inline-size;
-
 	}
 
 	.balance-info {
@@ -127,17 +123,10 @@
 		align-items: center;
 		padding: 0 1%;
 		border-radius: 8px;
-		position: relative;
-		top: 20px;
 	}
 
-	.invested{
-		color: var(--general-text-color-invert);
-	}
-
-	.invested h1{
+	:is(.invested,.gifted) h1{
 		font-size: clamp(1rem,36px,2.5rem);
-		font-weight: 500;
 		text-align: center;
 		align-self: center;
 		overflow: hidden;
@@ -147,7 +136,7 @@
 		
 	}
 	
-	.invested p{
+	:is(.invested,.gifted) p{
 		font-size: clamp(10px,12px,12px);	
 	}
 
@@ -162,7 +151,6 @@
 		font-weight: 300;
 	}
 
-	/* gifted info */
 	.gifted{
 		color: var(--general-text-color); 
 		gap: 0;
@@ -188,14 +176,14 @@
 	}
 
 	.gifted-content svg{
-		--d:clamp(.8rem,5vw,20px);
-		width: var(--d);
-		height: clamp(1rem,var(--d),var(--d));
+		--d:clamp(.8rem,5vw,25px);
+		min-width: var(--d);
+		height: var(--d);
 		aspect-ratio: 1;
 		color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
 		path{
 			fill: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
-			fill:goldenrod;
+			fill:rgba(218, 165, 32, 0.877);
 		}
 	}
 
@@ -216,23 +204,13 @@
 		--d:clamp(.8rem,5vw,50px);
 	}
 
-	.gifted h1{
-		font-size: clamp(1rem,36px,2.5rem);
-		text-align: center;
-		align-self: center;
-		margin-bottom: 2% ;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-		width: 100%;
+	.gifted.inner h1{
+		width: fit-content;
 	}
 
-	.gifted.outer{
-		display: none;
-	}
-
-	.gifted.outer p{
-		font-size: clamp(10px,12px,12px);	
+	.gifted.inner p{
+		font-size: 1rem;
+		font-weight: 300;
 	}
 
 	.gifted.inner::after{
@@ -251,7 +229,6 @@
 		grid-template-rows: 1fr 1fr;
 		width: clamp(50%,50dvw ,300px);
 		max-width: 500px;
-		height: 24cqh;
 		border-radius: 8px;
 		background-color: var(--general-background-color,white);
 		color: var(--general-text-color);
@@ -268,28 +245,6 @@
 		justify-content: center;
 		height: 100%;
 		color: var(--general-text-color);
-	}
-
-	.button-container .gifted.inner{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		width: 100%;
-		height: 100%;
-	}
-
-	.button-container .gifted.inner svg{
-		--d:clamp(.8rem,5vw,50px);
-	}
-
-	.button-container .gifted.inner h1{
-		width: fit-content;
-	}
-
-	.button-container .gifted.inner p{
-		font-size: 1rem;
-		font-weight: 300;
 	}
 
 	.button-container button{
@@ -330,24 +285,6 @@
 		justify-content: center;
 		gap: 4%;
 		min-width: fit-content;
-
-	}
-
-	.balance-section:has(.button-container) .button-container .gifted {
-		grid-column: 1 / -1;
-		grid-row: 1 / 2;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		height: 100%;
-		color: var(--general-text-color);
-	}
-	
-	.add-money-link{
-		display: flex;
-		place-content: center;
-		gap: 4%;
 		width: 100%;
 		max-height: 50px;
 		font-size: clamp(0.8rem, 4vw, 1.125rem);
@@ -383,19 +320,8 @@
 			width: 100%;
 			gap: calc(var(--margin-top) + 5dvh);
 			margin-top: var(--margin-top);
-			gap: calc(19% + var(--move-top));
-			padding: 0;
-			width: 100%;
-			height: 100%;
-			align-items: unset;
 			align-self: end;
-			justify-content: center;
 			transform-origin: bottom;
-			gap: calc(var(--margin-top) + 7dvh);
-			padding-top: 3%;
-			margin-top: var(--margin-top);
-
-			container-type: size;
 		}
 	
 		.balance-section:has(.button-container) {
@@ -414,17 +340,15 @@
 			flex-direction: column;
 			align-items: center;
 			text-align: center;
-			justify-content: center;
-			top: 0;
 		}	
 
-		.balance-info .invested h1{
+		.invested h1{
 			font-size: clamp(1rem,10vw,2.5rem);
 			width: 100%;
 			text-align: center;
 		}
 
-		.balance-info .invested p {
+		.invested p {
 			font-size: clamp(1rem,5vw,1.3rem);
 		}
 
@@ -478,34 +402,6 @@
 		.balance-section:has(.button-container) {
 			height: fit-content;
 			height: var(--header-intro-height);
-		.gifted h1{
-			max-height: 50px;
-			font-size: clamp(.5rem,7vw,1.2rem);
-			padding: 3% clamp(5px,4vw,1%);
-		}
-
-		.gifted.outer {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			gap: 4%;
-			min-width: fit-content;
-			font-size: clamp(0.5rem, 2vw, 1rem);
-			text-wrap: nowrap;
-			color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
-		}
-
-		.gifted.outer p{
-			translate: 0 40%;
-		}
-
-		@container balance (height < 200px) {
-			.gifted.outer {
-				height: 0 !important;
-				overflow: hidden;
-				transition: 3ms ease-in-out;
-			}
 		}
 
 		.balance-section:has(.button-container) .button-container {
@@ -535,15 +431,7 @@
 			border-radius: inherit;
 			background-color: var(--neutral-grey);
 		}
-
-		.balance-section .button-container .gifted.inner{
-			display: none ;
-		}
-
-		.balance-section:has(.button-container) .add-money-link {
-			display: none;
-		}
-	}}
+	}
 
 		@media 
 	(-webkit-min-device-pixel-ratio: 3),
