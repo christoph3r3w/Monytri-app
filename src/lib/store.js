@@ -52,6 +52,9 @@ export function updateCurrentFromPath() {
         case '/stock-overview/calculator':
             current.set('calculator');
             break;
+        case '/education':
+            current.set('Grow with Monytri');
+            break;
         default:
             current.set('');
             break;

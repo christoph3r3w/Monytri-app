@@ -34,6 +34,7 @@ export {default as Brokers} from './Stock-overview-p/Brokers.svelte';
 export {default as Announcements} from './Stock-overview-p/Announcements.svelte';
 export {default as Calculator} from './Stock-overview-p/Calc-components/Calculator.svelte';
 export {default as PortfolioDetail} from './Stock-overview-p/Portfolio-detail.svelte';
+export {default as EduArticles} from './Education-p/Articles.svelte';
 
 
 // test components
