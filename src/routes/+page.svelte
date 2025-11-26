@@ -39,6 +39,22 @@
 		goto('/login');
 	};
 
+
+
+//     const { data } = $props();
+//     let { device, user, isAuthenticated, authReady } = data;
+
+    // Authentication check using reactive state
+//     $effect(() => {
+//         if (!$authReady) return;
+        
+//         const hasSession = user.hasLocalSession?.();
+//         if (!$user && !hasSession) {
+//             goto('/login');
+//         }
+//     });
+
+//     };
 </script>
 
 <svelte:head>
@@ -60,6 +76,7 @@
 		{:else}
 			<button onclick={logout}>Logout</button>
 		{/if}
+
 	</div>
 	<Logo name={false} />
 	<div class="analitycs">
@@ -103,7 +120,7 @@
 		margin-inline: auto;
 	}
 	
-	.button-conatiner-dev :is(button) {
+	.button-conatiner-dev button {
 		font-size: 2rem;
 		border: solid 2px var(--primary-purple-400) ;
 		border-radius: 50px;
@@ -181,14 +198,11 @@
 			}
 
 			:global(header){
-				--_background-cut-off: 85%;
 				--body-padding: 5% ;
 				padding-inline: var(--body-padding) ;
 				z-index: 10;
 				overflow: visible;
 				height: var(--header-intro-height);
-				height: var(--header-height);
-				height: calc(var(--header-intro-height));
 			}
 	
 			:global(.home-wrapper){
