@@ -30,11 +30,9 @@
 		checkSignIn();
 	});
 
-	// Re-run check when auth readiness or user changes
-	$: if ($authReady) {
-		checkSignIn();
-	}
-
+	$effect(() => { 
+		if($authReady) {checkSignIn();}
+	})
 
 	const logout = async () => {
 		await user.logout();
@@ -49,12 +47,12 @@
 
 <section class="home-wrapper">
 	<!-- Top section of the home page on mobile. -->
-	<HomeArticles_M/>	
+	<HomeArticles_M {blogs} {podcasts}/>	
 	<div class="button-conatiner-dev">
 		<button onclick={goto("/transactions")}>Transactions</button>
 		<button onclick={goto("/stock-overview")}>Stock overview</button>
 		<button onclick={goto("/gift")}>send a gift</button>
-		<button onclick={goto("/request")} disabled>request a gift</button>
+		<button onclick={goto("/education")}>education</button>
 		<button onclick={goto("/share")}>share</button>
 		<button onclick={goto("/install")}>install app</button>
 		{#if !$isAuthenticated}
@@ -62,9 +60,6 @@
 		{:else}
 			<button onclick={logout}>Logout</button>
 		{/if}
-
-		<!-- <p>send feedback or issues here ⬇️</p>
-		<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a> -->
 	</div>
 	<Logo name={false} />
 	<div class="analitycs">
@@ -90,7 +85,6 @@
 		flex-direction: column;
 		align-content: start;
 		width: 100%;
-		/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
 		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
@@ -142,12 +136,25 @@
 		flex: 1 1 fit-content;
 	}
 
-		:global(.home-wrapper .button-conatiner-dev + .logo img){
-			width: clamp(1rem,5rem,3rem);
-			height: auto;
-			aspect-ratio: 1/1;
+	:global(.home-wrapper .button-conatiner-dev + .logo img){
+		width: clamp(1rem,5rem,3rem);
+		height: auto;
+		aspect-ratio: 1/1;
+	}
 
-		}
+	.analitycs{
+		display: none;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		padding: 1rem;
+		font-size: 0.75rem;
+		background-color: var(--general-background-color-secondary);
+		color: var(--general-text-color-secondary);
+		border-top-right-radius: 10px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+		z-index: 100;
+	}
 
 
 	/* for mobile */
@@ -197,7 +204,6 @@
 				height: fit-content;
 				margin-bottom: 5rem;
 				transition: background-color 0.3ms ease-out, color 0.3s ease-in-out;
-
 			}
 			
 			.button-conatiner-dev,.analitycs,:global(.home-wrapper .button-conatiner-dev + .logo) {

@@ -66,7 +66,7 @@
 </script>
 
 	<section class="home-articles">
-		<article class="invest-tips-container">
+		<!-- <article class="invest-tips-container">
 			<h2>Grow your investing skills!
 				<span class="arrow-icon">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,8 +104,9 @@
 					<p>With Chiara & David</p>
 				</li>
 			</ul>
-		</article>
-		<article class="recent-blogs">
+		</article> -->
+
+		<!-- <article class="recent-blogs">
 			<h2>Recent Blogs
 				<span class="arrow-icon">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -201,7 +201,7 @@
 	}
 
 	.gifted.inner {
-	position: relative;
+		position: relative;
 		grid-column: 1 / -1;
 		grid-row: 1 / 2;
 		display: flex;

@@ -195,7 +195,7 @@ let recentBlog = blogs || [
 		</article>
 	</section>
 
-	<style>
+<style>
 
 		.article-container ul{
 			display: grid;
@@ -214,12 +214,6 @@ let recentBlog = blogs || [
 			margin-bottom: 1.5dvh;
 		}
 		
-	/* @media 
-		(-webkit-min-device-pixel-ratio: 3),
-		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi),
-		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
-		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) { */
-
 			.edu-articles{
 				--body-padding: 5%;
 				position: relative;
@@ -259,16 +253,22 @@ let recentBlog = blogs || [
 				grid-auto-flow:column;
 				grid-auto-columns: clamp(50%, 50%, 300px);
 				gap: 1rem;
-				min-height: 30% ;
+				min-height: 30%;
+				align-items:stretch;
 			}
 
 			.article-container ul li{
 				position: relative;
 				width: 90%;
 				height: auto;
+				max-height: 300px;
 				aspect-ratio: 1;
 				display: flex;
 				flex-direction: column;
+			}
+			
+			.article-container.invest-tips ul li{
+				margin-block: 2%;
 			}
 
 			.article-container li a{
@@ -285,6 +285,11 @@ let recentBlog = blogs || [
 				width: 100%;
 				height: 100%;
 				margin-bottom: 3%;
+			}
+
+			.article-container.invest-tips figure{
+				height: auto;
+				aspect-ratio: 1;
 			}
 
 			.article-container figure img{
@@ -311,6 +316,10 @@ let recentBlog = blogs || [
 				color: var(--general-text-color);
 				font-weight: 400;
 				line-height: 120%;
+			}
+
+			.article-container li > p:nth-of-type(1){
+				flex: 0 1 20%;
 			}
 
 			.article-container li p:nth-of-type(2){
@@ -448,7 +457,7 @@ let recentBlog = blogs || [
 				margin-bottom: 4%;
 			}
 
-			.blog-container .blog-text .blog-text-content p:not(.date){
+			.blog-container .blog-text .blog-text-content p:not(.publishedAt){
 				font-size: 14px;
 				color: var(--black);
 				font-weight: 400;
@@ -479,10 +488,6 @@ let recentBlog = blogs || [
 				font-weight: 400;
 				line-height: 120%;
 			}
-
-
-	/* } */
-	
 
 	@media (width >= 600px) {
 		.article-container ul{

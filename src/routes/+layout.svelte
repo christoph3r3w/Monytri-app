@@ -227,6 +227,7 @@
 		grid-row: header;
 		grid-column: 1/-1;
 		z-index: 100;
+		
 		container-type: inline-size;
 		container-name:header;
 	}
@@ -241,7 +242,6 @@
 		overflow-x: hidden;
 		overflow-y: visible;
 		
-		
 		container-name: main;
 
 		/* grid positioning for all main content */
@@ -252,7 +252,7 @@
 			grid-template-columns: subgrid;
 			align-content: start;
 			overflow-x: clip;
-			overflow-y: visible;
+			overflow-y: auto;
 		}
 				
 		&:nth-of-type(1) > :is(:global(*)) {
@@ -278,6 +278,12 @@
 		
 		container-type: inline-size;
 		container-name: footer;
+	}
+
+	@media screen and (width < 901px){
+		:global(main:nth-of-type(1)) {
+			overflow-y: visible;
+		}
 	}
 
 	/* media query for mobile view */
