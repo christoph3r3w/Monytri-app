@@ -5,7 +5,7 @@ export const client = new Client();
 
 client
     .setEndpoint(PUBLIC_APPWRITE_ENDPOINT)
-    .setProject(PUBLIC_APPWRITE_PROJECT_ID); // Replace with your project ID
+    .setProject(PUBLIC_APPWRITE_PROJECT_ID); 
 
 export const account = new Account(client);
 export const databases = new Databases(client);
