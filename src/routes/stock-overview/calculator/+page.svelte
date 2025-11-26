@@ -71,6 +71,7 @@
 
 :global(.calculator-container > .page-container .right-step){
 	overflow-y:auto ;
+	height: calc(100cqh - var(--footer-height) - var(--header-height) );
 }
 
 .calculator-container {
@@ -97,6 +98,7 @@
 
 .calculator-section{
 	width: 100% ;
+	height: calc( 100% -  var(--footer-height));
 } 
 
 .calculator-section h2{
@@ -149,7 +151,16 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		height: 200vh ;
 		overflow: auto;
 	}
-	
+
+	:global(.calculator-container > .page-container .right-step){
+		overflow-y:visible ;
+		height: 100%;
+	}
+
+	.calculator-section{
+		width: 100% ;
+		height: auto;
+	} 
 }
 
 </style>
