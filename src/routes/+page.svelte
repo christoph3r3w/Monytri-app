@@ -8,6 +8,9 @@
 	import { user,isAuthenticated, authReady } from '$lib/user';
 	import {page} from '$app/stores';
 
+	let {data} = $props();
+	let {blogs,podcasts} = data.data;
+
 	async function checkSignIn() {
 		// Wait until auth system finished first check
 		if (!$authReady) return; // on next tick it will run again via reactive statement

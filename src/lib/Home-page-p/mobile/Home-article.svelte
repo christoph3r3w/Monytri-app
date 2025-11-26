@@ -1,3 +1,70 @@
+<script>
+	let {blogs,podcasts} = $props();
+
+	let investTips = podcasts || [
+		{
+			episodeNumber: '1',
+			title: 'Why Monytri?',
+			subtitle: 'With Chiara & David',
+			bannerImage:{imageUrl:'/home-page/homescreen-piggybank.png', altText:'homescreen piggybank'},
+			link:'/how-it-works'
+		},
+		{
+			episodeNumber: '2',
+			title: 'Why Monytri?',
+			subtitle: 'With Chiara & David',
+			bannerImage:{imageUrl:'/home-page/homescreen-cash.png', altText:'homescreen cash'},
+			link:'/how-it-works'
+		},
+		{
+			episodeNumber: '3',
+			title: 'Why Monytri?',
+			subtitle: 'With Chiara & David',
+			bannerImage:{imageUrl:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png', altText:'homescreen cash'},
+			link:'/how-it-works'
+		}
+	];
+
+	let videoBlogs = [
+		{
+			episodeNumber: '1',
+			link:'/blog',
+			bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+			publishedAt:'date',
+			title:'Investing 101',
+			subtitle:'In this episode Chiara is braking down the ins and outs of investing and where to start as a beginner.',
+			host :{profileImg:'', name:'Chiara'}
+		}
+	];
+
+	let recentBlog = blogs || [
+		{
+			link:'/blog',
+			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+			publishedAt:'date',
+			title:'Are you saving enough?',
+			subtitle:'Discover how your finances stack up in the Netherlands!',
+			author :{profileImg:'', name:'Chiara'}
+		},
+		{
+			link:'/blog',
+			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+			publishedAt:'date',
+			title:'Are you saving enough?',
+			subtitle:'Discover how your finances stack up in the Netherlands!',
+			author :{profileImg:'', name:'Chiara'}
+		},
+		{
+			link:'/blog',
+			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+			publishedAt:'date',
+			title:'Are you saving enough?',
+			subtitle:'Discover how your finances stack up in the Netherlands!',
+			author :{profileImg:'', name:'Chiara'}
+		}
+	]
+</script>
+
 	<section class="home-articles">
 		<article class="invest-tips-container">
 			<h2>Grow your investing skills!
@@ -61,6 +128,71 @@
 					<span>
 						<img src="./" alt="chiara" width="10px" height="10px">
 						<p>by Chiara</p>
+					</span>
+				</div>
+			</li>
+			{/each}
+			</ul>
+		</article> -->
+
+		<article class="invest-tips-container">
+			<h2>Grow your investing skills!
+				<span class="arrow-icon">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M21.6919 12.2869C21.6539 12.3789 21.599 12.4618 21.53 12.5308L14.53 19.5308C14.384 19.6768 14.192 19.7508 14 19.7508C13.808 19.7508 13.616 19.6778 13.47 19.5308C13.177 19.2378 13.177 18.7628 13.47 18.4698L19.1899 12.7498H3C2.586 12.7498 2.25 12.4138 2.25 11.9998C2.25 11.5858 2.586 11.2498 3 11.2498H19.189L13.469 5.52981C13.176 5.23681 13.176 4.76177 13.469 4.46877C13.762 4.17577 14.237 4.17577 14.53 4.46877L21.53 11.4688C21.599 11.5378 21.6539 11.6207 21.6919 11.7127C21.7679 11.8967 21.7679 12.1029 21.6919 12.2869Z" fill="#313131"/>
+					</svg>
+				</span>
+			</h2>
+			<ul class="invest-tips-list">
+			{#each investTips as article}
+				<li>
+					<a href={article.link} aria-label="article"></a>
+					<figure>
+						<img src={encodeURI(article.bannerImage?.imageUrl)} alt={article.bannerImage?.altText} width="177px" height="177px">
+						
+						<figcaption>Ep.{article.episodeNumber}</figcaption>
+					</figure>
+					<p>Ep.{article.episodeNumber}: {article.title} {#if article.guest} with {article.guest} {/if}</p>
+					<p>
+						{#if article.subtitle}
+							{article.subtitle}
+						{:else if article.host?.length}
+							with {article.host[0].name}
+							{#each article.host.slice(1) as host}
+								& {host.name}
+							{/each}
+						{/if}
+					</p>
+				</li>
+			{/each}
+			</ul>
+		</article>
+
+		<article class="recent-blogs">
+			<h2>Recent Blogs
+				<span class="arrow-icon">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M21.6919 12.2869C21.6539 12.3789 21.599 12.4618 21.53 12.5308L14.53 19.5308C14.384 19.6768 14.192 19.7508 14 19.7508C13.808 19.7508 13.616 19.6778 13.47 19.5308C13.177 19.2378 13.177 18.7628 13.47 18.4698L19.1899 12.7498H3C2.586 12.7498 2.25 12.4138 2.25 11.9998C2.25 11.5858 2.586 11.2498 3 11.2498H19.189L13.469 5.52981C13.176 5.23681 13.176 4.76177 13.469 4.46877C13.762 4.17577 14.237 4.17577 14.53 4.46877L21.53 11.4688C21.599 11.5378 21.6539 11.6207 21.6919 11.7127C21.7679 11.8967 21.7679 12.1029 21.6919 12.2869Z" fill="#313131"/>
+					</svg>
+				</span>
+			</h2>
+			<!-- url('{encodeURI(cardDesign.cardBackground)}') -->
+			<ul class="recent-blogs-list">
+			{#each recentBlog as blog}
+			<li class="blog-container">
+				<a href={blog.link || '/blog'} aria-label="blog"></a>
+				<img src={encodeURI(blog.bannerImage?.imageUrl)} alt={blog.bannerImage?.altText} width="177px" height="177px">
+				<div class="blog-text">
+					<p class="date">{blog.publishedAt || 'date'}</p>
+					<div class="blog-text-content">
+						<p>{blog.title}</p>
+						<p>{blog.subtitle}</p>
+					</div>
+					<span>
+						{#if blog.author?.profileImg}
+							<img src={encodeURI(blog.author?.profileImg)} alt={blog.author?.name} width="10px" height="10px">
+						{/if}
+						<p>by {blog.author?.name}</p>
 					</span>
 				</div>
 			</li>

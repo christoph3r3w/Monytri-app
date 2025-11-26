@@ -7,8 +7,8 @@
 	import {user} from '$lib/user.js';
 
 	let {data} = $props();
-	let {portfolio,usersBrokers,brokers,totalBalance,averageBalance,announcements} = data.data	
-
+	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = data?.data	
+	
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
 		return new Intl.NumberFormat('en-IE', {

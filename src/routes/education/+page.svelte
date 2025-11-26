@@ -8,6 +8,7 @@
 	
 	let search = $state('');
 	let {data,onSearchQueryUpdate} = $props();
+	let {blogs,podcasts,videos} = data?.data;
 	
 	function updateSearchQuery(newQuery) {
 		search = newQuery;
@@ -17,7 +18,7 @@
 </script>	
 
 {#snippet a()}
-	<EduArticles />
+	<EduArticles {blogs} {podcasts} {videos} />
 {/snippet}
 
 <article class="edu-container">

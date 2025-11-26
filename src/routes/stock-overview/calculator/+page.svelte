@@ -7,7 +7,7 @@
 	import {user} from '$lib/user.js';
 
 	let {data} = $props();
-	let {portfolio,usersBrokers,brokers,totalBalance,averageBalance} = data?.data;	
+	let {portfolio,usersBrokers,totalBalance,averageBalance} = data?.data;	
 
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
@@ -29,7 +29,7 @@
 {#snippet b()}
 	<section class="current-brokers">
 		<h2>Current Brokers</h2>		
-		<Brokers {formatCurrency} {usersBrokers} {brokers}/>
+		<Brokers {formatCurrency} {usersBrokers}/>
 	</section>
 {/snippet}
 

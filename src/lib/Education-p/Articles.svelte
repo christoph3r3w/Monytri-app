@@ -1,84 +1,85 @@
 <script>
-	
 
-let investTips = [
+let {blogs,podcasts,videos} = $props();
+
+let investTips = podcasts || [
 	{
 		ep: '1',
-		title: 'Ep.1: Why Monytri?',
+		title: 'Why Monytri?',
 		subtitle: 'With Chiara & David',
-		img:{src:'/home-page/homescreen-piggybank.png', alt:'homescreen piggybank'},
+		bannerImage:{imageUrl:'/home-page/homescreen-piggybank.png', altText:'homescreen piggybank'},
 		link:'/how-it-works'
 	},
 	{
 		ep: '2',
-		title: 'Ep.2: Why Monytri?',
+		title: 'Why Monytri?',
 		subtitle: 'With Chiara & David',
-		img:{src:'/home-page/homescreen-cash.png', alt:'homescreen cash'},
+		bannerImage:{imageUrl:'/home-page/homescreen-cash.png', altText:'homescreen cash'},
 		link:'/how-it-works'
 	},
 	{
 		ep: '3',
-		title: 'Ep.3: Why Monytri?',
+		title: 'Why Monytri?',
 		subtitle: 'With Chiara & David',
-		img:{	src:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png', alt:'homescreen cash'},
+		bannerImage:{imageUrl:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png', altText:'homescreen cash'},
 		link:'/how-it-works'
 	}
 ];
 
-let videoBlogs = [
+let videoBlogs = videos || [
 	{
 		ep: '1',
 		link:'/blog',
-		img:{src:'/shared-assests/edu-video-img.png', alt:''},
-		date:'date',
+		bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+		publishedAt:'date',
 		title:'Investing 101',
 		subtitle:'In this episode Chiara is braking down the ins and outs of investing and where to start as a beginner.',
-		author :{img:'', name:'Chiara'}
+		host :{profileImg:'', name:'Chiara'}
 	},
 	{
 		ep: '2',
 		link:'/blog',
-		img:{src:'/shared-assests/edu-video-img.png', alt:''},
-		date:'date',
+		bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
-		author :{img:'', name:'Chiara'}
+		host :{profileImg:'', name:'Chiara'}
 	},
 	{
 		ep: '3',
 		link:'/blog',
-		img:{src:'/shared-assests/edu-video-img.png', alt:''},
-		date:'date',
+		bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
-		author :{img:'', name:'Chiara'}
+		host :{profileImg:'', name:'Chiara'}
 	}
 ];
 
-let recentBlog =[
+let recentBlog = blogs || [
 	{
 		link:'/blog',
-		img:{src:'/home-page/homescreen-team.png', alt:''},
-		date:'date',
+		bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
-		author :{img:'', name:'Chiara'}
+		author :{profileImg:'', name:'Chiara'}
 	},
 	{
 		link:'/blog',
-		img:{src:'/home-page/homescreen-team.png', alt:''},
-		date:'date',
+		bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
-		author :{img:'', name:'Chiara'}
+		author :{profileImg:'', name:'Chiara'}
 	},
 	{
 		link:'/blog',
-		img:{src:'/home-page/homescreen-team.png', alt:''},
-		date:'date',
+		bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
-		author :{img:'', name:'Chiara'}
+		author :{profileImg:'', name:'Chiara'}
 	}
 ]
 
@@ -97,12 +98,21 @@ let recentBlog =[
 				<li>
 					<a href={article.link} aria-label="article"></a>
 					<figure>
-						<img src={article.img.src} alt={article.img.alt} width="177px" height="177px">
+						<img src={article.bannerImage?.imageUrl} alt={article.bannerImage?.altText} width="177px" height="177px">
 						
-						<figcaption>Ep.{article.ep}</figcaption>
+						<figcaption>Ep.{article.episodeNumber}</figcaption>
 					</figure>
-					<p>{article.title}</p>
-					<p>{article.subtitle}</p>
+					<p>Ep.{article.episodeNumber}: {article.title} {#if article.guest} with {article.guest} {/if}</p>
+					<p>
+						{#if article.subtitle}
+							{article.subtitle}
+						{:else if article.host?.length}
+							with {article.host[0].name}
+							{#each article.host.slice(1) as host}
+								& {host.name}
+							{/each}
+						{/if}
+					</p>
 				</li>
 			{/each}
 			</ul>
@@ -121,26 +131,35 @@ let recentBlog =[
 				<li class="blog-container">
 					<a href={article.link} aria-label="article"></a>
 					<figure>
-						<img src={article.img.src} alt={article.img.alt} width="177px" height="177px">
-						<figcaption>Ep.{article.ep}</figcaption>
+						<img src={article.bannerImage?.imageUrl} alt={article.bannerImage?.altText} width="177px" height="177px">
+						{#if article.episodeNumber}
+							<figcaption>Ep.{article.episodeNumber}</figcaption>
+						{/if}
 					</figure>
 
 					<div class="blog-text">
 						<div class="blog-text-content">
-							<h3>Ep.{article.ep}: {article.title}</h3>
-							<p>{article.subtitle}</p>
+							<h3>Ep.{article.episodeNumber}: {article.title}</h3>
+							<p>{article.description || article.subtitle}</p>
 						</div>
 						<span>
-							{#if article.author.img}
-								<img src={article.author.img} alt={article.author.name} width="10px" height="10px">
+							{#if article.host.profileImg}
+								<img src={article.host.profileImg} alt={article.host.name} width="10px" height="10px">
 							{/if}
-								<p>with {article.author.name}</p>
+						
+							<p>
+								{#if article.host?.length}
+										with {article.host[0].name}
+									{#each article.host.slice(1) as host}
+										& {host.name}
+									{/each}
+								{/if}
+							</p>
 						</span>
 					</div>
 				</li>
 			{/each}
 			</ul>
-
 		</article>
 
 		<article class="recent-blogs">
@@ -155,17 +174,17 @@ let recentBlog =[
 			<ul class="recent-blogs-list">
 			{#each recentBlog as blog}
 			<li class="blog-container">
-				<a href={blog.link} aria-label="blog"></a>
-				<img src={blog.img.src} alt={blog.img.alt} width="177px" height="177px">
+				<a href={blog.link || '/blog'} aria-label="blog"></a>
+				<img src={blog.bannerImage?.imageUrl} alt={blog.bannerImage?.altText} width="177px" height="177px">
 				<div class="blog-text">
-					<p class="date">{blog.date}</p>
+					<p class="date">{blog.publishedAt || 'date'}</p>
 					<div class="blog-text-content">
 						<p>{blog.title}</p>
 						<p>{blog.subtitle}</p>
 					</div>
 					<span>
-						{#if blog.author.img}
-							<img src={blog.author.img} alt={blog.author.name} width="10px" height="10px">
+						{#if blog.author.profileImg}
+							<img src={blog.author.profileImg} alt={blog.author.name} width="10px" height="10px">
 						{/if}
 						<p>by {blog.author.name}</p>
 					</span>
