@@ -42,7 +42,6 @@
 	container-type: inline-size;	
 	/* debugging */
 	/* outline: tomato solid; */
-
 }
 
 .announcements-list li{

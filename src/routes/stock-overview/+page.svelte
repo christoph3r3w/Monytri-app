@@ -312,7 +312,9 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		}
 
 		:global(body.isMobile.ios-device) :global(.stockOverview-container .mobile-step){
-			padding-bottom: calc(13lvh + var(--footer-height) + var(--safe-area-inset-bottom)) ;
+			/* border: solid red; */
+			padding-bottom: calc( var(--footer-height) + var(--safe-area-inset-bottom)) ;
+			max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ;
 		}
 
 	}

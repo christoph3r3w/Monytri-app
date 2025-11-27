@@ -5,7 +5,7 @@
 
 <section class="error-container">
 	{#if $isMobile}
-		<section class="error-message mobile"  transition:fade>
+		<section class="error-message mobile" transition:fade>
 			<div class="error-text">
 				<img src="./shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="not found">
 				<h2>Page Not Found</h2>
@@ -17,13 +17,13 @@
 		</section>
 	{:else}
 		
-		<section class="error-header"  transition:fade>
+		<section class="error-header" transition:fade>
 			<div class="error-header-text">
 				<h2>Page Not Found</h2>
 			</div>
 		</section>
 		
-		<section class="error-message"  transition:fade>
+		<section class="error-message" transition:fade>
 			<img src="/shared-assests/Empty-State-No-User-Found-1--Streamline-Brooklyn (Traced).png" alt="becoming rich ">
 			<p>Oops! It looks like the page you're looking for doesn't exist or has moved. Please try again or go back to the home page.</p>
 			<a href="/">Back to Homepage</a>
@@ -74,7 +74,7 @@
 		color: var(--general-text-color);
 	}
 	
-	.error-header p{
+	.error-text p{
 		flex: 1 1 100%;
 		text-align: center;
 		color: var(--general-text-color);
