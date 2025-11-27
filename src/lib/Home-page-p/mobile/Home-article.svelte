@@ -257,7 +257,8 @@
 				grid-auto-flow:column;
 				grid-auto-columns: clamp(50%, 50%, 300px);
 				gap: 1rem;
-				min-height: 30% ;
+				height: 30% ;
+				max-height: fit-content;
 			}
 
 			.invest-tips-container ul li{
@@ -267,8 +268,6 @@
 				aspect-ratio: 1;
 				display: flex;
 				flex-direction: column;
-				/* outline: tomato solid 1px; */
-				/* max-width: 200px; */
 			}
 
 			.invest-tips-container ul li a{
@@ -320,7 +319,7 @@
 			}
 
 			.recent-blogs{
-				margin-bottom: 3rem;
+				margin-bottom: var(--footer-height,3rem);
 				display: flex;
 				flex-direction: column;
 			}
@@ -338,10 +337,12 @@
 			}
 
 			.recent-blogs .recent-blogs-list{
+				box-sizing: content-box;
 				display: grid;
+				height: fit-content;
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1rem;
-				height: 100%;
+
 			}
 
 			.recent-blogs .blog-container{

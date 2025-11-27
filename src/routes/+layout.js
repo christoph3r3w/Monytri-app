@@ -1,10 +1,19 @@
 // import { dev } from '$app/environment';
-
+// export const ssr = dev;
 export const ssr = true;
 export const prerender = true
-// export const ssr = dev;
-
 import { isAuthenticated, user, authReady } from '$lib/user';
+import { device } from '$lib/Device.js';
+
+function balanceString(balance) {
+	const formatted = new Intl.NumberFormat('nl-NL', {
+		style: 'currency',
+		currency: 'EUR',
+	}).format(balance);
+	const maxLength = 10;
+	return formatted.length > maxLength ? formatted.slice(0, maxLength) + '…' : formatted;
+}	
+
 
 // /**
 //  * Client-side load function that syncs server-side auth state with the client stores.
@@ -38,10 +47,20 @@ export const load = async ({ data }) => {
 //         }
 //     }
 
+    let investedRaw = 1505.88;
+	let giftedRaw = 501.25;
+
     return {
-        ...data,
+        data:{
+                    Invested: balanceString(investedRaw),
+                    Gifted: balanceString(giftedRaw),
+            },
+        device,
+        user,
+        // isAuthenticated,
+        authenticated: !!data?.authenticated,
+        authReady
         // Re-export the current auth state for components that don't use the store
-        authenticated: !!data?.authenticated
     };
 };
 
