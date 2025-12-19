@@ -2,15 +2,19 @@
 	import { onMount } from "svelte";
 	import { goto } from '$app/navigation';
 	let {data} = $props();
-	let {Invested,Gifted} = $derived(data.data);
+	let {Invested,Gifted} = $derived(data?.data);
 </script>
 
 
 {#snippet landingInfo()}
 		<article class="balance-info">
-			<div class="invested">
-				<h1 title={undefined}>{Invested}</h1>
+		<div class="invested">
+		{#await Invested}
+			<h1>0.00</h1>
+		{:then Invested}
+				<h1 title={undefined}>{Invested|| 0.00}</h1>
 				<p>Portfolio Value</p>
+		{/await}
 			</div>
 			<a href="/" class="add-money-link">
 				<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,6 +24,7 @@
 			</a>
 		</article>
 		<div class="gifted outer">
+		{#await data.data.Gifted then Gifted }
 				{#if Gifted.length > 0 && Invested.length > 0}
 					<span class="gifted-content">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,6 +41,8 @@
 					<h1>let's start here</h1>
 				</span>
 				{/if}
+		{/await}
+
 		</div>
 		<nav class="button-container">
 			<div class="gifted inner">
@@ -188,7 +195,7 @@
 	}
 
 	.gifted.inner {
-	position: relative;
+		position: relative;
 		grid-column: 1 / -1;
 		grid-row: 1 / 2;
 		display: flex;

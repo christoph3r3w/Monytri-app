@@ -164,7 +164,7 @@ let growthPercentage = $derived.by(() => {
 			x: { grid: { display: false } },
 			y: {
 			stacked: true,
-			grid: { color: '#e5e7eb', borderDash: [5, 5] },
+			grid: { color: '#e5e7eb', tickBorderDash: [5, 5] },
 			ticks: {
 				callback: (value) => `€${(Number(value) / 1000).toFixed(0)}k`,
 			},
@@ -253,6 +253,7 @@ let growthPercentage = $derived.by(() => {
 		padding: 5%;
 		background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 90% );
 		border-radius: 10px;
+    height: 100%;
 	}
 
 	.con > *{
@@ -300,6 +301,23 @@ let growthPercentage = $derived.by(() => {
     max-width: 99%;
     transition: none !important;;
     animation: none !important;
+  }
+
+  @media screen and (width <= 1200px){
+    .con{
+      overflow-y: auto;
+      height: 100%;
+    }
+    .con > * {
+      grid-template-columns: 1fr !important;
+    }
+    
+  }
+
+  @media screen and (width <= 600px){
+    .con{
+      height: auto;
+    }
   }
 
 </style>

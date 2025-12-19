@@ -2,16 +2,18 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
    import {current} from '$lib/store.js';
-	import { device } from '$lib/Device';
 	import { onMount } from 'svelte';
 
+	let { data } = $props();
+	let device = data.device;
+
     let deferredPrompt = null;
-    let showInstall = false;
+    let showInstall = $state(false);
 
-    const isIOS = $device.isApple;
-    const isAndroid = $device.isAndroid;
+    const isIOS = device.isApple;
+    const isAndroid = device.isAndroid;
 
-    if (typeof window !== 'undefined' && $device.isAndroid) {
+    if (typeof window !== 'undefined' && device.isAndroid) {
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -24,7 +26,6 @@
             deferredPrompt.prompt();
             const { outcome } = await deferredPrompt.userChoice;
             if (outcome === 'accepted') {
-				// console.log('App installed');
             }
             deferredPrompt = null;
             showInstall = false;
@@ -35,7 +36,6 @@
 <div class="container">
 
 	<figure class="banner" style={`background-image: url('${base}/shared-assests/banner-deco.png')`}>
-		<!-- <img src={`${base}/shared-assests/Monytri-01.png`} alt=""> -->
 		<img src={`/shared-assests/Monytri-01.png`} alt="">
 	</figure>
 

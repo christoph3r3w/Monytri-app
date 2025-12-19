@@ -12,7 +12,7 @@
 			{@render routes()}
 		</ul>
 	</section>
-	<section class="general">
+	<section class="general" aria-disabled>
 		<h3>General</h3>
 		<ul>
 			<li>
@@ -29,7 +29,7 @@
 			</li>
 		</ul>
 	</section>
-	<section class="session-notification">
+	<section class="session-notification" aria-disabled>
 		<h3>Session & Notification</h3>
 		<ul>
 			<li>
@@ -51,15 +51,17 @@
 		<ul>
 			<li>
 				<svg></svg>
-				<a href="/">Privacy Policy</a>
+				<a href="https://monytri.com/privacy-policy/">Privacy Policy</a>
 			</li>
 			<li>
 				<svg></svg>
-				<a href="/">Contact Support</a>
+				<a href="https://www.linkedin.com/company/monytri/">Contact Support</a>
 			</li>
 			<li>
 				<svg></svg>
-				<a href="/">Log out</a>
+			<form action="/logout" method="post">
+				<button type="submit">Log out</button>
+			</form>
 			</li>
 		</ul>
 	</section>
@@ -70,6 +72,7 @@
 		position: absolute;
 		top: var(--header-height);
 		right: var(--body-padding);
+		left: auto;
 		width: clamp(200px, 50%, 300px);
 		background-color: var(--general-background-color);
 		display: flex;
@@ -84,9 +87,20 @@
 	}
 	
 	nav.dropdown-menu section{
+	position: relative;
 		display: flex;
 		flex-direction: column;
 		margin-bottom: 1.2rem;	
+	}
+
+	nav.dropdown-menu section[aria-disabled]::after{
+		content: "";
+		inset: -5px;
+		position: absolute;
+		background-color:color-mix(in srgb, 45% rgba(34, 34, 34, 0.342),var(--primary-red-500));
+		border-radius: 8px;
+		outline: solid 1px rgba(0, 0, 0, 0.212);
+		backdrop-filter: blur(.5px);
 	}
 		
 	nav.dropdown-menu section h3{
@@ -109,6 +123,7 @@
 		align-items: center;
 		padding: 3%;
 		background-color: var(--white);
+		transition: background-color 0.3s ease;
 		
 		&:nth-of-type(1){
 			border-radius: 8px 8px 0 0;
@@ -118,8 +133,13 @@
 			border-radius: 0 0 8px 8px;
 		}
 	}
+
+	nav.dropdown-menu section ul li:hover{
+		background-color: color-mix(in srgb, 45% rgba(211, 211, 211, 0.082),var(--primary-green-500));
+		cursor: pointer;
+	}
 	
-	nav.dropdown-menu section ul li a{
+	nav.dropdown-menu section ul li :is(a,button){
 		font-size: 14px;
 		font-weight: 400;
 		color: var(--black);
@@ -132,11 +152,19 @@
 	nav.dropdown-menu section.header-routes{
 		display: flex;
 		align-items: center;
-			
-		&:hover{
-			text-decoration: underline;
-		}
 	}
+
+	nav.dropdown-menu section.header-routes ul{
+		width: 100%;
+	}
+
+	nav.dropdown-menu section.header-routes ul li:hover{
+			text-decoration: underline;
+			& a {
+				color: var(--general-text-color);
+			}
+	}
+
 	
 	nav.dropdown-menu section ul li svg {
 		width: 20px;

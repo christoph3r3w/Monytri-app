@@ -29,7 +29,8 @@ export {default as ButtonGift} from './Gift-page-p/Shared/button-gift-page_S.sve
 export {default as Request_success} from './Request-page-p/mobile/Request-process-succuess.svelte';
 export {default as StepContainer} from './Shared/molucule/StepContainer_S.svelte';
 export {default as PageStepContainer} from './Shared/molucule/PageStepContainer_S.svelte';
-export {default as LoginStep} from './Login-page/Login.svelte'
+export {default as Login_S} from './Login-page/Login-CS.svelte'
+export {default as Login_F} from './Login-page/Login-SSR.svelte'
 export {default as Brokers} from './Stock-overview-p/Brokers.svelte';
 export {default as Announcements} from './Stock-overview-p/Announcements.svelte';
 export {default as Calculator} from './Stock-overview-p/Calc-components/Calculator.svelte';

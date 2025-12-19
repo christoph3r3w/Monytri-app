@@ -1,41 +1,46 @@
 <script>
 	import {current} from '$lib/store.js';
 	import {InProgress_S} from '$lib';
-	import {user,isAuthenticated} from '$lib/user';
-	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
-	import {device} from '$lib/Device.js';
 	import {Logo} from '$lib';
+
+	let {data} = $props();
+	let {user, device} = data;
 	
-	let userName = $derived($user?.name || $user?.email || 'Guest')
-	const logout = async () => {
-		await user.logout();
-		goto('/login');
-	};
+	let userName = $derived(user?.name || user?.email || 'Guest')
+	// const logout = async () => {
+	// 	await user.logout();
+	// 	goto('/login');
+	// };
 
 </script>
 
 	<section class="profile-container">
-		{#if $user}
+		{#if user}
 			<img src="/generic.png" alt="generic." width="50" height="50">
 			<h1>Profile of {userName}</h1>
 			<p>This page is under construction. Please check back later.</p>
 			<div class="analitycs">
 				<p>
-					Platform: {$device.platform}<br>
-					Device: { $device.isMobile ? 'Mobile' : 'Desktop' }
+					Platform: {device.platform}<br>
+					Device: { device.isMobile ? 'Mobile' : 'Desktop' }
 				</p>
 			
-				{#if $device.platform === 'iOS' && $device.isMobile}
+				{#if device.platform === 'iOS' && device.isMobile}
 					<p>This is an iPhone or iPad.</p>
-				{:else if $device.platform === 'Android' && $device.isMobile}
+				{:else if device.platform === 'Android' && device.isMobile}
 					<p>This is an Android phone or tablet.</p>
 				{/if}
-				<p>Current user: {$user?.email || 'No user logged in'}</p>
+				<p>Current user: {user?.email || 'No user logged in'}</p>
 			</div>
+		{:else}
+			<p>You are not logged in. Please <a href="/login">login</a></p>
 		{/if}
+
 		<div class="button-conatiner-dev">
-			<button onclick={logout}>Logout</button>
+		<form action="/logout" method="post">
+			<button type="submit">Logout</button>
+		</form>
 			<button onclick={goto("/share")}>share</button>
 			<button onclick={goto("/install")}>install app</button>
 			<button onclick={goto('/')}>Go home</button>
@@ -44,8 +49,6 @@
 
 		<Logo name={false} />
 	</section>
-
-
 
 <style>
 	.profile-container {
@@ -78,7 +81,6 @@
 
 	.profile-container > p {
 		font-size: 1.2em;
-		margin-inline: var(--body-padding);
 	}
 
 	.button-conatiner-dev{
@@ -147,7 +149,6 @@
 		gap: 1rem;
 		width: 100%;
 		height: fit-content;
-		padding-inline: 5%;
 		padding-bottom: 5rem;
 		font-size: 1.2rem;
 		color: var(--general-text-color);

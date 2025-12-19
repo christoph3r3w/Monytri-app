@@ -3,7 +3,12 @@
 	import{ goto } from '$app/navigation'
    import { Logo } from '$lib';
 	import { current } from '$lib/store.js';
+
+	let {d} = $props();
 	let navSelect = $derived($current);
+	let device = $derived(d);
+	let {isMobile,platform,isApple,isAndroid} = device;
+	
 </script>
 
 {#snippet about()}
@@ -32,6 +37,7 @@
 		<a href="https://monytri.com/cookie-policy-eu/" target="_blank" rel="noopener">Cookie Policy</a>
 	</p>
 {/snippet}
+
 
 <!-- desktop footer -->
 <div class="footer-one">    

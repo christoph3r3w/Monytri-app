@@ -1,52 +1,51 @@
-// import { redirect } from '@sveltejs/kit';
+export const ssr = true;
+export const prerender = false;
 
-// /**
-//  * Server-side authentication guard that redirects unauthenticated users
-//  * to /login unless they're on a public route like /login or /register
-//  */
-// export const load = async ({ url, cookies, request }) => {
-//     // Public routes that don't require authentication
-//     const publicRoutes = ['/login', '/register'];
-//     const path = url.pathname;
-    
-//     // Check if we're on a public route
-//     if (publicRoutes.some(route => path === route || path.startsWith(route + '/'))) {
-//         return {
-//             authenticated: false,
-//             current: path.split('/').filter(Boolean)[0] || ''
-//         };
-//     }
+import {load as sd} from '$lib/broker.js';
+import {redirect} from '@sveltejs/kit';
 
-//     // Check for authentication
-//     // Since we're server-side, we need to rely on cookies or JWT tokens
-//     // Appwrite typically stores a session cookie that we can check for
-//     const authCookies = request.headers.get('cookie');
-//     const hasAppwriteSession = authCookies && (
-//         authCookies.includes('a_session_') || 
-//         authCookies.includes('appwrite-session-') ||
-//         cookies.get('a_session_') ||
-//         cookies.get('appwrite-session-')
-//     );
+/** @type {import('./$types').LayoutServerLoad} */
+export const load = async ({ locals, url }) => {
+    // Define public routes
+    const publicRoutes = ['/login', '/register'];
+    const isPublicRoute = publicRoutes.some(route => url.pathname.startsWith(route));
+	
+	
+	if (!locals.user && !isPublicRoute) {
+		throw redirect(303, '/login');
+	}	
 
-//     if (!hasAppwriteSession) {
-//         console.log('No Appwrite session found, redirecting to login');
-//         // No session cookie found, redirect to login
-//         throw redirect(303, '/login');
-//     }
+    if (locals.user && isPublicRoute) {
+        throw redirect(303, '/');
+    }
 
-//     // Get the current route segment for the client
-//     const current = path.split('/').filter(Boolean)[0] || '';
-    
-//     // Allow the request to continue with the authenticated flag
-//     return {
-//         authenticated: true,
-//         current
-//     };
-// };
+   
+    let { stockData: { totalBalance, portfolio } } = await sd();
+    let investedRaw = totalBalance || 1507.88;
+    let giftedRaw = 501.25 + (Math.abs(portfolio.profitLoss) || 0);
 
-// //     // Allow the request to continue with the authenticated flag
-// //     return {
-// //         authenticated: true,
-// //         current
-// //     };
-// // };
+    let u = locals.user;
+    let ia = !!locals.user;
+
+	 function balanceString(balance) {
+		const formatted = new Intl.NumberFormat('nl-NL', {
+			style: 'currency',
+			currency: 'EUR',
+		}).format(balance);
+		const maxLength = 10;
+		return formatted.length > maxLength ? formatted.slice(0, maxLength) + '…' : formatted;
+	}
+
+
+    return {
+        data: {
+            Invested: balanceString(investedRaw),
+            Gifted: balanceString(giftedRaw),
+        },
+        user: u,
+        isAuthenticated: ia,
+
+    };
+};
+
+
