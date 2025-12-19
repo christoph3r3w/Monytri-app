@@ -44,7 +44,7 @@
 	if (!isAuthenticated) return;
 	// checkSignIn();
 		const eruda = (await import("eruda")).default;
-		// eruda.init(); 
+		eruda.init(); 
 	});
 	
 	
