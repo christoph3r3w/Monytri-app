@@ -49,8 +49,8 @@
 	import {fade} from 'svelte/transition';
 
 	$effect(() => {
-		console.log(searchValue);
-		console.log(searchQuery);	
+		// console.log(searchValue);
+		// console.log(searchQuery);	
 	});
 </script>
 

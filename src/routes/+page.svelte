@@ -1,43 +1,10 @@
 <script>
-	import { onMount } from 'svelte';
 	import {Balance_M,HomeArticles_M,Logo } from '$lib'
-	import {current,anAcount} from '$lib/store.js';
-	import { device } from '$lib/Device.js';
+	import {current} from '$lib/store.js';
 	import { goto } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
-	import { user,isAuthenticated, authReady } from '$lib/user';
-	import {page} from '$app/stores';
 
-	async function checkSignIn() {
-		// Wait until auth system finished first check
-		if (!$authReady) return; // on next tick it will run again via reactive statement
-
-		// Prefer explicit user, fallback to local session hint
-		const hasSession = user.hasLocalSession && user.hasLocalSession();
-		if (!$user && !hasSession) {
-			// Only redirect if we are definitely not authenticated
-			await goto('/login');
-			console.log('Redirecting to login (no session/user).');
-			return; 
-		}
-	}
-
-	onMount(() => {
-		// Run once after mount; subsequent logic handled by reactive statement
-		checkSignIn();
-	});
-
-	// Re-run check when auth readiness or user changes
-	$: if ($authReady) {
-		checkSignIn();
-	}
-
-
-	const logout = async () => {
-		await user.logout();
-		goto('/login');
-	};
-
+	let {data} = $props();
+	let {blogs,podcasts,user,device,isAuthenticated} = data;
 </script>
 
 <svelte:head>
@@ -46,36 +13,36 @@
 
 <section class="home-wrapper">
 	<!-- Top section of the home page on mobile. -->
-	<HomeArticles_M/>	
+	<HomeArticles_M {blogs} {podcasts}/>	
 	<div class="button-conatiner-dev">
-		<button onclick={goto("/transactions")}>Transactions</button>
-		<button onclick={goto("/stock-overview")}>Stock overview</button>
-		<button onclick={goto("/gift")}>send a gift</button>
-		<button onclick={goto("/request")} disabled>request a gift</button>
-		<button onclick={goto("/share")}>share</button>
-		<button onclick={goto("/install")}>install app</button>
-		{#if !$isAuthenticated}
+			<button onclick={goto("/education")}>education</button>
+			<button onclick={goto("/share")}>share</button>
+			<button onclick={goto("/install")}>install app</button>
+		{#if !isAuthenticated}
 			<button onclick={goto("/login")}>login</button>
 		{:else}
-			<button onclick={logout}>Logout</button>
+			<button onclick={goto("/transactions")}>Transactions</button>
+			<button onclick={goto("/stock-overview")}>Stock overview</button>
+			<button onclick={goto("/gift")}>send a gift</button>
+			<form action="/logout" method="post">
+	 		    <button type="submit">Logout</button>
+			</form>
 		{/if}
 
-		<!-- <p>send feedback or issues here ⬇️</p>
-		<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a> -->
 	</div>
 	<Logo name={false} />
 	<div class="analitycs">
 		<p>
-		Platform: {$device.platform}<br>
-		Device: { $device.isMobile ? 'Mobile' : 'Desktop' }
+		Platform: {device.platform}<br>
+		Device: { device.isMobile ? 'Mobile' : 'Desktop' }
 		</p>
 	
-		{#if $device.platform === 'iOS' && $device.isMobile}
+		{#if device.platform === 'iOS' && device.isMobile}
 			<p>This is an iPhone or iPad.</p>
-		{:else if $device.platform === 'Android' && $device.isMobile}
+		{:else if device.platform === 'Android' && device.isMobile}
 			<p>This is an Android phone or tablet.</p>
 		{/if}
-		<p>Current user: {$user?.email || 'No user logged in'}</p>
+		<p>Current user: {user?.email || 'No user logged in'}</p>
 	</div>
 </section>
 
@@ -87,7 +54,6 @@
 		flex-direction: column;
 		align-content: start;
 		width: 100%;
-		/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
 		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
@@ -106,7 +72,7 @@
 		margin-inline: auto;
 	}
 	
-	.button-conatiner-dev :is(button) {
+	.button-conatiner-dev button {
 		font-size: 2rem;
 		border: solid 2px var(--primary-purple-400) ;
 		border-radius: 50px;
@@ -139,12 +105,25 @@
 		flex: 1 1 fit-content;
 	}
 
-		:global(.home-wrapper .button-conatiner-dev + .logo img){
-			width: clamp(1rem,5rem,3rem);
-			height: auto;
-			aspect-ratio: 1/1;
+	:global(.home-wrapper .button-conatiner-dev + .logo img){
+		width: clamp(1rem,5rem,3rem);
+		height: auto;
+		aspect-ratio: 1/1;
+	}
 
-		}
+	.analitycs{
+		display: none;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		padding: 1rem;
+		font-size: 0.75rem;
+		background-color: var(--general-background-color-secondary);
+		color: var(--general-text-color-secondary);
+		border-top-right-radius: 10px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+		z-index: 100;
+	}
 
 
 	/* for mobile */
@@ -171,14 +150,11 @@
 			}
 
 			:global(header){
-				--_background-cut-off: 85%;
 				--body-padding: 5% ;
 				padding-inline: var(--body-padding) ;
 				z-index: 10;
 				overflow: visible;
 				height: var(--header-intro-height);
-				height: var(--header-height);
-				height: calc(var(--header-intro-height));
 			}
 	
 			:global(.home-wrapper){
@@ -194,7 +170,6 @@
 				height: fit-content;
 				margin-bottom: 5rem;
 				transition: background-color 0.3ms ease-out, color 0.3s ease-in-out;
-
 			}
 			
 			.button-conatiner-dev,.analitycs,:global(.home-wrapper .button-conatiner-dev + .logo) {

@@ -1,14 +1,12 @@
 	<script >
-	import {current} from '$lib/store.js';
-	import {device} from '$lib/Device.js';
 	import {PageStepContainer,Brokers,Announcements,PortfolioDetail} from '$lib';
 	import {goto} from '$app/navigation';
-	import {onMount} from 'svelte';
-	import {user} from '$lib/user.js';
 
 	let {data} = $props();
-	let {portfolio,usersBrokers,brokers,totalBalance,averageBalance,announcements} = data.data	
-
+	let {stockData,device} = data;
+	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = stockData;	
+	
+	
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
 		return new Intl.NumberFormat('en-IE', {
@@ -25,17 +23,27 @@
 	
 	<div class="button-container-calculator">
 
-		<button onclick={goto('stock-overview/calculator')}>
-				<!-- <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M22.2432 14.269C22.2422 12.279 19.7102 10.746 16.2432 10.552V5.98999C16.2422 3.40699 12.8532 2.25 9.49316 2.25C6.13316 2.25 2.74416 3.40599 2.74316 5.98999V17.01C2.74316 19.593 6.13316 20.75 9.49316 20.75C9.84016 20.75 10.1962 20.718 10.5502 20.683C11.8442 21.406 13.6712 21.75 15.4932 21.75C18.8522 21.75 22.2432 20.593 22.2432 18.01V14.269C22.2432 14.27 22.2432 14.27 22.2432 14.269ZM20.7432 14.271C20.7432 15.329 18.4982 16.512 15.4932 16.512C12.4882 16.512 10.2432 15.329 10.2432 14.271C10.2432 13.883 10.5502 13.479 11.0812 13.122C11.0992 13.112 11.1132 13.098 11.1302 13.087C12.0542 12.487 13.6262 12.03 15.4932 12.03C18.4982 12.03 20.7432 13.213 20.7432 14.271ZM14.7432 9.53003C14.7432 9.98103 14.3472 10.358 13.9702 10.621C12.5792 10.786 11.3782 11.175 10.4772 11.723C10.1572 11.75 9.83514 11.77 9.49414 11.77C6.66614 11.77 4.24414 10.538 4.24414 9.53003V8.47803C5.54514 9.33003 7.52214 9.73199 9.49414 9.73199C11.4661 9.73199 13.4431 9.33003 14.7441 8.47803V9.53003H14.7432ZM4.24316 11.849C5.44616 12.663 7.21718 13.172 8.98218 13.256C8.83018 13.577 8.74316 13.915 8.74316 14.27C8.74316 14.27 8.74316 14.27 8.74316 14.271V15.479C6.25116 15.288 4.24316 14.189 4.24316 13.271V11.849ZM9.49316 3.75C12.0742 3.75 14.7432 4.58803 14.7432 5.99103C14.7432 7.44703 12.0382 8.23199 9.49316 8.23199C6.94816 8.23199 4.24316 7.44703 4.24316 5.99103C4.24316 4.58803 6.91216 3.75 9.49316 3.75ZM4.24316 17.01V15.589C5.39216 16.366 7.05716 16.865 8.74316 16.981V18.01C8.74316 18.465 8.85317 18.873 9.04517 19.241C6.61217 19.15 4.24316 18.331 4.24316 17.01ZM15.4932 20.25C13.8742 20.25 12.2212 19.92 11.2142 19.328C10.6152 18.976 10.2441 18.532 10.2441 18.01V16.676C11.4621 17.502 13.3281 18.012 15.4941 18.012C17.6601 18.012 19.5261 17.502 20.7441 16.676V18.01C20.7431 19.412 18.0742 20.25 15.4932 20.25Z" fill="#121212"/>
-				</svg> -->
-
+		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M6 3.25C3.932 3.25 2.25 4.932 2.25 7C2.25 9.068 3.932 10.75 6 10.75C8.068 10.75 9.75 9.068 9.75 7C9.75 4.932 8.068 3.25 6 3.25ZM6 9.25C4.759 9.25 3.75 8.241 3.75 7C3.75 5.759 4.759 4.75 6 4.75C7.241 4.75 8.25 5.759 8.25 7C8.25 8.241 7.241 9.25 6 9.25ZM18 13.25C15.932 13.25 14.25 14.932 14.25 17C14.25 19.068 15.932 20.75 18 20.75C20.068 20.75 21.75 19.068 21.75 17C21.75 14.932 20.068 13.25 18 13.25ZM18 19.25C16.759 19.25 15.75 18.241 15.75 17C15.75 15.759 16.759 14.75 18 14.75C19.241 14.75 20.25 15.759 20.25 17C20.25 18.241 19.241 19.25 18 19.25ZM15 7.75H21C21.414 7.75 21.75 7.414 21.75 7C21.75 6.586 21.414 6.25 21 6.25H15C14.586 6.25 14.25 6.586 14.25 7C14.25 7.414 14.586 7.75 15 7.75ZM9 16.25H3C2.586 16.25 2.25 16.586 2.25 17C2.25 17.414 2.586 17.75 3 17.75H9C9.414 17.75 9.75 17.414 9.75 17C9.75 16.586 9.414 16.25 9 16.25Z" fill="#121212"/>
+					<g clip-path="url(#clip0_20_4)">
+					<path d="M4 5C4 4.46957 4.21071 3.96086 4.58579 3.58579C4.96086 3.21071 5.46957 3 6 3H18C18.5304 3 19.0391 3.21071 19.4142 3.58579C19.7893 3.96086 20 4.46957 20 5V19C20 19.5304 19.7893 20.0391 19.4142 20.4142C19.0391 20.7893 18.5304 21 18 21H6C5.46957 21 4.96086 20.7893 4.58579 20.4142C4.21071 20.0391 4 19.5304 4 19V5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M8 8C8 7.73478 8.10536 7.48043 8.29289 7.29289C8.48043 7.10536 8.73478 7 9 7H15C15.2652 7 15.5196 7.10536 15.7071 7.29289C15.8946 7.48043 16 7.73478 16 8V9C16 9.26522 15.8946 9.51957 15.7071 9.70711C15.5196 9.89464 15.2652 10 15 10H9C8.73478 10 8.48043 9.89464 8.29289 9.70711C8.10536 9.51957 8 9.26522 8 9V8Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M8 14V14.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M12 14V14.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M16 14V14.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M8 17V17.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M12 17V17.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					<path d="M16 17V17.01" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+					</g>
+					<defs>
+					<clipPath id="clip0_20_4">
+					<rect width="24" height="24" fill="white"/>
+					</clipPath>
+					</defs>
 				</svg>
 		</button>
 
-		<button onclick={goto('stock-overview/calculator')}>
+		<button onclick={() => goto('/stock-overview/calculator')}>
 			Open Calculator
 		</button>
 
@@ -46,7 +54,7 @@
 	<section class="current-brokers">
 		<h2>Current Brokers</h2>
 		
-		<Brokers {formatCurrency} {usersBrokers} {brokers}/>
+		<Brokers {formatCurrency} {usersBrokers}/>
 	</section>
 {/snippet}
 
@@ -71,7 +79,7 @@
 <article class="stockOverview-container">	
 	<PageStepContainer
 	stepType=''
-	headerName={$device.isMobile? '' :'stock overview'}
+	headerName={device.isMobile? '' :'stock overview'}
 	subtext=""
 	showLeftContent={true}
 	showRightContent={true}
@@ -228,6 +236,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		aspect-ratio: 1;
 	}
 
+	/* calc button */
 	.button-container-calculator button{
 		position: relative;
 		display: grid;
@@ -269,6 +278,16 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		height: auto;
 	}
 
+	.button-container-calculator button svg{
+		scale: 1.3;
+	}
+	.button-container-calculator button svg path{
+		fill: var(--primary-darkgreen-550);
+		stroke: var(--primary-darkgreen-200);
+		stroke: color-mix(in srgb, var(--primary-darkgreen-200) , rgba(251, 255, 180, 0.479) 70% );
+		stroke-width: 6%;
+	}
+
 	.button-container-calculator button:not(:has(svg)) {
 		display: none;
 	}
@@ -283,7 +302,9 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		}
 
 		:global(body.isMobile.ios-device) :global(.stockOverview-container .mobile-step){
-			padding-bottom: calc(13lvh + var(--footer-height) + var(--safe-area-inset-bottom)) ;
+			/* border: solid red; */
+			padding-bottom: calc( var(--footer-height) + var(--safe-area-inset-bottom)) ;
+			max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ;
 		}
 
 	}

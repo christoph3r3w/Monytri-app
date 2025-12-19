@@ -1,13 +1,12 @@
 	<script >
-	import {current} from '$lib/store.js';
-	import {device} from '$lib/Device.js';
 	import {PageStepContainer,Brokers,Calculator,PortfolioDetail} from '$lib';
-	import {goto} from '$app/navigation';
 	import {onMount} from 'svelte';
-	import {user} from '$lib/user.js';
 
 	let {data} = $props();
-	let {portfolio,usersBrokers,brokers,totalBalance,averageBalance} = data?.data;	
+	let {device} = data;
+	// console.log(device);
+	
+	let {portfolio,usersBrokers,totalBalance,averageBalance} = data?.data;	
 
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
@@ -23,13 +22,13 @@
 {#snippet a()}
 	<PortfolioDetail {portfolio} {averageBalance} {formatCurrency} style={2}/>
 	
-	{#if !$device.isMobile}{@render b()}{/if}
+	{#if !device.isMobile}{@render b()}{/if}
 {/snippet}
 
 {#snippet b()}
 	<section class="current-brokers">
 		<h2>Current Brokers</h2>		
-		<Brokers {formatCurrency} {usersBrokers} {brokers}/>
+		<Brokers {formatCurrency} {usersBrokers}/>
 	</section>
 {/snippet}
 
@@ -49,12 +48,12 @@
 <article class="calculator-container">	
 	<PageStepContainer
 	stepType=''
-	headerName={$device.isMobile? '' :' '}
+	headerName={device.isMobile? '' :' '}
 	subtext=""
 	showLeftContent={true}
 	showRightContent={true}
-	leftContent={$device.isMobile? d : a}
-	rightContent={$device.isMobile? b : c}
+	leftContent={device.isMobile? d : a}
+	rightContent={device.isMobile? b : c}
 	/>
 </article>
 
@@ -71,6 +70,7 @@
 
 :global(.calculator-container > .page-container .right-step){
 	overflow-y:auto ;
+	height: calc(100cqh - var(--footer-height) - var(--header-height) );
 }
 
 .calculator-container {
@@ -97,6 +97,7 @@
 
 .calculator-section{
 	width: 100% ;
+	height: calc( 100% -  var(--footer-height));
 } 
 
 .calculator-section h2{
@@ -149,7 +150,16 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		height: 200vh ;
 		overflow: auto;
 	}
-	
+
+	:global(.calculator-container > .page-container .right-step){
+		overflow-y:visible ;
+		height: 100%;
+	}
+
+	.calculator-section{
+		width: 100% ;
+		height: auto;
+	} 
 }
 
 </style>

@@ -1,32 +1,20 @@
 <script>
 	import { onMount } from "svelte";
 	import { goto } from '$app/navigation';
-
-	let Invested = $state(1500.75); 
-	let Gifted = $state(500.25); 
-	
-	let investedRaw = 1503.75;
-	let giftedRaw = 500.25;
-
-	function balanceString(balance) {
-		const formatted = new Intl.NumberFormat('nl-NL', {
-			style: 'currency',
-			currency: 'EUR',
-		}).format(balance);
-		const maxLength = 10;
-		return formatted.length > maxLength ? formatted.slice(0, maxLength) + '…' : formatted;
-	}
-
-	Invested = balanceString(investedRaw);
-	Gifted = balanceString(giftedRaw);
-
+	let {data} = $props();
+	let {Invested,Gifted} = $derived(data?.data);
 </script>
+
 
 {#snippet landingInfo()}
 		<article class="balance-info">
-			<div class="invested">
-				<h1 title={undefined}>{Invested}</h1>
+		<div class="invested">
+		{#await Invested}
+			<h1>0.00</h1>
+		{:then Invested}
+				<h1 title={undefined}>{Invested|| 0.00}</h1>
 				<p>Portfolio Value</p>
+		{/await}
 			</div>
 			<a href="/" class="add-money-link">
 				<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,6 +24,7 @@
 			</a>
 		</article>
 		<div class="gifted outer">
+		{#await data.data.Gifted then Gifted }
 				{#if Gifted.length > 0 && Invested.length > 0}
 					<span class="gifted-content">
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,6 +41,8 @@
 					<h1>let's start here</h1>
 				</span>
 				{/if}
+		{/await}
+
 		</div>
 		<nav class="button-container">
 			<div class="gifted inner">
@@ -73,6 +64,7 @@
 				{/if}
 			</div>
 
+
 			<button onclick={goto("/gift")}>
 				<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M30.5398 6.04003C30.3452 6.2347 30.0892 6.33332 29.8332 6.33332C29.5772 6.33332 29.3212 6.23603 29.1265 6.04003L28.1665 5.08007V9.33332C28.1665 9.88532 27.7185 10.3333 27.1665 10.3333C26.6145 10.3333 26.1665 9.88532 26.1665 9.33332V5.08137L25.2065 6.04133C24.8158 6.432 24.1825 6.432 23.7918 6.04133C23.4012 5.65067 23.4012 5.01729 23.7918 4.62662L26.4585 1.95995C26.5505 1.86795 26.6612 1.79464 26.7838 1.74397C27.0278 1.64264 27.3038 1.64264 27.5478 1.74397C27.6705 1.79464 27.7812 1.86795 27.8732 1.95995L30.5398 4.62662C30.9305 5.01729 30.9305 5.64936 30.5398 6.04003ZM29.8332 16C29.8332 23.4867 23.6532 29.5386 16.1198 29.328C9.16384 29.1346 3.36651 23.336 3.17184 16.38C2.96118 8.8467 9.01318 2.66666 16.4998 2.66666C18.2692 2.66666 19.9585 3.0067 21.4958 3.64403C21.7092 3.73203 21.7918 3.98399 21.6972 4.19465C21.2025 5.29065 21.0172 6.57866 21.2972 7.93066C21.8145 10.4333 23.9852 12.3786 26.5278 12.6346C27.3532 12.7173 28.1545 12.6387 28.9012 12.416C29.1212 12.3507 29.3558 12.464 29.4132 12.6854C29.6865 13.74 29.8332 14.8547 29.8332 16ZM20.4625 18.6893C20.4625 17.0866 19.3758 15.692 17.8145 15.2974L15.6705 14.7653C15.3399 14.6826 15.0585 14.4974 14.8465 14.2267C14.6465 13.9734 14.5358 13.648 14.5358 13.3133C14.5358 12.488 15.2065 11.8174 16.0318 11.8174H16.9652C17.7278 11.8174 18.3665 12.3907 18.4532 13.1507C18.5145 13.7 19.0092 14.1 19.5585 14.0334C20.1079 13.972 20.5025 13.4774 20.4412 12.9281C20.2612 11.3254 19.0212 10.0893 17.4692 9.86392V9.33332C17.4692 8.78132 17.0212 8.33332 16.4692 8.33332C15.9172 8.33332 15.4692 8.78132 15.4692 9.33332V9.87206C13.8092 10.1441 12.5358 11.576 12.5358 13.3107C12.5358 14.0934 12.7985 14.8587 13.2718 15.456C13.7465 16.068 14.4238 16.5106 15.1838 16.7026L17.3278 17.2347C17.9958 17.404 18.4625 18.0013 18.4625 18.6867C18.4625 19.084 18.3065 19.4587 18.0225 19.7427C17.7385 20.0267 17.3639 20.1826 16.9665 20.1826H16.0332C15.2705 20.1826 14.6318 19.6093 14.5452 18.8493C14.4838 18.2999 13.9878 17.8973 13.4398 17.9666C12.8905 18.028 12.4958 18.5226 12.5572 19.0719C12.7345 20.6546 13.9452 21.8827 15.4692 22.1294V22.6667C15.4692 23.2187 15.9172 23.6667 16.4692 23.6667C17.0212 23.6667 17.4692 23.2187 17.4692 22.6667V22.1361C18.2092 22.0281 18.8958 21.7 19.4358 21.16C20.0985 20.4973 20.4625 19.6199 20.4625 18.6893Z" fill="#497951"/>
@@ -89,9 +81,11 @@
 		</nav>
 {/snippet}
 
+
 <section class="balance-section">
 	{@render landingInfo()}
 </section>
+
 
 <style>
 	.balance-section {
@@ -201,7 +195,7 @@
 	}
 
 	.gifted.inner {
-	position: relative;
+		position: relative;
 		grid-column: 1 / -1;
 		grid-row: 1 / 2;
 		display: flex;

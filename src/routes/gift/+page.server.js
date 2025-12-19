@@ -2,11 +2,11 @@ import { goto } from '$app/navigation';
 import {current, isMobile} from '$lib/store.js';
 
 // State management
-let currentStep = $state(1);
-let totalSteps = $state(5);
+let currentStep = 1;
+let totalSteps = 5;
 
 // Form data structure
-let formData = $state({
+let formData = {
 	recipient: null,
 	cardDesign: 'default',
 	Purpose: null,
@@ -19,21 +19,21 @@ let formData = $state({
 	isLoading: false,
 	date: new Date(),
 	currentDate: null
-});
+};
 
 formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
 
 // Step validation state
-let stepValidation = $state({
+let stepValidation = {
 	1: false,
 	2: false,
 	3: false,
 	4: false,
 	5: true, // Review step is always valid
-});
+};
 
 // Use provided recipients or fallback to defaults
-let recipients = $state([
+let recipients = [
 	{
 	id: 1,
 	name: 'James May',
@@ -94,12 +94,11 @@ let recipients = $state([
 	amountMax: 10,
 	amountMin: 0,
 	}
-]);
+];
 
 // Progress tracking
-let currentProgress = $state(0);
-let progressPercentage = $derived(currentProgress > 0 ? currentProgress : ((currentStep / totalSteps) - (1 / totalSteps)) * 100);
-
+let currentProgress = 0;
+let progressPercentage = currentProgress > 0 ? currentProgress : ((currentStep / totalSteps) - (1 / totalSteps)) * 100;
 // Error handling function
 function handleError(step, error) {
 	formData.errors[step] = error;

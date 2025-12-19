@@ -1,4 +1,72 @@
+<script>
+	let {blogs,podcasts} = $props();
+
+	let investTips = podcasts || [
+		{
+			episodeNumber: '1',
+			title: 'Why Monytri?',
+			subtitle: 'With Chiara & David',
+			bannerImage:{imageUrl:'/home-page/homescreen-piggybank.png', altText:'homescreen piggybank'},
+			link:'/how-it-works'
+		},
+		{
+			episodeNumber: '2',
+			title: 'Why Monytri?',
+			subtitle: 'With Chiara & David',
+			bannerImage:{imageUrl:'/home-page/homescreen-cash.png', altText:'homescreen cash'},
+			link:'/how-it-works'
+		},
+		{
+			episodeNumber: '3',
+			title: 'Why Monytri?',
+			subtitle: 'With Chiara & David',
+			bannerImage:{imageUrl:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png', altText:'homescreen cash'},
+			link:'/how-it-works'
+		}
+	];
+
+	let videoBlogs = [
+		{
+			episodeNumber: '1',
+			link:'/blog',
+			bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+			publishedAt:'date',
+			title:'Investing 101',
+			subtitle:'In this episode Chiara is braking down the ins and outs of investing and where to start as a beginner.',
+			host :{profileImg:'', name:'Chiara'}
+		}
+	];
+
+	let recentBlog = blogs || [
+		{
+			link:'/blog',
+			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+			publishedAt:'date',
+			title:'Are you saving enough?',
+			subtitle:'Discover how your finances stack up in the Netherlands!',
+			author :{profileImg:'', name:'Chiara'}
+		},
+		{
+			link:'/blog',
+			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+			publishedAt:'date',
+			title:'Are you saving enough?',
+			subtitle:'Discover how your finances stack up in the Netherlands!',
+			author :{profileImg:'', name:'Chiara'}
+		},
+		{
+			link:'/blog',
+			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+			publishedAt:'date',
+			title:'Are you saving enough?',
+			subtitle:'Discover how your finances stack up in the Netherlands!',
+			author :{profileImg:'', name:'Chiara'}
+		}
+	]
+</script>
+
 	<section class="home-articles">
+
 		<article class="invest-tips-container">
 			<h2>Grow your investing skills!
 				<span class="arrow-icon">
@@ -8,36 +76,30 @@
 				</span>
 			</h2>
 			<ul class="invest-tips-list">
+			{#each investTips as article}
 				<li>
-					<a href="/how-it-works" aria-label="article"></a>
+					<a href={article.link} aria-label="article"></a>
 					<figure>
-						<img src="/home-page/homescreen-piggybank.png" alt="homescreen piggybank" width="177px" height="177px">
+						<img src={encodeURI(article.bannerImage?.imageUrl)} alt={article.bannerImage?.altText} width="177px" height="177px">
 						
-						<figcaption>Ep.1</figcaption>
+						<figcaption>Ep.{article.episodeNumber}</figcaption>
 					</figure>
-					<p>Ep.1: Why Monytri?</p>
-					<p>With Chiara & David</p>
+					<p>Ep.{article.episodeNumber}: {article.title} {#if article.guest} with {article.guest} {/if}</p>
+					<p>
+						{#if article.subtitle}
+							{article.subtitle}
+						{:else if article.host?.length}
+							with {article.host[0].name}
+							{#each article.host.slice(1) as host}
+								& {host.name}
+							{/each}
+						{/if}
+					</p>
 				</li>
-				<li>
-					<a href="/how-it-works" aria-label="article"></a>
-					<figure>
-						<img src="/home-page/homescreen-cash.png" alt="cash" width="177px" height="177px">
-						<figcaption>Ep.2</figcaption>
-					</figure>
-					<p>Ep.2: Why Monytri?</p>
-					<p>With Chiara & David</p>
-				</li>
-				<li>
-					<a href="/how-it-works" aria-label="article"></a>
-					<figure>
-						<img src="/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png" alt="cash" width="177px" height="177px">
-						<figcaption>Ep.3</figcaption>
-					</figure>
-					<p>Ep.3: Why Monytri?</p>
-					<p>With Chiara & David</p>
-				</li>
+			{/each}
 			</ul>
 		</article>
+
 		<article class="recent-blogs">
 			<h2>Recent Blogs
 				<span class="arrow-icon">
@@ -46,21 +108,23 @@
 					</svg>
 				</span>
 			</h2>
-
+			<!-- url('{encodeURI(cardDesign.cardBackground)}') -->
 			<ul class="recent-blogs-list">
-			{#each {length:3}}
+			{#each recentBlog as blog}
 			<li class="blog-container">
-				<a href="/blog" aria-label="blog"></a>
-				<img src="/home-page/homescreen-team.png" alt="" width="177px" height="177px">
+				<a href={blog.link || '/blog'} aria-label="blog"></a>
+				<img src={encodeURI(blog.bannerImage?.imageUrl)} alt={blog.bannerImage?.altText} width="177px" height="177px">
 				<div class="blog-text">
-					<p class="date">date</p>
+					<p class="date">{blog.publishedAt || 'date'}</p>
 					<div class="blog-text-content">
-						<p>Are you saving enough? </p>
-						<p>Discover how your finances stack up in the Netherlands!</p>
+						<p>{blog.title}</p>
+						<p>{blog.subtitle}</p>
 					</div>
 					<span>
-						<img src="./" alt="chiara" width="10px" height="10px">
-						<p>by Chiara</p>
+						{#if blog.author?.profileImg}
+							<img src={encodeURI(blog.author?.profileImg)} alt={blog.author?.name} width="10px" height="10px">
+						{/if}
+						<p>by {blog.author?.name}</p>
 					</span>
 				</div>
 			</li>
@@ -124,7 +188,8 @@
 				grid-auto-flow:column;
 				grid-auto-columns: clamp(50%, 50%, 300px);
 				gap: 1rem;
-				min-height: 30% ;
+				height: 30% ;
+				max-height: fit-content;
 			}
 
 			.invest-tips-container ul li{
@@ -134,8 +199,6 @@
 				aspect-ratio: 1;
 				display: flex;
 				flex-direction: column;
-				/* outline: tomato solid 1px; */
-				/* max-width: 200px; */
 			}
 
 			.invest-tips-container ul li a{
@@ -187,7 +250,7 @@
 			}
 
 			.recent-blogs{
-				margin-bottom: 3rem;
+				margin-bottom: var(--footer-height,3rem);
 				display: flex;
 				flex-direction: column;
 			}
@@ -205,10 +268,12 @@
 			}
 
 			.recent-blogs .recent-blogs-list{
+				box-sizing: content-box;
 				display: grid;
+				height: fit-content;
 				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 1rem;
-				height: 100%;
+
 			}
 
 			.recent-blogs .blog-container{
