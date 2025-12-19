@@ -1,18 +1,11 @@
 <script>
 	import {current,isMobile} from '$lib/store.js';
-	import {Menu,InProgress_S,LoginStep} from '$lib'
+	import {Menu,InProgress_S,Login_F,Login_S} from '$lib'
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
-	import {user,isAuthenticated} from '$lib/user';
-
-	onMount(() => {
-		if ($isAuthenticated || $user) {
-			current.set('home');
-			goto('/');
-		}
-	});
+	let { data, form } = $props();
+	let isAuthenticated = $derived(data?.isAuthenticated);
 	
-	let toggleRegister = $state(false);
 	let errorMessage = $state('');
 	let isLoading = $state(false);
 
@@ -21,39 +14,13 @@
 		password: '',
 		name: ''
 	});
-	
-	let stepValidation = $state(createStepValidation(3));
-	let currentStep = $state(1);
-	let totalSteps = $derived(Object.keys(stepValidation).length);
-	
-	function createStepValidation(totalSteps) {
-		let steps = {};
-		for (let i = 1; i <= totalSteps; i++) {
-			steps[i] = i === totalSteps; 
-		}
-		return steps;
-	}
-	
-	
-	function nextStep() {
-		if (stepValidation[currentStep] && currentStep < totalSteps) {
-			currentStep++;
-		}
-	}
-	
-	function previousStep() {
-		if (currentStep > 1) {
-			currentStep--;
-		}
-	}
+		
 </script>
 
 <section class="login-step-container">
-	<LoginStep 
+	<Login_F 
 		{formData}
-		{nextStep}
-		{previousStep}
-		{stepValidation}
+		data={{ ...data, ...(form ?? {}) }}
 	/>
 </section>
 
@@ -85,47 +52,4 @@
 		}
 
 	}
-
-
-	/* .login-container h1 {
-		margin-bottom: 20px;
-	}
-
-	.login-container form {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 10px;
-	}
-
-	.login-container label {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.login-container input {
-		padding: 10px;
-		width: 200px;
-	}
-
-	.login-container button {
-		padding: 10px;
-		width: 100px;
-		background-color: var(--primary-purple-400);
-	}
-
-	.login-container button:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
-	}
-
-	.error-message {
-		background-color: #fee;
-		color: var(--primary-red-500);
-		padding: 10px;
-		border: 1px solid #fcc;
-		border-radius: 4px;
-		margin-bottom: 10px;
-		text-align: center;
-	} */
 </style>

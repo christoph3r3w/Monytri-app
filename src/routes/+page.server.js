@@ -31,10 +31,8 @@ export async function load() {
     }
     
     return {
-        data: {
-            blogs: posts.documents ?? [], 
-            podcasts: podcasts.documents ?? [],
-        }
+        blogs: posts.documents ?? [], 
+        podcasts: podcasts.documents ?? [],
     };
 }
 
