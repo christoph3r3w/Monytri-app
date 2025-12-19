@@ -3,18 +3,21 @@
 	import {Menu,InProgress_S} from '$lib'
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { user,isAuthenticated } from '$lib/user';
+	// import { user,isAuthenticated } from '$lib/server/user';
+
+	let {data} = $props();
+	let isAuthenticated = $derived(data?.isAuthenticated);
 	
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
 	let isLoading = $state(false);
 
 	// Only redirect if already authenticated (so user can't see register) – do NOT push unauthenticated users to /login here
-	function checkSignIn() {
-		if ($isAuthenticated) {
-			goto('/');
-		}
-	}
+	// function checkSignIn() {
+	// 	if ($isAuthenticated) {
+	// 		goto('/');
+	// 	}
+	// }
 
 	$effect(() => {
 		checkSignIn();
@@ -27,7 +30,8 @@
 		
 		try {
 			const formData = new FormData(e.target);
-			await user.register(formData.get('email'), formData.get('password'), formData.get('name'));
+			// await user.register(formData.get('email'), formData.get('password'), formData.get('name'));
+			console.warn('Register action disabled during refactor');
 		} catch (error) {
 			console.error('Registration error:', error);
 			if (error.code === 429 || error.message?.includes('Rate limit')) {
@@ -44,8 +48,10 @@
 	};
 
 	const logout = async () => {
-		await user.logout();
+		// await user.logout();
+		console.warn('Logout action disabled during refactor');
 		goto('/');
+
 	};
 
 </script>

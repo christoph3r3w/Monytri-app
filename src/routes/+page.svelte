@@ -1,60 +1,10 @@
 <script>
-	import { onMount } from 'svelte';
 	import {Balance_M,HomeArticles_M,Logo } from '$lib'
-	import {current,anAcount} from '$lib/store.js';
-	import { device } from '$lib/Device.js';
+	import {current} from '$lib/store.js';
 	import { goto } from '$app/navigation';
-	import { redirect } from '@sveltejs/kit';
-	import { user,isAuthenticated, authReady } from '$lib/user';
-	import {page} from '$app/stores';
 
 	let {data} = $props();
-	let {blogs,podcasts} = data.data;
-
-	async function checkSignIn() {
-		// Wait until auth system finished first check
-		if (!$authReady) return; // on next tick it will run again via reactive statement
-
-		// Prefer explicit user, fallback to local session hint
-		const hasSession = user.hasLocalSession && user.hasLocalSession();
-		if (!$user && !hasSession) {
-			// Only redirect if we are definitely not authenticated
-			await goto('/login');
-			console.log('Redirecting to login (no session/user).');
-			return; 
-		}
-	}
-
-	onMount(() => {
-		// Run once after mount; subsequent logic handled by reactive statement
-		checkSignIn();
-	});
-
-	$effect(() => { 
-		if($authReady) {checkSignIn();}
-	})
-
-	const logout = async () => {
-		await user.logout();
-		goto('/login');
-	};
-
-
-
-//     const { data } = $props();
-//     let { device, user, isAuthenticated, authReady } = data;
-
-    // Authentication check using reactive state
-//     $effect(() => {
-//         if (!$authReady) return;
-        
-//         const hasSession = user.hasLocalSession?.();
-//         if (!$user && !hasSession) {
-//             goto('/login');
-//         }
-//     });
-
-//     };
+	let {blogs,podcasts,user,device,isAuthenticated} = data;
 </script>
 
 <svelte:head>
@@ -65,32 +15,34 @@
 	<!-- Top section of the home page on mobile. -->
 	<HomeArticles_M {blogs} {podcasts}/>	
 	<div class="button-conatiner-dev">
-		<button onclick={goto("/transactions")}>Transactions</button>
-		<button onclick={goto("/stock-overview")}>Stock overview</button>
-		<button onclick={goto("/gift")}>send a gift</button>
-		<button onclick={goto("/education")}>education</button>
-		<button onclick={goto("/share")}>share</button>
-		<button onclick={goto("/install")}>install app</button>
-		{#if !$isAuthenticated}
+			<button onclick={goto("/education")}>education</button>
+			<button onclick={goto("/share")}>share</button>
+			<button onclick={goto("/install")}>install app</button>
+		{#if !isAuthenticated}
 			<button onclick={goto("/login")}>login</button>
 		{:else}
-			<button onclick={logout}>Logout</button>
+			<button onclick={goto("/transactions")}>Transactions</button>
+			<button onclick={goto("/stock-overview")}>Stock overview</button>
+			<button onclick={goto("/gift")}>send a gift</button>
+			<form action="/logout" method="post">
+	 		    <button type="submit">Logout</button>
+			</form>
 		{/if}
 
 	</div>
 	<Logo name={false} />
 	<div class="analitycs">
 		<p>
-		Platform: {$device.platform}<br>
-		Device: { $device.isMobile ? 'Mobile' : 'Desktop' }
+		Platform: {device.platform}<br>
+		Device: { device.isMobile ? 'Mobile' : 'Desktop' }
 		</p>
 	
-		{#if $device.platform === 'iOS' && $device.isMobile}
+		{#if device.platform === 'iOS' && device.isMobile}
 			<p>This is an iPhone or iPad.</p>
-		{:else if $device.platform === 'Android' && $device.isMobile}
+		{:else if device.platform === 'Android' && device.isMobile}
 			<p>This is an Android phone or tablet.</p>
 		{/if}
-		<p>Current user: {$user?.email || 'No user logged in'}</p>
+		<p>Current user: {user?.email || 'No user logged in'}</p>
 	</div>
 </section>
 

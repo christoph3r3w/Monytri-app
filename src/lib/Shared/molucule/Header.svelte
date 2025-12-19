@@ -1,13 +1,15 @@
 <script>
 	import {goto} from '$app/navigation';
+	import {fade,fly} from 'svelte/transition';
+
 	import {Logo,Balance_M} from '$lib'
 	import {current,isMobile,menuOpen} from '$lib/store.js'
-	import {isAuthenticated} from '$lib/user';
 
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 
-	let {data} = $props();
+	let {data} = $props();	
+	let {isAuthenticated,firstLoad} = data;
 
 	let notOnLogin = $state(false);
 	$effect(() => {
@@ -16,18 +18,18 @@
 	
 	function iconTask (){
         if ($current === 'home') {
-            // On homepage, activate search functionality
-			// console.log('Activating search');
+			// Activating search
         } else if ($current === 'gift' || $current === 'gift-success') {
             history.back();
 		} else {
-            history.back();
+            goto('/', { replaceState: true })
 		}
 	}
 
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
 	}
+	
 </script>
 
 {#snippet desktopRoutes()}
@@ -43,7 +45,7 @@
 			<Logo name={true}/>
 		</h1>
 	</nav>
-	<nav class="menu" style="{!$isAuthenticated ? 'display: none;' : ''}" >
+	<nav class="menu" style="{!isAuthenticated ? 'display: none;' : ''}" >
 		<menu>
 			{@render desktopRoutes()}
 		</menu>
@@ -102,8 +104,9 @@
 		{@render desktopNav()}
 	{/if}
 </div>
+
 {#if $current === 'home' && $isMobile}
-	<section class="home-intro-section">
+	<section class="home-intro-section" in:fly={firstLoad ? {y:25, duration:500,opacity:0.5} : null}>
 		<Balance_M {data}/>
 	</section>
 {/if}
