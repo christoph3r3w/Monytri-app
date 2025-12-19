@@ -1,5 +1,4 @@
 <script>
-	import { user } from '$lib/user';
 	import { onMount } from 'svelte';
 
 	let {formatCurrency, usersBrokers} = $props();

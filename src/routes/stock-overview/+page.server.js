@@ -1,30 +1,5 @@
-import { user } from '$lib/user';
 import { databases } from '$lib/appwrite';
-
-/**
- * Renames keys in an object based on a key map.
- * @param {object} obj The original object.
- * @param {object} keyMap A map of { oldKey: 'newKey' }.
- * @returns {object} A new object with renamed keys.
- */
-// function renameKeys(obj, keyMap) {
-// 	const newObj = { ...obj };
-// 	for (const oldKey in keyMap) {
-// 		if (Object.prototype.hasOwnProperty.call(newObj, oldKey)) {
-// 			const newKey = keyMap[oldKey];
-// 			newObj[newKey] = newObj[oldKey];
-// 			delete newObj[oldKey];
-// 		}
-// 	}
-// 	return newObj;
-// }
-
-// const keyMap = {
-// 	backgroundColor: 'bannerImage.bgColor',
-// 	backgroundPosition: 'bannerImage.bgPosition',
-// 	bannerImage: 'bannerImage.src',
-// };
-
+import { get } from 'svelte/store';
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {
@@ -36,7 +11,7 @@ export async function load() {
 	let announcementsPost = null;
 	let brokersProfile = null;
   	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 3000).toFixed(2);
-
+	
 
 	try {
 		const newAPost = await databases.listDocuments(announcementsDBId, announcementsPostId);
@@ -130,7 +105,7 @@ export async function load() {
 		profitLossPercentage: +((profitLoss / (totalBalance - profitLoss)) * 100).toFixed(2)
 	};
 
-	// Simulate user data (I do not understand this yet. So come back and analyze this.)
+	// Simulated portfolio value user data 
 	// If usersBrokers is provided, update its balances
 	const distribute = (arr, total) => {
 		if (!arr.length) return arr;
@@ -152,7 +127,6 @@ export async function load() {
 		usersBrokers = distribute(usersBrokers, totalBalance);
 		totalBalance = usersBrokers.reduce((a, b) => a + b.balance, 0);
 		averageBalance = totalBalance / usersBrokers.length;
-		// update portfolio object
 	} else {	return }
 
 	portfolio.value = totalBalance + profitLoss;
@@ -161,7 +135,7 @@ export async function load() {
 
 
     return {
-		data: {  
+		stockData: {  
 			usersBrokers,
 			totalBalance, 
 			averageBalance,

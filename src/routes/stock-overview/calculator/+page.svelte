@@ -1,12 +1,11 @@
 	<script >
-	import {current} from '$lib/store.js';
-	import {device} from '$lib/Device.js';
 	import {PageStepContainer,Brokers,Calculator,PortfolioDetail} from '$lib';
-	import {goto} from '$app/navigation';
 	import {onMount} from 'svelte';
-	import {user} from '$lib/user.js';
 
 	let {data} = $props();
+	let {device} = data;
+	// console.log(device);
+	
 	let {portfolio,usersBrokers,totalBalance,averageBalance} = data?.data;	
 
 	function formatCurrency(value) {
@@ -23,7 +22,7 @@
 {#snippet a()}
 	<PortfolioDetail {portfolio} {averageBalance} {formatCurrency} style={2}/>
 	
-	{#if !$device.isMobile}{@render b()}{/if}
+	{#if !device.isMobile}{@render b()}{/if}
 {/snippet}
 
 {#snippet b()}
@@ -49,12 +48,12 @@
 <article class="calculator-container">	
 	<PageStepContainer
 	stepType=''
-	headerName={$device.isMobile? '' :' '}
+	headerName={device.isMobile? '' :' '}
 	subtext=""
 	showLeftContent={true}
 	showRightContent={true}
-	leftContent={$device.isMobile? d : a}
-	rightContent={$device.isMobile? b : c}
+	leftContent={device.isMobile? d : a}
+	rightContent={device.isMobile? b : c}
 	/>
 </article>
 

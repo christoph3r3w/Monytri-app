@@ -6,7 +6,7 @@
 		{#each announcements as {bannerImage, uploadDate, title, partner, link, backgroundColor} }
 		<li class="announcements-contain blog-container" style="--bg-color:{backgroundColor || bannerImage?.bgColor}; --bg-position:{bannerImage?.bgPosition || 'contain'};">
 			<a href={link || "/blog"} aria-label="blog"></a>
-			<img src={bannerImage || bannerImage?.src || '/home-page/homescreen-team.png'} alt="" width="177px" height="177px">
+			<img src={bannerImage || '/home-page/homescreen-team.png'} alt="" width="177px" height="177px">
 			<div class="blog-text">
 				<p class="date">{uploadDate}</p>
 				<div class="blog-text-content">

@@ -1,4 +1,3 @@
-import { user } from '$lib/user';
 import { databases } from '$lib/appwrite';
 
 /** @type {import('./$types').PageLoad} */

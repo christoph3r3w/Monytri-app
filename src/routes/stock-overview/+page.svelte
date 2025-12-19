@@ -1,13 +1,11 @@
 	<script >
-	import {current} from '$lib/store.js';
-	import {device} from '$lib/Device.js';
 	import {PageStepContainer,Brokers,Announcements,PortfolioDetail} from '$lib';
 	import {goto} from '$app/navigation';
-	import {onMount} from 'svelte';
-	import {user} from '$lib/user.js';
 
 	let {data} = $props();
-	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = data?.data	
+	let {stockData,device} = data;
+	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = stockData;	
+	
 	
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
@@ -25,14 +23,7 @@
 	
 	<div class="button-container-calculator">
 
-		<button onclick={() => goto('/stock-overview/calculator')}>
-		<!-- need a calculator icon -->
-				<!-- <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M6 3.25C3.932 3.25 2.25 4.932 2.25 7C2.25 9.068 3.932 10.75 6 10.75C8.068 10.75 9.75 9.068 9.75 7C9.75 4.932 8.068 3.25 6 3.25ZM6 9.25C4.759 9.25 3.75 8.241 3.75 7C3.75 5.759 4.759 4.75 6 4.75C7.241 4.75 8.25 5.759 8.25 7C8.25 8.241 7.241 9.25 6 9.25ZM18 13.25C15.932 13.25 14.25 14.932 14.25 17C14.25 19.068 15.932 20.75 18 20.75C20.068 20.75 21.75 19.068 21.75 17C21.75 14.932 20.068 13.25 18 13.25ZM18 19.25C16.759 19.25 15.75 18.241 15.75 17C15.75 15.759 16.759 14.75 18 14.75C19.241 14.75 20.25 15.759 20.25 17C20.25 18.241 19.241 19.25 18 19.25ZM15 7.75H21C21.414 7.75 21.75 7.414 21.75 7C21.75 6.586 21.414 6.25 21 6.25H15C14.586 6.25 14.25 6.586 14.25 7C14.25 7.414 14.586 7.75 15 7.75ZM9 16.25H3C2.586 16.25 2.25 16.586 2.25 17C2.25 17.414 2.586 17.75 3 17.75H9C9.414 17.75 9.75 17.414 9.75 17C9.75 16.586 9.414 16.25 9 16.25Z" fill="#121212"/>
-				</svg> -->
-				
-				<!-- <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-calculator"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 3m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" /><path d="M8 7m0 1a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-6a1 1 0 0 1 -1 -1z" /><path d="M8 14l0 .01" /><path d="M12 14l0 .01" /><path d="M16 14l0 .01" /><path d="M8 17l0 .01" /><path d="M12 17l0 .01" /><path d="M16 17l0 .01" /></svg> -->
-
+		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_20_4)">
 					<path d="M4 5C4 4.46957 4.21071 3.96086 4.58579 3.58579C4.96086 3.21071 5.46957 3 6 3H18C18.5304 3 19.0391 3.21071 19.4142 3.58579C19.7893 3.96086 20 4.46957 20 5V19C20 19.5304 19.7893 20.0391 19.4142 20.4142C19.0391 20.7893 18.5304 21 18 21H6C5.46957 21 4.96086 20.7893 4.58579 20.4142C4.21071 20.0391 4 19.5304 4 19V5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -50,7 +41,6 @@
 					</clipPath>
 					</defs>
 				</svg>
-
 		</button>
 
 		<button onclick={() => goto('/stock-overview/calculator')}>
@@ -89,7 +79,7 @@
 <article class="stockOverview-container">	
 	<PageStepContainer
 	stepType=''
-	headerName={$device.isMobile? '' :'stock overview'}
+	headerName={device.isMobile? '' :'stock overview'}
 	subtext=""
 	showLeftContent={true}
 	showRightContent={true}
