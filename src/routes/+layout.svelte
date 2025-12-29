@@ -434,12 +434,12 @@
 			background-color: var(--general-background-color) !important;
 		}
 
-		:global(body:not(.windows-device, .desktop-device)) main :global(.home-wrapper) > :global(*) {
+		:global(body:not(.windows-device, .desktop-device, .macos-device)) main :global(.home-wrapper) > :global(*) {
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
 		/* :global(body:not(.windows-device)) footer { */
-		:global(body:not(.desktop-device)) footer {
+		:global(body:not(.windows-device, .desktop-device, .macos-device)) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
 			position: fixed;
