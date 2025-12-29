@@ -66,6 +66,7 @@
 	max-width: 100%;
 	height: fit-content;
 	min-height: 2.5rem;
+	min-height: clamp(2.5rem,5svw + 1rem,3dvw);
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;

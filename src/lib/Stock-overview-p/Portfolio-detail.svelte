@@ -129,7 +129,7 @@
 }
 
 .portfolio .value.main{
-	font-size: clamp(1rem, 2rem - .2dvw , 3rem);
+	font-size: clamp(1rem, 1rem + 4cqw , 2.5rem);
 	font-weight: 500;
 	line-height: 120%;
 	text-align: center;
@@ -170,9 +170,11 @@
 }
 
 .portfolio-details span p:last-child{
-	font-size: .825rem;
+	position: relative;
+	font-size: clamp(.825rem, .825rem + .7vw, 1.3rem);
 	font-weight: 500;
 	line-height: 120%;
+
 }
 
 @media (-webkit-min-device-pixel-ratio: 3), 
