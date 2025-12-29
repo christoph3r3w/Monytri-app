@@ -428,7 +428,7 @@
 
 	@media not (display-mode: standalone)  {
 
-		:global(body:not(.windows-device)){
+		:global(body:not(.windows-device, .desktop-device, .macos-device)) {
 			overflow: hidden;
 			max-height:100lvh !important;
 			background-color: var(--general-background-color) !important;
