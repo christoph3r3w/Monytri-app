@@ -465,7 +465,8 @@
 		}
 	}
 
-	@media (orientation: landscape) and (height > 500px) and (width > 900px) and (hover: none) and (pointer: coarse) {
+	@media (orientation: landscape) and (max-height : 600px) and (max-width : 1000px) and (hover: none) and (pointer: coarse),(orientation: landscape) and (aspect-ratio: 16/9) and (hover: none) and (pointer: coarse) {
+	/* @media (orientation: landscape) and (aspect-ratio: 16/9) and (hover: none) and (pointer: coarse) { */
 		:global(.body-container)::after {
 			content: 'Please rotate your device  ' url(/shared-assests/exclamation-circle-white.svg);
 			position: fixed;
