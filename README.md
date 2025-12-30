@@ -5,37 +5,75 @@
 
 ## Project Description
 
-Monytri is a comprehensive financial technology platform designed to modernize digital money transfers and gift-giving experiences. This Progressive Web Application (PWA) serves as an MVP to demonstrate core service functionality to stakeholders and investors, utilizing modern web APIs and service worker systems to deliver native app-like performance across all devices.
+An MVP designed to showcase the services, capabilities, and adaptability of the Monytri financial platform to stakeholders and investors. It is a progressive web app that centralizes stock gifting, asset transfers, and payment requests, while also allowing users to practice and learn about financial literacy.
+
+The platform encourages users to stay up to date with their personal portfolios, learn from curated educational content on portfolio management, and exchange assets through built-in services.
 
 ## Core Features
 
 ### User Experience
-- **Progressive Web App**: Native app functionality through web technologies
-- **Responsive Design**: Optimized interface for mobile, tablet, and desktop devices
-- **Intuitive Navigation**: Streamlined user flows and accessible design patterns
-- **Offline Capability**: Service worker implementation for offline functionality
+- **Gifting & Requests**: Send and request gifted assets
+- **Portfolio Overview**: View all portfolios in one centralized dashboard
+- **Calculator**: Extrapolation and projection tool for financial scenarios
+- **Curated Media**: Educational content and announcements curated by the Monytri team
+- **QR Sharing**: Generate QR codes to request amounts or share the app easily
+
+### App Experience 
+- **Progressive Web App (PWA)**: App-like functionality delivered through web technologies
+- **Responsive Design**: Optimized for mobile, tablet, and desktop
+- **Intuitive Navigation**: Clear user flows with accessible design patterns
+- **Offline Capability**: Service worker support for limited offline use
+- **Environment Responsiveness**: Platform and device detection for adaptive behavior
 
 
 ## Getting Started
 
 ### Production Environment
 
-The application is deployed and maintained on Netlify with continuous integration.
-[![Netlify Status](https://api.netlify.com/api/v1/badges/08a4e3a9-42ce-4a4b-859f-cf756c1f2da3/deploy-status)](https://app.netlify.com/projects/monytri-alpha/deploys)
+The application is maintained on GitHub and Netlify with continuous integration, and the content is managed via Appwrite.
 
-Access the live application at: [**Monytri MVP**](https://monytri.app/)
+Access the live application at: [**Monytri.app**](https://monytri.app/)
 
+### Netlify 
+Log in to Netlify with your connected account, and select the project. 
+> here you can check and manage application traffic, DNS settings, and domain settings.
 
-### Development Environment
+### Appwrite
+Log in to Appwrite with your connected account and select the project. 
+> On this platform you can manage and add content to the application. (blogs, podcasts, announcements, image assets, videos)
 
-#### Prerequisites
+##### To add content, 
+1. navigate to the content type in the database tab,
+2. select the option to add a new row,
+3. and fill in the necessary perameters.
+ 
+##### For image assets, 
+ 1. navigate to the storage tab and add the assets. then
+ 2. copy the generated link of the asset and navigate to the blog section in the database tab. There you
+ 3. select the banner-image section and
+ 4. create a new row for the copied asset link.
+ 5. fill in the necessary perameters.
+
+### Development Prerequisites
 - Node.js (version 18+ recommended)
-- npm 
+- npm
+- Svelte 5
+
+## Technical Architecture
+
+### Technology Stack
+- **SvelteKit** - Frontend & SSR 
+- **Appwrite** - Auth - Storage - CMS
+- **Capacitor** - Cross-platform native app creation
+- **Tailwind CSS** - Utility-first CSS 
+- **PWA Features** - Service worker implementation and offline functionality
+- **Web APIs** - Integration with modern browser capabilities
 
 #### Installation & Setup
 ```bash
 # Clone the repository
 git clone https://github.com/christoph3r3w/Monytri-app.git
+> Or download the folder from GitHub
 
 # Navigate to project directory
 cd Monytri-app
@@ -50,16 +88,6 @@ npm run dev
 npm run build
 ```
 
-## Technical Architecture
-
-### Technology Stack
-- **SvelteKit** - Frontend & SSR 
-- **Appwrite** - Auth - Storage - CMS
-- **Capacitor** - Cross-platform native app creation
-- **Tailwind CSS** - Utility-first CSS 
-- **PWA Features** - Service worker implementation and offline functionality
-- **Web APIs** - Integration with modern browser capabilities
-
 ### Project Structure
 ```
 src/
@@ -71,7 +99,9 @@ src/
 
 ## Device Compatibility
 
-This application functions on every mobile and desktop environment and browser.
+This application functions on Most mobile and desktop environments and browsers that support:
+- HTML 4 & 5
+- JavaScript (ECMAScript 2026)
 
 
 ## Project Status & Development
