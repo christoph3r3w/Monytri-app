@@ -30,7 +30,7 @@
     "prettier": "^3.3.2",
     "prettier-plugin-svelte": "^3.2.6",
     "svelte": "^5.38.10",
-    "tailwindcss": "^3.4.9",
+    "tailwindcss": "^3.4.19",
     "vite": "^7.1.5"
   },
   "dependencies": {
@@ -43,6 +43,7 @@
     "@capacitor/status-bar": "^8.0.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/vite": "^4.1.18",
     "appwrite": "^18.1.1",
     "chart.js": "^4.5.0",
     "eruda": "^3.4.3",
