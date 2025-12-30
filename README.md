@@ -43,14 +43,14 @@ Log in to Appwrite with your connected account and select the project.
 > On this platform you can manage and add content to the application. (blogs, podcasts, announcements, image assets, videos)
 
 ##### To add content, 
-1. Navigate to the content type in the database tab,
-2. Select the option to add a new row,
+1. Navigate to the content type in the database tab.
+2. Select the option to add a new row.
 3. and fill in the necessary parameters.
  
 ##### For image assets
  1. Navigate to the storage tab and add the assets.
  2. Copy the generated link of the asset and navigate to the blog section in the database tab.
- 3. Select the banner-image section
+ 3. Select the banner-image section.
  4. Create a new row for the copied asset link.
  5. Fill in the necessary parameters.
 
