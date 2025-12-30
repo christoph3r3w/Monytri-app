@@ -36,23 +36,23 @@ Access the live application at: [**Monytri.app**](https://monytri.app/)
 
 ### Netlify 
 Log in to Netlify with your connected account, and select the project. 
-> here you can check and manage application traffic, DNS settings, and domain settings.
+> Here you can check and manage application traffic, DNS settings, and domain settings.
 
 ### Appwrite
 Log in to Appwrite with your connected account and select the project. 
 > On this platform you can manage and add content to the application. (blogs, podcasts, announcements, image assets, videos)
 
 ##### To add content, 
-1. navigate to the content type in the database tab,
-2. select the option to add a new row,
-3. and fill in the necessary perameters.
+1. Navigate to the content type in the database tab,
+2. Select the option to add a new row,
+3. and fill in the necessary parameters.
  
-##### For image assets, 
- 1. navigate to the storage tab and add the assets. then
- 2. copy the generated link of the asset and navigate to the blog section in the database tab. There you
- 3. select the banner-image section and
- 4. create a new row for the copied asset link.
- 5. fill in the necessary perameters.
+##### For image assets
+ 1. Navigate to the storage tab and add the assets.
+ 2. Copy the generated link of the asset and navigate to the blog section in the database tab.
+ 3. Select the banner-image section
+ 4. Create a new row for the copied asset link.
+ 5. Fill in the necessary parameters.
 
 ### Development Prerequisites
 - Node.js (version 18+ recommended)
@@ -65,6 +65,7 @@ Log in to Appwrite with your connected account and select the project.
 - **SvelteKit** - Frontend & SSR 
 - **Appwrite** - Auth - Storage - CMS
 - **Capacitor** - Cross-platform native app creation
+- **CSS** - Global styling
 - **Tailwind CSS** - Utility-first CSS 
 - **PWA Features** - Service worker implementation and offline functionality
 - **Web APIs** - Integration with modern browser capabilities
@@ -99,7 +100,7 @@ src/
 
 ## Device Compatibility
 
-This application functions on Most mobile and desktop environments and browsers that support:
+This application functions on _most_ mobile and desktop environments and browsers that support:
 - HTML 4 & 5
 - JavaScript (ECMAScript 2026)
 
