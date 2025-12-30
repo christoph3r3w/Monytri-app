@@ -70,7 +70,7 @@
 				{isLoading ? 'Creating account...' : 'Register'}
 			</button>
 		</form>	
-	<button onclick={() => goto('/')}>home</button>
+	<button onclick={() => goto('/login')}>Signin</button>
 </section>
 
 <style>
