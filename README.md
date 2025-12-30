@@ -88,7 +88,7 @@ npm run dev
 npm run build
 ```
 
-### Project Structure
+#### Project Structure
 ```
 src/
 ├── routes/           # Application pages and routing logic
