@@ -1,11 +1,11 @@
 <script>
 	import {current,isMobile} from '$lib/store.js';
-	import {Menu,InProgress_S,Login_F,Login_S} from '$lib'
+	import {Menu,InProgress_S,Login_F} from '$lib'
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
 	let { data, form } = $props();
 	let isAuthenticated = $derived(data?.isAuthenticated);
-	
+		
 	let errorMessage = $state('');
 	let isLoading = $state(false);
 

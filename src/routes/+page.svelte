@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 
 	let {data} = $props();
-	let {blogs,podcasts,user,device,isAuthenticated} = data;
+	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;
 </script>
 
 <svelte:head>
@@ -15,15 +15,15 @@
 	<!-- Top section of the home page on mobile. -->
 	<HomeArticles_M {blogs} {podcasts}/>	
 	<div class="button-conatiner-dev">
-			<button onclick={goto("/education")}>education</button>
-			<button onclick={goto("/share")}>share</button>
-			<button onclick={goto("/install")}>install app</button>
-		{#if !isAuthenticated}
-			<button onclick={goto("/login")}>login</button>
+			<button onclick={() => goto("/education")}>education</button>
+			<button onclick={() => goto("/share")}>share</button>
+			<button onclick={() => goto("/install")}>install app</button>
+		{#if !isAuthenticated }
+			<button onclick={() => goto("/login")}>login</button>
 		{:else}
-			<button onclick={goto("/transactions")}>Transactions</button>
-			<button onclick={goto("/stock-overview")}>Stock overview</button>
-			<button onclick={goto("/gift")}>send a gift</button>
+			<button onclick={() => goto("/transactions")}>Transactions</button>
+			<button onclick={() => goto("/stock-overview")}>Stock overview</button>
+			<button onclick={() => goto("/gift")}>send a gift</button>
 			<form action="/logout" method="post">
 	 		    <button type="submit">Logout</button>
 			</form>
@@ -31,7 +31,7 @@
 
 	</div>
 	<Logo name={false} />
-	<div class="analitycs">
+	<div class="analitycs" style="display: {dev === 'dev' ? 'block' : 'none'}">
 		<p>
 		Platform: {device.platform}<br>
 		Device: { device.isMobile ? 'Mobile' : 'Desktop' }
@@ -112,7 +112,6 @@
 	}
 
 	.analitycs{
-		display: none;
 		position: fixed;
 		bottom: 0;
 		left: 0;

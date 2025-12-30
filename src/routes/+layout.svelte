@@ -8,17 +8,11 @@
 	import '../app.css';
 	
 	let {data, children} = $props();
-	let {user,isAuthenticated} = data;	
+	let {user,isAuthenticated,dev} = data;	
 	
 	let menu_Open = $derived($menuOpen);
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
-
-
-	$effect(() => {
-	if (!isAuthenticated) return;
-		// checkSignIn();
-	});
 
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
@@ -41,10 +35,10 @@
 	// debugging tool for mobile
 	// need to be removed in production
 	onMount(async () => {
-	if (!isAuthenticated) return;
+	if (!dev) return;
 	// checkSignIn();
-		// const eruda = (await import("eruda")).default;
-		// eruda.init(); 
+		const eruda = (await import("eruda")).default;
+		eruda.init(); 
 	});
 	
 	
@@ -428,6 +422,8 @@
 
 	@media not (display-mode: standalone)  {
 
+
+
 		:global(body:not(.windows-device, .desktop-device, .macos-device)) {
 			overflow: hidden;
 			max-height:100lvh !important;
@@ -438,7 +434,6 @@
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
-		/* :global(body:not(.windows-device)) footer { */
 		:global(body:not(.windows-device, .desktop-device, .macos-device)) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 

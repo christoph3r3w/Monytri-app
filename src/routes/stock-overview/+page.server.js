@@ -2,11 +2,14 @@ import { databases } from '$lib/appwrite';
 import { get } from 'svelte/store';
 
 /** @type {import('./$types').PageLoad} */
-export async function load() {
+export async function load(x) {
   	const announcementsDBId = '68d64fbc0012a8ec7a92';
   	const announcementsPostId = '6925ecc600033d68ba2e';
   	const brokerDBId = '68d6504c001707f48230';
   	const brokerProfileId = '69262e00001b9f68d131';
+	let data = await x.parent();
+	let {isAuthenticated} = data;
+	
 
 	let announcementsPost = null;
 	let brokersProfile = null;
@@ -20,12 +23,14 @@ export async function load() {
 			return x;
 		});
 
-		const brokersData = await databases.listDocuments(brokerDBId, brokerProfileId);
-		brokersProfile = (brokersData.documents || []).map(x => {
-			x.balance = rand();
-			return x;
-		});
 
+		if(isAuthenticated){
+			const brokersData = await databases.listDocuments(brokerDBId, brokerProfileId);
+			brokersProfile = (brokersData.documents || []).map(x => {
+				x.balance = rand();
+				return x;
+			});
+		}
 	} catch (err) {
 		console.error('Appwrite client error:', err);
 	}
@@ -132,7 +137,8 @@ export async function load() {
 	portfolio.value = totalBalance + profitLoss;
 	portfolio.profitLoss = profitLoss;
 	portfolio.profitLossPercentage = +((portfolio.profitLoss / (portfolio.value - portfolio.profitLoss)) * 100).toFixed(2);
-
+	// console.log(data.data);
+	
 
     return {
 		stockData: {  

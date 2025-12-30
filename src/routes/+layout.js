@@ -4,7 +4,9 @@ import { get } from 'svelte/store';
 
 /** @type {import('./$types').LayoutLoad} */
 export async function load(data) {
-    const d = get(device);
+    let {isAuthenticated} = data.data;
+    
+    let d = isAuthenticated ? get(device) : null;
     let f = firstLoad;
 
     return {

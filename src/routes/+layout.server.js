@@ -19,15 +19,17 @@ export const load = async ({ locals, url }) => {
         throw redirect(303, '/');
     }
 
-   
-    let { stockData: { totalBalance, portfolio } } = await sd();
-    let investedRaw = totalBalance || 1507.88;
-    let giftedRaw = 501.25 + (Math.abs(portfolio.profitLoss) || 0);
-
     let u = locals.user;
+    let dev = u?.prefs?.dev === 'trueDev' ? 'dev' : null;
     let ia = !!locals.user;
+    
+    
+    let { stockData: { totalBalance, portfolio } } = await sd();
+    let investedRaw = totalBalance ?? 1507.88;
+    let giftedRaw =  501.25 + (Math.abs(portfolio.profitLoss) || 0) ?? 501.25;
+    
 
-	 function balanceString(balance) {
+	function balanceString(balance) {
 		const formatted = new Intl.NumberFormat('nl-NL', {
 			style: 'currency',
 			currency: 'EUR',
@@ -38,12 +40,13 @@ export const load = async ({ locals, url }) => {
 
 
     return {
-        data: {
+        data: !ia ? null : {
             Invested: balanceString(investedRaw),
             Gifted: balanceString(giftedRaw),
         },
         user: u,
         isAuthenticated: ia,
+        dev : dev,
 
     };
 };

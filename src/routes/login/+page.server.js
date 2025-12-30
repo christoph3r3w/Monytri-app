@@ -24,8 +24,12 @@ export const actions = {
 				secure: import.meta.env.PROD,
 				expires: new Date(session.expire)
 			});
-		} catch {
-			return fail(401, { error: 'Invalid email or password' });
+		} catch (error) {
+		if (error.code === 409) {
+			return fail(409, { error: "User already exists" });
+		}
+
+		return fail(500, { error: "Unexpected server error" });
 		}
 
 		throw redirect(303, '/');
