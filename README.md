@@ -15,11 +15,6 @@ Monytri is a comprehensive financial technology platform designed to modernize d
 - **Intuitive Navigation**: Streamlined user flows and accessible design patterns
 - **Offline Capability**: Service worker implementation for offline functionality
 
-### Platform Components
-- **Landing Page/Homepage**: Introduction to Monytri services and value proposition
-- **Onboarding Experience**: Guided user registration and platform familiarization
-- **Gift Interface**: Comprehensive sending and receiving functionality
-- **Content Management**: Dynamic content delivery and management system
 
 ## Getting Started
 
@@ -28,15 +23,14 @@ Monytri is a comprehensive financial technology platform designed to modernize d
 The application is deployed and maintained on Netlify with continuous integration.
 [![Netlify Status](https://api.netlify.com/api/v1/badges/08a4e3a9-42ce-4a4b-859f-cf756c1f2da3/deploy-status)](https://app.netlify.com/projects/monytri-alpha/deploys)
 
-Access the live application at: [**[Monytri MVP]**](https://monytri-alpha.netlify.app/)
+Access the live application at: [**Monytri MVP**](https://monytri.app/)
 
 
 ### Development Environment
 
 #### Prerequisites
 - Node.js (version 18+ recommended)
-- npm or yarn package manager
-- Modern web browser for testing
+- npm 
 
 #### Installation & Setup
 ```bash
@@ -51,21 +45,18 @@ npm install
 
 # Start development server
 npm run dev
-```
 
-#### Development Commands
-- `npm run dev` - Start development server with hot reload
-- `npm run build` - Build application for production
-- `npm run preview` - Preview production build locally
-- `npm run test:e2e` - Execute end-to-end testing suite
-- `npm run format` - Format codebase with Prettier
+# Build app
+npm run build
+```
 
 ## Technical Architecture
 
 ### Technology Stack
-- **SvelteKit** - Modern web framework for optimal performance
-- **Capacitor** - Cross-platform native app capabilities
-- **Tailwind CSS** - Utility-first CSS framework for responsive design
+- **SvelteKit** - Frontend & SSR 
+- **Appwrite** - Auth - Storage - CMS
+- **Capacitor** - Cross-platform native app creation
+- **Tailwind CSS** - Utility-first CSS 
 - **PWA Features** - Service worker implementation and offline functionality
 - **Web APIs** - Integration with modern browser capabilities
 
@@ -84,13 +75,14 @@ This application functions on every mobile and desktop environment and browser.
 
 
 ## Project Status & Development
-This application is in its second phase, which should lead to the MVP that showcases the main functionalities.
-[![Netlify Status](https://api.netlify.com/api/v1/badges/08a4e3a9-42ce-4a4b-859f-cf756c1f2da3/deploy-status)](https://app.netlify.com/projects/monytri-alpha/deploys)
+- Development: MVP phase has concluded
+- Live status:  [![Netlify Status](https://api.netlify.com/api/v1/badges/08a4e3a9-42ce-4a4b-859f-cf756c1f2da3/deploy-status)](https://app.netlify.com/projects/monytri-alpha/deploys)
 
 ## Support & Documentation
 
 ### Issues & Bug Reports
 Report technical issues through [GitHub Issues](https://github.com/christoph3r3w/Monytri-app/issues)
+
 
 ### Community & Updates
 - [Instagram](https://www.instagram.com/monytri.fintech/) - Product updates and announcements
