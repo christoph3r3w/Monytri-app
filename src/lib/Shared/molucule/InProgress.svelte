@@ -4,7 +4,7 @@
 
 <article class="message-container">
 	<header class="message-header">
-		<h2>in progress</h2>
+		<!-- <h2>in progress</h2> -->
 	</header>
 	<section class="message-body">
 	<img src={`/shared-assests/team-brainstorming.png`} alt="team-brainstorming">
@@ -62,7 +62,9 @@
 		border-radius: 0 0 var(--rad) var(--rad);
 		width: 100%;
 		height: 50%;
+		gap: clamp(3dvh, 1rem + 2dvh, 5dvh);
 		text-align: center;
+
 	}
 
 	.message-body img {

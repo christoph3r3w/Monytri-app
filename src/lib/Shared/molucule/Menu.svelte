@@ -186,6 +186,8 @@
 			left: 0;
 			top: var(--header-height);
 			bottom: 20vh;
+			box-shadow: rgba(99, 99, 99, 0.381) 0px 7px 15px 0px, inset 0px -25px 10px -15px rgba(255, 255, 255, 0.693)
+
 		}
 		
 		nav.dropdown-menu section.header-routes{

@@ -45,7 +45,7 @@
 			<Logo name={true}/>
 		</h1>
 	</nav>
-	<nav class="menu" style="{!isAuthenticated ? 'display: none;' : ''}" >
+	<nav class="menu" style="{!isAuthenticated ? 'display: none;' : ''}" in:fade={isAuthenticated ? { duration: 300, delay: 100 } : null} >
 		<menu>
 			{@render desktopRoutes()}
 		</menu>

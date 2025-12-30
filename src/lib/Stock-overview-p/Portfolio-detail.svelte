@@ -97,12 +97,12 @@
 	50% {	transform: translateY(-10%);}
 }
 
-.portfolio span {
+.portfolio > span {
 	color: var(--general-text-color);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content:stretch;
 	gap: 1%;
 	text-wrap:nowrap ;
 }
@@ -120,12 +120,13 @@
 }
 
 .portfolio-average .value{
-	font-size: 1.3rem;
+	font-size: clamp(1rem, 1.3rem + 1cqw , 2rem);
 	font-weight: 500;
 	line-height: 120%;
 	text-align: center;
 	text-decoration: underline 5% ;
 	color: var(--general-text-color);
+	margin-top: 2cqw;
 }
 
 .portfolio .value.main{
