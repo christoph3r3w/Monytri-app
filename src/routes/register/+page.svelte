@@ -3,56 +3,44 @@
 	import {Menu,InProgress_S} from '$lib'
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	// import { user,isAuthenticated } from '$lib/server/user';
 
 	let {data} = $props();
-	let isAuthenticated = $derived(data?.isAuthenticated);
+	
 	
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
 	let isLoading = $state(false);
 
-	// Only redirect if already authenticated (so user can't see register) – do NOT push unauthenticated users to /login here
-	// function checkSignIn() {
-	// 	if ($isAuthenticated) {
-	// 		goto('/');
-	// 	}
-	// }
-
 	$effect(() => {
-		checkSignIn();
-	})
-
-	const register = async (e) => {
-		e.preventDefault();
-		isLoading = true;
-		errorMessage = '';
-		
-		try {
-			const formData = new FormData(e.target);
-			// await user.register(formData.get('email'), formData.get('password'), formData.get('name'));
-			console.warn('Register action disabled during refactor');
-		} catch (error) {
-			console.error('Registration error:', error);
-			if (error.code === 429 || error.message?.includes('Rate limit')) {
-				errorMessage = 'Too many requests. Please wait a moment and try again.';
-			} else if (error.code === 409) {
-				errorMessage = 'An account with this email already exists.';
-			} else {
-				errorMessage = error.message || 'Registration failed. Please try again.';
-			}
-		} finally {
+		if(data.user === null){
 			isLoading = false;
-			goto('/login');
 		}
-	};
+	});
 
-	const logout = async () => {
-		// await user.logout();
-		console.warn('Logout action disabled during refactor');
-		goto('/');
+	// const register = async (e) => {
+	// 	e.preventDefault();
+	// 	isLoading = true;
+	// 	errorMessage = '';
+		
+	// 	try {
+	// 		const formData = new FormData(e.target);
+	// 		// await user.register(formData.get('email'), formData.get('password'), formData.get('name'));
+	// 		console.warn('Register action disabled during refactor');
+	// 	} catch (error) {
+	// 		console.error('Registration error:', error);
+	// 		if (error.code === 429 || error.message?.includes('Rate limit')) {
+	// 			errorMessage = 'Too many requests. Please wait a moment and try again.';
+	// 		} else if (error.code === 409) {
+	// 			errorMessage = 'An account with this email already exists.';
+	// 		} else {
+	// 			errorMessage = error.message || 'Registration failed. Please try again.';
+	// 		}
+	// 	} finally {
+	// 		isLoading = false;
+	// 		goto('/login');
+	// 	}
+	// };
 
-	};
 
 </script>
 
@@ -65,7 +53,7 @@
 		</div>
 	{/if}
 	
-		<form onsubmit={register}>
+		<form action="/register" method="POST" use:enhance>
 			<label>
 				Name:
 				<input type="text" placeholder="Name" name="name" required disabled={isLoading} />
@@ -78,11 +66,11 @@
 				Password:
 				<input type="password" placeholder="Password" name="password" required minlength="8" disabled={isLoading} value="monytriapp" />
 			</label>
-			<button type="submit" disabled={isLoading}>
+			<button type="submit" disabled={isLoading} onclick={() => (isLoading=true)}>
 				{isLoading ? 'Creating account...' : 'Register'}
 			</button>
 		</form>	
-	<button onclick={logout}>Logout</button>
+	<button onclick={() => goto('/')}>home</button>
 </section>
 
 <style>
