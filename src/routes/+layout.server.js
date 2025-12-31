@@ -10,7 +10,6 @@ export const load = async ({ locals, url }) => {
     const publicRoutes = ['/login', '/register'];
     const isPublicRoute = publicRoutes.some(route => url.pathname.startsWith(route));
 	
-	
 	if (!locals.user && !isPublicRoute) {
 		throw redirect(303, '/login');
 	}	
@@ -20,6 +19,7 @@ export const load = async ({ locals, url }) => {
     }
 
     let u = locals.user;
+    const safeUser = { id: u.$id, email: u.email, name: u.name };
     let dev = u?.prefs?.dev === 'trueDev' ? 'dev' : null;
     let ia = !!locals.user;
     
@@ -38,13 +38,12 @@ export const load = async ({ locals, url }) => {
 		return formatted.length > maxLength ? formatted.slice(0, maxLength) + '…' : formatted;
 	}
 
-
     return {
         data: !ia ? null : {
             Invested: balanceString(investedRaw),
             Gifted: balanceString(giftedRaw),
         },
-        user: u,
+        user: safeUser,
         isAuthenticated: ia,
         dev : dev,
 

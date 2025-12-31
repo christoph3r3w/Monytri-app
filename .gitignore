@@ -5,6 +5,7 @@ build
 android
 src/lib/test components
 ios
+test-results
 
 # Output
 .output
