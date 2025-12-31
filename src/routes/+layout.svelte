@@ -2,7 +2,7 @@
 	import {onMount} from 'svelte';
   	import {onNavigate,afterNavigate, goto} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
-	import{device} from '$lib/Device.js'
+	import {device} from '$lib/Device.js'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
 	import { fade } from 'svelte/transition';
 	import '../app.css';
@@ -32,16 +32,7 @@
 		});
 	}
 
-	// debugging tool for mobile
-	// need to be removed in production
-	onMount(async () => {
-	if (!dev) return;
-	// checkSignIn();
-		const eruda = (await import("eruda")).default;
-		eruda.init(); 
-	});
-	
-	
+
 	$effect(() => {		
 		detectSWUpdate();
 
@@ -124,10 +115,16 @@
     //     })
     // })
 
+	onMount(async () => {
+	// debugging tool for mobile
+	if (!dev && $device.isMobile == false ) return;
+		const eruda = (await import("eruda")).default;
+		eruda.init(); 
+	});
+
 	afterNavigate(() => {
 		updateCurrentFromPath();
 	});	
-
 </script>
 
 <svelte:head>
@@ -410,9 +407,7 @@
 			border-radius: var(--_nav-radius) var(--_nav-radius) 0 0;
 			transform: translate3d(0,0,0);
 			padding-bottom: env(safe-area-inset-bottom);
-			z-index: 100;
-
-			
+			z-index: 100;	
 		}
 
 		:global(body.android-device){
@@ -421,9 +416,6 @@
 	}
 
 	@media not (display-mode: standalone)  {
-
-
-
 		:global(body:not(.windows-device, .desktop-device, .macos-device)) {
 			overflow: hidden;
 			max-height:100lvh !important;

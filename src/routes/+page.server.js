@@ -10,7 +10,9 @@ export async function load() {
 
     let posts = null;
     let podcasts = null;
-    let videoBlogs = null;;
+    let videoBlogs = null;
+
+    console.time('Appwrite client fetch');
 
     try {
         posts = await databases.listDocuments(databaseId,blogPostId,[
@@ -29,6 +31,8 @@ export async function load() {
     } catch (err) {
         console.error('Appwrite client error:', err);
     }
+
+    console.timeEnd('Appwrite client fetch');
     
     return {
         blogs: posts.documents ?? [], 

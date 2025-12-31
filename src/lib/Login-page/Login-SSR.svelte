@@ -3,6 +3,8 @@
 	import {Menu,InProgress_S,PageStepContainer,Logo} from '$lib'
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
+	import {enhance} from '$app/forms';
+
 	let { formData, data } = $props();
 	let {device, isAuthenticated} = data
 
@@ -152,7 +154,7 @@
 		<h2>Log in to Monytri</h2>
 		<p class="subtext">Enter your registered mobile number to log in.</p>
 
-		<form class="login-form" id="login-form" method="post" action="/login" onsubmit={handleSubmit} bind:this={form}>
+		<form class="login-form" id="login-form" method="post" action="/login" onsubmit={handleSubmit} bind:this={form} use:enhance>
 			<label for="email">Email</label>
 			<input name="email" type="email" placeholder="Email" id="email" required autocomplete="email" disabled={isLoading} />
 			<label for="phone">Phone</label>
@@ -230,7 +232,7 @@
 {/snippet}
 
 {#snippet logout1()}
-<form action="/logout" method="post">
+<form action="/logout" method="post" use:enhance>
     <button>Logout</button>  
 </form>
 {/snippet}

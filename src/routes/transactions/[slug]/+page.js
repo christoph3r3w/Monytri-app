@@ -1,10 +1,8 @@
 export const prerender = false;
 
-
-
 export const load = ({ fetch, params }) => {
 
-let formData = {
+	let formData = {
 		amount: null,
 		message: 'check if needed',
 		searchQuery:'',
@@ -16,7 +14,7 @@ let formData = {
 		shareUrl: null,
 		token: null
 	};
-	// Define the transaction data inside the load function
+
 	const transactionData = [
 		{ id:1, transactionType: 'sent', user:{name:'Dani',surname:'dune'}, amount: 21.10, slug:'tx-1-dani', date: '2024-10-01', status: 'completed' },
 		{ id:2, transactionType: 'received', user:{name:'David',surname:'Dick'}, amount: 125, slug:'2dd-r', date: '2024-10-02', status: 'pending' },

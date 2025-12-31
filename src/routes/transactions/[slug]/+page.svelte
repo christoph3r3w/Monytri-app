@@ -8,7 +8,7 @@
 	
 	// Or you can get it from the data passed by the load function
 	let { data, aList } = $props();
-	let {TDU, formData} = $state(data.slug)
+	let {TDU, formData} = $state(data.slug)	
 
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
@@ -20,7 +20,7 @@
 		}).format(number);
 	}
 
-	onMount(() => {
+	$effect(() => {
 		current.set('transactions History');
 	});
 
@@ -52,7 +52,7 @@
 		<section class="user-details">
 			<h2>Recipient Details</h2>
 			<ul>
-				<li>Account number<span>{b.account}</span></li>
+				<li>Account number<span>{b.account||'****'}</span></li>
 				<li>Recipient Name<span>{b.user.name} {b.user.surname}</span></li>
 			</ul>
 		</section>
@@ -60,12 +60,12 @@
 		<section class="user-details">
 			<h2>Sender Details</h2>
 			<ul>
-				<li>Account number<span>{b.account}</span></li>
+				<li>Account number<span>{b.account||'****'}</span></li>
 				<li>Sender Name<span>{b.user.name} {b.user.surname}</span></li>
 			</ul>
 		</section>
 	{:else}
-		<button onclick={goto('/transactions')}>back to transactions</button>
+		<button onclick={() => goto('/transactions')}>back to transactions</button>
 	{/if}
 {/snippet}
 
@@ -93,17 +93,17 @@
 		{@render b(TDU)}
 	{:else}
 		<p>transaction {TDU.status}</p>
-		<button onclick={goto('/transactions')}>back to transactions</button>
+		<button onclick={() => goto('/transactions')}>back to transactions</button>
 	{/if}
 {/snippet}
 
 {#snippet d()}
 	{#if TDU.transactionType == 'sent' }
-	<button class="redo-button gift" onclick={goto('/gift')}>redo transaction</button>	
+	<button class="redo-button gift" onclick={() => goto('/gift')}>redo transaction</button>	
 	{:else if TDU.transactionType == 'received'}
-	<button class="redo-button request"onclick={goto('/request')}>redo transaction</button>	
+	<button class="redo-button request"onclick={() => goto('/request')}>redo transaction</button>	
 	{/if}
-	<button onclick={goto('/transactions')}>back to transactions</button>
+	<button onclick={() => goto('/transactions')}>back to transactions</button>
 {/snippet}
 
 {#snippet e()}

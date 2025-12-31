@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import {StepContainer} from '$lib';
+	import { enhance } from '$app/forms';
 
 	let { formData,selected, button, validateAmount, nextStep, min, max,stepValidation,previousStep } = $props();
 	
@@ -34,7 +35,7 @@
 </script>
 
 {#snippet amountOptions()}
-	<form onsubmit={() => {nextStep();preventDefault();}}>
+	<form onsubmit={() => {nextStep();preventDefault();}} use:enhance>
 		<fieldset class="amount-input-container">
 			<label for='fixedAmount1'><input type="radio" id='fixedAmount1' name="fixedAmount" oninput={() => handleRadioInput('€25')} value="€25">&euro; 25</label>
 			<label for='fixedAmount2'><input type="radio" id='fixedAmount2' name="fixedAmount" oninput={() => handleRadioInput('€50')} value="€50">&euro; 50</label>

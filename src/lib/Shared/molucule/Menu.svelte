@@ -1,3 +1,7 @@
+<script>
+	import { enhance } from '$app/forms';
+</script>
+
 {#snippet routes()}
 	<li><a href="/">home</a></li>
 	<li><a href="/gift">gift</a></li>
@@ -59,7 +63,7 @@
 			</li>
 			<li>
 				<svg></svg>
-			<form action="/logout" method="post">
+			<form action="/logout" method="post" use:enhance>
 				<button type="submit">Log out</button>
 			</form>
 			</li>

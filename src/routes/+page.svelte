@@ -2,6 +2,8 @@
 	import {Balance_M,HomeArticles_M,Logo } from '$lib'
 	import {current} from '$lib/store.js';
 	import { goto } from '$app/navigation';
+	import {enhance} from '$app/forms';
+
 
 	let {data} = $props();
 	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;
@@ -24,7 +26,7 @@
 			<button onclick={() => goto("/transactions")}>Transactions</button>
 			<button onclick={() => goto("/stock-overview")}>Stock overview</button>
 			<button onclick={() => goto("/gift")}>send a gift</button>
-			<form action="/logout" method="post">
+			<form action="/logout" method="post" use:enhance>
 	 		    <button type="submit">Logout</button>
 			</form>
 		{/if}

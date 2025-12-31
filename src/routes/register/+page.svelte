@@ -3,6 +3,7 @@
 	import {Menu,InProgress_S} from '$lib'
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import {enhance} from '$app/forms';
 
 	let {data} = $props();
 	

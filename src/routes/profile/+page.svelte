@@ -3,6 +3,8 @@
 	import {InProgress_S} from '$lib';
 	import {goto} from '$app/navigation';
 	import {Logo} from '$lib';
+	import {enhance} from '$app/forms';
+
 
 	let {data} = $props();
 	let {user, device} = data;
@@ -38,12 +40,12 @@
 		{/if}
 
 		<div class="button-conatiner-dev">
-		<form action="/logout" method="post">
+		<form action="/logout" method="post" use:enhance>
 			<button type="submit">Logout</button>
 		</form>
-			<button onclick={goto("/share")}>share</button>
-			<button onclick={goto("/install")}>install app</button>
-			<button onclick={goto('/')}>Go home</button>
+			<button onclick={() => goto("/share")}>share</button>
+			<button onclick={() => goto("/install")}>install app</button>
+			<button onclick={() => goto('/')}>Go home</button>
 			<a href="https://github.com/christoph3r3w/Monytri-dev-pwa-v1/issues/new">report issues </a>
 		</div>
 
