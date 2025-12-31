@@ -1,5 +1,5 @@
 <script>
-	import { enhance } from '$app/forms';
+	
 </script>
 
 {#snippet routes()}
@@ -63,7 +63,7 @@
 			</li>
 			<li>
 				<svg></svg>
-			<form action="/logout" method="post" use:enhance>
+			<form action="/logout" method="post" >
 				<button type="submit">Log out</button>
 			</form>
 			</li>

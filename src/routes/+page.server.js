@@ -12,8 +12,6 @@ export async function load() {
     let podcasts = null;
     let videoBlogs = null;
 
-    console.time('Appwrite client fetch');
-
     try {
         posts = await databases.listDocuments(databaseId,blogPostId,[
             Query.equal('isPublished', true),
@@ -31,8 +29,6 @@ export async function load() {
     } catch (err) {
         console.error('Appwrite client error:', err);
     }
-
-    console.timeEnd('Appwrite client fetch');
     
     return {
         blogs: posts.documents ?? [], 

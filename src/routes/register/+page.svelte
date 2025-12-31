@@ -3,7 +3,6 @@
 	import {Menu,InProgress_S} from '$lib'
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import {enhance} from '$app/forms';
 
 	let {data} = $props();
 	
@@ -54,7 +53,7 @@
 		</div>
 	{/if}
 	
-		<form action="/register" method="POST" use:enhance>
+		<form action="/register" method="POST" >
 			<label>
 				Name:
 				<input type="text" placeholder="Name" name="name" required disabled={isLoading} />

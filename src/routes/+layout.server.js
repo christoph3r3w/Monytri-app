@@ -18,10 +18,10 @@ export const load = async ({ locals, url }) => {
         throw redirect(303, '/');
     }
 
-    let u = locals.user;
-    const safeUser = { id: u.$id, email: u.email, name: u.name };
-    let dev = u?.prefs?.dev === 'trueDev' ? 'dev' : null;
-    let ia = !!locals.user;
+    const u = locals.user;
+    const ia = !!u;
+    const safeUser = u ? { email: u.email, name: u.name } : null;
+    const dev = u?.prefs?.dev === 'trueDev' ? 'dev' : null;
     
     
     let { stockData: { totalBalance, portfolio } } = await sd();

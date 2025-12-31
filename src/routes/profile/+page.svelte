@@ -3,8 +3,6 @@
 	import {InProgress_S} from '$lib';
 	import {goto} from '$app/navigation';
 	import {Logo} from '$lib';
-	import {enhance} from '$app/forms';
-
 
 	let {data} = $props();
 	let {user, device} = data;
@@ -40,7 +38,7 @@
 		{/if}
 
 		<div class="button-conatiner-dev">
-		<form action="/logout" method="post" use:enhance>
+		<form action="/logout" method="post" >
 			<button type="submit">Logout</button>
 		</form>
 			<button onclick={() => goto("/share")}>share</button>
