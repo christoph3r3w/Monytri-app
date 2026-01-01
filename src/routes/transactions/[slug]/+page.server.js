@@ -36,6 +36,19 @@ export const load = ({ fetch, params }) => {
 	const filteredData = transactionData.filter(tx => tx.slug === params.slug)[0];
 	// console.log('Filtered transaction:', filteredData);
 
+
+	function formatCurrency(value) {
+		const number = typeof value === 'string' ? parseFloat(value) : value;
+		return new Intl.NumberFormat('en-IE', {
+			style: 'currency',
+			currency: 'EUR',
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2
+		}).format(number);
+	}
+
+	filteredData.amount = formatCurrency(filteredData.amount);
+
 	return {
 		// Return the filtered transaction data
 		slug: {TDU: filteredData, formData}

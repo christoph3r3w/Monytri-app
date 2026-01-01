@@ -1,4 +1,6 @@
 <script>
+
+let {username} = $props();
 	
 </script>
 
@@ -11,6 +13,10 @@
 
 
 <nav class="dropdown-menu">
+<section class="profile">
+	<span class="profile-letter">{username[0]?.toLowerCase()}</span> 
+	<p>{username}</p>
+</section>
 	<section class="header-routes">
 		<ul>
 			{@render routes()}
@@ -89,6 +95,31 @@
 		box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;		
 		z-index: 20;
 	}
+
+	.profile{
+		display: flex;
+		flex-direction: row !important;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.profile-letter {	
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: clamp(40px,30vw,3rem);
+		height: auto;
+		aspect-ratio: 1;
+		padding-right: .9%;
+		padding-bottom: 1%;
+		background-color: var(--primary-darkgreen-550);
+		color: white;
+		font-size: clamp(1rem, 1.5rem + 6vw, 2rem);
+		text-box: trim-both ex alphabetic;
+	}
+
 	
 	nav.dropdown-menu section{
 	position: relative;
@@ -191,7 +222,14 @@
 			top: var(--header-height);
 			bottom: 20vh;
 			box-shadow: rgba(99, 99, 99, 0.381) 0px 7px 15px 0px, inset 0px -25px 10px -15px rgba(255, 255, 255, 0.693)
+		}
 
+		.profile{
+			display: flex;
+			flex-direction: column !important;
+			align-items: start;
+			gap: 1rem;
+			margin-bottom: 1.5rem;
 		}
 		
 		nav.dropdown-menu section.header-routes{

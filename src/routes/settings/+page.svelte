@@ -4,9 +4,9 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 
-	$effect(() => {
+	onMount(() => {
 		if ($current && !$isMobile) {
-			goto('/error');
+			goto('/');
 		} 	
 	});
 
@@ -14,9 +14,9 @@
 
 <InProgress_S />
 
-<div class='settings-container'>
+<!-- <div class='settings-container'>
 	<Menu></Menu>
-</div>
+</div> -->
 
 <style>
 

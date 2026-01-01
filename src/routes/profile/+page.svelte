@@ -5,7 +5,7 @@
 	import {Logo} from '$lib';
 
 	let {data} = $props();
-	let {user, device} = data;
+	let {user, device,dev} = data;
 	
 	let userName = $derived(user?.name || user?.email || 'Guest')
 	// const logout = async () => {
@@ -17,9 +17,10 @@
 
 	<section class="profile-container">
 		{#if user}
-			<img src="/generic.png" alt="generic." width="50" height="50">
+			<div class="profile-letter">{userName[0].toLowerCase()}</div>
+			<!-- <img src="/generic.png" alt="generic." width="50" height="50"> -->
 			<h1>Profile of {userName}</h1>
-			<p>This page is under construction. Please check back later.</p>
+			{#if dev}
 			<div class="analitycs">
 				<p>
 					Platform: {device.platform}<br>
@@ -33,6 +34,9 @@
 				{/if}
 				<p>Current user: {user?.email || 'No user logged in'}</p>
 			</div>
+			{:else}
+				<p>This page is under construction.</p>
+			{/if}
 		{:else}
 			<p>You are not logged in. Please <a href="/login">login</a></p>
 		{/if}
@@ -66,11 +70,29 @@
 		padding-inline: var(--body-padding);
 	}
 
-	.profile-container img{
+	.profile-container img{	
 		display: inline-block ;
 		width: clamp(3rem,30vw,6rem);
 		height: auto;
 		margin-block: 1rem;
+	}
+
+	.profile-letter {	
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: clamp(40px,30vw,5rem);
+		height: auto;
+		aspect-ratio: 1;
+		margin-right: 1rem;
+		margin-block: 1rem;
+		padding-right: .9%;
+		padding-bottom: 1%;
+		background-color: var(--primary-darkgreen-550);
+		color: white;
+		font-size: clamp(1rem, 1.5rem + 6vw, 3.4rem);
+		text-box: trim-both ex alphabetic;
 	}
 
 	.profile-container > h1 {
@@ -140,7 +162,6 @@
 		width: clamp(1rem,5rem,3rem);
 		aspect-ratio: 1/1;
 		height: fit-content;
-
 	}
 	
 	.analitycs{
@@ -153,7 +174,4 @@
 		font-size: 1.2rem;
 		color: var(--general-text-color);
 	}
-	
-
-	
 </style>

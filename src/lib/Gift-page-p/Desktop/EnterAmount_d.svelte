@@ -55,9 +55,6 @@
 			aria-required="true"
 			/>
 		</fieldset>
-		<!-- <div class="button-container">
-			{@render button('continue',2)}
-		</div> -->
 	</form>
 {/snippet}
 
@@ -83,7 +80,6 @@
 		flex-direction: column;
 		flex: 1 1 100%;
 		gap: 0;
-		/* outline: teal solid; */
 	}
 
 	form .amount-input-container{

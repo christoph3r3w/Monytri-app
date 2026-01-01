@@ -21,14 +21,13 @@ export const load = async ({ locals, url }) => {
     const u = locals.user;
     const ia = !!u;
     const safeUser = u ? { email: u.email, name: u.name } : null;
-    const dev = u?.prefs?.dev === 'trueDev' ? 'dev' : null;
+    const dev = u ?.prefs?.dev === 'trueDev' ? true : false;
     
     
     let { stockData: { totalBalance, portfolio } } = await sd();
     let investedRaw = totalBalance ?? 1507.88;
     let giftedRaw =  501.25 + (Math.abs(portfolio.profitLoss) || 0) ?? 501.25;
     
-
 	function balanceString(balance) {
 		const formatted = new Intl.NumberFormat('nl-NL', {
 			style: 'currency',
@@ -39,14 +38,15 @@ export const load = async ({ locals, url }) => {
 	}
 
     return {
-        data: !ia ? null : {
-            Invested: balanceString(investedRaw),
-            Gifted: balanceString(giftedRaw),
-        },
+        data: !ia
+            ? null
+            : {
+                    Invested: balanceString(investedRaw),
+                    Gifted: balanceString(giftedRaw)
+                },
         user: safeUser,
         isAuthenticated: ia,
-        dev : dev,
-
+        ...(dev ? { dev } : {})
     };
 };
 

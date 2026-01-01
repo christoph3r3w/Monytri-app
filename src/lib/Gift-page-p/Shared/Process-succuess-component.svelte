@@ -79,6 +79,7 @@
 	}
 	
 	.step-header h2{
+		text-align: center;
 		font-size: clamp(1rem, calc(1rem + 2vw), 2.7rem);
 	}
 	

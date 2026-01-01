@@ -6,23 +6,8 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	
-	// Or you can get it from the data passed by the load function
-	let { data, aList } = $props();
-	let {TDU, formData} = $state(data.slug)	
-
-	function formatCurrency(value) {
-		const number = typeof value === 'string' ? parseFloat(value) : value;
-		return new Intl.NumberFormat('en-IE', {
-			style: 'currency',
-			currency: 'EUR',
-			minimumFractionDigits: 2,
-			maximumFractionDigits: 2
-		}).format(number);
-	}
-
-	$effect(() => {
-		current.set('transactions History');
-	});
+	let { data,aList } = $props();
+	let {TDU, formData} = $state(data.slug)
 
 </script>
 
@@ -34,9 +19,9 @@
 				<li>
 					Transfer amount
 					{#if a.transactionType == 'sent'}
-					<span style="text-decoration: underline var(--primary-red-500)">- {formatCurrency(a.amount)}</span>
+					<span style="text-decoration: underline var(--primary-red-500)">- {a.amount}</span>
 					{:else}
-					<span style="text-decoration: underline var(--primary-green-500)">{formatCurrency(a.amount)}</span>
+					<span style="text-decoration: underline var(--primary-green-500)">{a.amount}</span>
 					{/if}
 				</li>
 				<li>Transfer ID<span>#{a.id}</span></li>
@@ -106,9 +91,9 @@
 	<button onclick={() => goto('/transactions')}>back to transactions</button>
 {/snippet}
 
-{#snippet e()}
+<!-- {#snippet e()}
 	{@render aList()}
-{/snippet}
+{/snippet} -->
 
 <article class="transaction-instance-container">	
 	<PageStepContainer

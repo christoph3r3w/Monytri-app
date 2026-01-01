@@ -9,7 +9,7 @@
 	
 	let {data, children} = $props();
 	let {user,isAuthenticated,dev} = data;	
-	
+		
 	let menu_Open = $derived($menuOpen);
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
@@ -117,7 +117,8 @@
 
 	onMount(async () => {
 	// debugging tool for mobile
-	if (!dev && $device.isMobile == false ) return;
+	if (!dev) return;
+	if ($device.isMobile == false ) return;
 		const eruda = (await import("eruda")).default;
 		eruda.init(); 
 	});

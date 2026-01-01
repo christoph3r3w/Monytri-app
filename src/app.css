@@ -29,10 +29,11 @@ footer, header, hgroup, menu, nav, section {
   display: block;
 }
 body {
-  line-height: 1;
+  line-height: 1 !important;
   margin: 0;
   padding: 0;
 }
+
 ol, ul {
   list-style: none;
 }
@@ -150,20 +151,11 @@ a,button {
 			scrollbar-width: none;
 		}
 		
-				
-		/* @container style(--mobile:0){
-			&:hover{
-				scrollbar-width:var(--scrollbar-width, none);
-			}
-		} */
-	
 	}
 	
 	/* Legacy browsers with `::-webkit-scrollbar-*` support */
 	@supports selector(::-webkit-scrollbar) {
-		/* &::-webkit-scrollbar-thumb {
-			background: var(--scrollbar-color-thumb);
-		} */
+
 		&::-webkit-scrollbar-track {
 			background: var(--scrollbar-color-track);
 		}

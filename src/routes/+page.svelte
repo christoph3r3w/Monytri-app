@@ -34,7 +34,7 @@
 
 	</div>
 	<Logo name={false} />
-	<div class="analitycs" style="display: {dev === 'dev' ? 'block' : 'none'}">
+	<div class="analitycs" style="display: {dev ? 'block' : 'none'}">
 		<p>
 		Platform: {device.platform}<br>
 		Device: { device.isMobile ? 'Mobile' : 'Desktop' }

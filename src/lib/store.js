@@ -18,7 +18,6 @@ export function updateCurrentFromPath() {
             current.set('gift');
             break;
         case '/request':
-        case '/request-success':
             current.set('request');
             break;
         case '/share':
@@ -31,7 +30,6 @@ export function updateCurrentFromPath() {
             current.set('learn-more');
             break;
         case '/transactions':
-        case '/transaction-instance':
             current.set('transactions History');
             break;
         case '/stock-overview':
@@ -58,5 +56,10 @@ export function updateCurrentFromPath() {
         default:
             current.set('');
             break;
+    }
+
+    if (currentPath.startsWith('/transactions/')) {
+        current.set('transactions History');
+        return;
     }
 }

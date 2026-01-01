@@ -19,7 +19,7 @@
 	function iconTask (){
         if ($current === 'home') {
 			// Activating search
-        } else if ($current === 'gift' || $current === 'gift-success') {
+        } else if ($current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'transactions History' ) {
             history.back();
 		} else {
             goto('/', { replaceState: true })
@@ -51,7 +51,12 @@
 		</menu>
 	</nav>
 	<nav class="profile">
-		<button onclick={toggleMenu}><img src="/generic.png" alt="generic person"></button>
+		<button onclick={toggleMenu}>
+			<img src="/generic.png" alt="generic person">
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M8.00903 6.5C8.00903 4.294 9.80303 2.5 12.009 2.5C14.215 2.5 16.009 4.294 16.009 6.5C16.009 8.706 14.215 10.5 12.009 10.5C9.80303 10.5 8.00903 8.706 8.00903 6.5ZM14 12.5H10C5.94 12.5 4.5 15.473 4.5 18.019C4.5 20.296 5.71105 21.5 8.00305 21.5H15.9969C18.2889 21.5 19.5 20.296 19.5 18.019C19.5 15.473 18.06 12.5 14 12.5Z" fill="#121212"/>
+			</svg>
+		</button>
 	</nav>
 {/snippet}
 
@@ -91,7 +96,12 @@
 			</nav>
 			<!-- profile menu -->
 			<nav class="profile">
-				<a href="/profile"><img src="/generic.png" alt="generic person"></a>
+				<a href="/profile">
+					<img src="/generic.png" alt="generic person">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M8.00903 6.5C8.00903 4.294 9.80303 2.5 12.009 2.5C14.215 2.5 16.009 4.294 16.009 6.5C16.009 8.706 14.215 10.5 12.009 10.5C9.80303 10.5 8.00903 8.706 8.00903 6.5ZM14 12.5H10C5.94 12.5 4.5 15.473 4.5 18.019C4.5 20.296 5.71105 21.5 8.00305 21.5H15.9969C18.2889 21.5 19.5 20.296 19.5 18.019C19.5 15.473 18.06 12.5 14 12.5Z" fill="#121212"/>
+					</svg>
+				</a>
 			</nav>
 		{/if}
 	</section>
@@ -157,9 +167,11 @@
 		height: fit-content;
 		
 		li{
+			position: relative;
 			display: flex;
 			flex-wrap: nowrap;
 			padding-inline: 1.5vw;
+			transition: all 0.3s ease;
 		}
 
 		& li :is(a,button){
@@ -171,8 +183,25 @@
 			width: 100%;
 		}
 
-		& li:hover :is(a,button){
-			text-decoration: underline !important ;
+		& li::after{
+			content: '';
+			position: absolute;
+			inset-inline: 9px;
+			bottom: -2px;
+			top: auto;
+			height: 2px;
+			width: 0px;
+			background-color: var(--primary-green-500);
+		}
+
+		& li:hover::after{
+			width: calc(100% - 18px);
+			transition: all 0.5s ease;
+		}
+
+		& li:not(:hover)::after{
+			width: 0px;
+			transition: all 0.3s ease;
 		}
 	}
 
@@ -182,9 +211,67 @@
 		height: 32px;
 	}
 
+	.profile button{
+		border-radius: 50%;
+		width: 32px;
+		height: 32px;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+		color: var(--primary-green-500);
+	}
+
 	.profile img{
 		width: clamp(100%, 100%, 65px);
 		aspect-ratio: 1;
+	}
+
+	.profile:has(svg) img{
+		display: none;
+	}
+
+	.profile:has(svg) :is(a,button){
+		width: clamp(29px,5vw,2.2rem);
+		height: auto;
+		aspect-ratio: 1;
+		outline: solid rgb(255, 255, 255);
+		outline-width: 2px;
+		display: grid;
+		place-content: center;
+		background-color: var(--primary-darkgreen-550);
+		background-color: var(--off-white);
+	}
+
+	.profile:has(svg) button{
+		outline: solid var(--primary-green-500);
+		outline-width: 2px;
+
+		&:hover{
+			background-color: var(--primary-darkgreen-550);
+		}
+	}
+
+	:global(body:has(.dropdown-menu)) .profile:has(svg) button{
+		background-color: var(--primary-darkgreen-550);
+
+		svg path{
+			stroke: var(--primary-darkgreen-550);
+			fill: var(--off-white);
+		}
+	}
+
+	.profile svg{
+		width: clamp(20px,4vw,1.5rem);
+		height: auto;
+		aspect-ratio: 1;
+
+		path{
+			/* stroke: var(--primary-darkgreen-550); */
+			stroke: var(--off-white);
+			fill: var(--off-white);
+			fill: var(--primary-darkgreen-550);
+		}
 	}
 
 	@media 

@@ -1,5 +1,5 @@
 <script>
-	export let name = false;
+ let {name = false} = $props();
 </script>
 
 <a href="/" class="logo">
@@ -19,6 +19,8 @@
 		color: var(--general-text-color);
 		overflow: hidden;
 		transition: padding .8s ease-out;
+			/* outline: rgb(25, 0, 255) solid; */
+
 	}
 	
 	picture {
@@ -32,7 +34,7 @@
 	picture img {
 		aspect-ratio: 1 / 1;
 		width: 40px;
-
+		overflow: hidden;
 		@starting-style{
 			width: 40px;
 		}
@@ -44,27 +46,14 @@
 		font-weight: 600;
 		text-transform: capitalize;
 		width: fit-content;
+		line-height: 120%;
 		overflow: hidden;
 		transition: .4s ease-out;
+
 	}
 
 	/* small logo test aniamtion  */
-	/* @media screen and (width < 730px){
-		a{
-			width: 50%;
-			padding-left: var(--body-padding);
-		}
-
-		image{
-			width: 50px;
-		}
-
-		h1{
-			transform: translateX(-100%);
-			cursor: none;
-			opacity: 0;
-		}
-	} */
+	
 
 
 </style>
