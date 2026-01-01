@@ -1,7 +1,7 @@
 <script>
 	import {onMount} from 'svelte';
   	import {onNavigate,afterNavigate, goto} from '$app/navigation'
-	import {Header,Footer,Menu} from '$lib'
+	import {Header,Footer,Footer_M,Menu} from '$lib'
 	import {device} from '$lib/Device.js'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
 	import { fade } from 'svelte/transition';
@@ -134,22 +134,24 @@
 
 <!-- main application layout -->
 <section class="body-container" >
-	{#if $isMobile && noHeaderPage}
-	{:else}
+	{#if !($isMobile && noHeaderPage)}
 		<header>
 			<Header {data}/>	
 		</header>
 	{/if}
 	{#if menu_Open}
-		<Menu/>
+		<Menu username={user.name}/>
 	{/if}
 		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage} onclick={() => {if (menu_Open) menuOpen.set(false);}} >
 			{@render children()}
 		</main>
-	{#if $isMobile && noFooterPage}
-	{:else}
-		<footer onclick={() => {if (menu_Open) menuOpen.set(false);}}>
-			<Footer {current} d={$device}/>
+	{#if !(noFooterPage)}
+		<footer>
+			{#if $isMobile}
+				<Footer_M {current} d={$device}/>
+			{:else}
+				<Footer {current} d={$device}/>
+			{/if}
 		</footer>
 	{/if}
 </section>
@@ -254,7 +256,7 @@
 			grid-template-columns: subgrid;
 			align-content: start;
 			overflow-x: clip;
-			overflow-y: auto;
+			/* overflow-y: auto; */
 		}
 				
 		&:nth-of-type(1) > :is(:global(*)) {
@@ -423,10 +425,11 @@
 			background-color: var(--general-background-color) !important;
 		}
 
-		:global(body:not(.windows-device, .desktop-device, .macos-device)) main :global(.home-wrapper) > :global(*) {
+		:global(body:not(.windows-device, .desktop-device, .macos-device)) main {
 			padding-bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom));
 		}
 
+		
 		:global(body:not(.windows-device, .desktop-device, .macos-device)) footer {
 			--footer-height: calc(20px + var(--safe-area-inset-bottom));
 
@@ -439,12 +442,18 @@
 			place-self: center;
 			justify-content: center;
 			border-radius: 1pc;
-			transition: bottom 1s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);
+			transition:bottom 1s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);
 
 			@starting-style {
+				opacity: 0 ;
+				position: relative ;
 				bottom: 0;
 				box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 			}
+		}
+
+		:global(body:is(.windows-device, .desktop-device, .macos-device)) footer {
+			position: relative !important;
 		}
 
 		:global(body.ios-device) footer {
