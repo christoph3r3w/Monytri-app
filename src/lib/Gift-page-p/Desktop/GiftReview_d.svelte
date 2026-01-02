@@ -4,13 +4,20 @@
 
 	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm, onPaymentMethodSelect } = $props();
 	let selectedMethod = $state('');
-	let selectedBank = $state('');
-	let methods = $derived({
+	let selectedBank = $state(null);
+	let methods = $state({
 		"Linked Credit/Debit Card": "Card ending in **** **** 1234",
 		"iDEAL": "Select your bank",
 		"EFT Payment": "Select your bank",
 		"PayPal": "Pay with your PayPal account",
 	});
+
+	$effect(() => {
+		// If the payment method changes, clear any previously selected bank.
+		selectedMethod;
+		selectedBank = null;
+	});
+
 </script>
 
 {#snippet reviewSummary()}
@@ -57,7 +64,8 @@
 			bind:group={selectedMethod}
 			onclick={() =>{
 				onPaymentMethodSelect?.(`${method}${selectedBank}`);
-				validatePayment()
+				validatePayment();
+				selectedBank = null;
 			}} 
 			value="paymentMethod{i}{method}{selectedBank}">
 			{method} 
@@ -95,7 +103,6 @@
 	rightContent={reviewSummary	}
 	leftContent={paymentOptions}
 	submitForm={submitForm}
-	
 />
 
 <style>
@@ -103,7 +110,6 @@
 	.payment-input-container{
 		display: flex;
 		flex-direction: column;
-		gap: clamp(1rem, 2vw, 3rem);
 		padding-block: 3%;
 		padding-inline: 0 20%;
 	}
@@ -113,10 +119,12 @@
 		display: flex;
 		align-items: center;
 		gap: 1rem;
+		padding-block: clamp(1rem, 2vw, 3rem);
+		padding-bottom: 3%;
 	}
 	
 	.payment-input-container input[type="radio"] {
-		height: 100%;
+		height: 70%;
 		aspect-ratio: 1;
 	}
 
@@ -124,6 +132,16 @@
 		margin-bottom: 1%;
 		font-size: clamp(1rem,2vw,1.2rem);
 		color: var(--primary-green-500);
+	}
+
+	select.payment-info {
+		width: 50%;
+		border: var(--primary-green-500) solid 1px;
+		border-radius: 10px;
+		padding: 0.5rem;
+		font-size: clamp(1rem,2vw,1.2rem);
+		background-color: var(--primary-darkgreen-200, var(--white));
+		color: var(--general-text-color-inverted, var(--black));
 	}
 	
 	/* .right-step{
@@ -194,9 +212,9 @@
 		}
 	}
 
-	.button-container {
+	/* .button-container {
 		display: flex;
 		justify-content: end;
-	}
+	} */
 
 </style>

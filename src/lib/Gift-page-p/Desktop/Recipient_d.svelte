@@ -98,12 +98,13 @@
 <style>
 
 	:root {
-		--moveRight: 5rem;
+		--moveRight: 2rem;
+		--size : clamp(50px, 50px + 1vw, 70px);
 	}
 
 	.section-title{
 		position: relative;
-		margin-bottom: 1%;
+		margin-bottom: 3%;
 		font-size: clamp(1rem,10vw ,1.3rem);
 		margin-left: calc(var(--moveRight) + 0.125rem);
 		/* display: none; */
@@ -137,7 +138,7 @@
 			width: 95%;
 			justify-content: space-between;
 			align-items: center;
-			padding: clamp(1%,1.5vw,3%);
+			padding: clamp(1%,1.5vw,2%);
 			cursor: pointer;
 			background-color: light-dark(var(--general-background-color), color-mix(in srgb, var(--general-text-color-secondary), var(--grey-400)));
 			background-color: var(--general-background-color-secondary);
@@ -167,8 +168,8 @@
 		}
 		
 		.profile-pic,.profile-letter {
-			width: clamp(50px, 10vw, 70px);
-			height: clamp(50px, 10vw, 70px);
+			width: var(--size);
+			height: var(--size);
 			aspect-ratio: 1/1;
 			border-radius: 50%;
 			margin-right: 1rem;
@@ -231,6 +232,10 @@
 	}
 
 	@media (width <= 900px) {
+		:root{
+			--size :	90px;
+		}
+
 		.recipients-list {
 			flex: 1 1 100%;
 			align-self: center;

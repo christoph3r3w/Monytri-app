@@ -1,9 +1,11 @@
 import { goto } from '$app/navigation';
 import {current, isMobile} from '$lib/store.js';
 
+// Gift page server logic (not in use currently)
+
 // State management
 let currentStep = 1;
-let totalSteps = 5;
+let totalSteps = 3;
 
 // Form data structure
 let formData = {

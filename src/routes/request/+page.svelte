@@ -4,13 +4,6 @@
 	import {Logo,Benefactor_M,RequestAmount_M,Request_success,RequestReview_M} from '$lib';
 	import { fade,fly } from 'svelte/transition';
 
-
-
-	// State management
-	let stepValidation = $state(createStepValidation(3));
-	let currentStep = $state(1);
-	let totalSteps = $derived(Object.keys(stepValidation).length);
-	
 	// Form data structure
 	let formData = $state({
 		benefactor: null,
@@ -30,18 +23,7 @@
 		shareUrl: null,
 		token: null
 	});
-	
-	// Step validation state
-	function createStepValidation(totalSteps) {
-		let steps = {};
-		for (let i = 1; i <= totalSteps; i++) {
-			steps[i] = i === totalSteps; 
-		}
-		return steps;
-	}
-	
-	
-	
+
 	// Use provided benefactors or fallback to defaults
 	let benefactors = $state([
 		{
@@ -106,6 +88,21 @@
 		profilePic: '/generic 2.png'
 		}
 	]);
+
+	// State management
+	let stepValidation = $state(createStepValidation(3));
+	let currentStep = $state(1);
+	let totalSteps = $derived(Object.keys(stepValidation).length);
+	
+	
+	// Step validation state
+	function createStepValidation(totalSteps) {
+		let steps = {};
+		for (let i = 1; i <= totalSteps; i++) {
+			steps[i] = i === totalSteps; 
+		}
+		return steps;
+	}
 	
 	// Progress tracking
 	let currentProgress = $state(0);
@@ -192,7 +189,7 @@
 	}
 
 	function validaterequest(e) {
-		stepValidation[5] = e.target.value && formData.requestMethod !== null;
+		stepValidation[totalSteps] = e.target.value && formData.requestMethod !== null;
 	}
 	
 	// It needs to be checked and connected so that it sends proper form data to the back-end.
@@ -274,7 +271,6 @@
 		};
 	});
 
-
 </script>
 
 {#snippet progressBar()}
@@ -286,7 +282,6 @@
 <article class="transfer-wizard " in:fly={{y:50,duration:500,opacity:0.5}} out:fly={{ y: 30000, duration: 200, opacity: 0 }}>
 	<!-- Progress indicator -->
 	{@render progressBar()}
-	{#if $isMobile}
 		<!-- Step 1: Choose benefactor -->
 		{#if currentStep === 1}
 			<Benefactor_M 
@@ -326,13 +321,6 @@
 				{stepValidation} 
 			/>
 		{/if}
-	{:else}
-		<!-- Fallback content for unsupported devices -->
-		<div class="unsupported-device">
-			<p>Your device is not supported for this feature.</p>
-			<p>Please use a desktop or mobile device.</p>
-		</div>
-	{/if}
 </article>
 
 <style>
@@ -385,7 +373,6 @@
 		transition: width 0.3s ease;
 	}
 
-
 /* Needs to be checked and refactored.*/
 	:global(.amount-number-input-container ){
 		display: flex;
@@ -393,7 +380,7 @@
 		margin-bottom:10% ;
 	}
 
-	.skip-button,.back-button {
+	/* .skip-button,.back-button {
 		position: relative;
 		width: 100%;
 		padding: 0;
@@ -402,18 +389,18 @@
 			stroke: var(--black);
 			fill: var(--black);
 		}		
-	}	
+	}	 */
 /* Needs to be checked and refactored. */
 /* //////////////////////////////////// */
 
 
-		@media (width <= 930px) {
+	@media (width <= 930px) {
 		:global(.transfer-wizard) {
 			height: calc(100dvh - var(--footer-height));
 			background-color: var(--white);	
 		}
 
-		.left-step {
+		/* .left-step {
 			grid-column: 1 / -1 !important;
 			grid-row: 1 / span 1;
 			padding: 0 !important;
@@ -433,7 +420,7 @@
 		.step-container {
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
-		}
+		} */
 	}
 	
 	@media 
@@ -449,7 +436,7 @@
 			transition: width 0.5s ease-out;
 		}	
 
-		.skip-button,.back-button {
+		/* .skip-button,.back-button {
 			position: relative;
 			width: 100%;
 			height: unset !important;
@@ -459,8 +446,7 @@
 				stroke: var(--black);
 				fill: var(--black);
 			}
-		}	
-
+		}	 */
 
 	}
 

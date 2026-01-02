@@ -17,20 +17,6 @@
 	import {fade,fly} from 'svelte/transition';
 	import {onMount} from 'svelte';	
 
-	// Step validation state
-	let stepValidation = $state({
-		1: false,
-		2: false,
-		3: false,
-		4: false,
-		5: true, // Review step is always valid
-	});
-  
-	// State management
-	let currentStep = $state(1);
-	let totalSteps = $derived(Object.keys(stepValidation).length);
-	
-	
 	// Form data structure
 	let formData = $state({
 		recipient: null,
@@ -47,11 +33,8 @@
 				get currentDate() {
 			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
 		}
-
 	});
 	
-	
-
 	// Use provided recipients or fallback to defaults
 	let recipients = $state([
 		{
@@ -135,6 +118,19 @@
 		amountMin: 100,
 		}
 	]);
+
+	// Step validation state
+	let stepValidation = $state({
+		1: false,
+		2: false,
+		3: false,
+		4: false,
+		5: true, // Review step is always valid
+	});
+  
+	// State management
+	let currentStep = $state(1);
+	let totalSteps = $derived(Object.keys(stepValidation).length);
 	
 	// Progress tracking
 	let currentProgress = $state(0);
@@ -170,7 +166,6 @@
 		}
 		formData.recipient = recipient;
 		stepValidation[1] = true;
-		
 	}
 	
 	function nextStep() {
@@ -242,7 +237,7 @@
 	}
 	
 	function validateCardDesign(cardDesignId) {
-		if (!cardDesignId || cardDesignId === 'default') {
+		if (!cardDesignId) {
 			handleError(4, 'Please select a card design');
 			return;
 		}
@@ -262,11 +257,13 @@
 	// Skip step callbacks
 	function skipPurpose() {
 		formData.Purpose = null;
+		stepValidation[currentStep] = true;	
 	}
 
 	function skipCardDesign() {
 		formData.cardDesign = 'default';
 		formData.message = '';
+		stepValidation[currentStep] = true;
 	}
 	
 	async function submitForm() {
@@ -301,6 +298,7 @@
 	}
 
 	$effect(() => {
+	
 		// Reset form data when the component is destroyed
 		return () => {
 			formData.recipient = null;
@@ -364,7 +362,9 @@
 				{validateCardDesign}
 				{nextStep}
 				{previousStep}
+				onSkipCardDesign ={skipCardDesign}
 				{stepValidation}
+
 			/>
 		<!-- Step 5: Review and Confirm -->
 		{:else if currentStep === 5}
@@ -421,6 +421,7 @@
 				{nextStep}
 				{previousStep}
 				{stepValidation}
+				onSkipCardDesign ={skipCardDesign}
 			/>			
 		<!-- Step 5: Review and Confirm -->
 		{:else if currentStep === 5}
@@ -491,7 +492,7 @@
 		margin-bottom:10% ;
 	}
 
-	.skip-button,.back-button {
+	/* .skip-button,.back-button {
 		position: relative;
 		width: 100%;
 		padding: 0;
@@ -500,9 +501,9 @@
 			stroke: var(--black);
 			fill: var(--black);
 		}		
-	}	
+	}	 */
 
-	@media (width <= 930px) {
+	/* @media (width <= 930px) {
 		:global(.transfer-wizard) {
 			height: calc(100dvh - var(--footer-height));
 			background-color: var(--white);	
@@ -531,21 +532,18 @@
 			grid-row: 2 / -1;
 		}
 	}
-	
+	 */
 	@media 
 	(-webkit-min-device-pixel-ratio: 3),
 	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 
 	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape)
 	{
-
 		.progress {
 			position: relative;
 			height: 100%;
 			border-radius: 0 5px 5px 0;
 			transition: width 0.5s ease-out;
 		}	
-
-
 	}
 
 </style>

@@ -1,8 +1,9 @@
 <script>
 	import { goto } from '$app/navigation';
-	import {fade} from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { observe } from '../Shared/useViewportAction.js';
-	import {StepContainer} from '$lib';
+	import { StepContainer } from '$lib';
+
 	let { formData, validateCardDesign,button,nextStep,stepValidation,previousStep } = $props();
 	let cardContainer;
 	let currentCardIndex = $state(0);
@@ -73,7 +74,6 @@
 				style="--card-color:{cardDesign.primaryColor};--card-background:{cardDesign.cardBackground};--card-background-message:{cardDesign.cardbackgroundMessage};"
 				use:observe={{
 					onEnter: () => {
-							// console.log(`Card ${cardDesign.id} entered view!`);
 						// Find and check the radio input
 						const radioInput = document.getElementById(cardDesign.id);
 						if (cardDesign.id) {
@@ -131,7 +131,6 @@
 	showContinueButton={true}
 	showSkipButton={true}
 	rightContent={cardDesignOptions}
-	
 />
 
 <style>
@@ -195,20 +194,19 @@
 		container-type: inline-size;
 		anchor-name: --myAnchor;
 		counter-increment: markers;
-		scroll-marker-group:after;
 	}
 
 	@supports selector(ul::scroll-button(*)){
 		.card-design-options::scroll-button(right){
 			content: 'next';
 			right: 0;
-			right: anchor(right);
+			right: calc(anchor(right) + 1%);
 		}
 	
 		.card-design-options::scroll-button(left){
 			content:'prev';
 			left: 0;
-			left: anchor(left);
+			left: calc(anchor(left) + 1%);
 		}
 
 		.card-design-options::scroll-button(*){
@@ -221,23 +219,22 @@
 			border: none;
 			z-index: 50;
 			cursor: pointer;
-			background-color: var(--primary-darkgreen-200);
+			background-color: var(--primary-darkgreen-550);
+			background-color: color-mix(in srgb, var(--primary-darkgreen-550) 70% , rgba(23, 23, 23, 0.252) );
+			backdrop-filter: blur(5px);
+			box-shadow: color-mix(in srgb, rgba(7, 8, 16, 0.658) 60%, var(--general-background-color)) 0px 20px 25px -10px;
+			transition: .3s ease-out;
 		}
 
 		.card-design-options::scroll-button(*):disabled{
-			opacity: 0.5;
-		}
+			opacity: 0.9;
+			background-color: var(--primary-darkgreen-200);
 
-		/* needs to be checked or deleted */
-		/* .card-design-options::scroll-marke-group{
-			position-anchor: --myAnchor;
-			display: flex;
-			gap: 3%;
-			position: absolute;
-			bottom: 0;
-			bottom: anchor(bottom);
-			outline: solid red;
-		} */
+			cursor:default;
+			bottom: 14.5%;
+			box-shadow: rgba(0, 0, 0, 0.45) 0px 15px 10px -20px;
+			transition: all .25s ease-out;
+		}
 	}
 
 	.card-option {
@@ -262,8 +259,8 @@
 	/* container inset border color  */
 	.card-option.selected:hover {
 		border-radius: 14px;
-		box-shadow: inset 0px 0px 55px -37px color-mix(in srgb, var(--general-background-color) 30%, var(--card-color,var(--grey-400)));
-		transition: 100ms ease-in-out;
+		box-shadow: inset 0px 0px 55px -47px color-mix(in srgb, var(--general-background-color) 30%, var(--card-color,var(--grey-400)));
+		transition: 5s ease-in-out;
 	}
 
 	/* card shadow color */
@@ -304,8 +301,6 @@
 		background-size: cover;
 		user-select: none;
 		color: light-dark(var(--general-text-color), var(--black));
-
-		/* outline: solid rgb(0, 255, 21); */
 	}
 	
 	.card > *{
@@ -411,10 +406,4 @@
 		border-radius: 8px;
 		padding: 1%;
 	}
-
-:global(html:has(.isMobile))
-	.card-design-options{
-		display: none;
-	}
-
 </style>

@@ -1,6 +1,7 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import { StepContainer,Logo} from '$lib'
+	import {isMobile} from '$lib/store.js';
 	import {onMount} from 'svelte'
 	import QRCode from 'qrcode';
 	import { goto } from '$app/navigation';
@@ -45,7 +46,6 @@
 	}
 
 	async function nativeShare() {
-
 		if (!canShare) {
 			alert('Web Share API is not supported in your browser.');
 			return;
@@ -150,8 +150,8 @@
 {#snippet shareOption2()}
 	<figure class="qr-container">
 		{#if qrDataUrl.length > 0 && !openRequest }
-		<article class="qr-popup">
-			<img src={qrDataUrl} alt="QR Code" width="300" height="300" onclick={qrDataUrl = ''} />
+		<article class="qr-popup" onclick={qrDataUrl = ''}>
+			<img src={qrDataUrl} alt="QR Code" width="300" height="300"  />
 			<p>Scan the QR code to share </p>
 		</article>
 		{/if}
@@ -191,10 +191,15 @@
 	showRightContent={true}
 	showContinueButton={false}
 	customButton={shareOption2}
-	leftContent={requestReview}
+	leftContent={$isMobile ? requestReview : ''}
+	rightContent={$isMobile ? '' : requestReview}
 />
 
 <style>
+
+	:global(.right-step:has(.request-summary)){
+		position: relative;
+	}
 
 	.review-summary{
 		flex: 1 1 108%;
@@ -334,7 +339,6 @@
 		align-self: center; 
 		display: flex;
 		justify-content: center;
-		/* outline: solid black; */
 	}
 	
 	.request-summary .review-amount span {
@@ -353,30 +357,33 @@
 	.qr-container{
 		min-height: fit-content;
 		gap: 1rem;
-		margin-block: 6%;
+		width: fit-content;
+		height: auto;
 		max-width: 400px;
 		z-index: 20 !important;
+		background-color: transparent;
 	}
 
 	.qr-popup {
 		position: absolute;
-		top: 50%;
+		top:-40cqh;
+		inset-inline: 0;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		max-width: 80%;
+		max-width: 400px;
 		padding: 1rem;
 		border-radius: 10px;
 		transform: translate(0, -10%);
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		transition: background-color all 3s ease-in-out;
 		/* background-color: rgb(197, 38, 38); */
-		/* inset-inline: var(--body-padding); ; */
+		/* inset-inline: var(--body-padding); */
 
 	}
 
 	.qr-popup::before {
-		content:'5';
+		content:'';
 		position: absolute;
 		inset: -100vw !important;
 		background-color: rgba(255, 255, 255, 0.5);
@@ -395,24 +402,79 @@
 		padding-block: 2%;
 	}
 
-	.share-button-container {
+	.qr-container button{
+		margin: 0;
+		height: 100%;
+		min-width: 50cqw;
+	}
+
+	/* .share-button-container {
 		flex: 1 1 20%;
-		/* position: relative; */
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		width: 100%;
 		gap: 1svh;
 		justify-content: end;
+	} */
+
+	.share-button{
+		flex: 0 1 40%;
 	}
 
-	:is(.share-button-container,.qr-container) button {
+	/* :is(.share-button-container,.qr-container) button {
 		&:nth-of-type(1) {
 			background-color: var(--primary-green-500);
+			
 		}
 		
 		&:nth-of-type(2n) {
 			color: var(--primary-green-500);
+		}
+	} */
+
+	@media
+	(-webkit-min-device-pixel-ratio: 3),
+	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 
+	screen and (device-height <= 900px) and (height <= 900px) and  (orientation: landscape){
+	
+		.qr-container{
+			min-height: fit-content;
+			gap: 1rem;
+			margin-block: 6%;
+			width: stretch;
+			max-width: 400px;
+			z-index: 20 !important;
+		}
+
+		.qr-popup {
+			position: absolute;
+			top: 50%;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			max-width: 80%;
+			padding: 1rem;
+			border-radius: 10px;
+			transform: translate(0, -10%);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			transition: background-color all 3s ease-in-out;
+			/* background-color: rgb(197, 38, 38); */
+			/* inset-inline: var(--body-padding); ; */
+
+		}
+
+		.qr-popup::before {
+			content:'5';
+			position: absolute;
+			inset: -100vw !important;
+			background-color: rgba(255, 255, 255, 0.5);
+			z-index: -1;
+			transition: background-color all 3s ease-in-out;
+		}
+
+		.share-button{
+			flex: 1 1 40%;
 		}
 	}
 
