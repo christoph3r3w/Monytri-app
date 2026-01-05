@@ -301,11 +301,12 @@
 		:root{
 			--mobile: 1;
 			--body-padding: 5%;
+			padding-top: var(--safe-area-inset-top) !important;
 		}
 
 		:global(html){
 			background-color: var(--primary-green-500);
-			padding-top: env(safe-area-inset-top);
+			padding-top: var(--safe-area-inset-top) !important;
 		}
 
 		:global(body){
