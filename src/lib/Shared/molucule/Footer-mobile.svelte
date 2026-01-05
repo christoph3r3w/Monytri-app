@@ -13,7 +13,7 @@
 
 <!-- mobile navigation -->
 <!-- add this to a component -->
-<nav class="mobile-nav">
+<nav class="mobile-nav" id="mobile-footer">
 	<ul>
 		<li >
 			<button href="/" class:active={navSelect === 'home'} onclick={() => (goto('/'))} aria-label="Home">
@@ -84,6 +84,7 @@
 			width: 100cqw;
 			border-radius:inherit;
 			z-index: 100;
+			anchor-name: --mobile-footer;
 		}
 			
 		.mobile-nav ul{

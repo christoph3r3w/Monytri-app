@@ -276,6 +276,7 @@
 			width: 100cqw;
 			border-radius:inherit;
 			z-index: 100;
+			
 		}
 			
 		.mobile-nav ul{

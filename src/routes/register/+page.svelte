@@ -6,41 +6,10 @@
 
 	let {data} = $props();
 	
-	
+	let form = $state();
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
-	let isLoading = $state(false);
-
-	$effect(() => {
-		if(data.user === null){
-			isLoading = false;
-		}
-	});
-
-	// const register = async (e) => {
-	// 	e.preventDefault();
-	// 	isLoading = true;
-	// 	errorMessage = '';
-		
-	// 	try {
-	// 		const formData = new FormData(e.target);
-	// 		// await user.register(formData.get('email'), formData.get('password'), formData.get('name'));
-	// 		console.warn('Register action disabled during refactor');
-	// 	} catch (error) {
-	// 		console.error('Registration error:', error);
-	// 		if (error.code === 429 || error.message?.includes('Rate limit')) {
-	// 			errorMessage = 'Too many requests. Please wait a moment and try again.';
-	// 		} else if (error.code === 409) {
-	// 			errorMessage = 'An account with this email already exists.';
-	// 		} else {
-	// 			errorMessage = error.message || 'Registration failed. Please try again.';
-	// 		}
-	// 	} finally {
-	// 		isLoading = false;
-	// 		goto('/login');
-	// 	}
-	// };
-
+	let isLoading = $state(data?.isLoading ?? false	);
 
 </script>
 
@@ -53,7 +22,7 @@
 		</div>
 	{/if}
 	
-		<form action="/register" method="POST" >
+		<form action="/register" method="post" id="register-form" bind:this={form} >
 			<label>
 				Name:
 				<input type="text" placeholder="Name" name="name" required disabled={isLoading} />
@@ -66,11 +35,16 @@
 				Password:
 				<input type="password" placeholder="Password" name="password" required minlength="8" disabled={isLoading} value="monytriapp" />
 			</label>
-			<button type="submit" disabled={isLoading} onclick={() => (isLoading=true)}>
+			<button 
+				type="submit" 
+				disabled={isLoading} 
+				onclick={() => {
+				document.getElementById('register-form').requestSubmit()
+			}}>
 				{isLoading ? 'Creating account...' : 'Register'}
 			</button>
 		</form>	
-	<button onclick={() => goto('/login')}>Signin</button>
+		<button onclick={() => goto('/login')}>Sign in</button>
 </section>
 
 <style>

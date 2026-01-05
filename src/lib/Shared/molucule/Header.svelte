@@ -10,10 +10,20 @@
 
 	let {data} = $props();	
 	let {isAuthenticated,firstLoad} = data;
-
+	// let onMobile = $derived($isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true');
+	let onMobile = $state();
+	// let isDesktop = $derived($isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false');
+	let isDesktop = $state();
 	let notOnLogin = $state(false);
 	$effect(() => {
 		notOnLogin = $current == 'login'? false : true;
+
+		if (document.readyState === 'complete') {
+			onMobile = $isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true';
+			isDesktop = $isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false';
+		} else {
+			console.log('waiting for pageload');
+		}
 	});
 	
 	function iconTask (){
@@ -29,6 +39,7 @@
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
 	}
+	
 	
 </script>
 
@@ -76,11 +87,11 @@
 			<nav class="goBack othr">
 				<button onclick={iconTask}>
 				{#if $current === 'home'}
-					<svg width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg class="search-icon" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="m19.53 18.47-3.841-3.841A8.705 8.705 0 0 0 17.75 9C17.75 4.175 13.825.25 9 .25S.25 4.175.25 9 4.175 17.75 9 17.75a8.705 8.705 0 0 0 5.629-2.061l3.841 3.841a.748.748 0 0 0 1.06 0 .749.749 0 0 0 0-1.06ZM1.75 9c0-3.998 3.252-7.25 7.25-7.25S16.25 5.002 16.25 9 12.998 16.25 9 16.25 1.75 12.998 1.75 9Z" fill="white"/>
 					</svg>
 				{:else}
-					<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<svg class="goBack-icon" width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
 					</svg>
 				{/if}
@@ -97,7 +108,6 @@
 			<!-- profile menu -->
 			<nav class="profile">
 				<a href="/profile">
-					<img src="/generic.png" alt="generic person">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M8.00903 6.5C8.00903 4.294 9.80303 2.5 12.009 2.5C14.215 2.5 16.009 4.294 16.009 6.5C16.009 8.706 14.215 10.5 12.009 10.5C9.80303 10.5 8.00903 8.706 8.00903 6.5ZM14 12.5H10C5.94 12.5 4.5 15.473 4.5 18.019C4.5 20.296 5.71105 21.5 8.00305 21.5H15.9969C18.2889 21.5 19.5 20.296 19.5 18.019C19.5 15.473 18.06 12.5 14 12.5Z" fill="#121212"/>
 					</svg>
@@ -108,9 +118,10 @@
 {/snippet}
 
 <div class="header">
-	{#if $isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true'}
+	{#if onMobile }
 		{@render mobileHeadNav()}
-	{:else}
+	{/if}
+	{#if isDesktop}
 		{@render desktopNav()}
 	{/if}
 </div>
@@ -133,6 +144,8 @@
 		align-items: center;
 		height: 100%;
 		height: var(--header-height);
+		max-height: 150px !important ;
+		min-height: 50px;
 		width: 100%;
 		gap: 1%;
 		border-bottom: solid 2px color-mix(in hsl, var(--grey-400), white 80%);
@@ -241,6 +254,7 @@
 		place-content: center;
 		background-color: var(--primary-darkgreen-550);
 		background-color: var(--off-white);
+		transition: all 0.2s ease;
 	}
 
 	.profile:has(svg) button{
@@ -249,6 +263,8 @@
 
 		&:hover{
 			background-color: var(--primary-darkgreen-550);
+
+			svg path{stroke-width: 2px ;}
 		}
 	}
 
@@ -321,6 +337,10 @@
 				stroke: var(--off-white);
 				fill: var(--off-white);
 			}
+
+			.search-icon{
+				opacity: 0.3;
+			}	
 		}
 
 		nav:nth-of-type(2).pageTitle{

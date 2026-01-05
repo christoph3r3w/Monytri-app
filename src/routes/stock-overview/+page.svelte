@@ -23,7 +23,7 @@
 	
 	<div class="button-container-calculator">
 
-		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator">
+		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator" anchor="mobile-footer">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_20_4)">
 					<path d="M4 5C4 4.46957 4.21071 3.96086 4.58579 3.58579C4.96086 3.21071 5.46957 3 6 3H18C18.5304 3 19.0391 3.21071 19.4142 3.58579C19.7893 3.96086 20 4.46957 20 5V19C20 19.5304 19.7893 20.0391 19.4142 20.4142C19.0391 20.7893 18.5304 21 18 21H6C5.46957 21 4.96086 20.7893 4.58579 20.4142C4.21071 20.0391 4 19.5304 4 19V5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -76,6 +76,7 @@
 	{@render b()}
 	{@render c()}
 {/snippet}
+
 <article class="stockOverview-container">	
 	<PageStepContainer
 	stepType=''
@@ -229,11 +230,29 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 
 	.button-container-calculator {
 		position: fixed;
+		position-anchor: --mobile-footer;
+		top:auto;
 		right: var(--body-padding);
-		bottom: var(--footer-height);
+		bottom: var(--footer-height,anchor(top));
 		z-index: 10;
 		width: clamp(1rem, 5rem + 5svw , 4rem);
 		aspect-ratio: 1;
+		transition:bottom .4s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);
+
+	}
+
+	@media not (display-mode: standalone)  {
+		:global(body:is(.ios-device,.android-device) .button-container-calculator) {
+			bottom: calc(var(--footer-height,0) + var(--safe-area-inset-bottom,0) + 13lvh + env(safe-area-inset-bottom));
+			bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom) + 13lvh);
+		}
+
+		@media screen and (width > 580px) {
+			:global(body:is(.ios-device,.android-device) .button-container-calculator) {
+				bottom: calc(var(--footer-height) + var(--safe-area-inset-bottom) + 4.2lvh);
+				right: calc(var(--body-padding) + .2lvw ) !important;
+			}
+		}
 	}
 
 	/* calc button */
@@ -302,7 +321,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		}
 
 		:global(body.isMobile.ios-device) :global(.stockOverview-container .mobile-step){
-			/* border: solid red; */
 			padding-bottom: calc( var(--footer-height) + var(--safe-area-inset-bottom)) ;
 			max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ;
 		}

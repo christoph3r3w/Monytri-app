@@ -43,7 +43,7 @@
 		};
 
 		// Debounce the updateIsMobile function to prevent it from running too frequently
-		const debouncedUpdateIsMobile = debounce(updateIsMobile, 50);
+		const debouncedUpdateIsMobile = debounce(updateIsMobile, 20);
 
 		// Run updateIsMobile immediately on mount
 		updateIsMobile();
@@ -104,16 +104,16 @@
 	});
 
 	// causes an issue when mobile view is active
-	// onNavigate((navigation) => {
-    //     if(!document.startViewTransition){return};
+	onNavigate((navigation) => {
+        if(!document.startViewTransition){return};
 
-    //     return new Promise((resolve) =>{
-    //         document.startViewTransition(async ()=>{
-    //             resolve();
-    //             await navigation.complete;
-    //         })
-    //     })
-    // })
+        return new Promise((resolve) =>{
+            document.startViewTransition(async ()=>{
+                resolve();
+                await navigation.complete;
+            })
+        })
+    })
 
 	onMount(async () => {
 	// debugging tool for mobile
@@ -140,7 +140,7 @@
 		</header>
 	{/if}
 	{#if menu_Open}
-		<Menu username={user.name}/>
+		<Menu username={user?.name}/>
 	{/if}
 		<main class:noHeaderPage={noHeaderPage} class:noFooterPage={noFooterPage} onclick={() => {if (menu_Open) menuOpen.set(false);}} >
 			{@render children()}
@@ -456,7 +456,7 @@
 			position: relative !important;
 		}
 
-		:global(body.ios-device) footer {
+		:global(body:is(.ios-device,.android-device)) footer {
 			--footer-height: calc(50px + var(--safe-area-inset-bottom));
 			bottom : calc(env(safe-area-inset-bottom) + 13lvh) !important;
 			transition: bottom .7s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);

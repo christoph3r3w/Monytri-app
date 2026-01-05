@@ -13,10 +13,12 @@ let {username} = $props();
 
 
 <nav class="dropdown-menu">
-<section class="profile">
-	<span class="profile-letter">{username[0]?.toLowerCase()}</span> 
-	<p>{username}</p>
-</section>
+{#if username}
+	<section class="profile">
+		<span class="profile-letter">{username[0]?.toLowerCase() }</span> 
+		<p>{username || 'Guest'}</p>
+	</section>
+{/if}
 	<section class="header-routes">
 		<ul>
 			{@render routes()}
@@ -67,12 +69,14 @@ let {username} = $props();
 				<svg></svg>
 				<a href="https://www.linkedin.com/company/monytri/">Contact Support</a>
 			</li>
+			{#if username}
 			<li>
-				<svg></svg>
-			<form action="/logout" method="post" >
-				<button type="submit">Log out</button>
-			</form>
+					<svg></svg>
+				<form action="/logout" method="post" >
+					<button type="submit">Log out</button>
+				</form>
 			</li>
+			{/if}
 		</ul>
 	</section>
 </nav>

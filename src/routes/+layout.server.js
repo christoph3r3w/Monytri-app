@@ -41,9 +41,9 @@ export const load = async ({ locals, url }) => {
         data: !ia
             ? null
             : {
-                    Invested: balanceString(investedRaw),
-                    Gifted: balanceString(giftedRaw)
-                },
+                Invested: balanceString(investedRaw),
+                Gifted: balanceString(giftedRaw)
+              },
         user: safeUser,
         isAuthenticated: ia,
         ...(dev ? { dev } : {})

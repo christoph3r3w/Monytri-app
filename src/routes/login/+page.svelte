@@ -41,10 +41,14 @@
 
 		container-type:normal;
 		container-name: transfer-wizard;
-
 	}
 
 	@media (width <= 930px) {
+
+		:global(body main:has(.login-step-container)){
+			padding-bottom: 0;
+			padding-top: 0;
+			}
 		.login-step-container {
 			min-height: 100svh;
 			max-width: 100dvh;

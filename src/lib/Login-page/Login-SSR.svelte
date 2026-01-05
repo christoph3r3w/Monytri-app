@@ -1,12 +1,12 @@
 <script>
 	import {current,isMobile} from '$lib/store.js';
+	import {device} from '$lib/Device.js'
 	import {Menu,InProgress_S,PageStepContainer,Logo} from '$lib'
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
 
-	let { formData, data } = $props();
-	let {device, isAuthenticated} = data
-
+	let {formData, data } = $props();
+	let {isAuthenticated} = data
 	
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
@@ -35,41 +35,6 @@
 		}
 	}
 
-	// async function login(e) {
-	// 	e.preventDefault();
-	// 	isLoading = true;
-	// 	errorMessage = '';
-		
-	// 	try {
-	// 		const formData = new FormData(e.target);
-	// 		// Replace raw phone value with fully-qualified E.164 number if plugin initialized
-	// 		if (phoneInput && typeof phoneInput.getNumber === 'function') {
-	// 			const fullNumber = phoneInput.getNumber();
-	// 			// Validate number using plugin utilities when available
-	// 			if (phoneInput.isValidNumber && !phoneInput.isValidNumber()) {
-	// 				errorMessage = 'Please enter a valid phone number.';
-	// 				isLoading = false;
-	// 				return;
-	// 			}
-	// 			if (fullNumber) formData.set('phone', fullNumber);
-	// 		}
-	// 		await formData.get('email'), formData.get('password');
-	// 		console.warn('Login action disabled during refactor');
-	// 	} catch (error) {
-	// 		console.error('Login error:', error);
-	// 		if (error.code === 429 || error.message?.includes('Rate limit')) {
-	// 			errorMessage = 'Too many requests. Please wait a moment and try again.';
-	// 		} else if (error.code === 401) {
-	// 			errorMessage = 'Invalid email or password.';
-	// 		} else {
-	// 			errorMessage = error.message || 'Login failed. Please try again.';
-	// 		}
-	// 	} finally {
-	// 		isLoading = false;
-	// 	}
-	// };
-
-	
 	let form = $state()
 	async function submitTrigger() {
 		if (form && !isLoading) {
@@ -119,8 +84,6 @@
 				errorMessage = 'Invalid phone number';
 			}
 		});
-
-		
 	});
 
 
@@ -179,14 +142,6 @@
 				disabled={isLoading} 
 				value="monytriapp" 
 			/>	
-
-			<!-- <button
-				type="button"
-				disabled={isLoading}
-				onclick={submitTrigger}
-			>
-				{isLoading ? 'Logging in…' : 'Login'}
-			</button> -->
 		</form>
 		<a class="forgot-p" href="/">forgot password</a>
 	</article>
@@ -213,10 +168,10 @@
 		{@render logout1()}
 	{/if}
 
-	{#if $isMobile && device.platform === 'Android' }
+	{#if $isMobile && $device.platform === 'Android' }
 		<button disabled>android fingerprint</button>
 	{/if }
-	{#if $isMobile && device.platform === 'iOS' }
+	{#if $isMobile && $device.platform === 'iOS' }
 		<button disabled>face id auth</button>
 	{/if }
 
@@ -274,8 +229,9 @@
 
 	:global(body:has(.login-form) .page-container .logo .logo-name){
 		font-size: clamp(1rem, 4rem, 400px);
-		width: 100%;
+		max-width: 400px;
 		letter-spacing: -2px;
+		overflow: visible;
 	}
 
 	.form-container {
@@ -308,10 +264,11 @@
 		font-weight: 400;
 	}
 	
-	.login-form input{
+	.login-form input, 
+	:global(.login-form .iti__flag-container)
+	{
 		padding: 10px;
-		margin-bottom: 1rem !important ;
-		width: 100%;
+		margin-bottom: 1rem ;
 		max-width: 400px;
 		padding:clamp(1%,5%,3%) clamp(1%,2%,3%);
 		color: var(--general-text-color-secondary);
@@ -319,7 +276,6 @@
 		border-radius: 8px;
 		border-color: var(--neutral-grey);
 		background-color: var(--white);
-		/* outline: solid red; */
 	}
 	
 	.login-form input::placeholder {
@@ -329,6 +285,7 @@
 
 	:global(.login-form .iti){
 		position: relative;
+		height: fit-content;
 		margin-bottom: 1rem  ;
 		display: flex;
 		flex-direction: row;
@@ -340,17 +297,23 @@
 		border-radius: 8px;
 		border-color: var(--general-text-color-secondary);
 	}
+
+	:global(.login-form .iti__flag-container){
+		flex: 0 1 20%;
+		margin: 0;
+		height: stretch;
+	}
 	
 	:global(.login-form [role="combobox"]) {
-		width: 100%;
 		border-radius: 8px;
 		background-color: transparent !important;
 	}
 
 	:global(.login-form .iti input[type="tel"]) {
-		margin-left: 5rem;
+		flex: 1 1 70%;
+		margin-left: clamp(6rem, 7rem - 0.01lvw, 10rem);
 		width: 100%;
-		max-width: 320px;
+		max-width: 290px;
 		padding-left: 3% !important;
 	}
 
@@ -387,7 +350,6 @@
 		gap: 10px;
 		margin: 20px;
 		font-size: clamp(0.8rem, 2vw, 1rem);
-		/* outline: solid red; */
 	}
 
 	.to-register p {
@@ -421,7 +383,6 @@
 		}
 
 		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom)  {
-			/* flex: 0 1 auto; */
 			gap: 20px;
 			display: flex;
 			flex-direction: column-reverse;
@@ -429,13 +390,15 @@
 			justify-content: end;
 		}
 		
-		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {
-			/* outline: solid red; */
-			/* flex-basis: 100% !important; */
+		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {			/* flex-basis: 100% !important; */
 			max-width: 300px;
 		}
 
-
+		:global(body:has(.login-form) .page-container .logo .logo-name){
+			font-size: clamp(1rem,2rem + 6dvw , 400px);
+			max-width: 400px;
+			letter-spacing: -2px;
+		}
 	}
 
 </style>

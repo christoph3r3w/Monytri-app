@@ -48,10 +48,6 @@
 	import {device} from '$lib/Device.js';
 	import {fade} from 'svelte/transition';
 
-	$effect(() => {
-		// console.log(searchValue);
-		// console.log(searchQuery);	
-	});
 </script>
 
 <!-- Button rendering snippet -->
