@@ -213,6 +213,7 @@
 		overscroll-behavior-x: contain;
 		overscroll-behavior-y: contain;
 		color: var(--general-text-color);
+		background-color: transparent;
 	}
 	
 	:global(.body-container){
@@ -302,6 +303,11 @@
 			--body-padding: 5%;
 		}
 
+		:global(html){
+			background-color: var(--primary-green-500);
+			padding-top: env(safe-area-inset-top);
+		}
+
 		:global(body){
 			overflow: hidden;
 			max-height:100dvh;
@@ -310,7 +316,6 @@
 
 		:global(.body-container){
 			/* there is an issue where the layout break in firefox */
-			/* the if ismobile is not on the layout should stay a grid but it sometimes becomes a flex layout  */
 			display: flex !important;
 			flex-direction: column;
 			min-height: revert;
