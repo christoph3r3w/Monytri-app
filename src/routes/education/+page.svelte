@@ -47,9 +47,9 @@
 		grid-template-columns: 
 		subgrid 
 		[left-start] repeat(5,[mid-left]) [left-end right-start] repeat(5,[mid-right]) [right-end];
-		grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr;
-		height: calc(100cqh - var(--header-height) + 10px);
-		max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); 
+		/* grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr; */
+		height: calc(100cqh - var(--header-height) );
+		max-height: calc(100cqh - var(--footer-height)); 
 		background-color: var(--general-background-color);
 
 		container-type:normal;
@@ -62,10 +62,13 @@
 
 		:global(.edu-container > .page-container){
 			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 3rem);
+			padding-bottom:var(--progressbar-height);
+			/* border: springgreen solid; */
 		}
 
 		:global(.edu-container > .mobile-step){
-			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 3rem);
+			height : calc(100cqh - var(--footer-height) - var(--progressbar-height) - 3rem);
+			border: rgb(255, 0, 217) solid;
 		}
 	}
 

@@ -529,8 +529,9 @@
 			max-height: 100dvh;
 			gap: 1cqh;
 			padding: 0 ;
-			padding-block: 3% ;
+			/* padding-block: 3% ; */
 			color: var(--general-text-color) !important;
+			/* border: solid red; */
 		}
 
 		.page-container > *{
@@ -545,7 +546,7 @@
 			height: 100%;
 			overflow: hidden;
 			overflow-y: auto;
-			/* outline: solid blue; */
+			/* border: solid blue; */
 		}
 
 		.step-header {

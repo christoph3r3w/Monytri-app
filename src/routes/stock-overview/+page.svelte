@@ -220,6 +220,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		overflow: hidden !important;
 		max-height: unset !important;
 		height: unset !important;
+		outline: solid aqua;
 	}
 
 	:global(.stockOverview-container .mobile-step){
@@ -322,7 +323,8 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 
 		:global(body.isMobile.ios-device) :global(.stockOverview-container .mobile-step){
 			padding-bottom: calc( var(--footer-height) + var(--safe-area-inset-bottom)) ;
-			max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ;
+			/* max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ; */
+			padding-bottom: calc(var(--footer-height) * 3 + var(--safe-area-inset-bottom)) ;
 		}
 
 	}
