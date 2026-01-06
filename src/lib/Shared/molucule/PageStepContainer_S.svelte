@@ -539,6 +539,7 @@
 			flex-direction: column;
 			width: 100%;
 			height: 100%;
+			padding-top: 3%;
 			overflow: hidden;
 			overflow-y: auto;
 		}
