@@ -6,7 +6,6 @@
 	let {stockData,device} = data;
 	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = stockData;	
 	
-	
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
 		return new Intl.NumberFormat('en-IE', {
@@ -178,7 +177,6 @@
 }
 
 /* brokers list  */
-
 section:is(.current-brokers, .announcements){
 	grid-column: right;
 	grid-row: 1 / span 3;
@@ -203,7 +201,6 @@ section:is(.current-brokers, .announcements) h2{
 
 .announcements h2{
 	font-size: clamp(1rem,1.25rem,5vw);
-
 	font-weight: 400;
 	text-wrap: nowrap;
 	display: flex;
@@ -220,7 +217,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		overflow: hidden !important;
 		max-height: unset !important;
 		height: unset !important;
-		outline: solid aqua;
 	}
 
 	:global(.stockOverview-container .mobile-step){
@@ -288,8 +284,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 
 				transition: background-color 0.3s ease;
 				color: var(--general-text-color);
-				color: var(--white);
-
 			}
 	}
 
@@ -326,7 +320,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 			/* max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ; */
 			padding-bottom: calc(var(--footer-height) * 3 + var(--safe-area-inset-bottom)) ;
 		}
-
 	}
 </style>
 

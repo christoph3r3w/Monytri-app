@@ -102,18 +102,6 @@
 		};
 	});
 
-	// causes an issue when mobile view is active
-	// onNavigate((navigation) => {
-   //      if(!document.startViewTransition){return};
-
-   //      return new Promise((resolve) =>{
-   //          document.startViewTransition(async ()=>{
-   //              resolve();
-   //              await navigation.complete;
-   //          })
-   //      })
-   //  })
-
 	onMount(async () => {
 	// debugging tool for mobile
 	if (!dev) return;
@@ -256,7 +244,6 @@
 			grid-template-columns: subgrid;
 			align-content: start;
 			overflow-x: clip;
-			/* overflow-y: auto; */
 		}
 				
 		&:nth-of-type(1) > :is(:global(*)) {
@@ -473,7 +460,6 @@
 	}
 
 	@media (orientation: landscape) and (max-height : 600px) and (max-width : 1000px) and (hover: none) and (pointer: coarse),(orientation: landscape) and (aspect-ratio: 16/9) and (hover: none) and (pointer: coarse) {
-	/* @media (orientation: landscape) and (aspect-ratio: 16/9) and (hover: none) and (pointer: coarse) { */
 		:global(.body-container)::after {
 			content: 'Please rotate your device  ' url(/shared-assests/exclamation-circle-white.svg);
 			position: fixed;

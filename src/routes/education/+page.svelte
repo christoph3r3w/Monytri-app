@@ -63,12 +63,10 @@
 		:global(.edu-container > .page-container){
 			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 3rem);
 			padding-bottom:var(--progressbar-height);
-			/* border: springgreen solid; */
 		}
 
 		:global(.edu-container > .mobile-step){
 			height : calc(100cqh - var(--footer-height) - var(--progressbar-height) - 3rem);
-			border: rgb(255, 0, 217) solid;
 		}
 	}
 

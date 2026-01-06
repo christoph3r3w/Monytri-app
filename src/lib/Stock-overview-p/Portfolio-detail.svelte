@@ -192,12 +192,27 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 	}
 
 	.portfolio-overview{
-		padding-block: 5%;
+		padding-block: 5% 8%;
 		padding-inline: 0;
 		width: 100%;
 		background-color: transparent;
 		margin-bottom: 0;
 		min-height: fit-content;
+	}
+
+	.portfolio-details{
+		width: stretch;
+		max-width: 700px;
+		align-self: center;
+	}
+}
+
+@media (width > 700px){
+	.portfolio-details{
+		max-width: 700px;
+		align-self: top;
+		justify-self: top;
+		margin-top: -10%;
 	}
 }
 

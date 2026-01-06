@@ -1,19 +1,26 @@
 <script>
 	import { fade } from 'svelte/transition';
-	import { StepContainer} from '$lib'
+	import {StepContainer} from '$lib'
 
 	let {formData,validatePayment,button,nextStep,stepValidation,previousStep,submitForm, onPaymentMethodSelect } = $props();
 	let selectedMethod = $state('');
-	let selectedBank = $state('');
-	let methods = $derived({
+	let selectedBank = $state(null);
+	let methods = $state({
 		"Linked Credit/Debit Card": "Card ending in **** **** 1234",
 		"iDEAL": "Select your bank",
-		"EFT Payment": "Select your bank"
+		"EFT Payment": "Select your bank",
+		"PayPal": "Pay with your PayPal account",
+	});
+
+	$effect(() => {
+		// If the payment method changes, clear any previously selected bank.
+		selectedMethod;
+		selectedBank = null;
 	});
 </script>
 
 {#snippet paymentOptions()}
-		<section class="payment-input-container">
+	<section class="payment-input-container">
 
 		{#each Object.entries(methods) as [method, info], i}
 		<label for='paymentMethod{i}'>
@@ -43,8 +50,6 @@
 			{/if}
 		{/if}
 		{/each}
-
-
 	</section>
 
 	<article class="review-summary">
@@ -120,6 +125,16 @@
 		display: flex;
 		align-items: start;
 		gap: 1rem;
+	}
+
+	select.payment-info {
+		width: 50%;
+		border: var(--primary-green-500) solid 1px;
+		border-radius: 10px;
+		padding: 0.5rem;
+		font-size: clamp(1rem,2vw,1.2rem);
+		background-color: var(--primary-darkgreen-200, var(--white));
+		color: var(--general-text-color-inverted, var(--black));
 	}
 
 	.payment-input-container input[type="radio"] {

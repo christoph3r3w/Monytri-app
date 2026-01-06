@@ -189,8 +189,8 @@
 		aspect-ratio: 1;
 		color: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
 		path{
-			fill: var(--general-text-color-invert,light-dark(var(--white),color-mix(in srgb, var(--white), var(--general-text-color) 90%)));
 			fill:rgba(218, 165, 32, 0.877);
+			stroke: rgba(218, 165, 32, 0.877);
 		}
 	}
 
@@ -440,7 +440,7 @@
 		}
 	}
 
-		@media 
+	@media 
 	(-webkit-min-device-pixel-ratio: 3),
 	screen and (device-height <= 500px) and (height <= 500px) and  (orientation: landscape)
 	{
@@ -468,13 +468,12 @@
 				padding-top: 4dvh;
 			}
 
-				.button-container::before{
+			.button-container::before{
 				height: 70%;
 				position: absolute;
 				bottom: 10%;
 			}
 		}
-	
 	}
 
 

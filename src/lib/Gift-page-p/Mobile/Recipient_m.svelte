@@ -12,6 +12,7 @@
 		)
 		: recipients
 	);
+	
 
 </script>
 {#snippet recipientsList()}			
@@ -151,7 +152,6 @@
 			display: none;
 		}	
 	}
-
 
 	.no-results {
 		text-align: center;

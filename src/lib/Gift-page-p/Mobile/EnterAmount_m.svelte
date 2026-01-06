@@ -70,7 +70,6 @@
 	showRightContent={true}
 	showContinueButton={true}
 	rightContent={amountForm}
-	
 />
 
 <style>
@@ -156,6 +155,6 @@
 		border-radius: 8px;
 		padding: 3%;
 		width: 100%;
-		background-color: var(--white);
+		background-color: var(--general-background-color, --white);
 	}
 </style>

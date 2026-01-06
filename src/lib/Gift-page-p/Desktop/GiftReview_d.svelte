@@ -144,14 +144,6 @@
 		color: var(--general-text-color-inverted, var(--black));
 	}
 	
-	/* .right-step{
-		flex: 1 1 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		gap: 1rem;
-	} */
-	
 	.review-summary {
 		align-self: baseline;
 		place-self: center;
@@ -211,10 +203,4 @@
 			text-wrap: nowrap;
 		}
 	}
-
-	/* .button-container {
-		display: flex;
-		justify-content: end;
-	} */
-
 </style>
