@@ -15,16 +15,15 @@
 	// let isDesktop = $derived($isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false');
 	let isDesktop = $state();
 	let notOnLogin = $state(false);
-	$effect(() => {
-		notOnLogin = $current == 'login'? false : true;
 
+	function readyCheck(){
 		if (document.readyState === 'complete') {
 			onMobile = $isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true';
 			isDesktop = $isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false';
 		} else {
 			console.log('waiting for pageload');
 		}
-	});
+	}
 	
 	function iconTask (){
         if ($current === 'home') {
@@ -39,6 +38,19 @@
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
 	}
+
+	$effect(() => {
+		notOnLogin = $current == 'login'? false : true;
+
+		readyCheck();
+		window.addEventListener('load', readyCheck);
+	});
+
+	onMount(() => {
+		afterNavigate(() => {
+			readyCheck();
+		});
+	});
 	
 	
 </script>
