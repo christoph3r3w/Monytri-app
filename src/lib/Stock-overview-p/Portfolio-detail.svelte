@@ -205,15 +205,16 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		max-width: 700px;
 		align-self: center;
 	}
-}
 
-@media (width > 700px){
-	.portfolio-details{
-		max-width: 700px;
-		align-self: top;
-		justify-self: top;
-		margin-top: -10%;
+	@media (width > 700px){
+		.portfolio-details{
+			max-width: 700px;
+			align-self: top;
+			justify-self: top;
+			margin-top: -10%;
+		}
 	}
+
 }
 
 </style>
