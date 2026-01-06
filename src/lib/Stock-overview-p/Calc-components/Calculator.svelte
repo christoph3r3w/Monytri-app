@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import Chart from 'chart.js/auto';
   import type { Chart as ChartType } from 'chart.js';
 
 const numberFormatter = new Intl.NumberFormat('en-US', {
@@ -55,6 +54,9 @@ let growthPercentage = $derived.by(() => {
   let chartCanvas: HTMLCanvasElement | null = null;
   let chartInstance: ChartType | null = null;
 
+	type ChartAutoModule = typeof import('chart.js/auto');
+	let ChartCtor = $state<ChartAutoModule['default'] | null>(null);
+
   // Calculation — note: preventDefault handled here per your request.
   function calculateInvestment(e?: Event) {
     if (e?.preventDefault) e.preventDefault();
@@ -107,6 +109,7 @@ let growthPercentage = $derived.by(() => {
 
   // Chart / DOM effect: re-create chart whenever canvas or results change
   $effect(() => {
+    if (!ChartCtor) return;
     if (!chartCanvas) return;
     // destroy previous chart
     if (chartInstance) {
@@ -120,7 +123,7 @@ let growthPercentage = $derived.by(() => {
 
     const labels = results.map((d) => (d.year === 0 ? 'Now' : `${d.year}y`));
 
-    chartInstance = new Chart(ctx, {
+    chartInstance = new ChartCtor(ctx, {
       type: 'line',
       data: {
         labels,
@@ -175,7 +178,12 @@ let growthPercentage = $derived.by(() => {
   });
 
   // initialise with default values so chart shows on load
-  onMount(() => calculateInvestment());
+  onMount(() => {
+    calculateInvestment();
+    import('chart.js/auto').then((mod) => {
+      ChartCtor = mod.default;
+    });
+  });
 </script>
 
 <!-- <section class="con max-w-5xl mx-auto p-6 space-y-8"> -->

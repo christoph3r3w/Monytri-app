@@ -4,7 +4,6 @@
 
 	let {data} = $props();
 	let {device} = data;
-	// console.log(device);
 	
 	let {portfolio,usersBrokers,totalBalance,averageBalance} = data?.data;	
 

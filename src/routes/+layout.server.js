@@ -1,7 +1,7 @@
 export const ssr = true;
 export const prerender = false;
 
-import {load as sd} from '$lib/broker.js';
+import { getStockData } from '$lib/server/broker.js';
 import {redirect} from '@sveltejs/kit';
 
 /** @type {import('./$types').LayoutServerLoad} */
@@ -22,11 +22,15 @@ export const load = async ({ locals, url }) => {
     const ia = !!u;
     const safeUser = u ? { email: u.email, name: u.name } : null;
     const dev = u ?.prefs?.dev === 'trueDev' ? true : false;
-    
-    
-    let { stockData: { totalBalance, portfolio } } = await sd();
-    let investedRaw = totalBalance ?? 1507.88;
-    let giftedRaw =  501.25 + (Math.abs(portfolio.profitLoss) || 0) ?? 501.25;
+
+    let investedRaw = 1507.88;
+    let giftedRaw = 501.25;
+    if (ia) {
+        const cacheKey = u?.$id ?? 'global';
+        const { stockData: { totalBalance, portfolio } } = await getStockData({ cacheKey });
+        investedRaw = totalBalance ?? investedRaw;
+        giftedRaw = 501.25 + (Math.abs(portfolio?.profitLoss) || 0);
+    }
     
 	function balanceString(balance) {
 		const formatted = new Intl.NumberFormat('nl-NL', {

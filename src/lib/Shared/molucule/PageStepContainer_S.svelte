@@ -46,7 +46,7 @@
 	
 	import {isMobile} from '$lib/store.js';
 	import {device} from '$lib/Device.js';
-	import {fade} from 'svelte/transition';
+	import {fade,blur} from 'svelte/transition';
 
 </script>
 
@@ -199,7 +199,7 @@
 	{@render buttonContainer()}
 {/snippet}
 
-<section class="page-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } transition:fade >
+<section class="page-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } in:fade={{duration: 450}} out:fade={{duration: 10}} >
 	{#if !$isMobile}
 		<!-- left grid section -->
 		{#if showLeftContent }

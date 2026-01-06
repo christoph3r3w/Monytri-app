@@ -8,5 +8,14 @@ export default defineConfig({
 	],
 	server: {
 		port: 3003,
+		watch: {
+			ignored: [
+				'**/build/**',
+				'**/test-results/**',
+				'**/gradle/**',
+				'**/ios/**',
+				'**/android/**'
+			]
+		}
 	  },
 });

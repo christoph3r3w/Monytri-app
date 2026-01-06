@@ -1,7 +1,8 @@
-import { databases } from '$lib/appwrite';
+import { createAdminClient } from '$lib/server/appwrite';
 
 /** @type {import('./$types').PageLoad} */
 export async function load() {
+	const { databases } = createAdminClient();
 	const brokerDBId = '68d6504c001707f48230';
   	const brokerProfileId = '69262e00001b9f68d131';
 	
@@ -38,57 +39,6 @@ export async function load() {
 		token: null
 	};
 	
-	// let brokers = [
-	// 	{
-	// 		name: "eToro",
-	// 		logo: "",
-	// 		link: "https://www.etoro.com/",
-	// 		description:
-	// 			"eToro is a social trading and multi-asset brokerage company that focuses on providing financial and copy trading services.",
-	// 		balance: rand()
-	// 	},
-	// 	{
-	// 		name: "Robinhood",
-	// 		logo: "",
-	// 		link: "https://robinhood.com/",
-	// 		description:
-	// 			"Robinhood offers commission-free trading of stocks, ETFs, and cryptocurrencies via a mobile-first platform.",
-	// 		balance: rand()
-	// 	},
-	// 	{
-	// 		name: "Fidelity",
-	// 		logo: "",
-	// 		link: "https://www.fidelity.com/",
-	// 		description:
-	// 			"Fidelity provides investment management, retirement planning, brokerage, and other financial services.",
-	// 		balance: rand()
-	// 	},
-	// 	{
-	// 		name: "Getbux",
-	// 		logo: "/brokers/BUX brokers logo 10.png",
-	// 		link: "https://www.getbucks.com/",
-	// 		description:
-	// 			"Getbucks offers accessible financial services and lending products in selected markets.",
-	// 		balance: rand()
-	// 	},
-	// 	{
-	// 		name: "Degiro",
-	// 		logo: "/brokers/Degiro broker logo.png",
-	// 		link: "https://www.dejiro.com/",
-	// 		description:
-	// 			"Dejiro provides a straightforward platform for trading global equities and ETFs.",
-	// 		balance: rand()
-	// 	},
-	// 	{
-	// 		name: "Interactive Brokers",
-	// 		logo: "/brokers/Interactive Brokers logo..png",
-	// 		link: "https://www.interactivebrokers.com/",
-	// 		description:
-	// 			"Interactive Brokers offers a professional-grade platform with global market access and advanced trading tools.",
-	// 		balance: rand()
-	// 	}
-	// ];
-
 	let usersBrokers = brokersProfile || [
 		{name: "eToro",logo: "",link:"" , balance: 0},
 		{name: "Robinhood",logo: "",link:"" , balance: 0},
