@@ -131,7 +131,7 @@
 
 <style>
 	.container{
-		grid-column: content;
+		grid-column: 2/-1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -268,5 +268,11 @@
 
 	.bottom-logo{
 		background-color: unset;
+	}
+
+	@media (width < 500px){
+		.container{
+			grid-column: 2/-2;
+		}
 	}
 </style>
