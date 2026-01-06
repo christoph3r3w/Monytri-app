@@ -126,7 +126,7 @@
 	.success-message p {
 		text-align: center;
 		font-size: 1.2rem;
-		max-width: 50vw;
+		max-width: min(60ch,50svw);
 	}
 	
 	.success-message a {

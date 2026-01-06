@@ -131,13 +131,14 @@
 
 <style>
 	.container{
-		grid-column: content;
+		grid-column: 2/-1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 2rem;
 		height: 100%;
 		padding-top: 3%;
+		z-index: 2;
 	}
 
 	article,figure{
@@ -267,5 +268,11 @@
 
 	.bottom-logo{
 		background-color: unset;
+	}
+
+	@media (width < 500px){
+		.container{
+			grid-column: 2/-2;
+		}
 	}
 </style>

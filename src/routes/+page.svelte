@@ -50,33 +50,6 @@
 </section>
 
 <style>
-	:global(body:is(.windows-device, .desktop-device, .macos-device):has(.home-wrapper) main){
-		background-color: transparent;
-		overflow: hidden;
-	}
-
-	:global(body:is(.windows-device, .desktop-device, .macos-device):has(.home-wrapper) main > svg){
-		position: absolute;
-		height: 100dvh !important;
-		width: stretch !important;
-		inset-inline: 0;
-		inset-block: 0;
-		z-index: 0;
-		scale: 1.5;
-		isolation: isolate;
-		@starting-style{
-			opacity: 0;
-		}
-	}
-
-	:global(body:has(.home-wrapper) main > svg path){
-		fill: color-mix(in srgb, var(--general-background-color) 95%, var(--primary-purple-400) );
-		fill: color-mix(in srgb, var(--general-background-color) 90%, var(--primary-darkgreen-200));
-
-		@starting-style{
-			fill: var(--general-background-color);
-		}
-	}
 
 	.home-wrapper{
 		/* border: orange 2px solid; */
@@ -111,6 +84,7 @@
 		border-radius: 50px;
 		padding: 1rem 2rem;
 		transition: background-color 0.3s ease-out, color 0.3s ease-in-out;
+		backdrop-filter: blur(5px);
 
 		&::first-letter {
 			text-transform: capitalize;

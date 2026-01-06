@@ -38,9 +38,20 @@
 		grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr;
 		height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
 		max-height: calc(100dvh - var(--footer-height) + var(--progressbar-height)); 
+		background-color: transparent;
+		z-index: 1;
 
 		container-type:normal;
 		container-name: transfer-wizard;
+	}
+
+	:global(main:has(.login-step-container) .page-container){
+		background-color: transparent;
+	}
+
+	:global(body main:has(.login-step-container) > svg path){
+		fill: color-mix(in srgb, var(--general-background-color) 95%, var(--neutral-grey) );
+		filter: blur(3px);
 	}
 
 	@media (width <= 930px) {
@@ -48,12 +59,14 @@
 		:global(body main:has(.login-step-container)){
 			padding-bottom: 0;
 			padding-top: 0;
-			}
+		}		
+		:global(main:has(.login-step-container) .page-container){
+			background-color: var(--general-background-color);
+		}
 		.login-step-container {
 			min-height: 100svh;
 			max-width: 100dvh;
 			background-color: var(--white);	
 		}
-
 	}
 </style>
