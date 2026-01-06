@@ -50,7 +50,36 @@
 </section>
 
 <style>
+	:global(body:is(.windows-device, .desktop-device, .macos-device):has(.home-wrapper) main){
+		background-color: transparent;
+		overflow: hidden;
+	}
+
+	:global(body:is(.windows-device, .desktop-device, .macos-device):has(.home-wrapper) main > svg){
+		position: absolute;
+		height: 100dvh !important;
+		width: stretch !important;
+		inset-inline: 0;
+		inset-block: 0;
+		z-index: 0;
+		scale: 1.5;
+		isolation: isolate;
+		@starting-style{
+			opacity: 0;
+		}
+	}
+
+	:global(body:has(.home-wrapper) main > svg path){
+		fill: color-mix(in srgb, var(--general-background-color) 95%, var(--primary-purple-400) );
+		fill: color-mix(in srgb, var(--general-background-color) 90%, var(--primary-darkgreen-200));
+
+		@starting-style{
+			fill: var(--general-background-color);
+		}
+	}
+
 	.home-wrapper{
+		/* border: orange 2px solid; */
 		grid-column: 1 / -1;
 		grid-row: 1 / span 1;
 		display: flex;
@@ -60,6 +89,7 @@
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
 		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
+		z-index: 2;
 	}
 
 	.button-conatiner-dev{
@@ -82,9 +112,25 @@
 		padding: 1rem 2rem;
 		transition: background-color 0.3s ease-out, color 0.3s ease-in-out;
 
+		&::first-letter {
+			text-transform: capitalize;
+		}
+
 		&:is(:hover,:focus-within,:active) {
 			background-color: var(--primary-purple-400);
 			color: var(--general-text-color);
+		}
+	}
+
+	[action="/logout"] button {
+		
+		transition: all 0.1s ease;
+		&:is(:hover,:focus-within,:active) {
+			border-color: var(--primary-red-500);
+			background-color: var(--primary-red-500);
+			background-color: transparent;
+			color: var(--general-text-color-invert);
+			color: var(--primary-red-500);
 		}
 	}
 

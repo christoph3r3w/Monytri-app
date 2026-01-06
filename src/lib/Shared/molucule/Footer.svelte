@@ -120,6 +120,7 @@
 		display: flex;
 		flex-direction: row;
 		width: 100%;
+		background-color: var(--general-background-color);
 
 		@container (width < 600px){
 			flex-direction: column;
