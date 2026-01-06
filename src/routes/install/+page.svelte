@@ -79,13 +79,14 @@
 	}
 
 	.container {
-		grid-column: content;
+		grid-column: 2/-1;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		gap: 2rem;
 		width: 100%;
 		margin-bottom: 5rem;
+		z-index: 2;
 	}
 
 	h2{
@@ -171,7 +172,7 @@
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
 		{
 			.container {
-		
+				grid-column: 2 / -2;
 				display: flex;
 				flex-direction: column;
 				align-items: center;

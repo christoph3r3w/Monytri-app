@@ -138,6 +138,7 @@
 		gap: 2rem;
 		height: 100%;
 		padding-top: 3%;
+		z-index: 2;
 	}
 
 	article,figure{
