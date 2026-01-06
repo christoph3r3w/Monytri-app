@@ -155,4 +155,40 @@
 			border-radius: 50% ;
 		}
 	}
+
+		@media not (display-mode: standalone)  {
+				
+		:global(body:not(.windows-device, .desktop-device, .macos-device)) :global(footer:has(.mobile-nav)) {
+			--footer-height: calc(20px + var(--safe-area-inset-bottom));
+
+			position: fixed;
+			bottom : 1dvh;
+			inset-inline: auto;
+			width: 85dvw;
+			max-width: 400px;
+			align-self: center;
+			place-self: center;
+			justify-content: center;
+			border-radius: 1pc;
+			transition:bottom 1s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);
+
+			@starting-style {
+				opacity: 0 ;
+				position: relative ;
+				bottom: 0;
+				box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+			}
+		}
+
+		:global(body:is(.ios-device,.android-device)) :global(footer:has(.mobile-nav)) {
+			--footer-height: calc(50px + var(--safe-area-inset-bottom));
+			bottom : calc(env(safe-area-inset-bottom) + 13lvh) !important;
+			transition: bottom .7s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);
+
+			@starting-style {
+				bottom: 0;
+			}
+		}
+	}
+
 </style>

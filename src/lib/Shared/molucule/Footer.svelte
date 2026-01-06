@@ -64,7 +64,8 @@
 
 <!-- mobile navigation -->
 <!-- add this to a component -->
-<nav class="mobile-nav">
+
+<!-- <nav class="mobile-nav-d">
 	<ul>
 		<li >
 			<button href="/" class:active={navSelect === 'home'} onclick={() => (goto('/'))} aria-label="Home">
@@ -103,7 +104,7 @@
 			</button>
 		</li>
 	</ul>
-</nav>
+</nav> -->
 
 
 <style>
@@ -251,7 +252,7 @@
 	/* mobile navigation styling */
 	/*///////////////////////////*/
 
-	.mobile-nav{
+	/* .mobile-nav-d{
 		display: none;
 	}
 	
@@ -266,7 +267,7 @@
             display: none;
     	}
 
-		.mobile-nav{
+		.mobile-nav-d{
 			grid-column: 1/-1;
 			position: relative;
 			grid-row: 1/2;
@@ -279,7 +280,7 @@
 			
 		}
 			
-		.mobile-nav ul{
+		.mobile-nav-d ul{
 			grid-column: content;
 			grid-row: content;
 			display: flex;
@@ -290,14 +291,14 @@
 			gap: clamp(10px, 10cqw, 100px);
 		}
 
-		.mobile-nav ul li{
+		.mobile-nav-d ul li{
 			position: relative;
 			padding: 1cqh;
 			width: fit-content;
 		}
 			
-		.mobile-nav ul li:is(:hover,:focus-within,:visited),
-		.mobile-nav ul li:has(:is(a,button).active){
+		.mobile-nav-d ul li:is(:hover,:focus-within,:visited),
+		.mobile-nav-d ul li:has(:is(a,button).active){
 			background-color: var(--off-white);
 			border-radius: 6px;
 			user-select: none;
@@ -307,21 +308,19 @@
 			}
 		}
 
-		.mobile-nav li:nth-of-type(1):is(:hover,:focus-within,:visited) svg path,
-		.mobile-nav ul li:nth-of-type(1):has(:is(a,button).active) svg path{
+		.mobile-nav-d li:nth-of-type(1):is(:hover,:focus-within,:visited) svg path,
+		.mobile-nav-d ul li:nth-of-type(1):has(:is(a,button).active) svg path{
 			fill:none !important;
-			/* test */
+
 			stroke:var(--primary-green-500) ;
 			user-select: none;
 		}
 			
-		/* selector does not work when i use 'a' instead i need to use :nht-child */
-		.mobile-nav li :nth-child(n){
+		.mobile-nav-d li :nth-child(n){
 				position: relative;
 		}
 			
-		/* touch area of nav buttons */
-		.mobile-nav li :nth-child(n)::before{
+		.mobile-nav-d li :nth-child(n)::before{
 				content: '';
 				position: absolute;
 				inset-inline: -75%;
@@ -332,19 +331,18 @@
    }
 
 	@media not all and (display-mode: standalone) {
-	 	.mobile-nav{
+	 	.mobile-nav-d{
 			grid-template-rows: min(0px, 20%) [content-start] 1fr [content-end] min(0px,20%);
 		}
 
-		.mobile-nav ul li {
+		.mobile-nav-d ul li {
 			padding: 2cqi;
-			/* aspect-ratio: 1; */
 		}
 
-		.mobile-nav ul li:is(:hover,:focus-within,:visited),
-		.mobile-nav ul li:has(:is(a,button).active){
+		.mobile-nav-d ul li:is(:hover,:focus-within,:visited),
+		.mobile-nav-d ul li:has(:is(a,button).active){
 			inset: 0;
 			border-radius: 50% ;
 		}
-	}
+	} */
 </style>
