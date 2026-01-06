@@ -263,9 +263,9 @@
 	}
 
 	.left-step p.subtext {
-		font-size: clamp(1rem,3vw,1.9rem);
+		font-size: clamp(1rem,3vw,1.7rem);
 		font-weight: 300;
-		max-width: 50ch;
+		max-width: 40ch;
 		margin-bottom: 1.813rem;
 	}
 
@@ -286,6 +286,7 @@
 		justify-self: center;
 		align-items: center;
 		width: 100%;
+		max-width: 600px;
 		height: fit-content;
 		margin-bottom: 2dvh;		
 

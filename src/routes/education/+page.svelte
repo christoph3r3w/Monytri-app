@@ -24,8 +24,8 @@
 <article class="edu-container">
 	<PageStepContainer
 		stepType=''
-		headerName={''}
-		subtext=""
+		headerName={$device.isMobile ? '' : 'Education Articles'}
+		subtext={$device.isMobile ? '' : 'Learn more about personal finance, investing, and money management through our curated articles, podcasts, and videos.'}
 		showLeftContent={true}
 		showRightContent={true}
 		rightContent={a}
