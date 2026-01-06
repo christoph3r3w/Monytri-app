@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { StepContainer } from '$lib'
-	import { fade } from 'svelte/transition';
+	// import { fade } from 'svelte/transition';
 	
 
 	let { formData, selected, button, validateAmount, nextStep, previousStep,stepValidation, min, max } = $props();
