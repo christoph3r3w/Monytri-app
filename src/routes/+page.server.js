@@ -15,13 +15,13 @@ export async function load() {
     try {
         posts = await databases.listDocuments(databaseId,blogPostId,[
             Query.equal('isPublished', true),
-            Query.orderDesc('$createdAt'),
+            Query.orderAsc('$createdAt'),
             Query.limit(3),
             Query.select(['title','subtitle','link','bannerImage.*','author.*','category.*','isPublished'])
         ]);
         
         podcasts = await databases.listDocuments(databaseId,podcastId,[
-            Query.orderAsc('releaseDate'),
+            Query.orderDesc('releaseDate'),
             Query.limit(3),
             Query.select(['title','episodeNumber','link','bannerImage.*','host.*','category.*','guest'])
         ]);

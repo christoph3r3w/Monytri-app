@@ -22,8 +22,8 @@ export async function load() {
 		]);
 		
 		podcasts = await databases.listDocuments(databaseId,podcastId,[
-			Query.orderAsc('releaseDate'),
-			Query.limit(5),
+			Query.orderDesc('releaseDate'),
+			Query.limit(6),
 			Query.select(['title','episodeNumber','link','bannerImage.*','host.*','category.*','guest'])
 		]);
 
