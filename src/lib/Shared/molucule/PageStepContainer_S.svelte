@@ -5,7 +5,7 @@
 		
 		// Step configuration
 		headerName, 
-		stepType = 'default', // 'recipient', 'amount', 'payment', 'review'
+		stepType = 'default',
 		currentStep = 1,
 		
 		// Navigation functions
@@ -199,7 +199,7 @@
 	{@render buttonContainer()}
 {/snippet}
 
-<section class="page-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } in:fade={{duration: 450}} out:fade={{duration: 10}} >
+<section class="page-container" id={$device.isMobile ? 'Mobile' : 'Desktop' } in:fade={{duration: 300}} >
 	{#if !$isMobile}
 		<!-- left grid section -->
 		{#if showLeftContent }
@@ -277,9 +277,7 @@
 		text-wrap:nowrap; 
 	}
 
-	/* needs to be refactored to work universaly */
-	/* the icon should alway be in the middle  */
-	/* the search should match the figma icon */
+	/* Search component */
 	:global(label:has([type="search"])) {
 		position: relative;
 		display: flex;

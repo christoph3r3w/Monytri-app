@@ -3,11 +3,8 @@
 	import {current} from '$lib/store.js';
 	import { goto } from '$app/navigation';
 
-
 	let {data} = $props();
-	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;
-	// console.log(data);
-	
+	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;	
 </script>
 
 <svelte:head>
@@ -18,15 +15,17 @@
 	<!-- Top section of the home page on mobile. -->
 	<HomeArticles_M {blogs} {podcasts}/>	
 	<div class="button-conatiner-dev">
+		{#if !isAuthenticated }
 			<button onclick={() => goto("/education")}>education</button>
 			<button onclick={() => goto("/share")}>share</button>
 			<button onclick={() => goto("/install")}>install app</button>
-		{#if !isAuthenticated }
-			<button onclick={() => goto("/login")}>login</button>
 		{:else}
-			<button onclick={() => goto("/transactions")}>Transactions</button>
+			<button onclick={() => goto("/education")}>education</button>
 			<button onclick={() => goto("/stock-overview")}>Stock overview</button>
 			<button onclick={() => goto("/gift")}>send a gift</button>
+			<button onclick={() => goto("/transactions")}>Transactions</button>
+			<button data='util' onclick={() => goto("/install")}>install app</button>
+			<button data='util' onclick={() => goto("/share")}>share</button>
 			<form action="/logout" method="post" >
 	 		    <button type="submit">Logout</button>
 			</form>
@@ -52,7 +51,6 @@
 <style>
 
 	.home-wrapper{
-		/* border: orange 2px solid; */
 		grid-column: 1 / -1;
 		grid-row: 1 / span 1;
 		display: flex;
@@ -83,7 +81,7 @@
 		border: solid 2px var(--primary-purple-400) ;
 		border-radius: 50px;
 		padding: 1rem 2rem;
-		transition: background-color 0.3s ease-out, color 0.3s ease-in-out;
+		transition: background-color 0.3s ease-out, color 0.2s ease-in-out;
 		backdrop-filter: blur(5px);
 
 		&::first-letter {
@@ -92,19 +90,28 @@
 
 		&:is(:hover,:focus-within,:active) {
 			background-color: var(--primary-purple-400);
-			color: var(--general-text-color);
+			color: var(--primary-purple-500,var(--general-text-color));
+			color: var(--general-text-color-invert);
 		}
 	}
 
 	[action="/logout"] button {
-		
-		transition: all 0.1s ease;
+		--_c: var(--primary-red-500);
+		transition: all 0.2s ease;
 		&:is(:hover,:focus-within,:active) {
-			border-color: var(--primary-red-500);
-			background-color: var(--primary-red-500);
+			border-color: var(--_c);
 			background-color: transparent;
-			color: var(--general-text-color-invert);
-			color: var(--primary-red-500);
+			color: var(--_c,var(--general-text-color));
+		}
+	}
+
+	button[data='util'] {
+		--_c: var(--primary-darkgreen-550);
+		transition: all 0.2s ease;
+		&:is(:hover,:focus-within,:active) {
+			border-color: var(--_c);
+			background-color: transparent;
+			color: var(--_c);
 		}
 	}
 
