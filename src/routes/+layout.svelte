@@ -103,9 +103,9 @@
 	});
 
 	onMount(async () => {
-	// debugging tool for mobile
-	if (!dev) return;
-	if ($device.isMobile == false ) return;
+		// debugging tool for mobile
+		if (!dev) return;
+		if ($device.isMobile == false ) return;
 		const eruda = (await import("eruda")).default;
 		eruda.init(); 
 	});
@@ -289,9 +289,10 @@
 	}
 
 	:global(body main > svg path){
-		/* fill: color-mix(in srgb, var(--general-background-color) 65%, var(--primary-purple-400) ); */
+		fill: color-mix(in srgb, var(--general-background-color) 65%, var(--primary-purple-400) );
 		fill: color-mix(in srgb, var(--general-background-color) 90%, var(--primary-darkgreen-200));
-		filter: blur(2px);
+		fill: color-mix(in srgb, var(--general-background-color) 65%, var(--primary-darkgreen-200));
+		filter: blur(10px);
 		transition: 0.3s ease;
 		
 		@starting-style{

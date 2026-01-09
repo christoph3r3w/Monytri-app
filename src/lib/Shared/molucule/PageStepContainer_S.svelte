@@ -283,7 +283,7 @@
 	:global(label:has([type="search"])) {
 		position: relative;
 		display: flex;
-		justify-self: center;
+		justify-self: start;
 		align-items: center;
 		width: 100%;
 		max-width: 600px;
@@ -508,6 +508,9 @@
 			grid-column: 1 / -1 !important;
 			grid-row: 2 / -1;
 		}
+
+		:global(label:has([type="search"])){
+			justify-self: center;}
 	}
 
 	@media 
