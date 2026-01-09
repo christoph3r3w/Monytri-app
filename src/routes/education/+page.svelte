@@ -47,10 +47,10 @@
 		grid-template-columns: 
 		subgrid 
 		[left-start] repeat(5,[mid-left]) [left-end right-start] repeat(5,[mid-right]) [right-end];
-		/* grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr; */
 		height: calc(100cqh - var(--header-height) );
-		max-height: calc(100cqh - var(--footer-height)); 
 		background-color: var(--general-background-color);
+		/* grid-template-rows: minmax(min-content,4px) 1fr 1fr 3fr; */
+		/* max-height: calc(100cqh - var(--footer-height));  */
 
 		container-type:normal;
 		container-name:edu-articles;
