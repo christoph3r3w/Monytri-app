@@ -26,6 +26,12 @@
 			<button onclick={() => goto("/transactions")}>Transactions</button>
 			<button data='util' onclick={() => goto("/install")}>install app</button>
 			<button data='util' onclick={() => goto("/share")}>share</button>
+			{#if dev}
+				<button data='util' onclick={() => goto("/request")}>request</button>
+				<button data='util' onclick={() => goto("/settings")}>settings</button>
+				<button data='util' onclick={() => goto("/learn-more")}>learn more</button>
+				<button data='util' onclick={() => goto("/gift-success")}>Gift success</button>
+			{/if}
 			<form action="/logout" method="post" >
 	 		    <button type="submit">Logout</button>
 			</form>
@@ -111,7 +117,7 @@
 		&:is(:hover,:focus-within,:active) {
 			border-color: var(--_c);
 			background-color: transparent;
-			color: var(--_c);
+			color: color-mix(in srgb, var(--_c) 50%, var(--general-text-color));
 		}
 	}
 
