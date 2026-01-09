@@ -5,11 +5,26 @@ import { APPWRITE_API_KEY } from '$env/static/private';
 export const SESSION_COOKIE = `a_session_${PUBLIC_APPWRITE_PROJECT_ID}`;
 
 
+function assertPublicConfig() {
+    if (!PUBLIC_APPWRITE_ENDPOINT || !PUBLIC_APPWRITE_PROJECT_ID) {
+        throw new Error(
+            'Missing Appwrite config. Set PUBLIC_APPWRITE_ENDPOINT and PUBLIC_APPWRITE_PROJECT_ID (for local dev, add a .env file)'
+        );
+    }
+}
+
+
 export function createAdminClient() {
+    assertPublicConfig();
     const client = new Client()
         .setEndpoint(PUBLIC_APPWRITE_ENDPOINT)
-        .setProject(PUBLIC_APPWRITE_PROJECT_ID) // Replace with your project ID
-        .setKey(APPWRITE_API_KEY); // Replace with your API key
+        .setProject(PUBLIC_APPWRITE_PROJECT_ID); // Replace with your project ID
+
+    // API key is optional in dev if you're only accessing public collections.
+    // Only set it when provided to avoid sending an invalid auth header.
+    if (APPWRITE_API_KEY) {
+        client.setKey(APPWRITE_API_KEY);
+    }
 
         return {
             get account() {
@@ -22,13 +37,16 @@ export function createAdminClient() {
 }
 
 export function createSessionClient(event){
+	assertPublicConfig();
     const client = new Client()
         .setEndpoint(PUBLIC_APPWRITE_ENDPOINT)
         .setProject(PUBLIC_APPWRITE_PROJECT_ID); // Replace with your project ID}
     
     const session = event.cookies.get(SESSION_COOKIE);
 
-    if (!session){return new Error('No session ');}
+    if (!session) {
+        throw new Error('No session');
+    }
 
     client.setSession(session);
 

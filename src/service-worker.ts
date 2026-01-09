@@ -13,7 +13,17 @@ const CACHE = `${PROJECT_NAME}-cache-${version}`;
 
 const ASSETS = [
 	...build, // the app itself
-	...files  // everything in `static`
+	...files.filter((f) =>
+		[
+			'/manifest.json',
+			'/favicon.ico',
+			'/apple-touch-icon-180x180.png',
+			'/maskable-icon-512x512.png',
+			'/pwa-64x64.png',
+			'/pwa-192x192.png',
+			'/pwa-512x512.png'
+		].includes(f)
+	) // only critical static assets (avoid caching all images at install)
 ];
 
 // Install Service Worker with scope validation
