@@ -1,8 +1,9 @@
-import {databases} from '$lib/appwrite';
-import { Query } from 'appwrite';
+import { createAdminClient } from '$lib/server/appwrite';
+import { Query } from 'node-appwrite';
 
 /** @type {import('./$types').PageServerLoad} */
 export async function load() {
+	const { databases } = createAdminClient();
 	const databaseId = '68d64fa40019a32f0f67';
 	const blogPostId = '6924e2a10003574f80bd';
 	const podcastId = '6925a7f8002b0f3c133c';

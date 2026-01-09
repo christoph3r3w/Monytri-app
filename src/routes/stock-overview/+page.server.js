@@ -1,8 +1,8 @@
-import { databases } from '$lib/appwrite';
-import { get } from 'svelte/store';
+import { createAdminClient } from '$lib/server/appwrite';
 
 /** @type {import('./$types').PageLoad} */
 export async function load(x) {
+	const { databases } = createAdminClient();
   	const announcementsDBId = '68d64fbc0012a8ec7a92';
   	const announcementsPostId = '6925ecc600033d68ba2e';
   	const brokerDBId = '68d6504c001707f48230';
