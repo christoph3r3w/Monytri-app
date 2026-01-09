@@ -1,17 +1,24 @@
 <script>
 	import {onMount} from 'svelte';
-  	import {onNavigate,afterNavigate} from '$app/navigation'
+  	import {onNavigate,afterNavigate, goto} from '$app/navigation'
 	import {Header,Footer,Menu} from '$lib'
+	import{device} from '$lib/Device.js'
 	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
 	import { fade } from 'svelte/transition';
 	import '../app.css';
-
-	let {data,authenticated, children} = $props();
-
-
+	
+	let {data, children} = $props();
+	let {user,isAuthenticated} = data;	
+	
 	let menu_Open = $derived($menuOpen);
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );
 	let noFooterPage = $derived($current == 'login' || $current == 'register' || $current == 'reset-password');
+
+
+	$effect(() => {
+	if (!isAuthenticated) return;
+		// checkSignIn();
+	});
 
 	// function to detect and update service worker update
 	async function detectSWUpdate(){
@@ -31,14 +38,17 @@
 		});
 	}
 
+	// debugging tool for mobile
+	// need to be removed in production
 	onMount(async () => {
+	if (!isAuthenticated) return;
+	// checkSignIn();
 		const eruda = (await import("eruda")).default;
 		eruda.init(); 
 	});
 	
-
 	
-	$effect(() => {
+	$effect(() => {		
 		detectSWUpdate();
 
 		// Function to update isMobile store value
@@ -147,7 +157,7 @@
 	{#if $isMobile && noFooterPage}
 	{:else}
 		<footer onclick={() => {if (menu_Open) menuOpen.set(false);}}>
-			<Footer {current}/>
+			<Footer {current} d={$device}/>
 		</footer>
 	{/if}
 </section>
@@ -227,6 +237,7 @@
 		grid-row: header;
 		grid-column: 1/-1;
 		z-index: 100;
+		
 		container-type: inline-size;
 		container-name:header;
 	}
@@ -251,7 +262,7 @@
 			grid-template-columns: subgrid;
 			align-content: start;
 			overflow-x: clip;
-			overflow-y: visible;
+			overflow-y: auto;
 		}
 				
 		&:nth-of-type(1) > :is(:global(*)) {
@@ -279,8 +290,15 @@
 		container-name: footer;
 	}
 
+	@media screen and (width < 901px){
+		:global(main:nth-of-type(1)) {
+			overflow-y: visible;
+		}
+	}
+
 	/* media query for mobile view */
-	@media (-webkit-min-device-pixel-ratio: 3) and (display-mode: standalone),
+	@media 
+		(-webkit-min-device-pixel-ratio: 3) and (display-mode: standalone),
 		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) and (display-mode: standalone),
 		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) 

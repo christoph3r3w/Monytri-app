@@ -8,6 +8,7 @@
 	
 	let search = $state('');
 	let {data,onSearchQueryUpdate} = $props();
+	let {blogs,podcasts,videos} = data?.data;
 	
 	function updateSearchQuery(newQuery) {
 		search = newQuery;
@@ -15,9 +16,9 @@
 	}
 
 </script>	
-
+<!-- Fixed overflow issue in mobile step container. -->
 {#snippet a()}
-	<EduArticles />
+	<EduArticles {blogs} {podcasts} {videos} />
 {/snippet}
 
 <article class="edu-container">
@@ -56,8 +57,8 @@
 	}
 
 	@media (-webkit-min-device-pixel-ratio: 3), 
-screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait), 
-screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) {
+		screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait), 
+		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) {
 
 		:global(.edu-container > .page-container){
 			height : calc(100cqh - var(--header-height) - var(--footer-height) - var(--progressbar-height) - 3rem);

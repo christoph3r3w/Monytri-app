@@ -158,6 +158,9 @@ export const authReady = writable(false); // becomes true after first init attem
 // Automatically update isAuthenticated based on user state
 if (isBrowser) {
 	user.subscribe((value) => {
+		// console.log(value);// checking for changes , need to remove later
+
+	
 		isAuthenticated.set(value !== null);
 		authReady.set(true); // Ensure authReady is true after user state changes
 	});

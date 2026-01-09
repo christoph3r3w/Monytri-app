@@ -1,25 +1,10 @@
 <script>
-    import { Balance_M, HomeArticles_M, Logo } from '$lib';
-    import { goto } from '$app/navigation';
+	import {Balance_M,HomeArticles_M,Logo } from '$lib'
+	import {current} from '$lib/store.js';
+	import { goto } from '$app/navigation';
 
-    const { data } = $props();
-    let { device, user, isAuthenticated, authReady } = data;
-
-    // Authentication check using reactive state
-    $effect(() => {
-        if (!$authReady) return;
-        
-        const hasSession = user.hasLocalSession?.();
-        if (!$user && !hasSession) {
-            goto('/login');
-        }
-    });
-
-    // Logout handler
-    const logout = async () => {
-        await user.logout();
-        goto('/login');
-    };
+	let {data} = $props();
+	let {blogs,podcasts,user,device,isAuthenticated} = data;
 </script>
 
 <svelte:head>
@@ -28,34 +13,36 @@
 
 <section class="home-wrapper">
 	<!-- Top section of the home page on mobile. -->
-	<HomeArticles_M/>	
+	<HomeArticles_M {blogs} {podcasts}/>	
 	<div class="button-conatiner-dev">
-		<button onclick={goto("/transactions")}>Transactions</button>
-		<button onclick={goto("/stock-overview")}>Stock overview</button>
-		<button onclick={goto("/gift")}>send a gift</button>
-		<button onclick={goto("/request")} disabled>request a gift</button>
-		<button onclick={goto("/share")}>share</button>
-		<button onclick={goto("/install")}>install app</button>
-		{#if !$isAuthenticated}
+			<button onclick={goto("/education")}>education</button>
+			<button onclick={goto("/share")}>share</button>
+			<button onclick={goto("/install")}>install app</button>
+		{#if !isAuthenticated}
 			<button onclick={goto("/login")}>login</button>
 		{:else}
-			<button onclick={logout}>Logout</button>
+			<button onclick={goto("/transactions")}>Transactions</button>
+			<button onclick={goto("/stock-overview")}>Stock overview</button>
+			<button onclick={goto("/gift")}>send a gift</button>
+			<form action="/logout" method="post">
+	 		    <button type="submit">Logout</button>
+			</form>
 		{/if}
 
 	</div>
 	<Logo name={false} />
 	<div class="analitycs">
 		<p>
-		Platform: {$device.platform}<br>
-		Device: { $device.isMobile ? 'Mobile' : 'Desktop' }
+		Platform: {device.platform}<br>
+		Device: { device.isMobile ? 'Mobile' : 'Desktop' }
 		</p>
 	
-		{#if $device.platform === 'iOS' && $device.isMobile}
+		{#if device.platform === 'iOS' && device.isMobile}
 			<p>This is an iPhone or iPad.</p>
-		{:else if $device.platform === 'Android' && $device.isMobile}
+		{:else if device.platform === 'Android' && device.isMobile}
 			<p>This is an Android phone or tablet.</p>
 		{/if}
-		<p>Current user: {$user?.email || 'No user logged in'}</p>
+		<p>Current user: {user?.email || 'No user logged in'}</p>
 	</div>
 </section>
 
@@ -67,7 +54,6 @@
 		flex-direction: column;
 		align-content: start;
 		width: 100%;
-		/* The minimum height is a little bit of a magic number because that seems to work for when adjusting the page. */
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
 		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
@@ -125,6 +111,20 @@
 		aspect-ratio: 1/1;
 	}
 
+	.analitycs{
+		display: none;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		padding: 1rem;
+		font-size: 0.75rem;
+		background-color: var(--general-background-color-secondary);
+		color: var(--general-text-color-secondary);
+		border-top-right-radius: 10px;
+		box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+		z-index: 100;
+	}
+
 
 	/* for mobile */
 	:global(html:has(.home-wrapper)){
@@ -170,7 +170,6 @@
 				height: fit-content;
 				margin-bottom: 5rem;
 				transition: background-color 0.3ms ease-out, color 0.3s ease-in-out;
-
 			}
 			
 			.button-conatiner-dev,.analitycs,:global(.home-wrapper .button-conatiner-dev + .logo) {

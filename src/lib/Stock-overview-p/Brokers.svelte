@@ -1,10 +1,9 @@
 <script>
-	import { user } from '$lib/user';
 	import { onMount } from 'svelte';
 
-	let {formatCurrency, usersBrokers,brokers} = $props();
+	let {formatCurrency, usersBrokers} = $props();
 	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 500).toFixed(2);
-	let brokersList = usersBrokers && usersBrokers.length > 0 ? usersBrokers : brokers;
+	let brokersList = usersBrokers  ;
 	let totalBalance = brokersList.reduce((acc, broker) => acc + broker.balance, 0);
 	let averageBalance = totalBalance / brokersList.length;
 	

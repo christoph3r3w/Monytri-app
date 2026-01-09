@@ -3,50 +3,71 @@
 	import {Menu,InProgress_S,PageStepContainer,Logo} from '$lib'
 	import {onMount} from 'svelte';
 	import {goto} from '$app/navigation';
-	import {user,isAuthenticated} from '$lib/user';
-	import {device} from '$lib/Device.js';
-    let {formData,nextStep,previousStep,stepValidation} = $props();
+	let { formData, data } = $props();
+	let {device, isAuthenticated} = data
+
 	
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
 	let isLoading = $state(false);
 
-	async function login(e) {
-		e.preventDefault();
+	$effect(() => {
+		// If the server returns an error (SvelteKit action/load), make sure the UI is interactive again.
+		if (data?.error) isLoading = false;
+	});
+
+	function handleSubmit(e) {
 		isLoading = true;
 		errorMessage = '';
-		
-		try {
-			const formData = new FormData(e.target);
-			// Replace raw phone value with fully-qualified E.164 number if plugin initialized
-			if (phoneInput && typeof phoneInput.getNumber === 'function') {
-				const fullNumber = phoneInput.getNumber();
-				// Validate number using plugin utilities when available
-				if (phoneInput.isValidNumber && !phoneInput.isValidNumber()) {
-					errorMessage = 'Please enter a valid phone number.';
-					isLoading = false;
-					return;
-				}
-				if (fullNumber) formData.set('phone', fullNumber);
-			}
-			await user.login(formData.get('email'), formData.get('password'));
-		} catch (error) {
-			console.error('Login error:', error);
-			if (error.code === 429 || error.message?.includes('Rate limit')) {
-				errorMessage = 'Too many requests. Please wait a moment and try again.';
-			} else if (error.code === 401) {
-				errorMessage = 'Invalid email or password.';
-			} else {
-				errorMessage = error.message || 'Login failed. Please try again.';
-			}
-		} finally {
-			isLoading = false;
-		}
-	};
 
-	async function logout() {
-        await $user.logout();
-	};
+		// Ensure we submit a fully-qualified number (E.164) when the plugin is available.
+		if (phoneInput && typeof phoneInput.getNumber === 'function') {
+			if (phoneInput.isValidNumber && !phoneInput.isValidNumber()) {
+				e.preventDefault();
+				errorMessage = 'Please enter a valid phone number.';
+				isLoading = false;
+				return;
+			}
+
+			const fullNumber = phoneInput.getNumber();
+			if (fullNumber && phoneInputField) phoneInputField.value = fullNumber;
+		}
+	}
+
+	// async function login(e) {
+	// 	e.preventDefault();
+	// 	isLoading = true;
+	// 	errorMessage = '';
+		
+	// 	try {
+	// 		const formData = new FormData(e.target);
+	// 		// Replace raw phone value with fully-qualified E.164 number if plugin initialized
+	// 		if (phoneInput && typeof phoneInput.getNumber === 'function') {
+	// 			const fullNumber = phoneInput.getNumber();
+	// 			// Validate number using plugin utilities when available
+	// 			if (phoneInput.isValidNumber && !phoneInput.isValidNumber()) {
+	// 				errorMessage = 'Please enter a valid phone number.';
+	// 				isLoading = false;
+	// 				return;
+	// 			}
+	// 			if (fullNumber) formData.set('phone', fullNumber);
+	// 		}
+	// 		await formData.get('email'), formData.get('password');
+	// 		console.warn('Login action disabled during refactor');
+	// 	} catch (error) {
+	// 		console.error('Login error:', error);
+	// 		if (error.code === 429 || error.message?.includes('Rate limit')) {
+	// 			errorMessage = 'Too many requests. Please wait a moment and try again.';
+	// 		} else if (error.code === 401) {
+	// 			errorMessage = 'Invalid email or password.';
+	// 		} else {
+	// 			errorMessage = error.message || 'Login failed. Please try again.';
+	// 		}
+	// 	} finally {
+	// 		isLoading = false;
+	// 	}
+	// };
+
 	
 	let form = $state()
 	async function submitTrigger() {
@@ -60,20 +81,7 @@
 	let phoneInput; // intl-tel-input instance
 
 	onMount(async () => {
-		// this works 
-		// if ($isAuthenticated) {
-		// 	login();
-		// 	goto('/');
-		// }else {
-		// 	$user.logout();
-		// }
-		if ($user) {
-			goto('/');
-		}else {
-			$user.deleteAllSessions();
-			$user.login();
-		}
-
+	
 		if (typeof window === 'undefined') return;
 		const factory = window.intlTelInput;
 		if (!phoneInputField || typeof factory !== 'function') {
@@ -136,11 +144,15 @@
 		</div>
 	{/if}
 
+	{#if data?.error}
+		<div class="error-message">{data.error}</div>
+	{/if}
+
 	<article class="form-container">
 		<h2>Log in to Monytri</h2>
 		<p class="subtext">Enter your registered mobile number to log in.</p>
 
-		<form class="login-form" onsubmit={login} bind:this={form}>
+		<form class="login-form" id="login-form" method="post" action="/login" onsubmit={handleSubmit} bind:this={form}>
 			<label for="email">Email</label>
 			<input name="email" type="email" placeholder="Email" id="email" required autocomplete="email" disabled={isLoading} />
 			<label for="phone">Phone</label>
@@ -165,22 +177,33 @@
 				autocomplete="current-password" 
 				disabled={isLoading} 
 				value="monytriapp" 
-			/>		
+			/>	
+
+			<!-- <button
+				type="button"
+				disabled={isLoading}
+				onclick={submitTrigger}
+			>
+				{isLoading ? 'Logging in…' : 'Login'}
+			</button> -->
 		</form>
 		<a class="forgot-p" href="/">forgot password</a>
 	</article>
+
 	<article class="to-register">
 		<p>Don't have an account ? </p>
 		<p>Create one <a href="/register">here</a></p>
 	</article>
+	
 {/snippet}
 
 {#snippet loginButtons()}
-	{#if !$isAuthenticated}
+	{#if !isAuthenticated}
 	<button
-		type="button"
+		type="submit"
+		form="login-form"
 		disabled={isLoading}
-		onclick={submitTrigger}
+		onclick="{document.getElementById('login-form').requestSubmit()}"
 	>
 		{isLoading ? 'Logging in...' : 'Login'}
 	</button>
@@ -188,12 +211,11 @@
 	{:else}
 		{@render logout1()}
 	{/if}
-	<!-- {@render logout1()} -->
 
-	{#if $isMobile && $device.platform === 'Android' }
+	{#if $isMobile && device.platform === 'Android' }
 		<button disabled>android fingerprint</button>
 	{/if }
-	{#if $isMobile && $device.platform === 'iOS' }
+	{#if $isMobile && device.platform === 'iOS' }
 		<button disabled>face id auth</button>
 	{/if }
 
@@ -208,22 +230,21 @@
 {/snippet}
 
 {#snippet logout1()}
-    <button onclick={logout}>Logout</button>  
+<form action="/logout" method="post">
+    <button>Logout</button>  
+</form>
 {/snippet}
 
 <PageStepContainer
-    {formData}
-    subtext=""
+   {formData}
+   subtext=""
 	currentStep={1}
-	{nextStep}
-	{previousStep}
-	{stepValidation}
-    showLeftContent={true}
+   showLeftContent={true}
 	showRightContent={true}
 	showContinueButton={false}
 	leftContent={pageHeader}
-    rightContent={loginForm}
-    customButton={loginButtons}
+	rightContent={loginForm}
+   customButton={loginButtons}
 />
     
 <style>
@@ -345,15 +366,17 @@
 	}
 
 	:global(body:has(.login-form):has(.button-container.custom) .button-container.custom)  {
-		/* outline: solid red; */
 		align-items: start;
 		justify-content: start;
 		gap: 20px;
-
+	}
+	:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(1))  {
+		/* flex: 1 1 auto; */
+		justify-self: center;
+		width: 100%;
 	}
 
 	.to-register {
-		/* outline: solid red; */
 		flex: 1 1 1cqh;
 		max-width:400px ;
 		display: flex;
@@ -363,6 +386,7 @@
 		gap: 10px;
 		margin: 20px;
 		font-size: clamp(0.8rem, 2vw, 1rem);
+		/* outline: solid red; */
 	}
 
 	.to-register p {
