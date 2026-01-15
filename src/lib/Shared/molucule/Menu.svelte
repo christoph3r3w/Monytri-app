@@ -1,7 +1,5 @@
 <script>
-
-let {username} = $props();
-	
+	let {username} = $props();
 </script>
 
 {#snippet routes()}
@@ -11,14 +9,13 @@ let {username} = $props();
 	<li><a href="/learn-more">learn more</a></li>
 {/snippet}
 
-
 <nav class="dropdown-menu">
-{#if username}
-	<section class="profile">
-		<span class="profile-letter">{username[0]?.toLowerCase() }</span> 
-		<p>{username || 'Guest'}</p>
-	</section>
-{/if}
+	{#if username}
+		<section class="profile">
+			<span class="profile-letter">{username[0]?.toLowerCase() }</span> 
+			<p>{username || 'Guest'}</p>
+		</section>
+	{/if}
 	<section class="header-routes">
 		<ul>
 			{@render routes()}
@@ -71,7 +68,7 @@ let {username} = $props();
 			</li>
 			{#if username}
 			<li>
-					<svg></svg>
+				<svg></svg>
 				<form action="/logout" method="post" >
 					<button type="submit">Log out</button>
 				</form>
@@ -124,7 +121,6 @@ let {username} = $props();
 		text-box: trim-both ex alphabetic;
 	}
 
-	
 	nav.dropdown-menu section{
 	position: relative;
 		display: flex;
@@ -157,6 +153,7 @@ let {username} = $props();
 	}
 		
 	nav.dropdown-menu section ul li{
+		position: relative;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
@@ -188,6 +185,13 @@ let {username} = $props();
 		top: var(--header-height);
 		bottom: var(--footer-height);
 	}
+
+	nav.dropdown-menu section ul li form :is(a,button)::after{
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+
 	nav.dropdown-menu section.header-routes{
 		display: flex;
 		align-items: center;
@@ -204,7 +208,6 @@ let {username} = $props();
 			}
 	}
 
-	
 	nav.dropdown-menu section ul li svg {
 		width: 20px;
 		aspect-ratio: 1;

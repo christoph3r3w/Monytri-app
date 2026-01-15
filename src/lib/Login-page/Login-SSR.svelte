@@ -11,11 +11,7 @@
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
 	let isLoading = $state(false);
-
-	$effect(() => {
-		// If the server returns an error (SvelteKit action/load), make sure the UI is interactive again.
-		if (data?.error) isLoading = false;
-	});
+	let form = $state()
 
 	function handleSubmit(e) {
 		isLoading = true;
@@ -35,7 +31,6 @@
 		}
 	}
 
-	let form = $state()
 	async function submitTrigger() {
 		if (form && !isLoading) {
 			if (form.requestSubmit) form.requestSubmit();
@@ -46,9 +41,10 @@
 	let phoneInputField = $state(); // DOM ref for the <input>
 	let phoneInput; // intl-tel-input instance
 
-	onMount(async () => {
+	$effect(async () => {
 	
-		if (typeof window === 'undefined') return;
+
+		if (typeof window === 'undefined' || $device.platform == 'Unknown' || $device.platform == 'macOS') return;
 		const factory = window.intlTelInput;
 		if (!phoneInputField || typeof factory !== 'function') {
 			console.warn('intlTelInput not available yet.');
@@ -86,7 +82,10 @@
 		});
 	});
 
-
+	$effect(() => {
+		// If the server returns an error.
+		if (data?.error) isLoading = false;
+	});
 </script>
 
 <svelte:head>
@@ -317,10 +316,9 @@
 		padding-left: 3% !important;
 	}
 
-	/* Overrides specific to the phone dropdown so user can choose country code */
+	/* Overrides specific to the phone dropdown */
 	:global(.iti__country-container) { z-index: 20; }
 	:global(.iti__country-list) { z-index: 9999; max-height: 240px; overflow-y: auto; }
-	/* Improve flag button affordance */
 	:global(.iti__flag-container) { cursor: pointer; }
 
 
@@ -334,10 +332,11 @@
 		justify-content: start;
 		gap: 20px;
 	}
+
 	:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(1))  {
-		/* flex: 1 1 auto; */
 		justify-self: center;
 		width: 100%;
+		max-width: 400px;
 	}
 
 	.to-register {

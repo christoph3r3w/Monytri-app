@@ -3,15 +3,11 @@
 </script>
 
 <article class="message-container">
-	<header class="message-header">
-		<!-- <h2>in progress</h2> -->
-	</header>
+	<header class="message-header"></header>
 	<section class="message-body">
-	<img src={`/shared-assests/team-brainstorming.png`} alt="team-brainstorming">
+		<img src={`/shared-assests/team-brainstorming.png`} alt="team-brainstorming">
 		<p>Oops! Looks like you've stumbled upon a page that's still under construction. Our team is working hard to bring this content to life. In the meantime, feel free to return to our home page.</p>
-		<a href="/" >
-			go home
-		</a>
+		<a href="/" >go home	</a>
 	</section>
 </article>
 
@@ -76,10 +72,10 @@
 	.message-body p {
 		text-align: center;
 		font-size: 1.2rem;
-		max-width: 50vw;
+		max-width: 50ch;
 	}
 
-	a{
+	.message-body a{
 		position: relative;
 		bottom: var(--body-padding);
 		right:0;
@@ -139,18 +135,19 @@
 
 		.message-body p {
 			width: 100%;
-			max-width: 100%;
+			max-width: 50ch;
 			margin-bottom: 0;
 			font-size: clamp(1rem, 2dvh, 1.2rem);
 			margin-bottom: min(10%,10px);
 		}
 
-		a {
+		.message-body a {
 			position: relative;
 			width: 100%;
+			max-width: 400px;
 			right: 0;
 			bottom: auto;
-			align-self: flex-end;
+			align-self: center;
 			margin-top: auto;
 			z-index: 0;
 		}
