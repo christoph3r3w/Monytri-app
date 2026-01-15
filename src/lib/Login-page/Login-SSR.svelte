@@ -42,7 +42,6 @@
 	let phoneInput; // intl-tel-input instance
 
 	$effect(async () => {
-	
 
 		if (typeof window === 'undefined' || $device.platform == 'Unknown' || $device.platform == 'macOS') return;
 		const factory = window.intlTelInput;
@@ -393,11 +392,24 @@
 			max-width: 300px;
 		}
 
+		:global(body:has(.login-form) .page-container .logo){
+			display: none;
+		}
 		:global(body:has(.login-form) .page-container .logo .logo-name){
 			font-size: clamp(1rem,2rem + 6dvw , 400px);
 			max-width: 400px;
 			letter-spacing: -2px;
 		}
 	}
+
+	@media
+		(-webkit-min-device-pixel-ratio: 3) and (display-mode: standalone),
+		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) and (display-mode: standalone),
+		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
+		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) {
+			:global(body:has(.login-form) .page-container .logo){
+				display: flex;
+			}
+		}
 
 </style>
