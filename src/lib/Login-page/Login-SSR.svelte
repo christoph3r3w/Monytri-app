@@ -43,7 +43,7 @@
 
 	$effect(async () => {
 
-		if (typeof window === 'undefined' || $device.platform == 'Unknown' || $device.platform == 'macOS') return;
+		if (typeof window === 'undefined' || $device.platform == 'Unknown' || $device.platform == 'macOS' || $device.platform == 'iOS') return;
 		const factory = window.intlTelInput;
 		if (!phoneInputField || typeof factory !== 'function') {
 			console.warn('intlTelInput not available yet.');
