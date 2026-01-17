@@ -1,10 +1,12 @@
 <script>
 	import {Balance_M,HomeArticles_M,Logo } from '$lib'
-	import {current} from '$lib/store.js';
+	import {current,isMobile} from '$lib/store.js';
 	import { goto } from '$app/navigation';
 
 	let {data} = $props();
 	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;	
+	// console.log(device);
+	
 </script>
 
 <svelte:head>
@@ -12,33 +14,43 @@
 </svelte:head>
 
 <section class="home-wrapper">
-	<!-- Top section of the home page on mobile. -->
-	<HomeArticles_M {blogs} {podcasts}/>	
-	<div class="button-conatiner-dev">
-		{#if !isAuthenticated }
-			<button onclick={() => goto("/education")}>education</button>
-			<button onclick={() => goto("/share")}>share</button>
-			<button onclick={() => goto("/install")}>install app</button>
-		{:else}
-			<button onclick={() => goto("/education")}>education</button>
-			<button onclick={() => goto("/stock-overview")}>Stock overview</button>
-			<button onclick={() => goto("/gift")}>send a gift</button>
-			<button onclick={() => goto("/transactions")}>Transactions</button>
-			<button data='util' onclick={() => goto("/install")}>install app</button>
-			<button data='util' onclick={() => goto("/share")}>share</button>
-			{#if dev}
-				<button data='util' onclick={() => goto("/request")}>request</button>
-				<button data='util' onclick={() => goto("/settings")}>settings</button>
-				<button data='util' onclick={() => goto("/learn-more")}>learn more</button>
-				<button data='util' onclick={() => goto("/gift-success")}>Gift success</button>
-			{/if}
-			<form action="/logout" method="post" >
-	 		    <button type="submit">Logout</button>
-			</form>
-		{/if}
 
-	</div>
-	<Logo name={false} />
+{#key $isMobile}
+	{#if $isMobile}	
+		{#await blogs then blogs}
+			<HomeArticles_M {blogs} {podcasts}/>	
+		{:catch error}
+			<p>Error loading blogs: {error.message}</p>
+		{/await}
+	{:else}
+		<div class="button-conatiner-dev">
+			{#if !isAuthenticated }
+				<button onclick={() => goto("/education")}>education</button>
+				<button onclick={() => goto("/share")}>share</button>
+				<button onclick={() => goto("/install")}>install app</button>
+			{:else}
+				<button onclick={() => goto("/education")}>education</button>
+				<button onclick={() => goto("/stock-overview")}>Stock overview</button>
+				<button onclick={() => goto("/gift")}>send a gift</button>
+				<button onclick={() => goto("/transactions")}>Transactions</button>
+				<button data='util' onclick={() => goto("/install")}>install app</button>
+				<button data='util' onclick={() => goto("/share")}>share</button>
+				{#if dev}
+					<button data='util' onclick={() => goto("/request")}>request</button>
+					<button data='util' onclick={() => goto("/settings")}>settings</button>
+					<button data='util' onclick={() => goto("/learn-more")}>learn more</button>
+					<button data='util' onclick={() => goto("/gift-success")}>Gift success</button>
+				{/if}
+				<form action="/logout" method="post" >
+					<button type="submit">Logout</button>
+				</form>
+			{/if}
+
+		</div>
+		<Logo name={false} />
+	{/if}
+{/key}
+
 	<div class="analitycs" style="display: {dev ? 'block' : 'none'}">
 		<p>
 		Platform: {device.platform}<br>

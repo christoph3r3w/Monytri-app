@@ -14,26 +14,30 @@ export async function load() {
     let videoBlogs = null;
 
     try {
-        posts = await databases.listDocuments(databaseId,blogPostId,[
-            Query.equal('isPublished', true),
-            Query.orderAsc('$createdAt'),
-            Query.limit(3),
-            Query.select(['title','subtitle','link','bannerImage.*','author.*','category.*','isPublished'])
-        ]);
+        posts = async () => {
+            return await databases.listDocuments(databaseId,blogPostId,[
+                Query.equal('isPublished', true),
+                Query.orderAsc('$createdAt'),
+                Query.limit(3),
+                Query.select(['title','subtitle','link','bannerImage.*','author.*','category.*','isPublished'])
+            ]);
+        }
         
-        podcasts = await databases.listDocuments(databaseId,podcastId,[
+        podcasts = async () =>{ 
+            return await databases.listDocuments(databaseId,podcastId,[
             Query.orderDesc('releaseDate'),
             Query.limit(3),
             Query.select(['title','episodeNumber','link','bannerImage.*','host.*','category.*','guest'])
         ]);
+        }
 
     } catch (err) {
         console.error('Appwrite client error:', err);
     }
     
     return {
-        blogs: posts.documents ?? [], 
-        podcasts: podcasts.documents ?? [],
+        blogs: (await posts()).documents ?? [], 
+        podcasts: (await podcasts()).documents ?? [],
     };
 }
 

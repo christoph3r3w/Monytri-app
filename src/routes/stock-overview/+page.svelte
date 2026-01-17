@@ -6,6 +6,7 @@
 	let {stockData,device} = data;
 	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = stockData;	
 	
+	
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
 		return new Intl.NumberFormat('en-IE', {

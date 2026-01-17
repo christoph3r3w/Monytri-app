@@ -18,7 +18,7 @@ export const load = async ({ locals, url }) => {
         throw redirect(303, '/');
     }
 
-    const u = locals.user;
+    const u = (await locals.user);
     const ia = !!u;
     const safeUser = u ? { email: u.email, name: u.name } : null;
     const dev = u ?.prefs?.dev === 'trueDev' ? true : false;
@@ -42,9 +42,7 @@ export const load = async ({ locals, url }) => {
 	}
 
     return {
-        data: !ia
-            ? null
-            : {
+        data: !ia? null : {
                 Invested: balanceString(investedRaw),
                 Gifted: balanceString(giftedRaw)
               },

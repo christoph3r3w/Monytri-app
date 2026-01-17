@@ -17,24 +17,32 @@ export async function load(x) {
 	
 
 	try {
-		const newAPost = await databases.listDocuments(announcementsDBId, announcementsPostId);
-		announcementsPost = (newAPost.documents || []).map(x => {
-			x.uploadDate = new Date(x.uploadDate).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
-			return x;
-		});
+		// const newAPost = await databases.listDocuments(announcementsDBId, announcementsPostId);
+		// announcementsPost = (newAPost.documents || []).map(x => {
+		// 	x.uploadDate = new Date(x.uploadDate).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+		// 	return x;
+		// });
+
+		const newAPost = async () => {
+			const result = await databases.listDocuments(announcementsDBId, announcementsPostId);
+			return (result.documents || []).map(x => {
+				x.uploadDate = new Date(x.uploadDate).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });				
+				return x;
+			});
+		}
+		announcementsPost = await newAPost();
 
 
-		if(isAuthenticated){
-			const brokersData = await databases.listDocuments(brokerDBId, brokerProfileId);
+		const brokersData = await databases.listDocuments(brokerDBId, brokerProfileId);
 			brokersProfile = (brokersData.documents || []).map(x => {
 				x.balance = rand();
 				return x;
 			});
-		}
+
 	} catch (err) {
 		console.error('Appwrite client error:', err);
 	}
-
+	
 
 	let formData = {
 		benefactor: null,
@@ -58,7 +66,7 @@ export async function load(x) {
 	let announcements = announcementsPost || [
 		{
 			bannerImage: {src:`./announcment-c/Announcement money.png`,bgColor:"#FFF3E0",bgPosition:"contain"},
-			uploadDate: "1 Sep 2025",
+			uploadDate: "3 Sep 2025",
 			title: "Sign up with BUX and get €100 free for you to invest!",
 			partner: "Bux",
 			link: "/blog"
@@ -79,14 +87,14 @@ export async function load(x) {
 		},
 		{
 			bannerImage: {src:`./home-page/homescreen-team.png`,bgColor:"white",bgPosition:"cover"},
-			uploadDate: "Aug 20, 2023",
+			uploadDate: "Aug 29, 2023",
 			title: "Are you saving enough?",
 			partner: "Monytri",
 			link: "/blog"
 		},
 		{
 			bannerImage: {src:`./home-page/homescreen-team.png`,bgColor:"#E3F2FD",bgPosition:"cover"},
-			uploadDate: "Aug 20, 2023",
+			uploadDate: "Aug 22, 2023",
 			title: "Are you saving enough?",
 			partner: "Monytri",
 			link: "/blog"

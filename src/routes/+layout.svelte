@@ -130,11 +130,13 @@
 		</main>
 	{#if !(noFooterPage)}
 		<footer>
+		{#key $isMobile, $current}	
 			{#if $isMobile}
-				<Footer_M {current} d={$device}/>
+				<Footer_M current={$current} d={$device}/>
 			{:else}
-				<Footer {current} d={$device}/>
+				<Footer current={$current} d={$device}/>
 			{/if}
+		{/key}
 		</footer>
 	{/if}
 </section>
