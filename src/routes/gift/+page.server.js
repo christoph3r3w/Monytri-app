@@ -3,9 +3,21 @@ import {current, isMobile} from '$lib/store.js';
 
 // Gift page server logic (not in use currently)
 
+// Step validation state
+let stepValidation = {
+	1: false,
+	2: false,
+	3: false,
+	4: false,
+	5: true, // Review step is always valid
+};
+
 // State management
 let currentStep = 1;
-let totalSteps = 3;
+let totalSteps = parseInt(Object.keys(stepValidation).length);
+
+console.log(totalSteps);
+
 
 // Form data structure
 let formData = {
@@ -25,14 +37,7 @@ let formData = {
 
 formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
 
-// Step validation state
-let stepValidation = {
-	1: false,
-	2: false,
-	3: false,
-	4: false,
-	5: true, // Review step is always valid
-};
+
 
 // Use provided recipients or fallback to defaults
 let recipients = [
@@ -248,3 +253,10 @@ function resetFormDataEffect() {
 	};
 }
 // ... end of file ...
+
+export async function load() {
+	return {
+		recipients,	
+		formData
+	}
+}

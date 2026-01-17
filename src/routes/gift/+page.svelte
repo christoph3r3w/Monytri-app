@@ -16,121 +16,23 @@
 	import {goto} from '$app/navigation';
 	import {fade,fly} from 'svelte/transition';
 	import {onMount} from 'svelte';	
-
-	// Form data structure
-	let formData = $state({
-		recipient: null,
-		cardDesign: 'default',
-		Purpose: null,
-		DeliveryDate: null,
-		PaymentMethod: null,
-		amount: null,
-		message: '',
-		searchQuery: '',
-		errors: {},
-		isLoading: false,
-		date: new Date(),
-				get currentDate() {
-			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
-		}
-	});
 	
-	// Use provided recipients or fallback to defaults
-	let recipients = $state([
-		{
-		id: 1,
-		name: 'David Dick',
-		email: 'david.dick@artgallery.com',
-		lastSent: '2 days ago',
-		profilePic: './generic.png',
-		linkedCard: 'artlover-card',
-		amountMax: 500,
-		amountMin: 25,
-		},
-		{
-		id: 2,
-		name: 'Chiara Liqui Lung',
-		email: 'chiara.chef@culinaryarts.it',
-		lastSent: '1 week ago',
-		profilePic: '/generic 2.png',
-		linkedCard: 'chef-premium',
-		amountMax: 300,
-		amountMin: 15,
-		},
-		{
-		id: 3,
-		name: 'Christopher Willems',
-		email: 'chris.crypto@blockchain.tech',
-		lastSent: '3 days ago',
-		profilePic: '',
-		linkedCard: null,
-		amountMax: 10000,
-		amountMin: 100,
-		},
-		{
-		id: 4,
-		name: 'Jamila Jones',
-		email: 'jamila.books@literature.org',
-		lastSent: '5 days ago',
-		profilePic: '/generic.png',
-		linkedCard: 'bookworm-card',
-		amountMax: 200,
-		amountMin: 10,
-		},
-		{
-		id: 5,
-		name: 'Karnis Jansen',
-		email: 'karnis.music@symphony.nl',
-		lastSent: '2 weeks ago',
-		profilePic: '',
-		linkedCard: 'musician-pro',
-		amountMax: 750,
-		amountMin: 20,
-		},
-		{
-		id: 7,
-		name: 'Maria Martina',
-		email: 'maria.fitness@healthclub.es',
-		lastSent: '1 day ago',
-		profilePic: '/generic 2.png',
-		linkedCard: null,
-		amountMax: 150,
-		amountMin: 5,
-		},
-		{
-		id: 8,
-		name: 'Amy Frost',
-		email: 'amy.travel@wanderlust.com',
-		lastSent: '15 Aug 2024',
-		profilePic: '/generic 2.png',
-		linkedCard: null,
-		amountMax: 2000,
-		amountMin: 50,
-		},
-		{
-		id: 9,
-		name: 'Jeremy Clarkson',
-		email: 'jeremy.cars@topgear.uk',
-		lastSent: '15 Aug 2024',
-		profilePic: '/generic 2.png',
-		linkedCard: null,
-		amountMax: 5000,
-		amountMin: 100,
-		}
-	]);
+	let {data} = $props();
+	let {recipients, formData} = data;
 
-	// Step validation state
-	let stepValidation = $state({
-		1: false,
-		2: false,
-		3: false,
-		4: false,
-		5: true, // Review step is always valid
-	});
-  
 	// State management
+	let stepValidation = $state(createStepValidation(5));
 	let currentStep = $state(1);
 	let totalSteps = $derived(Object.keys(stepValidation).length);
+	
+	// Step validation state
+	function createStepValidation(totalSteps) {
+		let steps = {};
+		for (let i = 1; i <= totalSteps; i++) {
+			steps[i] = i === totalSteps; 
+		}
+		return steps;
+	}
 	
 	// Progress tracking
 	let currentProgress = $state(0);
@@ -492,47 +394,6 @@
 		margin-bottom:10% ;
 	}
 
-	/* .skip-button,.back-button {
-		position: relative;
-		width: 100%;
-		padding: 0;
-		height: fit-content;
-		svg path{
-			stroke: var(--black);
-			fill: var(--black);
-		}		
-	}	 */
-
-	/* @media (width <= 930px) {
-		:global(.transfer-wizard) {
-			height: calc(100dvh - var(--footer-height));
-			background-color: var(--white);	
-		}
-
-		.left-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 1 / span 1;
-			padding: 0 !important;
-		}
-
-		.step-header .back-button{
-			position: relative !important;
-			top: 0;
-			left: 0;
-		}
-
-		.right-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / span 1;
-			padding: 0 !important;
-		}
-
-		.step-container {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / -1;
-		}
-	}
-	 */
 	@media 
 	(-webkit-min-device-pixel-ratio: 3),
 	screen and (device-width < 900px) and (width <= 900px) and (orientation: portrait) , 

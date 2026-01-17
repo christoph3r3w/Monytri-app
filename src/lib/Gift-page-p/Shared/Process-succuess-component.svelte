@@ -8,7 +8,6 @@
 		date: new Date(),
 	});
 
-	// Derive the current date instead of mutating formData
 	let currentDateFormatted = $derived(formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: '2-digit', hour: 'numeric', minute: 'numeric',hour12: true }));
 
 </script>
@@ -16,7 +15,7 @@
 	{#if $isMobile}
 		<section class="success-message mobile"  transition:fade>
 			<div class="success-text">
-				<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).png" alt="becoming rich ">
+				<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).png" width="170" height="250" alt="becoming rich ">
 				<h2>Payment complete</h2>
 				<p>{formData.currentDate}</p>
 				<p>If you need to view any information about any of your transactions, head over to your transaction history.</p>
@@ -38,7 +37,7 @@
 		</section>
 		
 		<section class="success-message"  transition:fade>
-			<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).png" alt="becoming rich ">
+			<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).png" width="170" height="250" alt="becoming rich ">
 			<p>If you need to view any information about any of your transactions, head over to your transaction history.</p>
 			<a href="/">Back to Homepage</a>
 			<a href="/gift">Send another one</a>
@@ -114,6 +113,10 @@
 		gap: 24px;
 		padding-top: 3rem;
 
+		@starting-style {
+			height: calc(100cqh - var(--header-height) - var(--footer-height));
+		}
+
 	}
 		
 	.success-message img {
@@ -121,6 +124,10 @@
 		object-position:top center;
 		object-fit: cover;
 		height: auto;
+
+		@starting-style {
+			height: 200px;
+		}	
 	}
 	
 	.success-message p {
