@@ -116,7 +116,16 @@
 
 		<form class="login-form" id="login-form" method="post" action="/login" onsubmit={handleSubmit} bind:this={form} >
 			<label for="email">Email</label>
-			<input name="email" type="email" placeholder="Email" id="email" required autocomplete="email" disabled={isLoading} />
+			<input 
+				id="email" 
+				type="email" 
+				name="email" 
+				value="guest@mt.com"
+				placeholder="Email" 
+				required 
+				autocomplete="email"
+				 disabled={isLoading} 
+			/>
 			<label for="phone">Phone</label>
 			<input 
 				id="phone"
