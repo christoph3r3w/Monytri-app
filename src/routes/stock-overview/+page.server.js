@@ -144,9 +144,7 @@ export async function load(x) {
 
 	portfolio.value = totalBalance + profitLoss;
 	portfolio.profitLoss = profitLoss;
-	portfolio.profitLossPercentage = +((portfolio.profitLoss / (portfolio.value - portfolio.profitLoss)) * 100).toFixed(2);
-	// console.log(data.data);
-	
+	portfolio.profitLossPercentage = +((portfolio.profitLoss / (portfolio.value - portfolio.profitLoss)) * 100).toFixed(2);	
 
     return {
 		stockData: {  

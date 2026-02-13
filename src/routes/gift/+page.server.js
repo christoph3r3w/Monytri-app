@@ -16,9 +16,6 @@ let stepValidation = {
 let currentStep = 1;
 let totalSteps = parseInt(Object.keys(stepValidation).length);
 
-console.log(totalSteps);
-
-
 // Form data structure
 let formData = {
 	recipient: null,
@@ -36,8 +33,6 @@ let formData = {
 };
 
 formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
-
-
 
 // Use provided recipients or fallback to defaults
 let recipients = [

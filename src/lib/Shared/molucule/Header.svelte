@@ -21,7 +21,7 @@
 			onMobile = $isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true';
 			isDesktop = $isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false';
 		} else {
-			console.log('waiting for pageload');
+			console.info('waiting for pageload');
 		}
 	}
 	

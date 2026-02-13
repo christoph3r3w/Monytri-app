@@ -217,6 +217,7 @@
 		user-select: none;
 		cursor:default;
 		pointer-events: none;
+		overflow: visible;
 	}
 
 	:global(body:has(.login-form) .page-container .logo picture img){

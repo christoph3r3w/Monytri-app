@@ -34,8 +34,6 @@ export const load = ({ fetch, params }) => {
 
 	// Filter the data based on the slug parameter
 	const filteredData = transactionData.filter(tx => tx.slug === params.slug)[0];
-	// console.log('Filtered transaction:', filteredData);
-
 
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;

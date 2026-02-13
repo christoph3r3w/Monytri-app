@@ -19,7 +19,6 @@
 		color: var(--general-text-color);
 		overflow: hidden;
 		transition: padding .8s ease-out;
-			/* outline: rgb(25, 0, 255) solid; */
 
 	}
 	
@@ -51,9 +50,4 @@
 		transition: .4s ease-out;
 
 	}
-
-	/* small logo test aniamtion  */
-	
-
-
 </style>
