@@ -46,7 +46,7 @@
         height: calc(100cqh - var(--header-height) + var(--progressbar-height) + 10px);
         max-height: calc(100lvh + var(--footer-height) + var(--progressbar-height));
         background-color: var(--general-background-color);
-        overflow-y: auto;
+        overflow-y:hidden;
         container-type: normal;
         container-name: inbox-container;
     }
@@ -79,6 +79,10 @@
 	screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait) , 
 	screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
 	{
+
+        :global( main:has(.inbox-empty-text)){
+            overflow: hidden;
+        }
 
         :global( .page-container:has(.inbox-empty-text) .right-step){
             justify-content: center;
