@@ -1,15 +1,5 @@
 <script>
-	import {current,isMobile} from '$lib/store.js';
 	import {Menu,InProgress_S} from '$lib'
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-
-	onMount(() => {
-		if ($current && !$isMobile) {
-			goto('/');
-		} 	
-	});
-
 </script>
 
 <InProgress_S />
@@ -24,7 +14,7 @@
 		display: none;
 	}
 
-	.settings-container {
+	/* .settings-container {
 		grid-column: 1 / -1;
 		grid-row: 1 / span 1;
 		display: flex;
@@ -33,5 +23,5 @@
 		width: 100%;
 		max-height: calc(120dvh - var(--footer-height)) ;
 		z-index: 5;
-	}
+	} */
 </style>

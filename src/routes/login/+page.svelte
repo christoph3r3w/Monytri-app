@@ -45,6 +45,10 @@
 		container-name: transfer-wizard;
 	}
 
+	:global(body:has(.login-step-container.login-step-container)){
+		overflow: hidden;
+	}
+
 	:global(main:has(.login-step-container) .page-container){
 		background-color: transparent;
 	}

@@ -38,6 +38,9 @@ export function updateCurrentFromPath() {
         case '/settings':
             current.set('settings');
             break;
+        case '/inbox':
+            current.set('inbox');
+            break;
         case '/profile':
             current.set('profile');
             break;

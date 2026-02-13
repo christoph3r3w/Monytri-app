@@ -147,7 +147,7 @@ a,button {
 	/* Modern browsers with `scrollbar-*` support */
 	@supports (scrollbar-width: auto) {
 		& {
-			scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track);
+			/* scrollbar-color: var(--scrollbar-color-thumb) var(--scrollbar-color-track); */
 			scrollbar-width: none;
 		}
 		

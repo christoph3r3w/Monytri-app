@@ -5,7 +5,6 @@
 
 	let {data} = $props();
 	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;	
-	// console.log(device);
 	
 </script>
 
@@ -38,6 +37,7 @@
 				{#if dev}
 					<button data='util' onclick={() => goto("/request")}>request</button>
 					<button data='util' onclick={() => goto("/settings")}>settings</button>
+					<button data='util' onclick={() => goto("/inbox")}>inbox</button>
 					<button data='util' onclick={() => goto("/learn-more")}>learn more</button>
 					<button data='util' onclick={() => goto("/gift-success")}>Gift success</button>
 				{/if}

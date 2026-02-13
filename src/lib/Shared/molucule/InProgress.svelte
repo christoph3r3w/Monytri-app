@@ -1,5 +1,16 @@
 <script>
 	import { base } from '$app/paths';
+	import {current,isMobile} from '$lib/store.js';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+
+	onMount(() => {
+		setTimeout(() => {
+			if ($current && !$isMobile) {
+				goto('/');
+			} 	
+		}, 1000);
+	});
 </script>
 
 <article class="message-container">
