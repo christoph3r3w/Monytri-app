@@ -18,13 +18,33 @@
 	import {onMount} from 'svelte';	
 	
 	let {data} = $props();
-	let {recipients, formData} = data;
+	let {recipients} = data;
 
 	// State management
-	let stepValidation = $state(createStepValidation(5));
+	const stepValidation = $state(createStepValidation(5));
 	let currentStep = $state(1);
-	let totalSteps = $derived(Object.keys(stepValidation).length);
-	
+	const totalSteps = $derived(Object.keys(stepValidation).length);
+
+	// Form data structure
+	let formData = $state({
+		recipient: null,
+		cardDesign: 'default',
+		Purpose: null,
+		DeliveryDate: null,
+		PaymentMethod: null,
+		amount: null,
+		message: '',
+		searchQuery: '',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+				get currentDate() {
+			return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+		}
+
+	})
+
+
 	// Step validation state
 	function createStepValidation(totalSteps) {
 		let steps = {};
@@ -199,9 +219,7 @@
 		}
 	}
 
-	$effect(() => {
-	
-		// Reset form data when the component is destroyed
+	onMount(() => {
 		return () => {
 			formData.recipient = null;
 			formData.amount = null;
@@ -211,6 +229,19 @@
 			formData.amount = null;
 			formData.message = '';
 		};
+	});
+
+	$effect(() => {
+		// Reset form data when the component is destroyed
+		// return () => {
+		// 	formData.recipient = null;
+		// 	formData.amount = null;
+		// 	formData.cardDesign = 'default';
+		// 	formData.Purpose = null;
+		// 	formData.DeliveryDate = null;
+		// 	formData.amount = null;
+		// 	formData.message = '';
+		// };
 	});
 </script>
 

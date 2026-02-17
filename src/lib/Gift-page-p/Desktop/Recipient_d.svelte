@@ -10,17 +10,28 @@
 			recipient.email.toLowerCase().includes(formData.searchQuery.toLowerCase())
 		)
 		: recipients
-	);
+	);	
+
+	$effect(() => {	
+		// Whenever the search query changes, we want to update the filtered recipients list.
+		formData.searchQuery;
+		filteredRecipients = formData.searchQuery 
+			? recipients.filter(recipient => 
+				recipient.name.toLowerCase().includes(formData.searchQuery.toLowerCase()) ||
+				recipient.email.toLowerCase().includes(formData.searchQuery.toLowerCase())
+			)
+			: recipients;
+	});
 </script>
 
-{#snippet recipientsList1()}
+<!-- {#snippet recipientsList1()}
 	<ul class="recipients-list">
 		{#each filteredRecipients as recipient}
 			<li class="recipient-item {formData.recipient?.id === recipient.id ? 'selected' : ''}">
 				<button
 					type="button"
 					class="recipient-button"
-					onclick={() => selectRecipient(recipient)}
+					onclick={() => selected(recipient)}
 				>
 					<div class="recipient-avatar">
 						{recipient.name.charAt(0).toUpperCase()}
@@ -46,7 +57,7 @@
 			<p>No recipients found matching your search.</p>
 		</div>
 	{/if}
-{/snippet}
+{/snippet} -->
 
 {#snippet recipientsList2()}
 	<!-- check if recent title is needed  -->
@@ -107,9 +118,7 @@
 		margin-bottom: 3%;
 		font-size: clamp(1rem,10vw ,1.3rem);
 		margin-left: calc(var(--moveRight) + 0.125rem);
-		/* display: none; */
 	}
-
 
 	.recipients-list{ 
 		flex: 1 1 70%;

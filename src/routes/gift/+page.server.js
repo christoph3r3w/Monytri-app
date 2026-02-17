@@ -3,8 +3,11 @@ import {current, isMobile} from '$lib/store.js';
 
 // Gift page server logic (not in use currently)
 
+let formData;
+// formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+
 // Step validation state
-let stepValidation = {
+const stepValidation = {
 	1: false,
 	2: false,
 	3: false,
@@ -14,25 +17,8 @@ let stepValidation = {
 
 // State management
 let currentStep = 1;
-let totalSteps = parseInt(Object.keys(stepValidation).length);
+const totalSteps = parseInt(Object.keys(stepValidation).length);
 
-// Form data structure
-let formData = {
-	recipient: null,
-	cardDesign: 'default',
-	Purpose: null,
-	DeliveryDate: null,
-	PaymentMethod: null,
-	amount: null,
-	message: '',
-	searchQuery: '',
-	errors: {},
-	isLoading: false,
-	date: new Date(),
-	currentDate: null
-};
-
-formData.currentDate = formData.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
 
 // Use provided recipients or fallback to defaults
 let recipients = [
