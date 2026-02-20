@@ -19,7 +19,6 @@
 		color: var(--general-text-color);
 		overflow: hidden;
 		transition: padding .8s ease-out;
-
 	}
 	
 	picture {
