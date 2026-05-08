@@ -97,7 +97,7 @@ let recipients = [
 	name: 'Jeremy Clarkson',
 	email: 'jeremy.cars@topgear.uk',
 	lastSent: '15 Aug 2024',
-	profilePic: '/generic 2.png',
+	profilePic: '',
 	linkedCard: null,
 	amountMax: 10,
 	amountMin: 0,

@@ -32,14 +32,14 @@ export async function load() {
 		name: 'David Dick',
 		email: 'david.dick@artgallery.com',
 		lastSent: '2 days ago',
-		profilePic: '/generic.png'
+		profilePic: ''
 		},
 		{
 		id: 2,
 		name: 'Chiara Liqui Lung',
 		email: 'chiara.chef@culinaryarts.it',
 		lastSent: '1 week ago',
-		profilePic: '/generic 2.png'
+		profilePic: ''
 		},
 		{
 		id: 3,
@@ -53,7 +53,7 @@ export async function load() {
 		name: 'Jamila Jones',
 		email: 'jamila.books@literature.org',
 		lastSent: '5 days ago',
-		profilePic: '/generic.png'
+		profilePic: ''
 		},
 		{
 		id: 5,
@@ -67,14 +67,14 @@ export async function load() {
 		name: 'Maria Martina',
 		email: 'maria.fitness@healthclub.es',
 		lastSent: '1 day ago',
-		profilePic: '/generic 2.png'
+		profilePic: ''
 		},
 		{
 		id: 8,
 		name: 'Amy Frost',
 		email: 'amy.travel@wanderlust.com',
 		lastSent: '15 Aug 2024',
-		profilePic: '/generic 2.png'
+		profilePic: ''
 		},
 		{
 		id: 9,

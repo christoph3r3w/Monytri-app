@@ -19,7 +19,7 @@
 </script>
 
 {#snippet a()}
-	<PortfolioDetail {portfolio} {averageBalance} {formatCurrency}/>
+	<PortfolioDetail {portfolio} {averageBalance} {formatCurrency} style={2}/>
 	
 	<div class="button-container-calculator">
 
@@ -236,7 +236,6 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		width: clamp(1rem, 5rem + 5svw , 4rem);
 		aspect-ratio: 1;
 		transition:bottom .4s linear(0, -0.004 4.3%, -0.018 8.5%, -0.115 25.2%, -0.116 29.6%, -0.092 33.4%, -0.014 38.3%, 0.119 42.8%, 0.302 46.8%, 0.811 55.5%, 0.958 59.5%, 1.057 63.9%, 1.107 68.5%, 1.118 73.7%, 1.099 78.5%, 1.017 91.7%, 1);
-
 	}
 
 	@media not (display-mode: standalone)  {
@@ -319,7 +318,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		:global(body.isMobile.ios-device) :global(.stockOverview-container .mobile-step){
 			padding-bottom: calc( var(--footer-height) + var(--safe-area-inset-bottom)) ;
 			/* max-height: calc(100% - var(--footer-height) * 1.5 + var(--safe-area-inset-bottom)) ; */
-			padding-bottom: calc(var(--footer-height) * 3 + var(--safe-area-inset-bottom)) ;
+			padding-bottom: calc(var(--footer-height) * .5 + var(--safe-area-inset-bottom)) ;
 		}
 	}
 </style>

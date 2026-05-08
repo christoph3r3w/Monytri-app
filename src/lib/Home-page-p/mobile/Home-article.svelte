@@ -369,6 +369,11 @@
 			grid-auto-flow: column;
 			grid-auto-columns: 200px !important;
 		}
+
+		.recent-blogs{
+				margin-bottom: 0;
+				
+			}
 	}
 		
 	@media (prefers-color-scheme: dark){

@@ -197,33 +197,28 @@ let recentBlog = blogs || [
 
 <style>
 
+		.edu-articles{
+			--body-padding: 5%;
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			justify-content: space-between;
+			height: fit-content;
+			overflow-y: auto;
+		}
+
 		.article-container ul{
 			display: grid;
 			grid-auto-columns:min-content;
 			gap: 1rem;
-
 			overflow: hidden;
-		}
-
-		.edu-articles{
-			overflow-x: hidden;
-			overflow-y: auto;
 		}
 
 		.edu-articles article{
 			margin-bottom: 1.5dvh;
 		}
 		
-		.edu-articles{
-				--body-padding: 5%;
-				position: relative;
-				display: flex;
-				flex-direction: column;
-				width: 100%;
-				justify-content: space-between;
-				height: fit-content;
-				overflow-y: auto;
-		}
 
 		.invest-tips{
 			container-name:invest-tips; 
@@ -507,6 +502,10 @@ let recentBlog = blogs || [
 	}
 
 	@media (width <= 800px) {
+		.edu-articles{
+			padding-bottom: var(--footer-height);
+		}
+
 		.article-container ul{
 			grid-auto-flow: column;
 			grid-auto-columns: clamp(30%, 58%, 300px);

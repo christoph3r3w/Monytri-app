@@ -77,8 +77,10 @@
 		width: 100%;
 		min-height: calc(100cqh - var(--header-height));
 		max-height: calc(120dvh - var(--footer-height)) ;
-		padding-bottom: calc(var(--header-height) + env(safe-area-inset-bottom));
+		padding-bottom: calc(var(--footer-height) + env(safe-area-inset-bottom));
 		z-index: 2;
+		overscroll-behavior: contain;
+		background-color:green;
 	}
 
 	.button-conatiner-dev{
@@ -224,6 +226,20 @@
 		}
 	}	
 }
+
+	@media 
+		(-webkit-min-device-pixel-ratio: 3) and (display-mode: standalone),
+		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) and (display-mode: standalone),
+		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
+		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) 
+		{
+
+		:global(body:has(.home-wrapper) main){
+			contain:content layout strict;
+		}
+		
+		}
+
 
 
 

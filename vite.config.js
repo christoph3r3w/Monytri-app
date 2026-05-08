@@ -16,6 +16,9 @@ export default defineConfig({
 				'**/ios/**',
 				'**/android/**'
 			]
+		},
+		hmr:{
+			overlay:false
 		}
 	  },
 });
