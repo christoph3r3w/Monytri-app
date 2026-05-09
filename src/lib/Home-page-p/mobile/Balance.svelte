@@ -325,7 +325,7 @@
 			align-items: center;
 			padding: 0;
 			width: 100%;
-			gap: calc(var(--margin-top) + 5dvh);
+			gap: calc(var(--margin-top) + 6dvh);
 			margin-top: var(--margin-top);
 			align-self: end;
 			transform-origin: bottom;

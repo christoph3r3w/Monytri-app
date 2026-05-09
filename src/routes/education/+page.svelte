@@ -67,7 +67,6 @@
 				max-height: fit-content;
 				overflow: hidden;
 				contain:content layout ;
-
 			}
 
 			:global(main){

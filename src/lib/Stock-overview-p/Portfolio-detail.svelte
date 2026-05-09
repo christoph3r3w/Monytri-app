@@ -146,6 +146,7 @@
 	justify-content: space-between;
 	gap: 1rem;
 	margin-block: 1rem 1rem;
+	padding-bottom: 1rem;
 }
 
 .portfolio-details span{
@@ -192,7 +193,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 	}
 
 	.portfolio-overview{
-		padding-block: 5% 8%;
+		padding-block: 5% 2cqh;
 		padding-inline: 0;
 		width: 100%;
 		background-color: transparent;
@@ -204,6 +205,7 @@ screen and (device-height <= 900px) and (height <= 900px) and (orientation: land
 		width: stretch;
 		max-width: 700px;
 		align-self: center;
+		border-bottom: solid 3px var(--general-background-color-secondary);
 	}
 
 	@media (width > 700px){

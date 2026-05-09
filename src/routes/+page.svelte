@@ -79,8 +79,6 @@
 		max-height: calc(120dvh - var(--footer-height)) ;
 		padding-bottom: calc(var(--footer-height) + env(safe-area-inset-bottom));
 		z-index: 2;
-		overscroll-behavior: contain;
-		background-color:green;
 	}
 
 	.button-conatiner-dev{
@@ -233,10 +231,10 @@
 		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait),
 		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape) 
 		{
-
-		:global(body:has(.home-wrapper) main){
-			contain:content layout strict;
-		}
+			:global(body:has(.home-wrapper) main){
+				contain:content layout strict;
+				overscroll-behavior: contain;
+			}
 		
 		}
 

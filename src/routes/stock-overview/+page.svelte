@@ -146,7 +146,7 @@
 	right:0;
 	width:100%;
 	padding: clamp(1rem,1vw,1rem);
-	background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 50% );
+	background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 30% );
 	
 	color: var(--general-text-color);
 
@@ -163,13 +163,9 @@
 		}
 
 		&:is(:hover, :focus,:focus-within){
-			background-color: color-mix(in srgb, var(--primary-green-500) , rgba(255, 255, 255, 0.295) 50% );
 			background-color: var(--primary-green-500);
-
-			transition: background-color 0.3s ease;
-			color: var(--general-text-color);
 			color: var(--white);
-
+			transition: background-color 0.3s ease;
 		}
 }
 

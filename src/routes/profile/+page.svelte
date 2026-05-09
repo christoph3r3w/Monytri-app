@@ -42,9 +42,9 @@
 		{/if}
 
 		<div class="button-conatiner-dev">
-		<form action="/logout" method="post" >
-			<button type="submit">Logout</button>
-		</form>
+			<form action="/logout" method="post" >
+				<button type="submit">Logout</button>
+			</form>
 			<button onclick={() => goto("/share")}>share</button>
 			<button onclick={() => goto("/install")}>install app</button>
 			<button onclick={() => goto('/')}>Go home</button>
@@ -87,8 +87,8 @@
 		aspect-ratio: 1;
 		margin-right: 1rem;
 		margin-block: 1rem;
-		padding-right: .9%;
-		padding-bottom: 1%;
+		padding-right: .2%;
+		padding-bottom: 5%;
 		background-color: var(--primary-darkgreen-550);
 		color: white;
 		font-size: clamp(1rem, 1.5rem + 6vw, 3.4rem);
@@ -110,10 +110,10 @@
 		flex-direction: row;
 		flex-wrap: wrap;
 		align-items: start;
-		gap: 2rem;
+		gap: 1rem;
 		width: fit-content;
 		height: fit-content;
-		margin-block: 2%;
+		margin-block: 1%;
 	}
 	
 	.button-conatiner-dev :is(a,button) {

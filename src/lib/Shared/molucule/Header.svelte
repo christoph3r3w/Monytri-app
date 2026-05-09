@@ -1,6 +1,7 @@
 <script>
 	import {goto} from '$app/navigation';
 	import {fade,fly} from 'svelte/transition';
+	import { elasticOut,backInOut,linear,quartIn } from 'svelte/easing';
 
 	import {Logo,Balance_M} from '$lib'
 	import {current,isMobile,menuOpen} from '$lib/store.js'
@@ -26,17 +27,31 @@
 	}
 	
 	function iconTask (){
-        if ($current === 'home') {
-			// Activating search
-        } else if ($current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'transactions History' ) {
-            history.back();
+      if ($current === 'home') {
+			return // Activating search
+      } else if ($current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'transactions History' ) {
+         history.back();
 		} else {
-            goto('/', { replaceState: true })
+         goto('/', { replaceState: true })
 		}
 	}
 
 	function toggleMenu(){
 		menuOpen.set(!$menuOpen);
+	}
+
+	function balanceAppear(node, {delay = 0, duration = 500}){
+		return{
+			duration,
+			
+			css:(t) => {
+			const eased = backInOut(t);
+			return `
+				transform: translateY(${(1-eased)*13}px);
+				filter: blur(${Math.min(2*(1-t),2)}px);
+				opacity: ${Math.max(0.1 * (t - 1) , t)};
+			`}
+		}
 	}
 
 	$effect(() => {
@@ -88,7 +103,7 @@
 		<!-- no header for specific pages -->
 		{#if $current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'request-success' }
 			<nav class="goBack">
-				<button onclick={iconTask}>
+				<button onclick={iconTask} aria-label="Go back">
 					<svg width="9" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M7.75 15.75a.744.744 0 0 1-.53-.22l-7-7a.75.75 0 0 1 0-1.06l7-7a.75.75 0 1 1 1.06 1.06L1.81 8l6.47 6.47a.75.75 0 0 1-.53 1.28Z" fill="white"/>
 					</svg>
@@ -97,7 +112,7 @@
 		{:else}
 			<!-- goback and search button -->
 			<nav class="goBack othr">
-				<button onclick={iconTask}>
+				<button onclick={iconTask} aria-label="Go back">
 				{#if $current === 'home'}
 					<svg class="search-icon" width="20" height="20" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="m19.53 18.47-3.841-3.841A8.705 8.705 0 0 0 17.75 9C17.75 4.175 13.825.25 9 .25S.25 4.175.25 9 4.175 17.75 9 17.75a8.705 8.705 0 0 0 5.629-2.061l3.841 3.841a.748.748 0 0 0 1.06 0 .749.749 0 0 0 0-1.06ZM1.75 9c0-3.998 3.252-7.25 7.25-7.25S16.25 5.002 16.25 9 12.998 16.25 9 16.25 1.75 12.998 1.75 9Z" fill="white"/>
@@ -119,7 +134,7 @@
 			</nav>
 			<!-- profile menu -->
 			<nav class="profile">
-				<a href="/profile">
+				<a href="/profile" aria-label="Profile">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path d="M8.00903 6.5C8.00903 4.294 9.80303 2.5 12.009 2.5C14.215 2.5 16.009 4.294 16.009 6.5C16.009 8.706 14.215 10.5 12.009 10.5C9.80303 10.5 8.00903 8.706 8.00903 6.5ZM14 12.5H10C5.94 12.5 4.5 15.473 4.5 18.019C4.5 20.296 5.71105 21.5 8.00305 21.5H15.9969C18.2889 21.5 19.5 20.296 19.5 18.019C19.5 15.473 18.06 12.5 14 12.5Z" fill="#121212"/>
 					</svg>
@@ -139,7 +154,7 @@
 </div>
 
 {#if $current === 'home' && $isMobile}
-	<section class="home-intro-section" in:fly={firstLoad ? {y:25, duration:500,opacity:0.5} : null}>
+	<section class="home-intro-section" in:balanceAppear={firstLoad ? {duration:500} : null}>
 		<Balance_M {data}/>
 	</section>
 {/if}
@@ -295,9 +310,7 @@
 		aspect-ratio: 1;
 
 		path{
-			/* stroke: var(--primary-darkgreen-550); */
 			stroke: var(--off-white);
-			fill: var(--off-white);
 			fill: var(--primary-darkgreen-550);
 		}
 	}
@@ -409,7 +422,7 @@
 
 			.home-intro-section{
 				position: fixed;
-				top: calc(var(--header-height));
+				top: calc(var(--header-height) + 1rem);
 				inset-inline: 0;
 				
 				display: flex;
