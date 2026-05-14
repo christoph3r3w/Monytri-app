@@ -1,6 +1,7 @@
 	<script >
 	import {PageStepContainer,Brokers,Announcements,PortfolioDetail} from '$lib';
 	import {goto} from '$app/navigation';
+	import {backInOut} from 'svelte/easing';
 
 	let {data} = $props();
 	let {stockData,device} = $derived(data);
@@ -16,6 +17,21 @@
 			maximumFractionDigits: 2
 		}).format(number);
 	}
+
+		function whoo(node, {delay = 0, duration = 500}){
+		return{
+			duration,
+			
+			css:(t) => {
+			const eased = backInOut(t);
+			return `
+				transform: translateY(${(1-eased)*10}px);
+				filter: blur(${Math.min(2*(1-t),2)}px);
+				opacity: ${Math.max(0.5 * (t - 1) , eased)};
+			`}
+		}
+	}
+
 </script>
 
 {#snippet a()}
@@ -23,7 +39,7 @@
 	
 	<div class="button-container-calculator" >
 
-		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator" anchor="mobile-footer">
+		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator" anchor="mobile-footer" in:whoo|global>
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<g clip-path="url(#clip0_20_4)">
 					<path d="M4 5C4 4.46957 4.21071 3.96086 4.58579 3.58579C4.96086 3.21071 5.46957 3 6 3H18C18.5304 3 19.0391 3.21071 19.4142 3.58579C19.7893 3.96086 20 4.46957 20 5V19C20 19.5304 19.7893 20.0391 19.4142 20.4142C19.0391 20.7893 18.5304 21 18 21H6C5.46957 21 4.96086 20.7893 4.58579 20.4142C4.21071 20.0391 4 19.5304 4 19V5Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -43,7 +59,7 @@
 				</svg>
 		</button>
 
-		<button onclick={() => goto('/stock-overview/calculator')}>
+		<button onclick={() => {goto('/stock-overview/calculator'); whoo()}}>
 			Open Calculator
 		</button>
 

@@ -41,15 +41,15 @@
 		menuOpen.set(!$menuOpen);
 	}
 
-	function balanceAppear(node, {delay = 0, duration = 500}){
+	function whoo(node, {delay = 0, duration = 500}){
 		return{
 			duration,
 			css:(t) => {
 			const eased = backInOut(t);
 			return `
-				transform: translateY(${(1-eased)*13}px);
+				transform: translateY(${(1-eased)*7}px);
 				filter: blur(${Math.min(2*(1-t),2)}px);
-				opacity: ${Math.max(0.1 * (t - 1) , t)};
+				opacity: ${Math.max(0.5 * (t - 1) , eased)};
 			`}
 		}
 	}
@@ -154,7 +154,7 @@
 </div>
 
 {#if $current === 'home' && $isMobile}
-	<section class="home-intro-section" in:balanceAppear={firstLoad ? {duration:500} : null}>
+	<section class="home-intro-section" in:whoo={firstLoad ? {duration:500} : null}>
 		<Balance_M {data}/>
 	</section>
 {/if}
