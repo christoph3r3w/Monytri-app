@@ -290,7 +290,7 @@
 
 		& .search-icon{
 			position: absolute;
-			top: 16%;
+			top: 17%;
 			left: 1rem;
 			scale: clamp(0.2,0.85,0.89);
 		}
@@ -300,7 +300,7 @@
 		}
 	}
 
-	:global(input[type="search"]) {
+	:global(input[type="search"]) {	
 		background-color: var(--white);
 		width: 100%;
 		font-size: clamp(1rem,1.1rem,2.5rem);

@@ -34,13 +34,14 @@
 	<article class="purpose-selction">
 		<ul class="purpose-options">
 			{#each searchPurpose as purpose}
-			<li class="purpose-option" tabindex="0" >
+			<li class="purpose-option"  >
 				<input 
 					type="radio" 
 					id="purpose{purpose.id}" 
 					name="purpose" 
 					value={purpose.value}
 					onclick={() => handlePurposeSelect(purpose)}
+					tabindex="0"
 				/>
 				<label for="purpose{purpose.id}">
 					{#if purpose.img}

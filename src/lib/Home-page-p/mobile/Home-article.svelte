@@ -1,7 +1,7 @@
 <script>
 	let {blogs,podcasts} = $props();
 
-	let investTips = podcasts || [
+	let investTips = $derived(podcasts || [
 		{
 			episodeNumber: '1',
 			title: 'Why Monytri?',
@@ -23,7 +23,7 @@
 			bannerImage:{imageUrl:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png', altText:'homescreen cash'},
 			link:'/how-it-works'
 		}
-	];
+	])
 
 	let videoBlogs = [
 		{
@@ -37,7 +37,7 @@
 		}
 	];
 
-	let recentBlog = blogs || [
+	let recentBlog = $derived(blogs || [
 		{
 			link:'/blog',
 			bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
@@ -62,7 +62,7 @@
 			subtitle:'Discover how your finances stack up in the Netherlands!',
 			author :{profileImg:'', name:'Chiara'}
 		}
-	]
+	])
 </script>
 
 	<section class="home-articles">

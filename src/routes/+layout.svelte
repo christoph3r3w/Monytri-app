@@ -8,7 +8,7 @@
 	import '../app.css';
 	
 	let {data, children} = $props();
-	let {user,isAuthenticated,dev} = data;	
+	let {user,isAuthenticated,dev} = $derived(data);	
 		
 	let menu_Open = $derived($menuOpen);
 	let noHeaderPage = $derived($current == 'gift' || $current == 'request' || $current == 'login' );

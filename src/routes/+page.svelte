@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 
 	let {data} = $props();
-	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;	
+	let {blogs,podcasts,user,device,isAuthenticated,dev} = $derived(data);	
 	
 </script>
 

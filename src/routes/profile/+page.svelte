@@ -5,7 +5,7 @@
 	import {Logo} from '$lib';
 
 	let {data} = $props();
-	let {user, device,dev} = data;
+	let {user, device,dev} = $derived(data);
 	
 	let userName = $derived(user?.name || user?.email || 'Guest')
 	// const logout = async () => {

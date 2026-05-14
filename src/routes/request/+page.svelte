@@ -1,18 +1,38 @@
 <script>
 	import {current,isMobile} from '$lib/store.js';
-	import { onMount } from 'svelte';
 	import {Logo,Benefactor_M,RequestAmount_M,Request_success,RequestReview_M} from '$lib';
+	import { onMount } from 'svelte';
 	import { fade,fly } from 'svelte/transition';
 
 	let {data} = $props()	
-	let{benefactors,formData} = data;
+	let{benefactors} = $derived(data);
 
 	// State management
-	let stepValidation = $state(createStepValidation(3));
+	const stepValidation = $state(createStepValidation(3));
 	let currentStep = $state(1);
-	let totalSteps = $derived(Object.keys(stepValidation).length);
+	const totalSteps = $derived(Object.keys(stepValidation).length);
 	
-	
+	// Form data structure
+	let formData = $state({
+		benefactor: null,
+		requestId: null,
+		cardDesign: 'default',
+		Purpose: null,
+		DeliveryDate: null,
+		requestMethod: null,
+		amount: null,
+		message: 'check if needed',
+		searchQuery: '',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
+	});
+
+
 	// Step validation state
 	function createStepValidation(totalSteps) {
 		let steps = {};

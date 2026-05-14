@@ -8,7 +8,7 @@
 	
 	let search = $state('');
 	let {data,onSearchQueryUpdate} = $props();
-	let {blogs,podcasts,videos} = data?.data;
+	let {blogs,podcasts,videos} = $derived(data?.data);
 	
 	function updateSearchQuery(newQuery) {
 		search = newQuery;

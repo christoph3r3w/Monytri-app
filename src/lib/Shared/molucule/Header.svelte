@@ -10,7 +10,7 @@
 	import { afterNavigate } from '$app/navigation';
 
 	let {data} = $props();	
-	let {isAuthenticated,firstLoad} = data;
+	let {isAuthenticated,firstLoad} = $derived(data);
 	// let onMobile = $derived($isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true');
 	let onMobile = $state();
 	// let isDesktop = $derived($isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false');
@@ -27,9 +27,10 @@
 	}
 	
 	function iconTask (){
+		const onPage = ['gift', 'gift-success', 'request', 'request-success', 'transactions History', 'calculator'].includes($current);
       if ($current === 'home') {
 			return // Activating search
-      } else if ($current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'transactions History' ) {
+      } else if (onPage) {
          history.back();
 		} else {
          goto('/', { replaceState: true })
@@ -43,7 +44,6 @@
 	function balanceAppear(node, {delay = 0, duration = 500}){
 		return{
 			duration,
-			
 			css:(t) => {
 			const eased = backInOut(t);
 			return `

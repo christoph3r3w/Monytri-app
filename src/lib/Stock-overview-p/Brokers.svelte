@@ -3,10 +3,10 @@
 
 	let {formatCurrency, usersBrokers} = $props();
 	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 500).toFixed(2);
-	let brokersList = usersBrokers  ;
-	let totalBalance = brokersList.reduce((acc, broker) => acc + broker.balance, 0);
-	let averageBalance = totalBalance / brokersList.length;
-	
+	let brokersList = $derived(usersBrokers);
+	let totalBalance = $derived(brokersList.reduce((acc, broker) => acc + broker.balance, 0));
+	let averageBalance = $derived(totalBalance / brokersList.length);
+
 	let defaultImg = "/brokers/bank.png"
 </script>
 

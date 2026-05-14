@@ -6,7 +6,7 @@
 	import {goto} from '$app/navigation';
 
 	let {formData, data } = $props();
-	let {isAuthenticated} = data
+	let {isAuthenticated} = $derived(data)
 	
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');

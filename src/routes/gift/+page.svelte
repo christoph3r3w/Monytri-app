@@ -1,5 +1,4 @@
 <script>
-	import {current,isMobile} from '$lib/store.js';
 	import {
 		Recipient_D, 
 		Recipient_M,
@@ -13,12 +12,13 @@
 		GiftReview_M,
 		Process_success_S,
 	} from '$lib';
+	import {current,isMobile} from '$lib/store.js';
 	import {goto} from '$app/navigation';
-	import {fade,fly} from 'svelte/transition';
 	import {onMount} from 'svelte';	
+	import {fade,fly} from 'svelte/transition';
 	
 	let {data} = $props();
-	let {recipients} = data;
+	let {recipients} = $derived(data);
 
 	// State management
 	const stepValidation = $state(createStepValidation(5));

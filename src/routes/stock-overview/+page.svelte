@@ -3,8 +3,8 @@
 	import {goto} from '$app/navigation';
 
 	let {data} = $props();
-	let {stockData,device} = data;
-	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = stockData;	
+	let {stockData,device} = $derived(data);
+	let {portfolio,usersBrokers,totalBalance,averageBalance,announcements} = $derived(stockData);	
 	
 	
 	function formatCurrency(value) {
@@ -21,7 +21,7 @@
 {#snippet a()}
 	<PortfolioDetail {portfolio} {averageBalance} {formatCurrency} style={2}/>
 	
-	<div class="button-container-calculator">
+	<div class="button-container-calculator" >
 
 		<button onclick={() => goto('/stock-overview/calculator')} aria-label="open calculator" anchor="mobile-footer">
 				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

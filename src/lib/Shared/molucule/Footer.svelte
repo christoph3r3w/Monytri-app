@@ -7,7 +7,7 @@
 	let {d} = $props();
 	let navSelect = $derived($current);
 	let device = $derived(d);
-	let {isMobile,platform,isApple,isAndroid} = device;
+	let {isMobile,platform,isApple,isAndroid} = $derived(device);
 	
 </script>
 

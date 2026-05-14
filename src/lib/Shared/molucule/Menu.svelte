@@ -21,7 +21,7 @@
 			{@render routes()}
 		</ul>
 	</section>
-	<section class="general" aria-disabled>
+	<section class="general" aria-label="General account settings" data-disabled=true >
 		<h3>General</h3>
 		<ul>
 			<li>
@@ -38,7 +38,7 @@
 			</li>
 		</ul>
 	</section>
-	<section class="session-notification" aria-disabled>
+	<section class="session-notification" aria-label="Session and notification settings" data-disabled=true>
 		<h3>Session & Notification</h3>
 		<ul>
 			<li>
@@ -55,7 +55,7 @@
 			</li>
 		</ul>
 	</section>
-	<section class="help">
+	<section class="help" aria-label="Help and support">
 		<h3>Help</h3>
 		<ul>
 			<li>
@@ -128,7 +128,7 @@
 		margin-bottom: 1.2rem;	
 	}
 
-	nav.dropdown-menu section[aria-disabled]::after{
+	nav.dropdown-menu section[data-disabled=true]::after{
 		content: "";
 		inset: -5px;
 		position: absolute;
