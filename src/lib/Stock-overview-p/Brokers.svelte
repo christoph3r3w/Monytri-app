@@ -7,7 +7,7 @@
 	let totalBalance = $derived(brokersList.reduce((acc, broker) => acc + broker.balance, 0));
 	let averageBalance = $derived(totalBalance / brokersList.length);
 
-	let defaultImg = "/brokers/bank.png"
+	let defaultImg = "/brokers/bank.avif"
 </script>
 
 {#snippet listItem(b)}

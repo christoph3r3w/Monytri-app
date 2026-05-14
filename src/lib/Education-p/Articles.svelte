@@ -7,21 +7,21 @@ let investTips = $derived(podcasts || [
 		ep: '1',
 		title: 'Why Monytri?',
 		subtitle: 'With Chiara & David',
-		bannerImage:{imageUrl:'/home-page/homescreen-piggybank.png', altText:'homescreen piggybank'},
+		bannerImage:{imageUrl:'/home-page/homescreen-piggybank.avif', altText:'homescreen piggybank'},
 		link:'/how-it-works'
 	},
 	{
 		ep: '2',
 		title: 'Why Monytri?',
 		subtitle: 'With Chiara & David',
-		bannerImage:{imageUrl:'/home-page/homescreen-cash.png', altText:'homescreen cash'},
+		bannerImage:{imageUrl:'/home-page/homescreen-cash.avif', altText:'homescreen cash'},
 		link:'/how-it-works'
 	},
 	{
 		ep: '3',
 		title: 'Why Monytri?',
 		subtitle: 'With Chiara & David',
-		bannerImage:{imageUrl:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png', altText:'homescreen cash'},
+		bannerImage:{imageUrl:'/home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.avif', altText:'homescreen cash'},
 		link:'/how-it-works'
 	}
 ]);
@@ -30,7 +30,7 @@ let videoBlogs = $derived(videos || [
 	{
 		ep: '1',
 		link:'/blog',
-		bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+		bannerImage:{imageUrl:'/shared-assests/edu-video-img.avif', altText:''},
 		publishedAt:'date',
 		title:'Investing 101',
 		subtitle:'In this episode Chiara is braking down the ins and outs of investing and where to start as a beginner.',
@@ -39,7 +39,7 @@ let videoBlogs = $derived(videos || [
 	{
 		ep: '2',
 		link:'/blog',
-		bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+		bannerImage:{imageUrl:'/shared-assests/edu-video-img.avif', altText:''},
 		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
@@ -48,7 +48,7 @@ let videoBlogs = $derived(videos || [
 	{
 		ep: '3',
 		link:'/blog',
-		bannerImage:{imageUrl:'/shared-assests/edu-video-img.png', altText:''},
+		bannerImage:{imageUrl:'/shared-assests/edu-video-img.avif', altText:''},
 		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
@@ -59,7 +59,7 @@ let videoBlogs = $derived(videos || [
 let recentBlog = $derived(blogs || [
 	{
 		link:'/blog',
-		bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+		bannerImage:{imageUrl:'/home-page/homescreen-team.avif', altText:''},
 		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
@@ -67,7 +67,7 @@ let recentBlog = $derived(blogs || [
 	},
 	{
 		link:'/blog',
-		bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+		bannerImage:{imageUrl:'/home-page/homescreen-team.avif', altText:''},
 		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',
@@ -75,7 +75,7 @@ let recentBlog = $derived(blogs || [
 	},
 	{
 		link:'/blog',
-		bannerImage:{imageUrl:'/home-page/homescreen-team.png', altText:''},
+		bannerImage:{imageUrl:'/home-page/homescreen-team.avif', altText:''},
 		publishedAt:'date',
 		title:'Are you saving enough?',
 		subtitle:'Discover how your finances stack up in the Netherlands!',

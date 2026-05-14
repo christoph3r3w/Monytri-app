@@ -19,14 +19,14 @@
 	} = $props();
 
 	let PurposeList = $state([
-		{id: 1,name: 'Birthday',value: 'Birthday',img:'./purpose-assets/Party-3--Streamline-Brooklyn (Traced)party.png'},
-		{id: 2,name: 'Wedding',value: 'Wedding',img:'./purpose-assets/Lgbt-Wedding-2--Streamline-Brooklyn (Traced)wedding.png'},
-		{id: 5,name: 'Just Because!',value: 'Just Because!',img:'./purpose-assets/Investment-Data-2--Streamline-Brooklyn (Traced)justbecause.png'},
+		{id: 1,name: 'Birthday',value: 'Birthday',img:'./purpose-assets/Party-3--Streamline-Brooklyn (Traced)party.avif'},
+		{id: 2,name: 'Wedding',value: 'Wedding',img:'./purpose-assets/Lgbt-Wedding-2--Streamline-Brooklyn (Traced)wedding.avif'},
+		{id: 5,name: 'Just Because!',value: 'Just Because!',img:'./purpose-assets/Investment-Data-2--Streamline-Brooklyn (Traced)justbecause.avif'},
 		{id: 3,name: 'Anniversary',value: 'Anniversary',img:''},
 		{id: 4,name: 'Thank You',value: 'Thank You',img:''},
-		{id: 6,name: 'Job Promotion',value: 'Job Promotion',img:'./purpose-assets/Team-Success-3--Streamline-Brooklyn (Traced)job.png'},
-		{id: 7,name: 'New Home',value: 'New Home',img:'./purpose-assets/Welcome Streamline Brooklyn 1 (Traced)newhome.png'},
-		{id: 8,name: 'New Family Member',value: 'New Family Member',img:'./purpose-assets/image 18 (Traced)pregnant.png'},
+		{id: 6,name: 'Job Promotion',value: 'Job Promotion',img:'./purpose-assets/Team-Success-3--Streamline-Brooklyn (Traced)job.avif'},
+		{id: 7,name: 'New Home',value: 'New Home',img:'./purpose-assets/Welcome Streamline Brooklyn 1 (Traced)newhome.avif'},
+		{id: 8,name: 'New Family Member',value: 'New Family Member',img:'./purpose-assets/image 18 (Traced)pregnant.avif'},
 	])
 
 	let searchPurpose = $derived(formData.searchQuery 

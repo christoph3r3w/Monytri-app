@@ -1,4 +1,4 @@
-# Monytri Progressive Web App <img width="30" height="30" alt="Monytri Appe" src="./static/Monytri-01-1.png" />
+# Monytri Progressive Web App <img width="30" height="30" alt="Monytri Appe" src="./static/Monytri-01-1.avif" />
 
 
 ## Project Description

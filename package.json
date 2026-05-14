@@ -12,7 +12,8 @@
     "format": "prettier --write .",
     "lint": "prettier --check .",
     "ionic:build": "cross-env VITE_IONIC_BUILD=true npm run build",
-    "ionic:serve": "npm run dev"
+    "ionic:serve": "npm run dev",
+    "optimize": "node src/lib/sharp-image-convert.js"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.3.4",
@@ -49,7 +50,8 @@
     "eruda": "^3.4.3",
     "netlify": "^13.3.5",
     "node-appwrite": "^20.3.0",
-    "qrcode": "^1.5.4"
+    "qrcode": "^1.5.4",
+    "sharp": "^0.34.5"
   },
   "overrides": {
     "cookie": "^0.7.0",

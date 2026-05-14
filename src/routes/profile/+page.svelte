@@ -18,7 +18,7 @@
 	<section class="profile-container">
 		{#if user}
 			<div class="profile-letter">{userName[0].toLowerCase()}</div>
-			<!-- <img src="/generic.png" alt="generic." width="50" height="50"> -->
+			<!-- <img src="/generic.avif" alt="generic." width="50" height="50"> -->
 			<h1>Profile of {userName}</h1>
 			{#if dev}
 			<div class="analitycs">

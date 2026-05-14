@@ -10,13 +10,13 @@
 	let observer;
 	
 	let cardDesigns = $state([
-		{ id: 'design1', name: 'Design 1',cardBackground: './gift-page-assets/Gift card 1.png',cardbackgroundMessage:'./gift-page-assets/Message Card.png' ,primaryColor:'#AFABED'},
-		{ id: 'design2', name: 'Design 2',cardBackground: './gift-page-assets/Gift card 6.png',cardbackgroundMessage:'./gift-page-assets/Message Card6.png' ,primaryColor:'#82A6C5'},
-		{ id: 'design3', name: 'Design 3',cardBackground: './gift-page-assets/Gift card 2.png',cardbackgroundMessage:'./gift-page-assets/Message Card2.png' ,primaryColor:'#5AB1AA'},
-		{ id: 'design4', name: 'Design 4',cardBackground: './gift-page-assets/Gift card 3.png',cardbackgroundMessage:'./gift-page-assets/Message Card3.png' ,primaryColor:'#F2A550'},
-		{ id: 'design5', name: 'Design 5',cardBackground: './gift-page-assets/Gift card 5.png',cardbackgroundMessage:'./gift-page-assets/Message Card5.png' ,primaryColor:'#AFABED'},
-		{ id: 'design6', name: 'Design 6',cardBackground: './shared-assests/banner-deco.png',cardbackgroundMessage:'' ,primaryColor:'purple'},
-		{ id: 'design7', name: 'Design 7',cardBackground: './home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.png',cardbackgroundMessage:'' ,primaryColor:'orange'},
+		{ id: 'design1', name: 'Design 1',cardBackground: './gift-page-assets/Gift card 1.avif',cardbackgroundMessage:'./gift-page-assets/Message Card.avif' ,primaryColor:'#AFABED'},
+		{ id: 'design2', name: 'Design 2',cardBackground: './gift-page-assets/Gift card 6.avif',cardbackgroundMessage:'./gift-page-assets/Message Card6.avif' ,primaryColor:'#82A6C5'},
+		{ id: 'design3', name: 'Design 3',cardBackground: './gift-page-assets/Gift card 2.avif',cardbackgroundMessage:'./gift-page-assets/Message Card2.avif' ,primaryColor:'#5AB1AA'},
+		{ id: 'design4', name: 'Design 4',cardBackground: './gift-page-assets/Gift card 3.avif',cardbackgroundMessage:'./gift-page-assets/Message Card3.avif' ,primaryColor:'#F2A550'},
+		{ id: 'design5', name: 'Design 5',cardBackground: './gift-page-assets/Gift card 5.avif',cardbackgroundMessage:'./gift-page-assets/Message Card5.avif' ,primaryColor:'#AFABED'},
+		{ id: 'design6', name: 'Design 6',cardBackground: './shared-assests/banner-deco.avif',cardbackgroundMessage:'' ,primaryColor:'purple'},
+		{ id: 'design7', name: 'Design 7',cardBackground: './home-page/138ff1cc36a27c844ea44dbdc2a89797589052cb.avif',cardbackgroundMessage:'' ,primaryColor:'orange'},
 		{ id: 'design8', name: 'Design 8',cardBackground: '',cardbackgroundMessage:'' ,primaryColor:'red'}
 	]);
 
@@ -76,7 +76,7 @@
 				style="--card-color:{cardDesign.primaryColor};">
 					<label for="{cardDesign.id}">
 					<section class="card simple-card" 
-						style="background-image: url('{cardDesign.cardBackground? encodeURI(cardDesign.cardBackground):'./shared-assests/banner-deco.png'}');"
+						style="background-image: url('{cardDesign.cardBackground? encodeURI(cardDesign.cardBackground):'./shared-assests/banner-deco.avif'}');"
 						>
 						<h3>{'Monytri'|| cardDesign.name}</h3>
 						<p>Stock gift card</p>
@@ -84,7 +84,7 @@
 					</section>
 					<p>Tap the card below to customise your message </p>
 					<section class="card message-input" 
-						style="background-image: url('{cardDesign.cardbackgroundMessage? encodeURI(cardDesign.cardbackgroundMessage):'./shared-assests/Vector 6.png' }');"
+						style="background-image: url('{cardDesign.cardbackgroundMessage? encodeURI(cardDesign.cardbackgroundMessage):'./shared-assests/Vector 6.avif' }');"
 						>
 						<h4>Monytri</h4>
 						<p>{formData.currentDate || ''}</p>

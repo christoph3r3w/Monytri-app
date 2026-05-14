@@ -15,7 +15,7 @@
 	{#if $isMobile}
 		<section class="success-message mobile"  transition:fade>
 			<div class="success-text">
-				<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).png" width="170" height="250" alt="becoming rich ">
+				<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).avif" width="170" height="250" alt="becoming rich ">
 				<h2>Payment complete</h2>
 				<p>{formData.currentDate}</p>
 				<p>If you need to view any information about any of your transactions, head over to your transaction history.</p>
@@ -37,7 +37,7 @@
 		</section>
 		
 		<section class="success-message"  transition:fade>
-			<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).png" width="170" height="250" alt="becoming rich ">
+			<img src="./gift-page-assets/Becoming-Rich-10--Streamline-Brooklyn (Traced).avif" width="170" height="250" alt="becoming rich ">
 			<p>If you need to view any information about any of your transactions, head over to your transaction history.</p>
 			<a href="/">Back to Homepage</a>
 			<a href="/gift">Send another one</a>

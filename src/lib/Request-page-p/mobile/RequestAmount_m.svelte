@@ -100,7 +100,7 @@
 		flex: 1 1 100%;
 		gap: 0;
 
-		/* background-image: url('./shared-assests/banner-deco2.png'); */
+		/* background-image: url('./shared-assests/banner-deco2.avif'); */
 		/* background-position:top center; */
 		/* background-repeat: no-repeat; */
 		/* background-size: cover; */

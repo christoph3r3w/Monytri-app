@@ -65,35 +65,35 @@ export async function load(x) {
 	
 	let announcements = announcementsPost || [
 		{
-			bannerImage: {src:`./announcment-c/Announcement money.png`,bgColor:"#FFF3E0",bgPosition:"contain"},
+			bannerImage: {src:`./announcment-c/Announcement money.avif`,bgColor:"#FFF3E0",bgPosition:"contain"},
 			uploadDate: "3 Sep 2025",
 			title: "Sign up with BUX and get €100 free for you to invest!",
 			partner: "Bux",
 			link: "/blog"
 		},
 		{
-			bannerImage: {src:`./announcment-c/Teamwork-5--Streamline-Brooklyn (Traced) .png`,bgColor:"#f2eade",bgPosition:"contain"},
+			bannerImage: {src:`./announcment-c/Teamwork-5--Streamline-Brooklyn (Traced) .avif`,bgColor:"#f2eade",bgPosition:"contain"},
 			uploadDate: "29 Aug 2024",
 			title: "Refer a friend and get €20 EACH when they sign up!",
 			partner: "Avatrade",
 			link: "/blog"
 		},
 		{
-			bannerImage: {src:`./announcment-c/Announcement Orange.png`,bgColor:"#ff6d3a",bgPosition:"contain"},
+			bannerImage: {src:`./announcment-c/Announcement Orange.avif`,bgColor:"#ff6d3a",bgPosition:"contain"},
 			uploadDate: "23 Aug 2024",
 			title: "Investor Today has some new stocks for you!",
 			partner: "Investor Today",
 			link: "/blog"
 		},
 		{
-			bannerImage: {src:`./home-page/homescreen-team.png`,bgColor:"white",bgPosition:"cover"},
+			bannerImage: {src:`./home-page/homescreen-team.avif`,bgColor:"white",bgPosition:"cover"},
 			uploadDate: "Aug 29, 2023",
 			title: "Are you saving enough?",
 			partner: "Monytri",
 			link: "/blog"
 		},
 		{
-			bannerImage: {src:`./home-page/homescreen-team.png`,bgColor:"#E3F2FD",bgPosition:"cover"},
+			bannerImage: {src:`./home-page/homescreen-team.avif`,bgColor:"#E3F2FD",bgPosition:"cover"},
 			uploadDate: "Aug 22, 2023",
 			title: "Are you saving enough?",
 			partner: "Monytri",
@@ -104,7 +104,7 @@ export async function load(x) {
 	let usersBrokers = brokersProfile || [
 		{name: "eToro",logo: "",link:"" , balance: 0},
 		{name: "Robinhood",logo: "",link:"" , balance: 0},
-		{name: "Interactive Brokers",logo: "/brokers/Interactive Brokers logo 2..png",link:"" , balance: 0}
+		{name: "Interactive Brokers",logo: "/brokers/Interactive Brokers logo 2..avif",link:"" , balance: 0}
 	];
 
 

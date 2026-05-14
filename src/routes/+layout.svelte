@@ -105,6 +105,7 @@
 
 <svelte:head>
 	<title>{$current}</title>
+	<link rel="preload" href="/shared-assests/exclamation-circle-white.svg" fetchpriority=high as="svg">
 </svelte:head>
 
 <!-- main application layout -->

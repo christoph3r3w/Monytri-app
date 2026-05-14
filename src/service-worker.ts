@@ -17,11 +17,11 @@ const ASSETS = [
 		[
 			'/manifest.json',
 			'/favicon.ico',
-			'/apple-touch-icon-180x180.png',
-			'/maskable-icon-512x512.png',
-			'/pwa-64x64.png',
-			'/pwa-192x192.png',
-			'/pwa-512x512.png'
+			'/apple-touch-icon-180x180.avif',
+			'/maskable-icon-512x512.avif',
+			'/pwa-64x64.avif',
+			'/pwa-192x192.avif',
+			'/pwa-512x512.avif'
 		].includes(f)
 	) // only critical static assets (avoid caching all images at install)
 ];

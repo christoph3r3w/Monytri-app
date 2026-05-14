@@ -25,7 +25,7 @@ export async function load() {
 		{
 		id: 999,
 		name: 'Open request',
-		profilePic: '/shared-assests/banner-deco2.png'
+		profilePic: '/shared-assests/banner-deco2.avif'
 		},
 		{
 		id: 1,
@@ -81,7 +81,7 @@ export async function load() {
 		name: 'Jeremy Clarkson',
 		email: 'jeremy.cars@topgear.uk',
 		lastSent: '15 Aug 2024',
-		profilePic: '/generic 2.png'
+		profilePic: '/generic 2.avif'
 		}
 	];
 

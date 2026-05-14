@@ -35,8 +35,8 @@
 
 <div class="container">
 
-	<figure class="banner" style={`background-image: url('${base}/shared-assests/banner-deco.png')`}>
-		<img src={`/shared-assests/Monytri-01.png`} alt="">
+	<figure class="banner" style={`background-image: url('${base}/shared-assests/banner-deco.avif')`}>
+		<img src={`/shared-assests/Monytri-01.avif`} alt="">
 	</figure>
 
     <article class="install-container">
