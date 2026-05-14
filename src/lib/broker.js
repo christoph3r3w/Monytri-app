@@ -69,7 +69,6 @@ export async function load() {
 	portfolio.profitLoss = profitLoss;
 	portfolio.profitLossPercentage = +((portfolio.profitLoss / (portfolio.value - portfolio.profitLoss)) * 100).toFixed(2);
 		
-
 	return {
 		stockData: {  
 			usersBrokers,

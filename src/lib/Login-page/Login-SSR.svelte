@@ -398,7 +398,7 @@
 			justify-content: end;
 		}
 		
-		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {			/* flex-basis: 100% !important; */
+		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {
 			max-width: 300px;
 		}
 

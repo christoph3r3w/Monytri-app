@@ -460,9 +460,6 @@
 			box-shadow: 0 4px 8px #0000001a, 0 -50px 3000px -40px #000000dc, 0 0px 3000px -10px #000000;
 			transition: background-color all 3s ease-in-out;
 			z-index: 30 !important;
-			/* background-color: rgb(197, 38, 38); */
-			/* inset-inline: var(--body-padding); ; */
-
 		}
 
 		.qr-popup::before {

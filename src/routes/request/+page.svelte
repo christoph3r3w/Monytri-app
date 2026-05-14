@@ -185,9 +185,9 @@
 			localStorage.setItem('requestToken', token);
 			localStorage.setItem('requestShareUrl', shareUrl);
 			// Optionally store the full payload for preview/debug
-			// localStorage.setItem('requestFormData', JSON.stringify(formData));
+			localStorage.setItem('requestFormData', JSON.stringify(formData));
 
-			// console.log('Prepared request:', { requestId, expiresAt, shareUrl },formData);
+			// console.log('Prepared request:', { requestId, expiresAt, shareUrl},formData);
 
 			// Move to success step
 			currentStep = 3;
@@ -262,16 +262,6 @@
 </article>
 
 <style>
-	/* .container{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-		width: 100%;
-		height: fit-content;
-		margin-bottom: 5rem;
-	} */
-
 	:root {
 		--progressbar-height: 4px;
 	}
@@ -318,16 +308,6 @@
 		margin-bottom:10% ;
 	}
 
-	/* .skip-button,.back-button {
-		position: relative;
-		width: 100%;
-		padding: 0;
-		height: fit-content;
-		svg path{
-			stroke: var(--black);
-			fill: var(--black);
-		}		
-	}	 */
 /* Needs to be checked and refactored. */
 /* //////////////////////////////////// */
 
@@ -337,28 +317,6 @@
 			height: calc(100dvh - var(--footer-height));
 			background-color: var(--white);	
 		}
-
-		/* .left-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 1 / span 1;
-			padding: 0 !important;
-		}
-
-		.step-header .back-button{
-			position: relative !important;
-			top: 0;
-			left: 0;
-		}
-
-		.right-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / span 1;
-			padding: 0 !important;
-		}
-		.step-container {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / -1;
-		} */
 	}
 	
 	@media 
@@ -373,21 +331,6 @@
 			border-radius: 0 5px 5px 0;
 			transition: width 0.5s ease-out;
 		}	
-
-		/* .skip-button,.back-button {
-			position: relative;
-			width: 100%;
-			height: unset !important;
-			padding-block: 5%;
-
-			svg path{
-				stroke: var(--black);
-				fill: var(--black);
-			}
-		}	 */
-
 	}
-
-
 
 </style>

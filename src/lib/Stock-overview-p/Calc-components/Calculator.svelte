@@ -301,14 +301,14 @@ let growthPercentage = $derived.by(() => {
      flex: 0 1 fit-content;
      text-wrap: nowrap;
      margin-right: 1rem;
-     animation: none !important;
-     transition: none !important;
+     animation: none;
+     transition: none;
   } 
 
   .con > * form button {
     max-width: 99%;
-    transition: none !important;;
-    animation: none !important;
+    transition: none;
+    animation: none ;
   }
 
   @media screen and (width <= 1200px){

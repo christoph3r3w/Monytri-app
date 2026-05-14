@@ -431,12 +431,6 @@
 
 	}
 
-	/* :global(.button-container :is(.continue-button,button[type="submit"]).disabled)  {
-		background-color: #cccccc;
-		color: var(--general-text-color);
-		cursor: not-allowed;
-	} */
-
 	:global(.right-step .button-container .skip-button)  {
 		flex: 0 1 20%;
 		width: 100%;
@@ -588,8 +582,6 @@
 			width: 100%;
 			height: unset !important;
 			padding-block: 5%!important;
-
-
 			
 			svg path{
 				stroke: var(--general-text-color);
