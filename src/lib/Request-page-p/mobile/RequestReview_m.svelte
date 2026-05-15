@@ -14,7 +14,7 @@
 	// Later for this, they should go into the server.js
 	// It should also pick the important forum data information from the request validation process, hash it, and make it a link to send to the backend.
 	// const requestUrl = `${homeUrl}/request?data=${encodeURIComponent(JSON.stringify(formData))}`;
-	const requestUrl = formData.shareUrl;
+	const requestUrl = $derived(formData?.shareUrl);
 	let qrDataUrl = $state('');
 	let canShare = $state(false);
 	let openRequest = $derived(formData.benefactor.name === 'Open request');
@@ -386,7 +386,7 @@
 		content:'';
 		position: absolute;
 		inset: -100vw !important;
-		background-color: rgba(255, 255, 255, 0.5);
+		background-color: rgba(87, 87, 87, 0.5);
 		z-index: -1;
 		transition: background-color all 3s ease-in-out;
 	}
@@ -457,19 +457,18 @@
 			padding: 1rem;
 			border-radius: 10px;
 			transform: translate(0, -10%);
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			box-shadow: 0 4px 8px #0000001a, 0 -50px 3000px -40px #000000dc, 0 0px 3000px -10px #000000;
 			transition: background-color all 3s ease-in-out;
-			/* background-color: rgb(197, 38, 38); */
-			/* inset-inline: var(--body-padding); ; */
-
+			z-index: 30 !important;
 		}
 
 		.qr-popup::before {
-			content:'5';
+			content:'';
+			content:none;
 			position: absolute;
 			inset: -100vw !important;
-			background-color: rgba(255, 255, 255, 0.5);
-			z-index: -1;
+			background-color: rgba(97, 97, 97, 0.5);
+			z-index: -2;
 			transition: background-color all 3s ease-in-out;
 		}
 

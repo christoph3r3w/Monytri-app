@@ -6,7 +6,7 @@
 	import {onMount} from 'svelte';
 
 	let {data,onSearchQueryUpdate} = $props();
-	let {transactionData, formData} = data.data
+	let {transactionData, formData} = $derived((data?.data));
 	let search = $state('');
 
 	let filteredTransactions = $derived((transactionData) => {

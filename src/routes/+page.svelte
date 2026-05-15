@@ -1,11 +1,29 @@
 <script>
 	import {Balance_M,HomeArticles_M,Logo } from '$lib'
-	import {current,isMobile} from '$lib/store.js';
+	import {current,isMobile,firstVisit} from '$lib/store.js';
 	import { goto } from '$app/navigation';
+	import { onMount,tick } from 'svelte';
 
 	let {data} = $props();
-	let {blogs,podcasts,user,device,isAuthenticated,dev} = data;	
-	
+	let {blogs,podcasts,user,device,isAuthenticated,dev} = $derived(data);	
+	let popup;
+
+	onMount(() => {
+		if (device.isMobile === false) {
+			if ($firstVisit !== true) return;
+			if (dev) return;
+				setTimeout(() => {
+					popup.showModal();
+					firstVisit.set(false);
+			}, 2000);
+		}
+	});
+
+	$effect(() => {
+		if ($isMobile) {
+			popup?.close();
+		};
+	});
 </script>
 
 <svelte:head>
@@ -14,42 +32,45 @@
 
 <section class="home-wrapper">
 
-{#key $isMobile}
-	{#if $isMobile}	
-		{#await blogs then blogs}
-			<HomeArticles_M {blogs} {podcasts}/>	
-		{:catch error}
-			<p>Error loading blogs: {error.message}</p>
-		{/await}
-	{:else}
-		<div class="button-conatiner-dev">
-			{#if !isAuthenticated }
-				<button onclick={() => goto("/education")}>education</button>
-				<button onclick={() => goto("/share")}>share</button>
-				<button onclick={() => goto("/install")}>install app</button>
-			{:else}
-				<button onclick={() => goto("/education")}>education</button>
-				<button onclick={() => goto("/stock-overview")}>Stock overview</button>
-				<button onclick={() => goto("/gift")}>send a gift</button>
-				<button onclick={() => goto("/transactions")}>Transactions</button>
-				<button data='util' onclick={() => goto("/install")}>install app</button>
-				<button data='util' onclick={() => goto("/share")}>share</button>
-				{#if dev}
-					<button data='util' onclick={() => goto("/request")}>request</button>
-					<button data='util' onclick={() => goto("/settings")}>settings</button>
-					<button data='util' onclick={() => goto("/inbox")}>inbox</button>
-					<button data='util' onclick={() => goto("/learn-more")}>learn more</button>
-					<button data='util' onclick={() => goto("/gift-success")}>Gift success</button>
+	{#key $isMobile}
+		{#if $isMobile}	
+			{#await blogs then blogs}
+				<HomeArticles_M {blogs} {podcasts}/>	
+			{:catch error}
+				<p>Error loading blogs: {error.message}</p>
+			{/await}
+		{:else}
+			<div class="button-conatiner-dev">
+			</div>
+			<div class="button-conatiner-dev">
+				{#if !isAuthenticated }
+					<button onclick={() => goto("/education")}>education</button>
+					<button onclick={() => goto("/share")}>share</button>
+					<button onclick={() => goto("/install")}>install app</button>
+				{:else}
+					<button command="show-modal" commandfor="popup">Mobile app</button>
+					<button onclick={() => goto("/education")}>education</button>
+					<button onclick={() => goto("/stock-overview")}>Stock overview</button>
+					<button onclick={() => goto("/gift")}>send a gift</button>
+					<button onclick={() => goto("/transactions")}>Transactions</button>
+					<button data='util' onclick={() => goto("/install")}>install app</button>
+					<button data='util' onclick={() => goto("/share")}>share</button>
+					{#if dev}
+						<button data='util' onclick={() => goto("/request")}>request</button>
+						<button data='util' onclick={() => goto("/settings")}>settings</button>
+						<button data='util' onclick={() => goto("/inbox")}>inbox</button>
+						<button data='util' onclick={() => goto("/learn-more")}>learn more</button>
+						<button data='util' onclick={() => goto("/gift-success")}>Gift success</button>
+					{/if}
+					<form action="/logout" method="post" >
+						<button type="submit">Logout</button>
+					</form>
 				{/if}
-				<form action="/logout" method="post" >
-					<button type="submit">Logout</button>
-				</form>
-			{/if}
 
-		</div>
-		<Logo name={false} />
-	{/if}
-{/key}
+			</div>
+			<Logo name={false} />
+		{/if}
+	{/key}
 
 	<div class="analitycs" style="display: {dev ? 'block' : 'none'}">
 		<p>
@@ -64,6 +85,14 @@
 		{/if}
 		<p>Current user: {user?.email || 'No user logged in'}</p>
 	</div>
+
+	<dialog  id="popup" class="popup" bind:this={popup}>
+		<p>For the best experience, view this MVP on a mobile device.</p>
+		<div class="button-conatiner-dev">
+			<button class="share-btn" onclick={() => goto("/share")}>scan QR code</button>
+			<button id="dismiss-btn" commandfor="popup" command="close">Continue on {device.platform}</button>
+		</div>
+	</dialog>
 </section>
 
 <style>
@@ -83,15 +112,24 @@
 
 	.button-conatiner-dev{
 		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
+		flex-flow: row wrap;
 		align-items: center;
 		justify-content: center;
 		gap: 2rem;
 		width: fit-content;
 		height: fit-content;
-		margin-block: 20% 5rem;
+		margin-block: 2rem 2rem;
 		margin-inline: auto;
+
+		&:nth-of-type(1){
+			flex-flow: column nowrap;
+			margin-top: 15%;
+		}
+
+		&:nth-last-of-type(1){
+			flex-flow: row wrap;
+			margin-bottom: 5rem;
+		}
 	}
 	
 	.button-conatiner-dev button {
@@ -172,6 +210,60 @@
 		z-index: 100;
 	}
 
+	#popup{
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 2rem;
+		height: 300px;
+		gap: 2rem;
+		min-width: fit-content;
+		background-color: var(--primary-green-500);
+		border-radius: clamp(8px,3vw,15px);
+		border: solid 2px var(--general-background-color-secondary);
+		&[open]{
+			display: flex;
+			flex-flow: column nowrap;
+		}
+
+		&::backdrop{
+			background-color: color-mix(in srgb, var(--primary-green-500) 20%, transparent);
+			backdrop-filter: blur(5px);
+		}
+	}
+
+	#popup p{
+		font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+		text-align: center;
+		width: 40ch;
+		height: fit-content;
+		line-height: 1.4;
+		align-self: center;
+	}
+
+	#popup .button-conatiner-dev{
+		flex-flow: row wrap;
+		justify-content: space-around;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+		gap: .5rem;
+		margin:0;
+	}
+
+	#popup .button-conatiner-dev button{
+		font-size: clamp(1rem, 2.5vw, 1.4rem);
+	}
+
+	#popup .button-conatiner-dev button.share-btn{
+		background-color:var(--general-background-color-secondary);
+		color: var(--general-text-color);
+		&:is(:hover,:focus-within,:active) {
+			background-color: var(--primary-purple-400);
+			color: var(--general-text-color-invert);
+		}
+	}
 
 	/* for mobile */
 	:global(html:has(.home-wrapper)){
@@ -221,9 +313,9 @@
 			
 			.button-conatiner-dev,.analitycs,:global(.home-wrapper .button-conatiner-dev + .logo) {
 			display: none;
-		}
-	}	
-}
+			}
+		}	
+	}
 
 	@media 
 		(-webkit-min-device-pixel-ratio: 3) and (display-mode: standalone),
@@ -235,10 +327,6 @@
 				contain:content layout strict;
 				overscroll-behavior: contain;
 			}
-		
 		}
-
-
-
 
 </style>

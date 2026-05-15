@@ -1,7 +1,5 @@
 <script>
-	// import { fade } from 'svelte/transition';
 	import { StepContainer } from '$lib'
-
 	let { formData, recipients, selected, button, nextStep,previousStep,stepValidation, onSearchQueryUpdate } = $props();
 
 	let filteredRecipients = $derived(
@@ -12,9 +10,9 @@
 		)
 		: recipients
 	);
-	
 
 </script>
+
 {#snippet recipientsList()}			
 	<section>
 		<h3 class="section-title">Most Recent</h3>

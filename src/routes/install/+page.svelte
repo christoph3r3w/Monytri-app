@@ -5,15 +5,15 @@
 	import { onMount } from 'svelte';
 
 	let { data } = $props();
-	let device = data.device;
+	let device = $derived(data.device);
 
     let deferredPrompt = null;
     let showInstall = $state(false);
 
-    const isIOS = device.isApple;
-    const isAndroid = device.isAndroid;
+    const isIOS = $derived((device.isApple));
+    const isAndroid = $derived(device.isAndroid);
 
-    if (typeof window !== 'undefined' && device.isAndroid) {
+    if (typeof window !== 'undefined' && device?.isAndroid) {
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
@@ -35,8 +35,8 @@
 
 <div class="container">
 
-	<figure class="banner" style={`background-image: url('${base}/shared-assests/banner-deco.png')`}>
-		<img src={`/shared-assests/Monytri-01.png`} alt="">
+	<figure class="banner" style={`background-image: url('${base}/shared-assests/banner-deco.avif')`}>
+		<img src={`/shared-assests/Monytri-01.avif`} alt="">
 	</figure>
 
     <article class="install-container">

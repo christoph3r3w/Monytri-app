@@ -10,7 +10,7 @@
 	import { afterNavigate } from '$app/navigation';
 
 	let {data} = $props();	
-	let {isAuthenticated,firstLoad} = data;
+	let {isAuthenticated,firstLoad} = $derived(data);
 	// let onMobile = $derived($isMobile == true || $isMobile == 1 || $isMobile == '1'|| $isMobile == 'true');
 	let onMobile = $state();
 	// let isDesktop = $derived($isMobile == false || $isMobile == 0 || $isMobile == '0'|| $isMobile == 'false');
@@ -27,9 +27,10 @@
 	}
 	
 	function iconTask (){
+		const onPage = ['gift', 'gift-success', 'request', 'request-success', 'transactions History', 'calculator'].includes($current);
       if ($current === 'home') {
 			return // Activating search
-      } else if ($current === 'gift' || $current === 'gift-success' || $current === 'request' || $current === 'transactions History' ) {
+      } else if (onPage) {
          history.back();
 		} else {
          goto('/', { replaceState: true })
@@ -40,16 +41,15 @@
 		menuOpen.set(!$menuOpen);
 	}
 
-	function balanceAppear(node, {delay = 0, duration = 500}){
+	function whoo(node, {delay = 0, duration = 500}){
 		return{
 			duration,
-			
 			css:(t) => {
 			const eased = backInOut(t);
 			return `
-				transform: translateY(${(1-eased)*13}px);
+				transform: translateY(${(1-eased)*7}px);
 				filter: blur(${Math.min(2*(1-t),2)}px);
-				opacity: ${Math.max(0.1 * (t - 1) , t)};
+				opacity: ${Math.max(0.5 * (t - 1) , eased)};
 			`}
 		}
 	}
@@ -70,9 +70,14 @@
 	
 </script>
 
+<svelte:head>
+	<link rel="preload" href="/home-page/homepage-intro-deco.avif" fetchpriority=high as="image">
+</svelte:head>
+
 {#snippet desktopRoutes()}
 	<li><a href="/">home</a></li>
 	<li><a href="/gift" rel="noopener">Gift</a></li>
+	<li><a href="/request" rel="noopener">Request</a></li>
 	<li><a href="/how-it-works">how it works</a></li>
 	<li><a href="/learn-more">learn more</a></li>
 {/snippet}
@@ -90,7 +95,7 @@
 	</nav>
 	<nav class="profile">
 		<button onclick={toggleMenu}>
-			<img src="/generic.png" alt="generic person">
+			<img src="/generic.avif" alt="generic person">
 			<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M8.00903 6.5C8.00903 4.294 9.80303 2.5 12.009 2.5C14.215 2.5 16.009 4.294 16.009 6.5C16.009 8.706 14.215 10.5 12.009 10.5C9.80303 10.5 8.00903 8.706 8.00903 6.5ZM14 12.5H10C5.94 12.5 4.5 15.473 4.5 18.019C4.5 20.296 5.71105 21.5 8.00305 21.5H15.9969C18.2889 21.5 19.5 20.296 19.5 18.019C19.5 15.473 18.06 12.5 14 12.5Z" fill="#121212"/>
 			</svg>
@@ -154,7 +159,7 @@
 </div>
 
 {#if $current === 'home' && $isMobile}
-	<section class="home-intro-section" in:balanceAppear={firstLoad ? {duration:500} : null}>
+	<section class="home-intro-section" in:whoo={firstLoad ? {duration:500} : null}>
 		<Balance_M {data}/>
 	</section>
 {/if}
@@ -411,7 +416,7 @@
 				inset-inline: 0;
 				min-height: calc(var(--header-intro-height) + var(--header-height));
 				background: 
-				url('/home-page/homepage-intro-deco.png') no-repeat center clamp(-12vh,-3vh,0px) / contain,
+				url('/home-page/homepage-intro-deco.avif') no-repeat center clamp(-12vh,-3vh,0px) / contain,
 				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off));
 				mask-image:
 				linear-gradient(180deg, var(--primary-green-500) var(--_background-cut-off), transparent var(--_background-cut-off)) ;

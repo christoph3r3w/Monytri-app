@@ -7,7 +7,7 @@
 	let {d} = $props();
 	let navSelect = $derived($current);
 	let device = $derived(d);
-	let {isMobile,platform,isApple,isAndroid} = device;
+	let {isMobile,platform,isApple,isAndroid} = $derived(device);
 	
 </script>
 
@@ -249,101 +249,4 @@
 		text-decoration: underline ;
 	}
 
-	/*///////////////////////////*/
-	/* mobile navigation styling */
-	/*///////////////////////////*/
-
-	/* .mobile-nav-d{
-		display: none;
-	}
-	
-   @media 
-		(-webkit-min-device-pixel-ratio: 3),
-		(-moz-min-device-pixel-ratio: 3),
-		(pointer: coarse) and (hover: none) and (min-resolution: 400dpi) ,
-		screen and (device-width <= 900px) and (width <= 900px) and (orientation: portrait) , 
-		screen and (device-height <= 900px) and (height <= 900px) and (orientation: landscape)
-		{
-      .footer-one,.footer-two{
-            display: none;
-    	}
-
-		.mobile-nav-d{
-			grid-column: 1/-1;
-			position: relative;
-			grid-row: 1/2;
-			display: grid;
-			grid-template-columns: subgrid;	
-			grid-template-rows: min(23px, 15%) [content-start] 2fr [content-end] min(0px, 10%);		
-			width: 100cqw;
-			border-radius:inherit;
-			z-index: 100;
-			
-		}
-			
-		.mobile-nav-d ul{
-			grid-column: content;
-			grid-row: content;
-			display: flex;
-			justify-content: center;
-			align-items: safe center;
-			width: 100%;
-			height: auto;
-			gap: clamp(10px, 10cqw, 100px);
-		}
-
-		.mobile-nav-d ul li{
-			position: relative;
-			padding: 1cqh;
-			width: fit-content;
-		}
-			
-		.mobile-nav-d ul li:is(:hover,:focus-within,:visited),
-		.mobile-nav-d ul li:has(:is(a,button).active){
-			background-color: var(--off-white);
-			border-radius: 6px;
-			user-select: none;
-			
-			svg path {
-				fill: var(--primary-green-500);
-			}
-		}
-
-		.mobile-nav-d li:nth-of-type(1):is(:hover,:focus-within,:visited) svg path,
-		.mobile-nav-d ul li:nth-of-type(1):has(:is(a,button).active) svg path{
-			fill:none !important;
-
-			stroke:var(--primary-green-500) ;
-			user-select: none;
-		}
-			
-		.mobile-nav-d li :nth-child(n){
-				position: relative;
-		}
-			
-		.mobile-nav-d li :nth-child(n)::before{
-				content: '';
-				position: absolute;
-				inset-inline: -75%;
-				inset-block: -35%;
-				bottom: -70%;
-				z-index: 100;
-		}
-   }
-
-	@media not all and (display-mode: standalone) {
-	 	.mobile-nav-d{
-			grid-template-rows: min(0px, 20%) [content-start] 1fr [content-end] min(0px,20%);
-		}
-
-		.mobile-nav-d ul li {
-			padding: 2cqi;
-		}
-
-		.mobile-nav-d ul li:is(:hover,:focus-within,:visited),
-		.mobile-nav-d ul li:has(:is(a,button).active){
-			inset: 0;
-			border-radius: 50% ;
-		}
-	} */
 </style>

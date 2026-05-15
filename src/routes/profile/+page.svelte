@@ -5,7 +5,7 @@
 	import {Logo} from '$lib';
 
 	let {data} = $props();
-	let {user, device,dev} = data;
+	let {user, device,dev} = $derived(data);
 	
 	let userName = $derived(user?.name || user?.email || 'Guest')
 	// const logout = async () => {
@@ -18,7 +18,7 @@
 	<section class="profile-container">
 		{#if user}
 			<div class="profile-letter">{userName[0].toLowerCase()}</div>
-			<!-- <img src="/generic.png" alt="generic." width="50" height="50"> -->
+			<!-- <img src="/generic.avif" alt="generic." width="50" height="50"> -->
 			<h1>Profile of {userName}</h1>
 			{#if dev}
 			<div class="analitycs">

@@ -412,8 +412,6 @@
 		}
 		
 		:global(body:has(.login-form):has(.button-container.custom) .button-container.custom >:nth-child(n))  {
-			/* outline: solid red; */
-			/* flex-basis: 100% !important; */
 			max-width: 300px;
 		}
 

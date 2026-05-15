@@ -1,18 +1,38 @@
 <script>
 	import {current,isMobile} from '$lib/store.js';
-	import { onMount } from 'svelte';
 	import {Logo,Benefactor_M,RequestAmount_M,Request_success,RequestReview_M} from '$lib';
+	import { onMount } from 'svelte';
 	import { fade,fly } from 'svelte/transition';
 
 	let {data} = $props()	
-	let{benefactors,formData} = data;
+	let{benefactors} = $derived(data);
 
 	// State management
-	let stepValidation = $state(createStepValidation(3));
+	const stepValidation = $state(createStepValidation(3));
 	let currentStep = $state(1);
-	let totalSteps = $derived(Object.keys(stepValidation).length);
+	const totalSteps = $derived(Object.keys(stepValidation).length);
 	
-	
+	// Form data structure
+	let formData = $state({
+		benefactor: null,
+		requestId: null,
+		cardDesign: 'default',
+		Purpose: null,
+		DeliveryDate: null,
+		requestMethod: null,
+		amount: null,
+		message: 'check if needed',
+		searchQuery: '',
+		errors: {},
+		isLoading: false,
+		date: new Date(),
+		get currentDate() {	return this.date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });},
+		expiresAt: null,
+		shareUrl: null,
+		token: null
+	});
+
+
 	// Step validation state
 	function createStepValidation(totalSteps) {
 		let steps = {};
@@ -165,9 +185,9 @@
 			localStorage.setItem('requestToken', token);
 			localStorage.setItem('requestShareUrl', shareUrl);
 			// Optionally store the full payload for preview/debug
-			// localStorage.setItem('requestFormData', JSON.stringify(formData));
+			localStorage.setItem('requestFormData', JSON.stringify(formData));
 
-			// console.log('Prepared request:', { requestId, expiresAt, shareUrl },formData);
+			// console.log('Prepared request:', { requestId, expiresAt, shareUrl},formData);
 
 			// Move to success step
 			currentStep = 3;
@@ -242,16 +262,6 @@
 </article>
 
 <style>
-	/* .container{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-		width: 100%;
-		height: fit-content;
-		margin-bottom: 5rem;
-	} */
-
 	:root {
 		--progressbar-height: 4px;
 	}
@@ -298,16 +308,6 @@
 		margin-bottom:10% ;
 	}
 
-	/* .skip-button,.back-button {
-		position: relative;
-		width: 100%;
-		padding: 0;
-		height: fit-content;
-		svg path{
-			stroke: var(--black);
-			fill: var(--black);
-		}		
-	}	 */
 /* Needs to be checked and refactored. */
 /* //////////////////////////////////// */
 
@@ -317,28 +317,6 @@
 			height: calc(100dvh - var(--footer-height));
 			background-color: var(--white);	
 		}
-
-		/* .left-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 1 / span 1;
-			padding: 0 !important;
-		}
-
-		.step-header .back-button{
-			position: relative !important;
-			top: 0;
-			left: 0;
-		}
-
-		.right-step {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / span 1;
-			padding: 0 !important;
-		}
-		.step-container {
-			grid-column: 1 / -1 !important;
-			grid-row: 2 / -1;
-		} */
 	}
 	
 	@media 
@@ -353,21 +331,6 @@
 			border-radius: 0 5px 5px 0;
 			transition: width 0.5s ease-out;
 		}	
-
-		/* .skip-button,.back-button {
-			position: relative;
-			width: 100%;
-			height: unset !important;
-			padding-block: 5%;
-
-			svg path{
-				stroke: var(--black);
-				fill: var(--black);
-			}
-		}	 */
-
 	}
-
-
 
 </style>

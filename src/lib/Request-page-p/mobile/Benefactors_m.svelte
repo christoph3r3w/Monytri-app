@@ -1,5 +1,4 @@
 <script>
-	// import { fade } from 'svelte/transition';
 	import { StepContainer } from '$lib';
 	let { formData, benefactors, selected,nextStep,previousStep,stepValidation, onSearchQueryUpdate } = $props();
 

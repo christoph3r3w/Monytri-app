@@ -64,8 +64,8 @@
 <div class="container">
 		
 	<figure class="banner">
-		<img src={`/shared-assests/Monytri-01.png`} alt="">
-		<!-- <img src={`${base}/shared-assests/Monytri-01.png`} alt=""> -->
+		<img src={`/shared-assests/Monytri-01.avif`} alt="">
+		<!-- <img src={`${base}/shared-assests/Monytri-01.avif`} alt=""> -->
 	</figure>
 
 	<article class="share-container">
@@ -183,8 +183,8 @@
 		background-size: cover;
 		display: grid;
 		place-items: center;
-		background: url('/shared-assests/banner-deco.png');
-		/* background: url('${base}/shared-assests/banner-deco.png'); */
+		background: url('/shared-assests/banner-deco.avif');
+		/* background: url('${base}/shared-assests/banner-deco.avif'); */
 		background-position:top center;
 		background-repeat: no-repeat;
 		background-size: cover;

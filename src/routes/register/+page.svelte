@@ -9,7 +9,7 @@
 	let form = $state();
 	let toggleRegister = $state(false);
 	let errorMessage = $state('');
-	let isLoading = $state(data?.isLoading ?? false	);
+	let isLoading = $derived(data?.isLoading ?? false);
 
 </script>
 

@@ -2,9 +2,13 @@
  let {name = false} = $props();
 </script>
 
+<svelte:head>
+	<link rel="preload" href="/Monytri-01-1.avif" fetchpriority=high as="image">
+</svelte:head>
+
 <a href="/" class="logo">
 	<picture>
-		<img src={`/Monytri-01-1.png`} alt="logo" width="40px" />	</picture>
+		<img src={`/Monytri-01-1.avif`} alt="logo" width="40px" />	</picture>
 	{#if name}
 		<span class="logo-name">monytri</span>
 	{/if}

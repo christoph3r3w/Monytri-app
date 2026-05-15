@@ -9,7 +9,7 @@
       "backgroundColor": "#ffffff",
       "androidSplashScreen": {
         "backgroundColor": "#ffffff",
-        "imageUrl": "splash.png",
+        "imageUrl": "splash.avif",
         "showSpinner": false
       }
     }

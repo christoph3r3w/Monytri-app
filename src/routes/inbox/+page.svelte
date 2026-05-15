@@ -2,7 +2,7 @@
     /** @type {import('./$types').PageProps} */
     import {PageStepContainer} from '$lib';
     let { data } = $props();
-    let {device} = data;    
+    let {device} = $derived(data);    
 </script>
 
 {#snippet a()}

@@ -3,11 +3,11 @@
 
 	let {formatCurrency, usersBrokers} = $props();
 	let rand = (currentValue) => currentValue !== undefined ? +(Math.random() * currentValue).toFixed(2) : +(Math.random() * 500).toFixed(2);
-	let brokersList = usersBrokers  ;
-	let totalBalance = brokersList.reduce((acc, broker) => acc + broker.balance, 0);
-	let averageBalance = totalBalance / brokersList.length;
-	
-	let defaultImg = "/brokers/bank.png"
+	let brokersList = $derived(usersBrokers);
+	let totalBalance = $derived(brokersList.reduce((acc, broker) => acc + broker.balance, 0));
+	let averageBalance = $derived(totalBalance / brokersList.length);
+
+	let defaultImg = "/brokers/bank.avif"
 </script>
 
 {#snippet listItem(b)}
@@ -44,21 +44,22 @@
 
 <style>
 
-
 .brokers {
+	--gap: 15px;	
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	max-height: 500px;
 	max-width: 100%;
 	width: 100%;
-	gap: var(--gap);
+	gap: var(--gap, auto);
 	border-radius: .5rem;
 	box-shadow: rgba(236, 236, 236, 0.199) 0px 0px 15px 0px;
 
 	padding: 1rem;
 	background-color: var(--general-background-color-secondary);
 	max-height: fit-content;
+
 }
 
 .brokers li{
@@ -99,6 +100,15 @@
 	object-fit: contain;
 	object-position: center;
 	border-radius: 0.25rem;
+}
+
+@media screen and (width <= 600px){
+	
+	.brokers{
+		--gap: 5px;
+		min-height: 5.5rem ;
+		max-height: fit-content ;
+	}
 }
 
 </style>

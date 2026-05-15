@@ -50,7 +50,7 @@ export async function getStockData({ cacheKey = 'global' } = {}) {
 	let usersBrokers = brokersProfile || [
 		{ name: 'eToro', logo: '', link: '', balance: 0 },
 		{ name: 'Robinhood', logo: '', link: '', balance: 0 },
-		{ name: 'Interactive Brokers', logo: '/brokers/Interactive Brokers logo 2..png', link: '', balance: 0 }
+		{ name: 'Interactive Brokers', logo: '/brokers/Interactive Brokers logo 2..avif', link: '', balance: 0 }
 	];
 
 	let totalBalance = usersBrokers.reduce((acc, broker) => acc + broker.balance, 0);

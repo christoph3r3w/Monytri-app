@@ -9,6 +9,7 @@
 	let device = $derived(d);
 	let {isMobile,platform,isApple,isAndroid} = $derived(device);
 	
+	
 </script>
 
 <!-- mobile navigation -->

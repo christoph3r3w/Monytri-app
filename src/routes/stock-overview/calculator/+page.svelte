@@ -1,11 +1,12 @@
 	<script >
 	import {PageStepContainer,Brokers,Calculator,PortfolioDetail} from '$lib';
-	import {onMount} from 'svelte';
+	import { current } from '$lib/store.js';
+	import {onMount,onDestroy} from 'svelte';
 
 	let {data} = $props();
-	let {device} = data;
+	let {device} = $derived(data);
 	
-	let {portfolio,usersBrokers,totalBalance,averageBalance} = data?.data;	
+	let {portfolio,usersBrokers,totalBalance,averageBalance} = $derived(data?.data);	
 
 	function formatCurrency(value) {
 		const number = typeof value === 'string' ? parseFloat(value) : value;
@@ -16,6 +17,7 @@
 			maximumFractionDigits: 2
 		}).format(number);
 	}
+
 </script>
 
 {#snippet a()}

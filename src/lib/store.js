@@ -1,9 +1,10 @@
 import { writable } from 'svelte/store';
 
-export const current = writable('home');
+export const current = writable(['home']);
 export const isMobile = writable(false);
 export const menuOpen = writable(false);
 export const anAcount = writable(false);
+export const firstVisit = writable(true);
 
 // Update current store based on window.location.pathname
 export function updateCurrentFromPath() {
@@ -33,7 +34,11 @@ export function updateCurrentFromPath() {
             current.set('transactions History');
             break;
         case '/stock-overview':
+        // case '/stock-overview/calculator':
             current.set('stock-overview');
+            break;
+        case '/stock-overview/calculator':
+            current.set('calculator');
             break;
         case '/settings':
             current.set('settings');
@@ -49,9 +54,6 @@ export function updateCurrentFromPath() {
             break;
         case '/login':
             current.set('login');
-            break;
-        case '/stock-overview/calculator':
-            current.set('calculator');
             break;
         case '/education':
             current.set('Grow with Monytri');
