@@ -100,7 +100,7 @@ export const device = readable(computeState(), (set) => {
 			current = next;
 			set(current);
 			applyBodyClasses(current);
-			if (import.meta.env.DEV) console.debug('Device Info:', current);
+			if (import.meta.env.DEV); //console.debug('Device Info:', current);
 		}
 	};
 

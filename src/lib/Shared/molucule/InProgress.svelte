@@ -9,7 +9,7 @@
 			if ($current && !$isMobile) {
 				goto('/');
 			} 	
-		}, 1000);
+		}, 7000);
 	});
 </script>
 

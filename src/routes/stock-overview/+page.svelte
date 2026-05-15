@@ -59,7 +59,7 @@
 				</svg>
 		</button>
 
-		<button onclick={() => {goto('/stock-overview/calculator'); whoo()}}>
+		<button onclick={() => {goto('/stock-overview/calculator')}} in:whoo|global aria-label="open calculator">
 			Open Calculator
 		</button>
 

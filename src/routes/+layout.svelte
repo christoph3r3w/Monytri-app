@@ -3,7 +3,7 @@
   	import {onNavigate,afterNavigate, goto} from '$app/navigation'
 	import {Header,Footer,Footer_M,Menu} from '$lib'
 	import {device} from '$lib/Device.js'
-	import {current,isMobile,menuOpen, updateCurrentFromPath} from '$lib/store.js'
+	import {current,isMobile,menuOpen, updateCurrentFromPath,firstVisit} from '$lib/store.js'
 	import { fade } from 'svelte/transition';
 	import '../app.css';
 	
@@ -91,6 +91,7 @@
 	});
 
 	onMount(async () => {
+		firstVisit.set(true);
 		// debugging tool for mobile
 		if (!dev) return;
 		if ($device.isMobile == false ) return;

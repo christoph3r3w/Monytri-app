@@ -4,6 +4,7 @@ export const current = writable(['home']);
 export const isMobile = writable(false);
 export const menuOpen = writable(false);
 export const anAcount = writable(false);
+export const firstVisit = writable(true);
 
 // Update current store based on window.location.pathname
 export function updateCurrentFromPath() {

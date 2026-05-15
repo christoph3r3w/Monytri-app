@@ -77,6 +77,7 @@
 {#snippet desktopRoutes()}
 	<li><a href="/">home</a></li>
 	<li><a href="/gift" rel="noopener">Gift</a></li>
+	<li><a href="/request" rel="noopener">Request</a></li>
 	<li><a href="/how-it-works">how it works</a></li>
 	<li><a href="/learn-more">learn more</a></li>
 {/snippet}
